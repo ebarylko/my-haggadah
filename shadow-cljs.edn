@@ -1,0 +1,41 @@
+;; shadow-cljs configuration
+{:source-paths
+ ["src/dev"
+  "src/main"
+  "src/test"]
+
+ :dependencies
+ [
+  [org.clojure/clojurescript "1.11.60"]
+  #_#_[firebase/app "9.21.0"]
+  [firebase/firestore "9.21.0"]]
+
+
+ :builds
+ {:app {:target :browser
+        :output-dir "public/assets/app/js"
+        :asset-path "/assets/app/js"
+        :modules {:main {:entries [my.app]}}}}}
+
+;; :builds {:app
+;;   9           {:target     :browser
+;;  10            :output-dir "resources/public/js/compiled"
+;;  11            :asset-path "/js/compiled"
+;;  12            :modules {:app {:init-fn my-art-gallery.core/init}}
+;;  13            :devtools {:preloads [day8.re-frame-10x.preload]}
+;;  14            :dev {:compiler-options
+;;  15                  {:closure-defines
+;;  16                   { re-frame.trace.trace-enabled? true
+;;  17                    day8.re-frame.tracing.trace-enabled? true
+;;  18                    re-com.config/root-url-for-compiler-output "http://localhost:8290/js/compiled/app/cljs-runtime/"}}}
+;;  1
+
+;;  20            :release {:build-options {:ns-aliases {day8.re-frame.tracing day8.re-frame.tracing-stubs}}}}
+;;  21           :browser-test {:target    :browser-test
+;;  22                          :ns-regexp "-test$"
+;;  23                          :runner-ns shadow.test.browser
+;;  24                          :test-dir  "target/browser-test"}
+;;  25           :karma-test {:target    :karma
+;;  26                        :ns-regexp "-test$"
+;;  27                        :output-to "target/karma-test.js"}}}
+;;  28

@@ -1,0 +1,4 @@
+{:deps {org.clojure/clojurescript {:mvn/version "1.11.60"}}
+ {firebase/app {:mvn/version "9.21.0"}}
+ {firebase/firestore {:mvn/version "9.21.0"}}
+ :paths ["src"]}
