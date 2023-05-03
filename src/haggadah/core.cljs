@@ -6,8 +6,11 @@
    [haggadah.routes :as routes]
    [haggadah.views :as views]
    [haggadah.config :as config]
+   ["firebase/app" :as fba]
+   [my-haggadah.fb.config :as cfg]
    ))
 
+(defonce firebase-instance (atom nil))
 
 (defn dev-setup []
   (when config/debug?
@@ -19,8 +22,19 @@
     (rdom/unmount-component-at-node root-el)
     (rdom/render [views/main-panel] root-el)))
 
+(defn fb-init [config]
+  (when-not @firebase-instance
+    (let [cfg (clj->js config)]
+      (reset! firebase-instance (fba/initializeApp cfg)))))
+
+(defn firebase-init!
+  []
+  (fb-init cfg/firebase))
+
 (defn init []
   (routes/start!)
   (re-frame/dispatch-sync [::events/initialize-db])
   (dev-setup)
-  (mount-root))
+  (mount-root)
+  (firebase-init!))
+
