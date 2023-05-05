@@ -8,9 +8,11 @@
    [haggadah.config :as config]
    ["firebase/app" :as fba]
    [haggadah.fb.config :as cfg]
+   [haggadah.fb.auth :as fb-auth]
    ))
 
 (defonce firebase-instance (atom nil))
+
 
 (defn dev-setup []
   (when config/debug?
@@ -25,7 +27,9 @@
 (defn fb-init [config]
   (when-not @firebase-instance
     (let [cfg (clj->js config)]
-      (reset! firebase-instance (fba/initializeApp cfg)))))
+      (reset! firebase-instance (fba/initializeApp cfg))
+      (fb-auth/init @firebase-instance)
+      )))
 
 (defn firebase-init!
   []

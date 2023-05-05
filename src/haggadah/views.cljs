@@ -17,7 +17,7 @@
       {:class (styles/level1)}
       (str "Hello from " @name ". This is the Home Page." "We're glad to see you.")]
      [:div
-      [:h1.p8.underline "Why is this not working?"]]
+      [:button  {:on-click #(re-frame/dispatch [::events/login :admin])} "Log In as Admin"]]
      [:div.underline
       [:a {:on-click #(re-frame/dispatch [::events/navigate :about])}
        "go to About Page"]]
