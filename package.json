@@ -1,6 +1,8 @@
 {
 	"name": "haggadah",
 	"scripts": {
+      "tailwind": "npx tailwindcss -i ./src/haggadah/css/styles.css -o ./resources/public/css/styles.css ",
+      "tailwind:watch": "npm run tailwind --watch",
 		"ancient": "clojure -Sdeps '{:deps {com.github.liquidz/antq {:mvn/version \"RELEASE\"}}}' -m antq.core",
 		"watch": "npx shadow-cljs watch app browser-test karma-test",
 		"release": "npx shadow-cljs release app",

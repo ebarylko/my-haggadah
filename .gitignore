@@ -67,6 +67,7 @@ node_modules/
 .env
 /out/
 /resources/public/js/compiled/
+/resources/public/css/
 /target/
 /*-init.clj
 /*.log
