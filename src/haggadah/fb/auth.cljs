@@ -8,5 +8,5 @@
   (reset! auth (fb-auth/getAuth firebase-instance)))
 
 (defn email-login
-  [{:keys [email password]}]
-  (fb-auth/signInWithEmailAndPassword auth email password))
+  [email password ]
+  (fb-auth/signInWithEmailAndPassword @auth email password))

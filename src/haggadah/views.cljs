@@ -42,3 +42,8 @@
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [::subs/active-panel])]
     (routes/panels @active-panel)))
+
+(defn login-message
+  [message]
+
+  )

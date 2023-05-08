@@ -16,18 +16,17 @@
 
 (re-frame/reg-fx
  ::email-login!
- (fn [args]
-   (-> (auth/email-login args)
-       (.then #(js/console.log :success %))
-       (.catch #(js/console.log :error %))
-       (.finally #(js/console.log "cleanup")))))
+ (fn [{:keys [email password on-success on-error]}]
+   (-> (auth/email-login email password)
+       (.then on-success)
+       (.catch on-error))))
 
 
 (re-frame/reg-event-fx
  ::login
  interceptors
  (fn [_ [_]]
-   {::email-login! {:email "han@skywalker.com" :password "123456789"}}))
+   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(js/console.log % :success) :on-error #(js/console.log % :error)}}))
 
 
 (re-frame/reg-event-fx
