@@ -18,7 +18,7 @@
  ::email-login!
  (fn [{:keys [email password on-success on-error]}]
    (-> (auth/email-login email password)
-       (.then on-success)
+       (.then (fn [user]  (on-success (.-user user))))
        (.catch on-error))))
 
 
@@ -26,7 +26,12 @@
  ::login
  interceptors
  (fn [_ [_]]
-   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(js/console.log % :success) :on-error #(js/console.log % :error)}}))
+   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %] ) :on-error #(js/console.log % :error)}}))
+
+(re-frame/reg-event-db
+ ::set-user
+ (fn-traced [db [_ user]]
+            (assoc db :name (.-email user))))
 
 
 (re-frame/reg-event-fx
