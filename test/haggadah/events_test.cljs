@@ -4,7 +4,8 @@
             #_[haggadah.src.haggadah.subs :as sub]
             [cljs.test :as t :include-macros true]
             [re-frame.core :as rf]
-            [day8.re-frame.test :as rf-test]))
+            [day8.re-frame.test :as rf-test]
+            #_[haggadah.events :as events]))
 
 (t/deftest admin-login
   (rf-test/run-test-sync               ;; <-- add this
@@ -14,7 +15,9 @@
    ;; Define subscriptions to the app state
    (let [name (rf/subscribe [::subs/name])]
      ;;Assert the initial state
-     (t/is (=  "(Unknown)" @name)))))
+     #_(t/is (=  "(Unknown)" @name))
+     (rf/dispatch [::login])
+     (t/is (= "han@skywalker.com" @name)))))
 
 
  (admin-login)
