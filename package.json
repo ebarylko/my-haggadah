@@ -1,8 +1,8 @@
 {
 	"name": "haggadah",
 	"scripts": {
-      "tailwind": "npx tailwindcss -i ./src/haggadah/css/styles.css -o ./resources/public/css/styles.css ",
-      "tailwind:watch": "npm run tailwind -- --watch",
+		"tailwind": "npx tailwindcss -i ./src/haggadah/css/styles.css -o ./resources/public/css/styles.css ",
+		"tailwind:watch": "npm run tailwind -- --watch",
 		"ancient": "clojure -Sdeps '{:deps {com.github.liquidz/antq {:mvn/version \"RELEASE\"}}}' -m antq.core",
 		"watch": "npx shadow-cljs watch app browser-test karma-test",
 		"release": "npx shadow-cljs release app",
@@ -16,6 +16,9 @@
 	},
 	"devDependencies": {
 		"autoprefixer": "^10.4.14",
+		"karma": "^6.4.2",
+		"karma-chrome-launcher": "^3.2.0",
+		"karma-cljs-test": "^0.1.0",
 		"postcss": "^8.4.23",
 		"postcss-import": "^15.1.0",
 		"shadow-cljs": "2.20.5",
