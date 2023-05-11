@@ -1,7 +1,7 @@
 module.exports = function (config) {
 
   config.set({
-    browsers: ['ChromeHeadless'],
+      browsers: ['ChromeHeadlessNoSandbox'],
     basePath: 'target',
     files: ['ci.js'],
     frameworks: ['cljs-test'],
@@ -15,6 +15,7 @@ module.exports = function (config) {
         args: ['shadow.test.karma.init'],
         singleRun: true
     },
+      customLaunchers: {ChromeHeadlessNoSandbox:  {'base': 'ChromeHeadless', 'flags': ['--no-sandbox']}},  
 
     // the default configuration
   })
