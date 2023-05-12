@@ -13,11 +13,12 @@
 (defn home-panel []
   (let [name (re-frame/subscribe [::subs/name])]
     [:div
-     [:h1
+     [:h1 
       {:class (styles/level1)}
       (str "Hello from " @name ". This is the Home Page." "We're glad to see you.")]
-
      [:div
+      [:button  {:on-click #(re-frame/dispatch [::events/login :admin])} "Log In as Admin"]]
+     [:div.underline
       [:a {:on-click #(re-frame/dispatch [::events/navigate :about])}
        "go to About Page"]]
      ]))
@@ -41,3 +42,8 @@
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [::subs/active-panel])]
     (routes/panels @active-panel)))
+
+(defn login-message
+  [message]
+
+  )
