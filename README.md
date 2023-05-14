@@ -30,3 +30,7 @@ run `firebase deploy`. If you only want to test specific aspect of deployment, s
 
 ## Naming branches
 Name the branch as the feature you are working on in the branch
+
+## Veryiying tests with firebase emulator
+Run `firebase emulators:exec 'npm test`
+
