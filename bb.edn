@@ -1,0 +1,4 @@
+{:paths ["test"]
+ :deps  {etaoin/etaoin {:mvn/version "1.0.40"}}}
+
+(require '[acceptance.admin-login-test :as login])
