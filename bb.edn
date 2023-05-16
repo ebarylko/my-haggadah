@@ -10,3 +10,12 @@
                                         :vars [:symbol]}}}}}
 
 (require '[acceptance.admin-login-test :as login])
+
+(shell {:extra-env
+        {FIREBASE_AUTH_HOST   "localhost:9098"
+         FIREBASE_HOSTING_HOST  "localhost:5003"
+         FIREBASE_FUNCTIONS_HOST  "localhost:5004"
+         FIREBASE_FIRESTORE_HOST  "localhost:8081"}})
+
+
+
