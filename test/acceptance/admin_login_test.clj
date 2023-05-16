@@ -15,6 +15,6 @@
 
 (t/deftest message-test
  (t/testing "default user" 
-   (let [_  (e/go driver "http://localhost:8280")
+   (let [_  (e/go driver "http://localhost:5000")
          actual (e/get-element-text driver {:class :haggadah-styles-level1})]
 (t/is (= default-message actual)))))

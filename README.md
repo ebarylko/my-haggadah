@@ -34,3 +34,5 @@ Name the branch as the feature you are working on in the branch
 ## Veryiying tests with firebase emulator
 Run `firebase emulators:exec 'npm test`
 
+## Verifying integration tests with firebase emulator
+Run `firebase emulators:exec 'npm run integration-test'`
