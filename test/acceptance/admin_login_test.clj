@@ -1,4 +1,4 @@
-(ns events-view-test
+(ns acceptance.admin-login-test
   (:require  [clojure.test :as t]
              [etaoin.api :as e]))
 
