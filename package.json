@@ -8,7 +8,7 @@
 		"release": "npx shadow-cljs release app",
 		  "build-report": "npx shadow-cljs run shadow.cljs.build-report app target/build-report.html",
       "test": "npx shadow-cljs compile ci && npx karma start --single-run",
-      "integration-test": "bb test:bb"
+      "test:integration": "firebase emulators:exec 'bb test:bb'"
 	},
 	"dependencies": {
 		"firebase": "^9.21.0",

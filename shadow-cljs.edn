@@ -48,9 +48,11 @@
                   {day8.re-frame.tracing day8.re-frame.tracing-stubs}}}}
           :ci {:target :karma
                :output-to "target/ci.js"
-               :closure-defines
-               {haggadah.fb.auth/FIREBASE_AUTH_HOST  "localhost:9098"
-                haggadah.fb.auth/FIREBASE_HOSTING_HOST  "localhost:5003"
-                haggadah.fb.auth/FIREBASE_FUNCTIONS_HOST  "localhost:5004"
-                haggadah.fb.auth/FIREBASE_FIRESTORE_HOST  "localhost:8081"}}}}
+               :dev
+               {:compiler-options
+               {:closure-defines
+               {haggadah.fb.auth/FIREBASE_AUTH_HOST_TEST  "localhost:9098"
+                haggadah.fb.auth/FIREBASE_HOSTING_HOST_TEST  "localhost:5003"
+                haggadah.fb.auth/FIREBASE_FUNCTIONS_HOST_TEST  "localhost:5004"
+                haggadah.fb.auth/FIREBASE_FIRESTORE_HOST_TEST  "localhost:8081"}}}}}}
 

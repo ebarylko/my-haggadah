@@ -1,7 +1,7 @@
 {:paths ["test"]
  :deps  {etaoin/etaoin {:mvn/version "1.0.40"}}
  :tasks
-  {test:bb {:extra-paths ["test"]
+  {test:bb {:extra-paths ["test/acceptance"]
             :extra-deps {io.github.cognitect-labs/test-runner
                          {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
             :task (exec 'cognitect.test-runner.api/test)
@@ -12,10 +12,10 @@
 (require '[acceptance.admin-login-test :as login])
 
 (shell {:extra-env
-        {FIREBASE_AUTH_HOST   "localhost:9098"
-         FIREBASE_HOSTING_HOST  "localhost:5003"
-         FIREBASE_FUNCTIONS_HOST  "localhost:5004"
-         FIREBASE_FIRESTORE_HOST  "localhost:8081"}})
+        {FIREBASE_AUTH_HOST   "localhost:9099"
+         FIREBASE_HOSTING_HOST  "localhost:5000"
+         FIREBASE_FUNCTIONS_HOST  "localhost:5001"
+         FIREBASE_FIRESTORE_HOST  "localhost:8080"}})
 
 
 
