@@ -1,5 +1,6 @@
 {:paths ["test"]
- :deps  {etaoin/etaoin {:mvn/version "1.0.40"}}
+ :deps  {etaoin/etaoin {:mvn/version "1.0.40"}
+         com.google.firebase/firebase-admin {:mvn/version "9.1.1"} }
  :tasks
   {test:bb {:extra-paths ["test/acceptance"]
             :extra-deps {io.github.cognitect-labs/test-runner
