@@ -10,6 +10,7 @@
             com.google.firebase.auth.UserRecord$CreateRequest
             com.google.firebase.auth.UserRecord$UpdateRequest))
 
+
 (def driver (e/firefox-headless))
 
 (def default-message
@@ -46,6 +47,7 @@
          actual (e/get-element-text driver {:class :haggadah-styles-level1})]
      (t/is (= default-message actual))))
   (t/testing "admin user"
+    (FirebaseApp/initializeApp (System/getenv "GCLOUD_PROJECT"))
     (create-user {:email "han@skywalker.com"  :pwd "123456789"})
     (let [_  (e/click driver {:tag :button})
           actual (e/get-element-text driver {:class :haggadah-styles-level1})]
