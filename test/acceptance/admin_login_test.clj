@@ -2,10 +2,14 @@
   (:require  [clojure.test :as t]
              [environ.core :refer [env]]
              [etaoin.api :as e]
+             [clojure.string :as str]
+             [cheshire.core :as json]
              [googlecredentials.core :as gcred])
   (:import com.google.firebase.FirebaseApp
             com.google.firebase.FirebaseOptions
             com.google.firebase.FirebaseOptions$Builder
+            [com.google.auth.oauth2 GoogleCredentials ServiceAccountCredentials]
+            [java.io IOException]
             com.google.auth.oauth2.ServiceAccountCredentials
             com.google.firebase.auth.FirebaseAuth
             com.google.firebase.auth.FirebaseAuthException
@@ -28,12 +32,43 @@
 
 (println "Hello how are you"(System/getenv "GCLOUD_PROJECT"))
 
+(defn- clean-env-var [env-var]
+  (-> env-var (name) (str) (str/lower-case) (str/replace "_" "-") (str/replace "." "-") (keyword)))
+
+(defn- build-service-account-credentials [creds]
+  (let [credentials (ServiceAccountCredentials/fromPkcs8
+                     ^String (-> creds :client_id str)
+                     ^String (-> creds :client_email str)
+                     ^String (-> creds :private_key str)
+                     ^String (-> creds :private_key_id str)
+                     [])]
+    (-> (^ServiceAccountCredentials .toBuilder credentials)
+        (.setProjectId (-> creds :project_id str))
+        (^ServiceAccountCredentials .build))))
+
+(defn ^GoogleCredentials load-service-credentials 
+  "Load google application credentials from environment variable defaults to  GOOGLE_APPLICATION_CREDENTIALS"
+  ([]
+   (load-service-credentials "GOOGLE_APPLICATION_CREDENTIALS"))  
+  ([^String env-var]
+   (let [clean-var (clean-env-var env-var)
+         creds (json/parse-stream-strict (env clean-var) true)]
+     (cond
+       (empty? creds)
+       (throw (IOException. ^String (str "Environment variable " env-var " is empty or does not exist")))
+       (empty? (:type creds))
+       (throw (IOException. ^String (str "Error reading credentials from stream, 'type' field not specified.")))
+       (= ^String "service-account-type" (:type creds))
+       (build-service-account-credentials creds) 
+       :else (throw (IOException. ^String (str "Error reading credentials from stream, 'type' value '" (:type creds) "' not recognized."
+                                               "Expecting '" "user-file-type" "' or '" "service-account-type" "'.")))))))9
+
 
 (defn- build-firebase-options 
   ([]
    (try 
      (-> (new FirebaseOptions$Builder) ;use thread-first when the final part of the function will return value to be used
-         (.setCredentials (gcred/load-service-credentials))
+         (.setCredentials (load-service-credentials))
          (.build))
      (catch Exception e (println "\nError: FIREBASE_CONFIG/GOOGLE_APPLICATION_CREDENTIALS AND GOOGLE_CLOUD_PROJECT environment variables must both be set"))))
   ([database-name]
