@@ -17,4 +17,4 @@ jobs:
         run: |
           npm install
           npm test
-          npm test:acceptance
+          npm run test:acceptance
