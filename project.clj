@@ -5,12 +5,8 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [etaoin/etaoin "1.0.40"]
-                 [cheshire "5.11.0"]
-                 [clj-http "3.10.1"]
-                 [environ "1.2.0"]
-                 [alekcz/googlecredentials "3.0.1"]
-                 [com.google.firebase/firebase-admin "9.1.1"]]
+                 [com.google.firebase/firebase-admin "9.1.1"]
+                 [environ "1.2.0"]]
   :repl-options {:init-ns haggadah.core
                  :init (init)})
-
 
