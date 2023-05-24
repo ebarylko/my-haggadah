@@ -63,6 +63,7 @@
     (println "The user" (create-user {:email "han@skywalker.com"  :pwd "123456789"}))
     (let [_ (e/go driver "http://localhost:5000/")
           _ (e/screenshot driver "screenshots/homepage.png")
-          _ (e/click driver {:tag :button})
+          + (e/scroll-top driver)
+          _ (e/click driver {:tag :button  :fn/text "Log In as Admin"})
           actual (e/get-element-text driver {:class :haggadah-styles-level1})]
       (t/is (= admin-login-message actual)))))
