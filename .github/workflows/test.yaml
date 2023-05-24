@@ -22,3 +22,5 @@ jobs:
           npm install -g firebase-tools
           npm test
           npm run test:acceptance 
+
+

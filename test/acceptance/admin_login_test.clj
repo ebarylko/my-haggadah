@@ -15,8 +15,7 @@
 
 (def project-id (env :gcloud-project))
 
-(def driver (e/firefox-headless))
-
+(def driver (e/chrome-headless))
 (def default-message
   "Hello from (Unknown). This is the Home Page.We're glad to see you.")
 
