@@ -31,8 +31,8 @@
                 :modules
                 {:app {:init-fn haggadah.core/init}}
                 :devtools
-                {:preloads [#_day8.re-frame-10x.preload
-                            #_re-frisk.preload]}
+                {:preloads [day8.re-frame-10x.preload
+                            re-frisk.preload]}
                 :dev
                 {:compiler-options
                  {:closure-defines

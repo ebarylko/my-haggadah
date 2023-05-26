@@ -63,9 +63,9 @@
     (println "The user" (create-user {:email "han@skywalker.com"  :pwd "123456789"}))
     (let [_ (e/go driver "http://localhost:5000/")
           _ (e/screenshot driver "screenshots/homepage.png")
-          _ (println (e/exists? driver {:id :test-id  :tag :button}))
+          _ (println (e/exists? driver {:id "login" :tag :button}))
           #_#__ (e/click-single driver {:id :test-id })
-          _ (e/click-visible driver {:tag :button}#_{:tag :button})
+          _ (e/click-visible driver {:tag :button :id "login"})
           _ (e/screenshot driver "screenshots/button-clicked.png")
           actual (e/get-element-text driver {:class :haggadah-styles-level1})]
       (t/is (= admin-login-message actual)))))
