@@ -7,20 +7,31 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/day8/chrome-latest:5.0.0
+      image: robcherry/docker-chromedriver:latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3 #Setup Node
         with:
           node-version: '18'
+      - uses: DeLaGuardo/setup-clojure@11.0
       - name: run test
         env: 
           GCLOUD_PROJECT: "my-haggadah"
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MY_HAGGADAH}}
         run: |
-          npm install
-          npm install -g firebase-tools
-          npm test
-          npm run test:acceptance 
+
+          which chromedriver
+          chromedriver --help
+          ls /usr/bin/google-chrome
+          which google-chrome
+          google-chrome --version
+          chromedriver --version
+          #npm install
+          # npm install -g firebase-tools
+          # npm test
+          # npm run test:acceptance 
 
 

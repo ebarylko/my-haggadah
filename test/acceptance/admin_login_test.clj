@@ -15,7 +15,7 @@
 
 (def project-id (env :gcloud-project))
 
-(def driver (e/chrome-headless {:disable-dev-shm-usage :true :disable-gpu :true}))
+(def driver (e/chrome-headless { :args ["no-sandbox" "--disable-dev-shm-usage" "--disable-gpu" "--disable-extensions"  "--start-maximized" ] }))
 (def default-message
   "Hello from (Unknown). This is the Home Page.We're glad to see you.")
 
