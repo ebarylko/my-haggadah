@@ -15,7 +15,7 @@
 
 (def project-id (env :gcloud-project))
 
-(def driver (e/chrome-headless))
+(def driver (e/chrome-headless ))
 (def default-message
   "Hello from (Unknown). This is the Home Page.We're glad to see you.")
 
@@ -63,7 +63,9 @@
     (println "The user" (create-user {:email "han@skywalker.com"  :pwd "123456789"}))
     (let [_ (e/go driver "http://localhost:5000/")
           _ (e/screenshot driver "screenshots/homepage.png")
-          + (e/scroll-top driver)
-          _ (e/click driver {:tag :button  :fn/text "Log In as Admin"})
+          _ (println (e/exists? driver {:id :test-id  :tag :button}))
+          #_#__ (e/click-single driver {:id :test-id })
+          _ (e/click-visible driver {:tag :button}#_{:tag :button})
+          _ (e/screenshot driver "screenshots/button-clicked.png")
           actual (e/get-element-text driver {:class :haggadah-styles-level1})]
       (t/is (= admin-login-message actual)))))

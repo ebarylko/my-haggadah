@@ -16,7 +16,7 @@
      [:h1 
       {:class (styles/level1)}
       (str "Hello from " @name ". This is the Home Page." "We're glad to see you.")]
-     [:div
+     [:div#test-id
       [:button  {:on-click #(re-frame/dispatch [::events/login :admin])} "Log In as Admin"]]
      [:div.underline
       [:a {:on-click #(re-frame/dispatch [::events/navigate :about])}
