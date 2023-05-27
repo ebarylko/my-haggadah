@@ -43,7 +43,11 @@
    [:h1 "This is the Haggadah Page."]
    [:div
     [:a {:on-click #(re-frame/dispatch [::events/navigate :home])}
-     "go to Home Page"]]])
+     "go to Home Page"]
+    [:div 
+    [:a {:on-click #(re-frame/dispatch [::events/navigate :home])}
+     "Click here to see the haggadah"]]
+    ]])
 
 (defmethod routes/panels :haggadah-panel [] [haggadah-panel])
 (defmethod routes/panels :about-panel [] [about-panel])
