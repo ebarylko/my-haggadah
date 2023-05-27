@@ -21,14 +21,13 @@
       (str "Hello from " @name ". This is the Home Page." "We're glad to see you.")]
      [:div 
       [:button {:on-click #(re-frame/dispatch [::events/login :admin]) :data-test-id "login"} "Log In as Admin"]
-      [:button {:on-click #(re-frame/dispatch [::events/render-login-text {:url "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/examples/learning/helloworld.pdf"}])}"Render text"]]
+      [:button {:on-click #(re-frame/dispatch  [::events/navigate :haggadah]  )}"Render text"]]
      [:div.underline
       [:a {:on-click #(re-frame/dispatch [::events/navigate :about])}
        "go to About Page"]]
      ]))
 
 (defmethod routes/panels :home-panel [] [home-panel])
-
 ;; about
 
 (defn about-panel []
@@ -39,6 +38,14 @@
     [:a {:on-click #(re-frame/dispatch [::events/navigate :home])}
      "go to Home Page"]]])
 
+(defn haggadah-panel []
+  [:div
+   [:h1 "This is the Haggadah Page."]
+   [:div
+    [:a {:on-click #(re-frame/dispatch [::events/navigate :home])}
+     "go to Home Page"]]])
+
+(defmethod routes/panels :haggadah-panel [] [haggadah-panel])
 (defmethod routes/panels :about-panel [] [about-panel])
 
 ;; main
