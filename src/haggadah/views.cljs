@@ -45,7 +45,7 @@
     [:a {:on-click #(re-frame/dispatch [::events/navigate :home])}
      "go to Home Page"]
     [:div 
-    [:a {:on-click #(re-frame/dispatch [::events/navigate :home])}
+    [:a {:on-click #(re-frame/dispatch [::events/render-login-text :home])}
      "Click here to see the haggadah"]]
     ]])
 

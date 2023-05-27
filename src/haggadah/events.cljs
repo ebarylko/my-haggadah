@@ -2,6 +2,7 @@
   (:require
    [re-frame.core :as re-frame]
    [goog.object :as gobj]
+   ["marked" :as mark]
    ["react" :as react]
    [haggadah.db :as db]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
@@ -80,11 +81,19 @@
 
     [:canvas {:ref canvas-ref}]))
 
+(defn haggadah-text
+  []
+  [:div
+   [:h1 "Welcome to the promised Haggadah"]]
+  [:div
+   [:a {:on-click #(re-frame/dispatch [::navigate :home])}
+    "Render text"]])
 
 (re-frame/reg-event-fx
  ::render-login-text
- (fn [_ [_ url]]
-   (pdf-canvas url)))
+ (fn [_ [_ file]]
+   (haggadah-text)))
+
 
 (re-frame/reg-event-fx
   ::navigate
