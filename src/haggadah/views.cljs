@@ -39,13 +39,13 @@
      "go to Home Page"]]])
 
 (defn haggadah-panel []
-  [:div
-   [:h1 "This is the Haggadah Page."]
+  [:div 
+   [:h1 {:id "haggadah-text"} "This is the Haggadah Page"]
    [:div
     [:a {:on-click #(re-frame/dispatch [::events/navigate :home])}
      "go to Home Page"]
     [:div 
-    [:a {:on-click #(re-frame/dispatch [::events/render-login-text :home])}
+    [:a {:on-click #(re-frame/dispatch [::events/render-login-text "/haggadah-example.md"])}
      "Click here to see the haggadah"]]
     ]])
 

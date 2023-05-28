@@ -64,6 +64,18 @@
     (let [_ (e/go driver "http://localhost:5000/")
           _ (e/screenshot driver "screenshots/homepage.png")
           _ (e/click-visible driver {:tag :button :data-test-id "login"})
+          _ (println (e/exists? driver {:tag :button :data-test-id "login"}))
           actual (e/get-element-text driver {:class :haggadah-styles-level1})
           _ (e/screenshot driver "screenshots/button-clicked.png")]
       (t/is (= admin-login-message actual)))))
+
+(def default-haggadah-text
+  "This is the Haggadah Page")
+
+(t/deftest show-text-test
+  (t/testing "Default text"
+    (let [_ (e/go driver "http://localhost:5000/")
+          _ (e/click-visible driver {:tag :button :fn/text "Render text"})
+          _ (e/screenshot driver "screenshots/haggadah-text.png")
+          actual (e/get-element-text driver {:tag :h1 :id "haggadah-text"})]
+      (t/is (= default-haggadah-text actual)))))

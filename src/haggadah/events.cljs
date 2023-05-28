@@ -92,7 +92,7 @@
 (re-frame/reg-event-fx
  ::render-login-text
  (fn [_ [_ file]]
-   (haggadah-text)))
+   (println "Here's the file" file)))
 
 
 (re-frame/reg-event-fx
