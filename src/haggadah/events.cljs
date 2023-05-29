@@ -3,6 +3,7 @@
    [re-frame.core :as re-frame]
    [shadow.resource :as rc]
    [goog.object :as gobj]
+   [cljsjs.marked]
    ["marked" :as mark]
    ["react" :as react]
    [haggadah.db :as db]
@@ -51,7 +52,8 @@
 (re-frame/reg-event-db
  ::render-login-text
  (fn [db [_ file]]
-   (assoc db :haggadah-text example-haggadah)))
+   (assoc db :haggadah-text example-haggadah)
+   (println (js/marked.parse example-haggadah))))
 
 
 
