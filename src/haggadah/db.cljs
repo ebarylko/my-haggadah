@@ -1,4 +1,5 @@
 (ns haggadah.db)
 
 (def default-db
-  {:name "(Unknown)"})
+  {:name "(Unknown)"
+   :haggadah-text "The default haggadah"})

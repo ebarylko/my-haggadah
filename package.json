@@ -9,14 +9,15 @@
 		"build-report": "npx shadow-cljs run shadow.cljs.build-report app target/build-report.html",
 		"test": "npx shadow-cljs compile ci && npx karma start --single-run",
 		"test:integration": "firebase emulators:exec 'bb test:bb'",
-		  "test:acceptance": "firebase emulators:exec --project my-haggadah 'lein test'",
-      "test:acceptance2": "firebase emulators:exec --token FIREBASE_TOKEN --project my-haggadah 'lein test'"
+		"test:acceptance": "firebase emulators:exec --project my-haggadah 'lein test'",
+		"test:acceptance2": "firebase emulators:exec --token FIREBASE_TOKEN --project my-haggadah 'lein test'"
 	},
 	"dependencies": {
 		"cheshire": "^0.1.42",
 		"firebase": "^9.21.0",
 		"firebase-admin": "^11.8.0",
 		"highlight.js": "11.5.1",
+		"markdown-clj": "^1.10.3",
 		"react": "17.0.2",
 		"react-dom": "17.0.2"
 	},

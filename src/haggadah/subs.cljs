@@ -11,3 +11,8 @@
  ::active-panel
  (fn [db _]
    (:active-panel db)))
+
+(re-frame/reg-sub
+ ::haggadah-text
+ (fn [db _]
+   (:haggadah-text db)))

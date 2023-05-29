@@ -45,9 +45,12 @@
     [:a {:on-click #(re-frame/dispatch [::events/navigate :home])}
      "go to Home Page"]
     [:div 
-    [:a {:on-click #(re-frame/dispatch [::events/render-login-text "/haggadah-example.md"])}
+    [:a {:on-click #(re-frame/dispatch [::events/render-login-text "haggadah-example.md"])}
      "Click here to see the haggadah"]]
-    ]])
+    (let [haggadah-text (re-frame/subscribe [::subs/haggadah-text])]
+    [:div
+     [:h1 @haggadah-text]]
+    )]])
 
 (defmethod routes/panels :haggadah-panel [] [haggadah-panel])
 (defmethod routes/panels :about-panel [] [about-panel])
