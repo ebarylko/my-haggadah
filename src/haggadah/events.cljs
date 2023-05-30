@@ -39,40 +39,22 @@
             (assoc db :name (.-email user))))
 
 
-(defn haggadah-text
-  []
-  [:div
-   [:h1 "Welcome to the promised Haggadah"]]
-  [:div
-   [:a {:on-click #(re-frame/dispatch [::navigate :home])}
-    "Render text"]])
 
-(def example-haggadah (rc/inline "example-haggadah.md" ))
+(def example-haggadah
+  "## Hello Why, who are you
+  ### This is the example haggadah
+  ### Look at all we `can show you`"
+  )
 
-(defn html-div
-  [html-content]
-  [:div {"dangerouslySetInnerHTML"
-         #js{:__html html-content}}])
-
-(defn blog-post [html]
-  [:div {:dangerouslySetInnerHTML {:__html html}}])
 
 (re-frame/reg-event-db
  ::render-login-text
  (fn [db [_ file]]
-   (assoc db :haggadah-text (js/marked.parse example-haggadah)
-          #_example-haggadah)
-   #_(println
-    (html-div (js/marked.parse example-haggadah)))))
+   (assoc db :haggadah-text (js/marked.parse example-haggadah))))
 
 
 
-#_(re-frame/reg-event-fx
- ::render-login-text
- (fn [_ [_ file]]
-   ))
 
-(rc/inline "example-haggadah.md")
 
 (re-frame/reg-event-fx
   ::navigate
