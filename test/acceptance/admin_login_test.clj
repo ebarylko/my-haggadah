@@ -4,14 +4,11 @@
              [environ.core :refer [env]])
   (:import com.google.firebase.FirebaseApp
            com.google.firebase.internal.EmulatorCredentials
-            #_com.google.firebase.FirebaseOptions
+            com.google.cloud.firestore.Firestore
             com.google.firebase.FirebaseOptions$Builder
-            #_[com.google.auth.oauth2 GoogleCredentials ServiceAccountCredentials]
-            #_com.google.auth.oauth2.ServiceAccountCredentials
             com.google.firebase.auth.FirebaseAuth
-            #_com.google.firebase.auth.UserRecord
             com.google.firebase.auth.UserRecord$CreateRequest
-            #_com.google.firebase.auth.UserRecord$UpdateRequest))
+            ))
 
 (def project-id (env :gcloud-project))
 
@@ -51,22 +48,24 @@
                          (.setPassword pwd))]
     (convert-user-record-to-map (. firebase-auth createUser create-request))))
 
+(defn init-firebase
+  "Pre: takes all tests
+  Post: initializes all features of firebase, such as firestore, authentication,"
+  [tests]
+  (init)
+  (tests))
+
+(t/use-fixtures :once init-firebase)
 
 (t/deftest message-test
-  #_(t/testing "default user"
-      (let [_  (e/go driver "http://localhost:5000/")
-            actual (e/get-element-text driver {:class :haggadah-styles-level1})]
-        (t/is (= default-message actual))))
-  (t/testing "admin user"
-    (println "The GCLOUD project is" project-id)
-    (init)
-    (println "The user" (create-user {:email "han@skywalker.com"  :pwd "123456789"}))
-    (let [_ (e/go driver "http://localhost:5000/")
-          _ (e/screenshot driver "screenshots/homepage.png")
-          _ (e/click-visible driver {:tag :button :data-test-id "login"})
-          _ (e/wait 3)
-          actual (e/get-element-text driver {:class :haggadah-styles-level1})
-          _ (e/screenshot driver "screenshots/button-clicked.png")]
+  (t/testing "When the admin user exists"
+    (create-user {:email "han@skywalker.com"  :pwd "123456789"})
+    (doto driver
+      (e/go "http://localhost:5000/")
+       (e/click-visible {:tag :button :data-test-id "login"})
+       (e/wait-has-text-everywhere admin-login-message))
+    (let [actual (e/get-element-text driver {:class :haggadah-styles-level1})]
+       (e/screenshot driver "screenshots/message-test-when-the-admin-exists.png")
       (t/is (= admin-login-message actual)))))
 
 (def default-haggadah-text
@@ -85,4 +84,6 @@
   (t/testing "Actual text"
     (let [_ (e/click-visible driver {:tag :button :fn/text "Click here to see the haggadah"})
           real-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
-      (t/is (= actual-haggadah-text real-text)))))
+      (t/is (= actual-haggadah-text real-text))))
+  #_(t/testing "Uploading document to firestore"
+    (fs/addDoc (fs/collection ))))
