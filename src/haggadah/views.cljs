@@ -10,21 +10,24 @@
 
 ;; home
 
+
+
+
 (defn home-panel []
   (let [name (re-frame/subscribe [::subs/name])]
     [:div
      [:h1 
       {:class (styles/level1)}
       (str "Hello from " @name ". This is the Home Page." "We're glad to see you.")]
-     [:div
-      [:button  {:on-click #(re-frame/dispatch [::events/login :admin])} "Log In as Admin"]]
+     [:div 
+      [:button {:on-click #(re-frame/dispatch [::events/login :admin]) :data-test-id "login"} "Log In as Admin"]
+      [:button {:on-click #(re-frame/dispatch  [::events/navigate :haggadah]  )}"Render text"]]
      [:div.underline
       [:a {:on-click #(re-frame/dispatch [::events/navigate :about])}
        "go to About Page"]]
      ]))
 
 (defmethod routes/panels :home-panel [] [home-panel])
-
 ;; about
 
 (defn about-panel []
@@ -35,6 +38,21 @@
     [:a {:on-click #(re-frame/dispatch [::events/navigate :home])}
      "go to Home Page"]]])
 
+(defn haggadah-panel []
+  [:div 
+   [:h1 {:id "haggadah-text"} "This is the Haggadah Page"]
+   [:div
+    [:a {:on-click #(re-frame/dispatch [::events/navigate :home])}
+     "go to Home Page"]
+    [:div 
+    [:button {:on-click #(re-frame/dispatch [::events/render-login-text "haggadah-example.md"])}
+     "Click here to see the haggadah"]]
+    (let [haggadah-text (re-frame/subscribe [::subs/haggadah-text])]
+      [:div  {:dangerouslySetInnerHTML #js{:__html @haggadah-text} :id "haggadah-text"}]
+      
+)]])
+
+(defmethod routes/panels :haggadah-panel [] [haggadah-panel])
 (defmethod routes/panels :about-panel [] [about-panel])
 
 ;; main

@@ -8,6 +8,8 @@
  [[reagent "1.1.1"]
   [re-frame "1.3.0"]
   [day8.re-frame/tracing "0.6.2"]
+  [etaoin/etaoin "1.0.40"]
+  [cljsjs/marked "0.3.5-1"]
   [day8.re-frame/test "0.1.5"]
   [bidi "2.1.6"]
   [clj-commons/pushy "0.3.10"]
@@ -35,11 +37,23 @@
                 :dev
                 {:compiler-options
                  {:closure-defines
-                  { re-frame.trace.trace-enabled? true
-                   day8.re-frame.tracing.trace-enabled? true}}}
+                  { re-frame.trace.trace-enabled? false
+                   day8.re-frame.tracing.trace-enabled? false
+                   haggadah.fb.auth/FIREBASE_AUTH_HOST  "http://localhost:9099"
+                   haggadah.fb.auth/FIREBASE_HOSTING_HOST  "localhost:5000"
+                   haggadah.fb.auth/FIREBASE_FUNCTIONS_HOST  "localhost:5001"
+                   haggadah.fb.auth/FIREBASE_FIRESTORE_HOST  "localhost:8080"}}}
                 :release
                 {:build-options
                  {:ns-aliases
                   {day8.re-frame.tracing day8.re-frame.tracing-stubs}}}}
           :ci {:target :karma
-               :output-to "target/ci.js" }}}
+               :output-to "target/ci.js"
+               :dev
+               {:compiler-options
+               {:closure-defines
+               {haggadah.fb.auth/FIREBASE_AUTH_HOST_TEST  "localhost:9098"
+                haggadah.fb.auth/FIREBASE_HOSTING_HOST_TEST  "localhost:5003"
+                haggadah.fb.auth/FIREBASE_FUNCTIONS_HOST_TEST  "localhost:5004"
+                haggadah.fb.auth/FIREBASE_FIRESTORE_HOST_TEST  "localhost:8081"}}}}}}
+

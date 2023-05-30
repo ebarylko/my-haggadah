@@ -15,8 +15,7 @@ module.exports = function (config) {
         args: ['shadow.test.karma.init'],
         singleRun: true
     },
-      customLaunchers: {ChromeHeadlessNoSandbox:  {'base': 'ChromeHeadless', 'flags': ['--no-sandbox']}},  
+      customLaunchers: {ChromeHeadlessNoSandbox:  {'base': 'ChromeHeadless', 'flags': ['--no-sandbox' ]}},  
 
-    // the default configuration
   })
 }
