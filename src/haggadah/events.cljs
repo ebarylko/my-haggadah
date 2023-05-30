@@ -49,11 +49,21 @@
 
 (def example-haggadah (rc/inline "example-haggadah.md" ))
 
+(defn html-div
+  [html-content]
+  [:div {"dangerouslySetInnerHTML"
+         #js{:__html html-content}}])
+
+(defn blog-post [html]
+  [:div {:dangerouslySetInnerHTML {:__html html}}])
+
 (re-frame/reg-event-db
  ::render-login-text
  (fn [db [_ file]]
-   (assoc db :haggadah-text example-haggadah)
-   (println (js/marked.parse example-haggadah))))
+   (assoc db :haggadah-text (js/marked.parse example-haggadah)
+          #_example-haggadah)
+   #_(println
+    (html-div (js/marked.parse example-haggadah)))))
 
 
 

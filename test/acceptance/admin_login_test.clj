@@ -69,12 +69,19 @@
       (t/is (= admin-login-message actual)))))
 
 (def default-haggadah-text
-  "This is the Haggadah Page")
+  "The default haggadah")
+
+(def actual-haggadah-text
+  "##Hello\nThis is the example haggadah\nLook at all we can show you")
 
 (t/deftest show-text-test
   (t/testing "Default text"
     (let [_ (e/go driver "http://localhost:5000/")
           _ (e/click-visible driver {:tag :button :fn/text "Render text"})
           _ (e/screenshot driver "screenshots/haggadah-text.png")
-          actual (e/get-element-text driver {:tag :h1 :id "haggadah-text"})]
-      (t/is (= default-haggadah-text actual)))))
+          actual (e/get-element-text driver {:tag :div :id "haggadah-text"})]
+      (t/is (= default-haggadah-text actual))))
+  (t/testing "Actual text"
+    (let [_ (e/click-visible driver {:tag :button :fn/text "Click here to see the haggadah"})
+          real-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
+      (t/is (= actual-haggadah-text real-text)))))
