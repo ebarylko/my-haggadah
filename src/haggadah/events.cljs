@@ -4,8 +4,9 @@
    [shadow.resource :as rc]
    [goog.object :as gobj]
    [cljsjs.marked]
-   [haggadah.fb.firestore :as fb-fs]
+   [haggadah.fb.firestore :as firestore]
    ["marked" :as mark]
+   ["firebase/firestore" :as fire]
    ["react" :as react]
    [haggadah.db :as db]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
@@ -36,23 +37,23 @@
    {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %] ) :on-error #(js/console.log % :error)}}))
 
 
-#_(re-frame/reg-event-db
- ::render-login-text
- (fn [db [_ uid]]
-   (let [haggadah
-         (-> (fs/Doc )
-          (FirestoreClient/getFirestore)
-             (.collection "users")
-             (.document "user1")
-             (.get "haggadah-text"))]
-   (assoc db :haggadah-text
-          (js/marked.parse haggadah)))))
+(re-frame/reg-fx
+ ::fetch-haggadah
+ (fn [{:keys [uid on-success on-error]}]
+   (println uid)
+   (-> (firestore/instance)
+       (fire/doc "users" uid )
+       (fire/getDoc)
+       (.then on-success)
+       (.catch on-error))))
 
 (re-frame/reg-event-fx
  ::set-user
  (fn-traced [{:keys [db]} [_ user]]
-            {:db (assoc db :name (.-email user))}
-            #_(rf/dispatch [::render-login-text (.-id user)])))
+            {:db (assoc db :name (.-email user))
+             ::fetch-haggadah {:uid (.-uid user)
+                               :on-success println
+                               :on-error #(js/console.log % :error)}}))
 
 
 
