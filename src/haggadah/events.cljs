@@ -47,12 +47,20 @@
        (.then on-success)
        (.catch on-error))))
 
+(re-frame/reg-event-db
+ ::set-haggadah
+ (fn [db [_ snap]]
+   (assoc db :haggadah-text
+          (-> snap
+              (. data)
+              (js->clj :keywordize-keys true)))))
+
 (re-frame/reg-event-fx
  ::set-user
  (fn-traced [{:keys [db]} [_ user]]
             {:db (assoc db :name (.-email user))
              ::fetch-haggadah {:uid (.-uid user)
-                               :on-success println
+                               :on-success #(re-frame/dispatch [::set-haggadah %])
                                :on-error #(js/console.log % :error)}}))
 
 

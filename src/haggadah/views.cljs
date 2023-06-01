@@ -20,9 +20,9 @@
       {:class (styles/level1)}
       (str "Hello from " @name ". This is the Home Page." "We're glad to see you.")]
 
-     (let [haggadah-text (re-frame/subscribe [::subs/haggadah-text])]
-       [:div  {:dangerouslySetInnerHTML #js{:__html @haggadah-text} :id "haggadah-text"}])
-
+     (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
+       (when haggadah-text
+         [:div  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))
      [:div 
       [:button {:on-click #(re-frame/dispatch [::events/login :admin]) :data-test-id "login"} "Log In as Admin"]]
 
