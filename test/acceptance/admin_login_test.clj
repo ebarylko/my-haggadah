@@ -74,23 +74,21 @@
   "The default haggadah")
 
 (def actual-haggadah-text
-  "Hello Why, who are you\nThis is the example haggadah\nLook at all we can show you")
+  "This is Amir's excellent Haggadah")
 
 (t/deftest show-text-test
-  (t/testing "Default text"
-    (let [_ (e/go driver "http://localhost:5000/")
-          _ (e/click-visible driver {:tag :button :fn/text "Render text"})
-          _ (e/screenshot driver "screenshots/haggadah-text.png")
-          actual (e/get-element-text driver {:tag :div :id "haggadah-text"})]
-      (t/is (= default-haggadah-text actual))))
   (t/testing "When the current user has a haggadah"
     (let [db (FirestoreClient/getFirestore)
           haggadah {"haggadah-text" "## This is Amir's excellent Haggadah"}
-          result (-> db
+          write (-> db
                      (.collection "users")
                      (.document "user1")
-                     (.set haggadah)
-                     (.get ))]
-      (println result))))
+                     (.set haggadah))
+          _ (e/go driver "http://localhost:5000/")
+          _ (e/click-visible driver {:tag :button :data-test-id "login"})
+          _ (e/wait-has-text-everywhere driver actual-haggadah-text)
+          haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
+
+      (t/is (= actual-haggadah-text haggadah-text)))))
 
 ;; "http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents"
