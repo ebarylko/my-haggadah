@@ -2,7 +2,7 @@
 
  :jvm-opts ["-Xmx1G"]
 
- :source-paths ["src" "test"]
+ :source-paths ["src" "test" ]
 
  :dependencies
  [[reagent "1.1.1"]
@@ -55,5 +55,10 @@
                {haggadah.fb.auth/FIREBASE_AUTH_HOST_TEST  "localhost:9098"
                 haggadah.fb.auth/FIREBASE_HOSTING_HOST_TEST  "localhost:5003"
                 haggadah.fb.auth/FIREBASE_FUNCTIONS_HOST_TEST  "localhost:5004"
-                haggadah.fb.auth/FIREBASE_FIRESTORE_HOST_TEST  "localhost:8081"}}}}}}
+                haggadah.fb.auth/FIREBASE_FIRESTORE_HOST_TEST  "localhost:8081"}}}}
+          :func {:target :node-library
+                :js-options {:js-package-dirs ["functions/node_modules"]}
+                :compiler-options {:infer-externs :auto}
+                :output-to "functions/index.js"
+                :exports-var functions.core/exports}}} 
 
