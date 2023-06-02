@@ -19,9 +19,13 @@
      [:h1 
       {:class (styles/level1)}
       (str "Hello from " @name ". This is the Home Page." "We're glad to see you.")]
+
+     (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
+       (when haggadah-text
+         [:div  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))
      [:div 
-      [:button {:on-click #(re-frame/dispatch [::events/login :admin]) :data-test-id "login"} "Log In as Admin"]
-      [:button {:on-click #(re-frame/dispatch  [::events/navigate :haggadah]  )}"Render text"]]
+      [:button {:on-click #(re-frame/dispatch [::events/login :admin]) :data-test-id "login"} "Log In as Admin"]]
+
      [:div.underline
       [:a {:on-click #(re-frame/dispatch [::events/navigate :about])}
        "go to About Page"]]
