@@ -7,7 +7,7 @@
    [haggadah.views :as views]
    [haggadah.config :as config]
    ["firebase/app" :as fba]
-   ["firebase/firestore" :as fs]
+   [haggadah.fb.functions :as fb-fn]
    [haggadah.fb.config :as cfg]
    [haggadah.fb.firestore :as fb-fs]
    [haggadah.fb.auth :as fb-auth]
