@@ -13,7 +13,6 @@
 		"test:acceptance2": "firebase emulators:exec --token FIREBASE_TOKEN --project my-haggadah 'lein test'"
 	},
 	"dependencies": {
-		"cheshire": "^0.1.42",
 		"firebase": "^9.21.0",
 		"firebase-admin": "^11.8.0",
 		"highlight.js": "11.5.1",
