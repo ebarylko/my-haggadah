@@ -15,7 +15,9 @@
 (defn write
   "Echo the passed in query parameters merged with the current time"
   [data ^js req]
-  (js/console.log "This is auth" (.-auth req))
+  (when-not (.-auth req)
+    (throw (js/Error. "User not authenticated")))
+  
   (-> db
       (.doc "/users/amir")
       (.set #js {"haggadah" data})

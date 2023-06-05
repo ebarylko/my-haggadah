@@ -5,4 +5,9 @@
 
 (t/deftest write-test
   (t/testing "When the user is not authenticated, throws an exception"
-(t/is (= 3 (sut/example 1)))))
+    (let [e (try (sut/write "hello there" #js{:auth nil})
+                 nil
+                 (catch js/Error e
+                   e))]
+      (t/is (not (nil? e))))))
+

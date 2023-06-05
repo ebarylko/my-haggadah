@@ -7,7 +7,8 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
       "logs": "firebase functions:log",
-      "test": "npx shadow-cljs compile func-test"
+      "test": "npx shadow-cljs compile func-test",
+      "watch": "npx shadow-cljs watch func func-test"
   },
   "engines": {
     "node": "18"
