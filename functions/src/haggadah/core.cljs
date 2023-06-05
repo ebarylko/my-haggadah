@@ -1,8 +1,7 @@
-(ns functions.core
+(ns haggadah.core
   (:require ["firebase-functions" :as functions]
             ["firebase-admin" :as admin]
-            ["firebase-admin/firestore" :as firestore]
-))
+            ["firebase-admin/firestore" :as firestore]))
 
 (defonce app (.initializeApp admin))
 

@@ -85,6 +85,9 @@ emulator_data/
 /.lein-*
 /.nrepl-port
 
+# shadow-cljs files
+functions/.shadow-cljs/
+
 # Node.js dependencies
 /node_modules/
 
@@ -93,6 +96,9 @@ emulator_data/
 
 # clj-kondo cache and configs from libs
 /.clj-kondo/*
+
+# generated files for func build
+/functions/out/
 
 # clj-kondo config
 !/.clj-kondo/config.edn
