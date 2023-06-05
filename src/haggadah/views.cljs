@@ -10,7 +10,7 @@
 
 ;; home
 
-
+(goog-define WRITE false)
 
 
 (defn home-panel []
@@ -29,6 +29,8 @@
      [:div.underline
       [:a {:on-click #(re-frame/dispatch [::events/navigate :about])}
        "go to About Page"]]
+     [:div
+      [:button {:on-click  #(re-frame/dispatch [::events/call-func WRITE "My name is" println js/console.log])}"Cloud function"  ]]
      ]))
 
 (defmethod routes/panels :home-panel [] [home-panel])

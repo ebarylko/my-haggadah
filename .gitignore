@@ -54,6 +54,9 @@ node_modules/
 # Functions index.js
 functions/index.js
 
+# Emulator data
+emulator_data/
+
 # Optional npm cache directory
 .npm
 

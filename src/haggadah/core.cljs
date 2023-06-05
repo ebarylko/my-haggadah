@@ -31,7 +31,8 @@
     (let [cfg (clj->js config)]
       (reset! firebase-instance (fba/initializeApp cfg))
       (fb-auth/init @firebase-instance)
-      (fb-fs/init @firebase-instance))))
+      (fb-fs/init @firebase-instance)
+      (fb-fn/init @firebase-instance))))
 
 (defn firebase-init!
   []

@@ -42,7 +42,10 @@
                    haggadah.fb.auth/FIREBASE_AUTH_HOST  "http://localhost:9099"
                    haggadah.fb.auth/FIREBASE_HOSTING_HOST  "localhost:5000"
                    haggadah.fb.functions/FIREBASE_FUNCTIONS_HOST  "localhost:5001"
-                   haggadah.fb.firestore/FIREBASE_FIRESTORE_HOST  "localhost:8080"}}}
+                   haggadah.fb.firestore/FIREBASE_FIRESTORE_HOST  "localhost:8080"
+                   haggadah.views/WRITE "http://127.0.0.1:5001/my-haggadah/us-central1/write"
+
+                   }}}
                 :release
                 {:build-options
                  {:ns-aliases

@@ -1,18 +1,13 @@
 (ns haggadah.events
   (:require
    [re-frame.core :as re-frame]
-   [shadow.resource :as rc]
-   [goog.object :as gobj]
    [cljsjs.marked]
    [haggadah.fb.firestore :as firestore]
-   ["marked" :as mark]
    ["firebase/firestore" :as fire]
-   ["react" :as react]
    [haggadah.db :as db]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
    [haggadah.fb.auth :as auth]
-   [re-frame.core :as rf])
- #_ (:import com.google.firebase.cloud.FirestoreClient))
+   [haggadah.fb.functions :as func]))
 
 (def interceptors [re-frame/trim-v])
 
@@ -21,6 +16,26 @@
  ::initialize-db
  (fn-traced [_ _]
    db/default-db))
+
+(re-frame/reg-event-fx
+ ::call-func
+ interceptors
+ (fn [_ [fn-url text on-success on-error]]
+   (println "This is for the url and text" fn-url "---" text)
+   {::call-func! {:fn-url fn-url
+                  :text text
+                  :on-success on-success
+                  :on-error on-error}}))
+
+(re-frame/reg-fx
+ ::call-func!
+ (fn [{:keys [fn-url text on-success on-error]}]
+   (println "This is for the url and text" fn-url "---" text)
+   (let [f (func/callable-from-url fn-url)]
+     (println "This is the function" f)
+     (-> (f text)
+         (.then on-success)
+         (.catch on-error)))))
 
 (re-frame/reg-fx
  ::email-login!
