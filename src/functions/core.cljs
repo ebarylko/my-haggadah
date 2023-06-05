@@ -15,7 +15,7 @@
 
 (defn write
   "Echo the passed in query parameters merged with the current time"
-  [data req]
+  [data ^js req]
   (js/console.log "This is auth" (.-auth req))
   (-> db
       (.doc "/users/amir")
@@ -24,6 +24,9 @@
                           :query data}))))
 
 
+(defn example
+  [arg]
+  (inc arg))
 
 (defn echo
   [req res]
