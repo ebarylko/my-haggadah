@@ -26,6 +26,8 @@
  {8280 "resources/public"
   8290 "target/browser-test"}
 
+ 
+
  :builds {:app {:target     :browser
                 :output-dir "resources/public/js/compiled"
                 :asset-path "/js/compiled"
@@ -34,26 +36,33 @@
                 :devtools
                 {:preloads [day8.re-frame-10x.preload
                             re-frisk.preload]}
-                :dev
-                {:compiler-options
-                 {:closure-defines
-                  { re-frame.trace.trace-enabled? false
-                   day8.re-frame.tracing.trace-enabled? false
-                   haggadah.fb.auth/FIREBASE_AUTH_HOST  "http://localhost:9099"
-                   haggadah.fb.auth/FIREBASE_HOSTING_HOST  "localhost:5000"
-                   haggadah.fb.auth/FIREBASE_FUNCTIONS_HOST  "localhost:5001"
-                   haggadah.fb.firestore/FIREBASE_FIRESTORE_HOST  "localhost:8080"}}}
-                :release
-                {:build-options
-                 {:ns-aliases
-                  {day8.re-frame.tracing day8.re-frame.tracing-stubs}}}}
+                :dev {:compiler-options {:closure-defines { re-frame.trace.trace-enabled? false
+                                                           day8.re-frame.tracing.trace-enabled? false
+                                                           haggadah.fb.auth/FIREBASE_AUTH_HOST  "http://localhost:9099"
+                                                           haggadah.fb.auth/FIREBASE_HOSTING_HOST  "localhost:5000"
+                                                           haggadah.fb.functions/FIREBASE_FUNCTIONS_HOST  "localhost:5001"
+                                                           haggadah.fb.firestore/FIREBASE_FIRESTORE_HOST  "localhost:8080"
+                                                           haggadah.views/WRITE "http://127.0.0.1:5001/my-haggadah/us-central1/write"}}}
+
+                :release {:build-options {:ns-aliases {day8.re-frame.tracing day8.re-frame.tracing-stubs}}}}
           :ci {:target :karma
                :output-to "target/ci.js"
-               :dev
-               {:compiler-options
-               {:closure-defines
-               {haggadah.fb.auth/FIREBASE_AUTH_HOST_TEST  "localhost:9098"
-                haggadah.fb.auth/FIREBASE_HOSTING_HOST_TEST  "localhost:5003"
-                haggadah.fb.auth/FIREBASE_FUNCTIONS_HOST_TEST  "localhost:5004"
-                haggadah.fb.auth/FIREBASE_FIRESTORE_HOST_TEST  "localhost:8081"}}}}}}
+               :js-options {:js-package-dirs ["node_modules" "functions/node_modules"]}
+               :dev {:compiler-options {:closure-defines {haggadah.fb.auth/FIREBASE_AUTH_HOST_TEST  "localhost:9098"
+                                                          haggadah.fb.auth/FIREBASE_HOSTING_HOST_TEST  "localhost:5003"
+                                                          haggadah.fb.auth/FIREBASE_FUNCTIONS_HOST_TEST  "localhost:5004"
+                                                          haggadah.fb.auth/FIREBASE_FIRESTORE_HOST_TEST  "localhost:8081"}}}}
+          :func {:target :node-library
+                :js-options {:js-package-dirs ["functions/node_modules"]}
+                :compiler-options {:infer-externs :auto}
+                :output-to "functions/index.js"
+                 :exports-var functions.core/exports}
+
+          :func-test {:target :node-test
+                      :js-options {:js-package-dirs ["functions/node_modules" ]}
+                      :output-to "out/node-tests.js"
+                      :ns-regexp "-spec$"
+                      :autorun   true}
+
+          }}
 

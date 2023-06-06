@@ -7,7 +7,7 @@
    [haggadah.views :as views]
    [haggadah.config :as config]
    ["firebase/app" :as fba]
-   ["firebase/firestore" :as fs]
+   [haggadah.fb.functions :as fb-fn]
    [haggadah.fb.config :as cfg]
    [haggadah.fb.firestore :as fb-fs]
    [haggadah.fb.auth :as fb-auth]
@@ -31,7 +31,8 @@
     (let [cfg (clj->js config)]
       (reset! firebase-instance (fba/initializeApp cfg))
       (fb-auth/init @firebase-instance)
-      (fb-fs/init @firebase-instance))))
+      (fb-fs/init @firebase-instance)
+      (fb-fn/init @firebase-instance))))
 
 (defn firebase-init!
   []

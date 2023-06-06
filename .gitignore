@@ -51,6 +51,12 @@ build/Release
 # Dependency directories
 node_modules/
 
+# Functions index.js
+functions/index.js
+
+# Emulator data
+emulator_data/
+
 # Optional npm cache directory
 .npm
 
@@ -79,6 +85,9 @@ node_modules/
 /.lein-*
 /.nrepl-port
 
+# shadow-cljs files
+functions/.shadow-cljs/
+
 # Node.js dependencies
 /node_modules/
 
@@ -87,6 +96,9 @@ node_modules/
 
 # clj-kondo cache and configs from libs
 /.clj-kondo/*
+
+# generated files for func build
+/functions/out/
 
 # clj-kondo config
 !/.clj-kondo/config.edn
