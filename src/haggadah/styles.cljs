@@ -15,8 +15,8 @@
 (defglobal defaults
   [:body
    {:color               :red
-    :background-color    :#ddd
-    :background-image    [(linear-gradient :white (px 2) :transparent (px 2))
+    :background-color    :#723AC5
+    #_#_#_#_#_#_:background-image    [(linear-gradient :white (px 2) :transparent (px 2))
                           (linear-gradient (deg 90) :white (px 2) :transparent (px 2))
                           (linear-gradient (rgba 255 255 255 0.3) (px 1) :transparent (px 1))
                           (linear-gradient (deg 90) (rgba 255 255 255 0.3) (px 1) :transparent (px 1))]
@@ -25,4 +25,17 @@
 
 (defclass level1
   []
-  {:color :green})
+  {:color :orange})
+
+(defclass button
+  []
+  {:background-color :#3AC572
+   :border :none})
+
+(defclass home-page
+  []
+  {:background :blue})
+
+(defclass about
+  []
+  {:margin-bottom 29})

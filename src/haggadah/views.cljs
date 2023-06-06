@@ -14,24 +14,29 @@
 
 
 (defn home-panel []
-  (let [name (re-frame/subscribe [::subs/name])]
+  [:div 
+   [:div 
+    [:button {:on-click #(re-frame/dispatch [::events/navigate :about])
+              :class (styles/button)}
+     "About"]]
+   (let [name (re-frame/subscribe [::subs/name])]
     [:div
      [:h1 
       {:class (styles/level1)}
-      (str "Hello from " @name ". This is the Home Page." "We're glad to see you.")]
+      "Welcome to my-haggadah, a site where you can create your personal haggadah with just a click.
+Please login below to access your haggadot."]
 
      (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
        (when haggadah-text
          [:div  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))
      [:div 
-      [:button {:on-click #(re-frame/dispatch [::events/login :admin]) :data-test-id "login"} "Log In as Admin"]]
+      [:button {:on-click #(re-frame/dispatch [::events/login :admin]) :data-test-id "login"
+                :class (styles/button)} "Log In"]]
 
-     [:div.underline
-      [:a {:on-click #(re-frame/dispatch [::events/navigate :about])}
-       "go to About Page"]]
+     
      [:div
       [:button {:on-click  #(re-frame/dispatch [::events/call-func WRITE "My name is" println js/console.log])}"Cloud function"  ]]
-     ]))
+     ])])
 
 (defmethod routes/panels :home-panel [] [home-panel])
 ;; about
