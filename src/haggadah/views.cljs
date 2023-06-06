@@ -22,7 +22,7 @@
    (let [name (re-frame/subscribe [::subs/name])]
     [:div
      [:h1 
-      {:class (styles/level1)}
+      {:class (styles/header)}
       "Welcome to my-haggadah, a site where you can create your personal haggadah with just a click.
 Please login below to access your haggadot."]
 
@@ -30,11 +30,11 @@ Please login below to access your haggadot."]
        (when haggadah-text
          [:div  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))
      [:div 
-      [:button {:on-click #(re-frame/dispatch [::events/login :admin]) :data-test-id "login"
+      [:button {:on-click #(re-frame/dispatch [::events/navigate :login]) :data-test-id "login"
                 :class (styles/button)} "Log In"]]
 
      
-     [:div
+     #_[:div
       [:button {:on-click  #(re-frame/dispatch [::events/call-func WRITE "My name is" println js/console.log])}"Cloud function"  ]]
      ])])
 
@@ -63,16 +63,21 @@ Please login below to access your haggadot."]
       
 )]])
 
+(defn login-panel []
+  [:div
+   [:button {:on-click #(re-frame/dispatch [::events/navigate :home]) :class (styles/button)}
+    "Return to Home Page"]
+   [:h1 {:class (styles/header)}"To see your dashboard please click on the button below"]
+   [:div 
+    [:button {:on-click #(re-frame/dispatch [::events/login :admin]) :data-test-id "login"
+              :class (styles/button)} "Log In"]]])
+
 (defmethod routes/panels :haggadah-panel [] [haggadah-panel])
 (defmethod routes/panels :about-panel [] [about-panel])
-
+(defmethod routes/panels :login-panel [] [login-panel])
 ;; main
 
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [::subs/active-panel])]
     (routes/panels @active-panel)))
 
-(defn login-message
-  [message]
-
-  )
