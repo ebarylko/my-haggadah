@@ -65,8 +65,9 @@
     (doto driver
       (e/go "http://localhost:5000/")
        (e/click-visible {:tag :button :data-test-id "login"})
+       (e/click-visible {:tag :button :id "load-user"})
        (e/wait-has-text-everywhere admin-login-message))
-    (let [actual (e/get-element-text driver {:class :haggadah-styles-level1})]
+    (let [actual (e/get-element-text driver {:class :user})]
        (e/screenshot driver "screenshots/message-test-when-the-admin-exists.png")
       (t/is (= admin-login-message actual)))))
 
@@ -86,6 +87,7 @@
                      (.set haggadah))
           _ (e/go driver "http://localhost:5000/")
           _ (e/click-visible driver {:tag :button :data-test-id "login"})
+          _ (e/click-visible driver {:tag :button :id "load-user"})
           _ (e/wait-has-text-everywhere driver actual-haggadah-text)
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
 
