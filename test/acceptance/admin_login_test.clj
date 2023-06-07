@@ -15,10 +15,12 @@
 
 (def driver (e/chrome-headless { :args ["no-sandbox" "--disable-dev-shm-usage" "--disable-gpu" "--disable-extensions"  "--start-maximized" ] }))
 (def default-message
-  "Hello from (Unknown). This is the Home Page.We're glad to see you.")
+  "Hello (Unknown). We're glad to see you.")
 
 (def admin-login-message
-  "Hello from han@skywalker.com. This is the Home Page.We're glad to see you.")
+  "Hello han@skywalker.com. We're glad to see you.")
+
+ 1
 
 (defn- build-firebase-options []
   (-> (new FirebaseOptions$Builder)
@@ -60,15 +62,16 @@
 
 (t/use-fixtures :once init-firebase)
 
+
 (t/deftest message-test
   (t/testing "When the admin user exists"
     (doto driver
       (e/go "http://localhost:5000/")
-       (e/click-visible {:tag :button :data-test-id "login"})
-       (e/click-visible {:tag :button :id "load-user"})
-       (e/wait-has-text-everywhere admin-login-message))
-    (let [actual (e/get-element-text driver {:class :user})]
-       (e/screenshot driver "screenshots/message-test-when-the-admin-exists.png")
+      (e/click-visible {:tag :button :data-test-id "login"})
+      (e/click-visible {:tag :button :data-test-id "load-haggadah"})
+      (e/wait-has-text-everywhere admin-login-message))
+    (let [actual (e/get-element-text driver {:id "user"})]
+      (e/screenshot driver "screenshots/message-test-when-the-admin-exists.png")
       (t/is (= admin-login-message actual)))))
 
 (def default-haggadah-text
@@ -88,7 +91,7 @@
           _ (doto driver
               (e/go "http://localhost:5000/")
               (e/click-visible {:tag :button :data-test-id "login"})
-              (e/click-visible {:tag :button :id "load-user"})
+              (e/click-visible {:tag :button :data-test-id "load-haggadah"})
               (e/wait-has-text-everywhere actual-haggadah-text))
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
 

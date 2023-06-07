@@ -316,16 +316,22 @@ Please login below to access your haggadot."]
       [:button {:id "navAction", :class "mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"} ]]]
     [:hr {:class "border-b border-gray-100 opacity-25 my-0 py-0"}]])
 
+(str "Hello " "name" ". We're glad to see you")
+
 (defn login-panel []
   [:div.leading-normal.tracking-normal.text-white.gradient.h-screen {:class (styles/home-page)}
    [menu]   
    [:div {:class "pt-24"}
+    (let [name (re-frame/subscribe [::subs/name])]
+      [:div
+       [:h1.text-center.text-2xl {:id "user"}
+        (str "Hello " @name ". We're glad to see you.")]])
     [:div {:class "container px-3 mx-auto flex flex-wrap flex-col  items-center"}  
      [:div {:class "flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left"}
       
       [:p {:class "leading-normal text-2xl mb-8"} "Click the button below so you can see your haggadot and share them"]
       [:button {:class "mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-                :on-click  #(re-frame/dispatch [::events/login :admin]) :data-test-id "login"} "Load haggadah"]]
+                :on-click  #(re-frame/dispatch [::events/login :admin]) :data-test-id "load-haggadah"} "Load haggadah"]]
      [:div.shadow-lg.flex-auto.text-align-left
       (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
         (when haggadah-text
