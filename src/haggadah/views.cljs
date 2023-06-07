@@ -15,28 +15,18 @@
 
 (defn home-panel []
   [:div 
-   [:div 
-    [:button {:on-click #(re-frame/dispatch [::events/navigate :about])
-              :class (styles/button)} "About"]]
-
-   (let [name (re-frame/subscribe [::subs/name])]
-    [:div
-     [:h1 
-      {:class (styles/header)}
-      "Welcome to my-haggadah, a site where you can create your personal haggadah with just a click.
+   [:div [:button {:on-click #(re-frame/dispatch [::events/navigate :about])
+                   :class (styles/button)} "About"]]
+   [:div [:h2 {:class (styles/header)}
+          "Welcome to my-haggadah, a site where you can create your personal haggadah with just a click.
 Please login below to access your haggadot."]
 
-     (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
-       (when haggadah-text
-         [:div  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))
-     [:div 
-      [:button {:on-click #(re-frame/dispatch [::events/navigate :login]) :data-test-id "login"
-                :class (styles/button)} "Log In"]]
-
-     
-     #_[:div
-      [:button {:on-click  #(re-frame/dispatch [::events/call-func WRITE "My name is" println js/console.log])}"Cloud function"  ]]
-     ])])
+    (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
+      (when haggadah-text
+        [:div  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))
+    [:div 
+     [:button {:on-click #(re-frame/dispatch [::events/navigate :login]) :data-test-id "login"
+               :class (styles/button)} "Log In"]]]])
 
 (defmethod routes/panels :home-panel [] [home-panel])
 ;; about
@@ -68,8 +58,7 @@ Please login below to access your haggadot."]
     "Return to Home Page"]
    (let [name (re-frame/subscribe [::subs/name])]
      [:div
-      [:h1.user
-       (str "Hello from " @name ". This is the Home Page." "We're glad to see you.")]
+      [:h1.user (str "Hello from " @name ". This is the Home Page." "We're glad to see you.")]
       (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
         (when haggadah-text
           [:div  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))])
