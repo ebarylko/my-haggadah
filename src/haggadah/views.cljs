@@ -18,13 +18,14 @@
    [:nav {:id "header", :class "fixed w-full z-30 top-0 text-white"}
     [:div {:class "w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2"}
      [:div {:class "pl-4 flex items-center"}
-      [:a {:class "toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl", :href "#"}  
-       [:svg {:class "h-8 fill-current inline", :xmlns "http://www.w3.org/2000/svg", :viewbox "0 0 512.005 512.005"}
+      "ourhaggadah.com "
+      [:a {:class "toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl", :href "#"}
+       [:svg {:class "h-8 fill-current inline", :xmlns "http://www.w3.org/2000/svg", :viewBox "0 0 512.005 512.005"}
         [:rect {:fill "#2a2a31", :x "16.539", :y "425.626", :width "479.767", :height "50.502", :transform "matrix(1,0,0,1,0,0)"}]
         [:path {:class "plane-take-off", :d " M 510.7 189.151 C 505.271 168.95 484.565 156.956 464.365 162.385 L 330.156 198.367 L 155.924 35.878 L 107.19 49.008 L 211.729 230.183 L 86.232 263.767 L 36.614 224.754 L 0 234.603 L 45.957 314.27 L 65.274 347.727 L 105.802 336.869 L 240.011 300.886 L 349.726 271.469 L 483.935 235.486 C 504.134 230.057 516.129 209.352 510.7 189.151 Z "}]]]]
      [:div {:class "block lg:hidden pr-4"}
       [:button {:id "nav-toggle", :class "flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"}
-       [:svg {:class "fill-current h-6 w-6", :viewbox "0 0 20 20", :xmlns "http://www.w3.org/2000/svg"}
+       [:svg {:class "fill-current h-6 w-6", :viewBox "0 0 20 20", :xmlns "http://www.w3.org/2000/svg"}
         [:title "Menu"]
         [:path {:d "M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"}]]]]
      [:div {:class "w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20", :id "nav-content"}
@@ -43,11 +44,12 @@
    [:p {:class "uppercase tracking-loose w-full"} "Share your haggadot with familiy and friends"]
    [:h1 {:class "my-4 text-5xl font-bold leading-tight"} "Our Haggadah"]
    [:p {:class "leading-normal text-2xl mb-8"} "Make a Haggadah effortlessly with just a click"]
-   [:button {:class "mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"} "Login"]]
+   [:button {:class "mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+             :on-click   #(re-frame/dispatch [::events/navigate :login]) :data-test-id "login"} "Login"]]
   [:div {:class "w-full md:w-3/5 py-6 text-center"}
    [:img {:class "w-full md:w-4/5 z-50", :src "/images/hero.png"}]]]]
 [:div {:class "relative -mt-12 lg:-mt-24"}
- [:svg {:viewbox "0 0 1428 174", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlns:xlink "http://www.w3.org/1999/xlink"}
+ [:svg {:viewBox "0 0 1428 174", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlns:xlink "http://www.w3.org/1999/xlink"}
   [:g {:stroke "none", :stroke-width "1", :fill "none", :fill-rule "evenodd"}
    [:g {:transform "translate(-2.000000, 44.000000)", :fill "#FFFFFF", :fill-rule "nonzero"}
     [:path {:d "M0,0 C90.7283404,0.927527913 147.912752,27.187927 291.910178,59.9119003 C387.908462,81.7278826 543.605069,89.334785 759,82.7326078 C469.336065,156.254352 216.336065,153.6679 0,74.9732496", :opacity "0.100000001"}]
@@ -68,7 +70,7 @@
      [:br]"\n              Images from:\n" 
      [:a {:class "text-pink-500 underline", :href "https://undraw.co/"} "undraw.co"]]]
    [:div {:class "w-full sm:w-1/2 p-6"}
-    [:svg {:class "w-full sm:h-64 mx-auto", :viewbox "0 0 1177 598.5", :xmlns "http://www.w3.org/2000/svg"}
+    [:svg {:class "w-full sm:h-64 mx-auto", :viewBox "0 0 1177 598.5", :xmlns "http://www.w3.org/2000/svg"}
      [:title "travel booking"]
      [:path {:transform "translate(-11.5 -150.75)", :d "M274.63,501l-6.29-3.91c-.6-.37-1.19-.77-1.79-1.15a59.86,59.86,0,0,0,6.05-116.62l.31,24.66-13.55-26.83h-.17a59.87,59.87,0,0,0-62.58,57c-.06,1.15,0,2.27,0,3.4-4.71-5.38-9-11.15-11.83-17.47-5.73-12.79-5.84-27.28-5.39-44.9.9-34.9,2.41-70.08,4.37-105.14a59.85,59.85,0,0,0,53.16-56.64c.08-1.83,0-3.63,0-5.43,0-.45,0-.89-.07-1.34-.12-1.74-.28-3.46-.55-5.16,0-.28-.1-.55-.15-.82-.24-1.44-.54-2.86-.88-4.26-.13-.53-.26-1-.4-1.57-.42-1.53-.88-3-1.42-4.52-.18-.49-.39-1-.58-1.46-.42-1.09-.88-2.17-1.37-3.23-.26-.56-.51-1.12-.78-1.67-.08-.14-.13-.29-.21-.43l0,0a59.84,59.84,0,0,0-70.28-30.36l.4,32.1-13.4-26.52a59.57,59.57,0,0,0-28.55,64.51h-.06c.09.43.22.84.32,1.26.19.79.39,1.57.61,2.35.28,1,.6,2,.93,3,.25.74.49,1.47.77,2.2.41,1.06.87,2.09,1.33,3.12.27.6.51,1.22.8,1.81q1.14,2.33,2.48,4.53c.31.52.66,1,1,1.51.64,1,1.28,2,2,2.93.43.59.89,1.16,1.34,1.73.66.83,1.33,1.65,2,2.44.49.57,1,1.12,1.51,1.66.74.78,1.49,1.53,2.27,2.26.52.49,1,1,1.57,1.46.88.79,1.8,1.53,2.73,2.26.47.37.93.75,1.41,1.11,1.42,1,2.88,2,4.39,3,.28.17.59.31.87.48,1.27.74,2.55,1.45,3.87,2.09.57.28,1.15.53,1.73.79,1.08.48,2.17.95,3.29,1.38l2,.7c1.1.37,2.22.72,3.35,1,.66.18,1.33.37,2,.53,1.22.29,2.47.53,3.73.75l.24.05q-1.23,22.19-2.2,44.39a59.83,59.83,0,0,0-83.07-26l10.58,29-21.77-20.9a59.66,59.66,0,0,0-19.34,41.34A58.5,58.5,0,0,0,52.8,354a59.84,59.84,0,0,0,110.06,16.3c0,1.5-.1,3-.14,4.51-.4,15.54-.9,34.88,6.85,52.15,5.25,11.7,13.69,21.21,22,29.73,5.43,5.54,11.06,10.91,16.83,16.1a60.09,60.09,0,0,0,21.62,18c9.48,7.3,19.3,14.17,29.45,20.51l6.34,3.94c5.7,3.53,11.54,7.16,17.26,10.93-1-.1-2-.21-3-.26a59.89,59.89,0,0,0-58.94,39l37.4,30.43-41.14-9.54a59.89,59.89,0,0,0,85.82,53.92l-2.78,3.45q-2.76,3.43-5.45,6.82c-24.34,30.83-31.11,60.09-19.06,82.4l14.66-7.91c-11.73-21.72,5.91-49.52,17.47-64.16q2.64-3.33,5.36-6.7c15.55-19.32,33.17-41.22,32.74-68.08C345.52,545,306.21,520.6,274.63,501Z", :fill "#f2f2f2"}]
      [:ellipse {:cx "588.5", :cy "577.5", :rx "588.5", :ry "21", :fill "#3f3d56"}]
@@ -120,7 +122,7 @@
      [:path {:transform "translate(-11.5 -150.75)", :d "M998.23,509.4A15.27,15.27,0,0,1,1014,512c5.47,4.88,6.57,12.85,8,20s4.17,15.21,11,18a28.35,28.35,0,0,1-9.19-.27l10.25,9.19-17.27-5.63c-5.42-1.77-11.11-3.56-16.72-2.56-9.3,1.65-15.78,10.4-24.71,13.47l1-4.85-6,0a11.75,11.75,0,0,0,3.43-4,3.27,3.27,0,0,0-2.29-1.2c-2.5-15.59,6.76-31,18.81-41.17,2.38-2,5-3.92,8.06-4.42s6.64.87,7.71,3.78", :fill "#3c354c"}]]]]
   [:div {:class "flex flex-wrap flex-col-reverse sm:flex-row"}
    [:div {:class "w-full sm:w-1/2 p-6 mt-6"}
-    [:svg {:class "w-5/6 sm:h-64 mx-auto", :viewbox "0 0 1176.60617 873.97852", :xmlns "http://www.w3.org/2000/svg"}
+    [:svg {:class "w-5/6 sm:h-64 mx-auto", :viewBox "0 0 1176.60617 873.97852", :xmlns "http://www.w3.org/2000/svg"}
      [:title "connected world"]
      [:path {:transform "translate(-11.697 -13.011)", :d "m1095.7 225.46c-133.54-185.83-415.64-261.21-693.08-180.02-146.67 42.921-288.09 128.92-358.18 295.44-125.28 297.67 137.76 392.74 309.77 423.04 83.172 14.651 161.51 39.263 233.09 72.771 128.78 60.284 356.74 113.7 528.63-137.41 124.59-182.01 68.722-350.04-20.23-473.82z", :fill "#f2f2f2"}]
      [:path {:transform "translate(-11.697 -13.011)", :d "m321.43 262.23a34.385 34.385 0 0 0 -2.2476 -8.6046 3.8949 3.8949 0 0 0 -1.9801 -2.4388 4.0801 4.0801 0 0 0 -1.9647 -0.022l-10.087 1.5435a3.8669 3.8669 0 0 0 -2.3015 0.89427c-1.3138 1.3817-0.0201 3.6066-0.06032 5.5128-0.04523 2.1435-1.9497 3.8834-4.015 4.459a15.177 15.177 0 0 1 -6.3797 -0.0791l-14.105-2.1919a23.256 23.256 0 0 0 10.671 -7.1207c1.8562-2.1989 2.8437-6.3042 0.1611-7.3455a6.5854 6.5854 0 0 0 -2.4499 -0.19671c-6.3906 0.04969-11.419-5.286-17.402-7.5332a19.241 19.241 0 0 0 -21.655 6.4554l7.5139 0.36227a3.3352 3.3352 0 0 1 2.0015 0.53379c1.6467 1.353-0.40057 3.9517-0.16859 6.0702 0.3014 2.7525 3.9561 3.3402 6.711 3.6185s6.2499 2.5167 4.9247 4.9479c-13.847 4.7694-27.937-9.3231-42.479-7.5884-3.6805 0.43906-7.1558 1.8849-10.749 2.7941-21.951 5.5538-44.644-9.2644-67.068-6.1262a85.163 85.163 0 0 0 -14.64 3.8612c-3.0519 1.0021-6.2353 2.085-8.4528 4.409s-3.0615 6.2985-0.96073 8.7285a49.126 49.126 0 0 1 -17.216 -1.6365 9.645 9.645 0 0 1 4.9587 8.5003 102.15 102.15 0 0 0 -26.167 7.9788 44.073 44.073 0 0 0 5.416 7.2148l-11.445 7.353c3.8668 0.97425 5.866 6.2469 3.6173 9.54 4.0094-1.7837 6.4942-6.3979 10.782-7.3334 2.8088-0.61288 5.6669 0.53616 8.3314 1.6156s5.5932 2.1261 8.3517 1.316 4.793-4.3868 3.0402-6.6656a142.72 142.72 0 0 1 36.253 -5.6639 4.5466 4.5466 0 0 1 2.7456 0.52105c1.5982 1.1088 1.1777 3.5038 1.0916 5.4471s1.4285 4.4973 3.1654 3.6214c-2.0434 1.7719-0.29656 5.1076 1.6639 6.9709s4.3233 4.4343 3.1231 6.8581c-0.31325 0.63259-0.84455 1.1387-1.146 1.777-0.88965 1.8842 0.52289 4.0808 2.189 5.332s3.7069 2.1257 4.8643 3.8584 0.63178 4.7655-1.4378 5.0074l-5.8824-7.4687a15.314 15.314 0 0 0 -3.9736 7.5302c6.2378 5.0992 7.176 15.478 1.9538 21.613-2.6687 3.1352-6.4637 5.0403-9.776 7.4858s-6.3772 5.9278-6.3688 10.045c0.01439 7.1131-0.56681 13.721 2.0986 20.316a312.97 312.97 0 0 0 16.99 35.447c1.6808 3.0062 3.8532 6.3011 7.2582 6.8187q-6.455-15.714-11.621-31.917c2.2434 0.00878 4.8359 0.1869 6.151 2.0044 1.089 1.505 0.85507 3.5512 1.1934 5.3778a16.659 16.659 0 0 0 2.1245 4.9943l20.55 36.605c1.7035 3.0345 3.6576 6.2917 6.9133 7.5206 2.0816 0.78568 4.4899 0.63767 6.4058 1.7688 1.5018 0.88663 2.5132 2.4605 4.0442 3.2957 4.3288 2.3615 10.349-2.1675 14.394 0.652 1.1567 0.80618 1.8926 2.0869 2.9584 3.0099 3.7363 3.2356 9.8654 1.0711 14.179 3.4848 2.7798 1.5556 4.2204 4.6667 5.7031 7.486 3.7139 7.0621 9.7233 13.981 17.683 14.543 2.5002 0.17664 5.054-0.2974 7.4979 0.25869s4.8497 2.6889 4.4574 5.1645c-0.67255 4.244 1.4243 8.8911 0.86116 13.151-1.0258 7.7595-12.032 11.169-12.978 18.939-0.207 1.7012 0.117 3.4571-0.28806 5.1223-0.49646 2.0408-2.0292 3.7025-2.5738 5.731-1.0321 3.8442 1.7221 7.67 4.7477 10.256s6.6346 4.8164 8.2888 8.4368c1.7484 3.8266 0.88959 8.2885 1.4582 12.457 1.2413 9.1004 9.1016 15.847 17.191 20.197 2.4646 1.3253 5.1109 2.6084 6.7062 4.9076 2.0821 3.0009 1.8747 6.957 2.5699 10.543 1.7027 8.7816 9.0953 16.017 9.3052 24.96 0.14919 6.3561-3.384 12.122-5.4946 18.12a42.257 42.257 0 0 0 3.4506 35.046c1.5789 2.666 3.4672 5.1796 4.5841 8.0698 1.9931 5.1575 1.3464 11.02 3.1841 16.235 2.4296 6.8946 9.1056 12.589 8.4667 19.872 3.0309 6.2941 9.7237 9.3866 16.454 11.26l12.062 3.3575c2.3095 0.64288 4.7228 1.2909 7.0745 0.82537s4.596-2.4182 4.5353-4.8148c-5.9148-1.3339-12.019-2.7524-16.895-6.3567s-8.2158-10.023-6.3658-15.797c0.85781-2.6775 2.6828-5.7694 0.94774-7.9818-0.99343-1.2667-2.81-1.5977-3.9305-2.7534-1.7478-1.8026-1.1473-4.831 0.10918-7.0048s3.0726-4.1164 3.5794-6.5755a6.8609 6.8609 0 0 0 -3.2158 -7.1379 17.054 17.054 0 0 0 5.97 -3.8306c1.57-1.7929 2.2952-4.557 1.0602-6.5952 3.6675 0.46513 7.9974 0.69293 10.405-2.1126 1.9225-2.2403 1.7905-5.5897 1.0308-8.4424s-2.0436-5.6236-2.0836-8.5754a156.27 156.27 0 0 0 25.353 -0.85968 16.439 16.439 0 0 0 -7.7081 -9.6535c3.8106-0.64475 7.2821-5.2068 8.486-8.8792s0.89686-7.6727 0.15275-11.465a6.1519 6.1519 0 0 1 -0.114 -3.0037c0.42911-1.3675 1.7725-2.202 3.0153-2.9157l18.914-10.863a11.017 11.017 0 0 0 3.0246 -2.2329c1.9817-2.3277 1.6881-5.8415 0.67344-8.7252s-2.64-5.5953-3.0308-8.6272c-1.169-9.0676 8.5376-15.574 11.813-24.109 1.2856-3.3497 1.5476-6.9907 1.7963-10.57 0.2672-3.8443 0.28706-8.3096-2.6647-10.787-2.8295-2.3747-7.2505-1.845-10.211-4.0539-2.7145-2.0252-3.651-5.9583-6.6164-7.5941-2.693-1.4855-6.0696-0.54073-9.0648-1.2394-5.2736-1.2301-8.5924-7.3082-13.978-7.8709-3.0388-0.31753-6.4781 1.1681-8.9687-0.60169-2.1946-1.5594-2.2826-4.6938-2.7003-7.3534a20.536 20.536 0 0 0 -16.575 -16.628c-3.1332-0.50246-6.5436-0.31164-9.2091-2.0335-2.699-1.7435-3.9365-5.0078-6.0566-7.4223-3.4169-3.8914-8.7984-5.274-13.84-6.4591l-20.506-4.8206c-3.6401-0.85575-8.3322-1.3095-10.286 1.8791a14.738 14.738 0 0 0 -1.2167 3.8267 11.85 11.85 0 0 1 -11.144 8.3882 13.179 13.179 0 0 0 -7.7715 -6.0133c-2.0793-0.57947-4.3049-0.64392-6.288-1.4964a8.8327 8.8327 0 0 1 -3.8326 -12.253 10.995 10.995 0 0 0 -1.8788 -13.225c-3.4872-3.1307-8.5315-3.8871-13.207-3.5739-1.2246-2.6721 0.823-5.687 3.0296-7.6289s4.886-3.851 5.3665-6.7508c0.75588-4.5615-5.0643-8.026-9.4834-6.6659s-7.2396 5.6524-9.1041 9.8835c-1.0698 2.4276-1.9792 4.984-3.6666 7.031s-4.4048 3.5127-6.9751 2.8557c-3.6388-0.93-5.0441-5.2531-5.8494-8.9215-1.0805-4.9218-2.1673-9.9118-1.9409-14.946s1.9234-10.203 5.6354-13.61c6.0488-5.5531 15.328-5.0087 23.491-4.1229-1.9286-2.173-1.452-5.8352 0.61156-7.8805a8.9597 8.9597 0 0 1 8.1208 -1.9951 11.191 11.191 0 0 1 6.2912 3.7615c2.3198 2.8283 2.9795 6.647 4.7329 9.8573s5.6962 5.9485 8.9233 4.2262c2.7874-1.4876 3.2298-5.3528 2.5361-8.4352s-2.1671-6.0798-1.9158-9.2293c0.4795-6.0096 6.7091-9.627 12.206-12.102s11.792-5.8036 12.663-11.769a10.73 10.73 0 0 1 0.65234 -3.4203 6.7093 6.7093 0 0 1 2.4614 -2.3147c16.044-10.603 32.355-21.335 50.692-27.129 0.954-0.30143 1.066 0.03357 2.0383-0.20258 1.3607-0.78645 0.45911-2.962-0.84552-3.8385s-3.0484-1.5485-3.3794-3.085c-0.24331-1.1294 0.42213-2.2384 0.595-3.3807 0.42476-2.807-2.9332-5.3987-5.541-4.2764-1.473-1.9508 1.4416-4.2175 3.7984-4.8663a103.15 103.15 0 0 1 21.67 -3.54 3.9033 3.9033 0 0 1 2.4659 0.41943c1.2309 0.85266 1.0737 2.8084 0.20129 4.0254s-2.2294 1.9812-3.3165 3.011a9.0526 9.0526 0 0 0 -2.3481 9.105c3.826 1.9462 7.9855 3.9496 12.223 3.264s7.9986-5.4468 6.0068-9.2492c-1.8548-3.541-7.4263-4.3397-8.3844-8.2205-1.1218-4.5438 5.3104-8.585 3.8615-13.035-0.63466-1.9494-2.5774-3.0966-4.0681-4.504a12.221 12.221 0 0 1 -2.6744 -13.552 15.419 15.419 0 0 1 -13.523 -4.2317c-3.2345-3.2642-5.8149-8.4135-10.408-8.2675-4.2148 0.134-7.8452 5.0513-11.786 3.5511-0.96958-0.36907-1.9919-1.1202-2.9313-0.68012a2.4222 2.4222 0 0 0 -1.0934 1.815c-1.0015 4.7884 0.72138 10.244-1.8884 14.382-2.8399 4.5027-9.4088 5.1269-12.852 9.1872-1.8689 2.2041-2.593 5.174-4.3108 7.4978s-5.3639 3.8011-7.4255 1.7761a10.235 10.235 0 0 0 -2.7804 -12.445 27.309 27.309 0 0 0 -6.1412 -2.9871 36.422 36.422 0 0 1 -6.8608 -3.8237 6.7578 6.7578 0 0 1 -2.5186 -2.6949 6.1414 6.1414 0 0 1 0.17224 -4.2617 17.426 17.426 0 0 1 13.867 -11.494c2.7449-0.37343 5.9396-0.24185 7.7561-2.3333 0.96116-1.1066 1.4655-2.7797 2.8606-3.2291a4.2194 4.2194 0 0 1 2.6411 0.32524l10.245 3.6062a7.1908 7.1908 0 0 0 3.6498 0.60364 2.4745 2.4745 0 0 0 2.1396 -2.6005c-0.32735-1.7014-2.9454-2.5179-2.7071-4.234a2.8267 2.8267 0 0 1 0.85747 -1.4414 36.629 36.629 0 0 1 29.051 -11.472c1.2931 2.1238-0.752 4.6388-2.4537 6.4518s-3.0692 5.0525-1.0112 6.448a5.6425 5.6425 0 0 0 2.7279 0.61435 23.819 23.819 0 0 1 7.2608 2.2023q5.3105 2.3111 10.417 5.0572c-0.30072-2.2447-0.58773-4.6095 0.26309-6.7084s3.2689-3.7452 5.381-2.9278c2.0355 0.78775 3.0794 3.483 5.2481 3.7299 2.8928 0.32939 4.0341-3.9442 2.8257-6.5932s-3.6004-4.8669-3.8001-7.7716c-0.13471-1.9596 0.611-4.3899-0.95429-5.5765a4.2605 4.2605 0 0 0 -1.8468 -0.64758l-39.084-7.1922c-2.3209-0.42709-5.6742-0.09975-5.7771 2.2579-0.05746 1.316 1.1181 2.6179 0.59742 3.8279-0.55569 1.2914-2.3812 1.1733-3.7108 1.6301-2.0631 0.70871-3.0983 3.1584-2.9002 5.3308a14.834 14.834 0 0 0 2.448 6.0075c-2.5422-1.0632-6.3915-1.2586-8.9336-2.3218z", :fill "#3f3d56"}]
@@ -193,7 +195,7 @@
    [:div {:class "flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"}
     [:div {:class "flex items-center justify-end"}
      [:button {:class "mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"} ]]]]]]
-[:svg {:class "wave-top", :viewbox "0 0 1439 147", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlns:xlink "http://www.w3.org/1999/xlink"}
+[:svg {:class "wave-top", :viewBox "0 0 1439 147", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlns:xlink "http://www.w3.org/1999/xlink"}
  [:g {:stroke "none", :stroke-width "1", :fill "none", :fill-rule "evenodd"}
   [:g {:transform "translate(-1.000000, -14.000000)", :fill-rule "nonzero"}
    [:g {:class "wave", :fill "#f8fafc"}
@@ -214,7 +216,7 @@
   [:div {:class "w-full flex flex-col md:flex-row py-6"}
    [:div {:class "flex-1 mb-6 text-black"}
     [:a {:class "text-pink-600 no-underline hover:no-underline font-bold text-2xl lg:text-4xl", :href "#"}  
-     [:svg {:class "h-8 fill-current inline", :xmlns "http://www.w3.org/2000/svg", :viewbox "0 0 512.005 512.005"}
+     [:svg {:class "h-8 fill-current inline", :xmlns "http://www.w3.org/2000/svg", :viewBox "0 0 512.005 512.005"}
       [:rect {:fill "#2a2a31", :x "16.539", :y "425.626", :width "479.767", :height "50.502", :transform "matrix(1,0,0,1,0,0)"}]
       [:path {:class "plane-take-off", :d " M 510.7 189.151 C 505.271 168.95 484.565 156.956 464.365 162.385 L 330.156 198.367 L 155.924 35.878 L 107.19 49.008 L 211.729 230.183 L 86.232 263.767 L 36.614 224.754 L 0 234.603 L 45.957 314.27 L 65.274 347.727 L 105.802 336.869 L 240.011 300.886 L 349.726 271.469 L 483.935 235.486 C 504.134 230.057 516.129 209.352 510.7 189.151 Z "}]]]]
    [:div {:class "flex-1"}
@@ -291,20 +293,61 @@ Please login below to access your haggadot."]
       
 )]])
 
+(defn menu
+  []
+[:nav {:id "header", :class "fixed w-full z-30 top-0 text-white"}
+    [:div {:class "w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2"}
+     [:div {:class "pl-4 flex items-center"}
+      "ourhaggadah.com "
+      [:a {:class "toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl", :href "#"}
+       [:svg {:class "h-8 fill-current inline", :xmlns "http://www.w3.org/2000/svg", :viewBox "0 0 512.005 512.005"}
+        [:rect {:fill "#2a2a31", :x "16.539", :y "425.626", :width "479.767", :height "50.502", :transform "matrix(1,0,0,1,0,0)"}]
+        [:path {:class "plane-take-off", :d " M 510.7 189.151 C 505.271 168.95 484.565 156.956 464.365 162.385 L 330.156 198.367 L 155.924 35.878 L 107.19 49.008 L 211.729 230.183 L 86.232 263.767 L 36.614 224.754 L 0 234.603 L 45.957 314.27 L 65.274 347.727 L 105.802 336.869 L 240.011 300.886 L 349.726 271.469 L 483.935 235.486 C 504.134 230.057 516.129 209.352 510.7 189.151 Z "}]]]]
+     [:div {:class "block lg:hidden pr-4"}
+      [:button {:id "nav-toggle", :class "flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"}
+       [:svg {:class "fill-current h-6 w-6", :viewBox "0 0 20 20", :xmlns "http://www.w3.org/2000/svg"}
+        [:title "Menu"]
+        [:path {:d "M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"}]]]]
+     [:div {:class "w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20", :id "nav-content"}
+      [:ul {:class "list-reset lg:flex justify-end flex-1 items-center"}
+       [:li {:class "mr-3"}
+        [:a {:class "inline-block py-2 px-4 text-black font-bold no-underline", :href "#"} "Active"]]
+       [:li {:class "mr-3"}
+        [:a {:class "inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4", :href "#"} "link"]]
+       [:li {:class "mr-3"}
+        [:a {:class "inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4", :href "#"} "link"]]]
+      [:button {:id "navAction", :class "mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"} ]]]
+    [:hr {:class "border-b border-gray-100 opacity-25 my-0 py-0"}]])
+
 (defn login-panel []
-  [:div
-   [:button {:on-click #(re-frame/dispatch [::events/navigate :home]) :class (styles/button)}
-    "Return to Home Page"]
-   (let [name (re-frame/subscribe [::subs/name])]
-     [:div
-      [:h1.user (str "Hello from " @name ". This is the Home Page." "We're glad to see you.")]
+  [:div.leading-normal.tracking-normal.text-white.gradient {:class (styles/home-page)}
+   [menu]   
+   [:div {:class "pt-24"}
+    [:div {:class "container px-3 mx-auto flex flex-wrap flex-col  items-center"}  
+     [:div {:class "flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left"}
+      
+      [:p {:class "leading-normal text-2xl mb-8"} "Click the button below so you can see your haggadot and share them"]
+      [:button {:class "mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+                :on-click  #(re-frame/dispatch [::events/login :admin]) :data-test-id "login"} "Load haggadah"]]
+     [:div.shadow-lg
       (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
         (when haggadah-text
-          [:div  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))])
-   [:h1 {:class (styles/header)}"To see your dashboard please click on the button below"]
-   [:div 
-    [:button {:on-click #(re-frame/dispatch [::events/login :admin]) :id "load-user"
-              :class (styles/button)} "Load user"]]])
+          [:div  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))]]]]
+
+
+  #_[:div
+     [:button {:on-click #(re-frame/dispatch [::events/navigate :home]) :class (styles/button)}
+      "Return to Home Page"]
+     (let [name (re-frame/subscribe [::subs/name])]
+       [:div
+        [:h1.user (str "Hello from " @name ". This is the Home Page." "We're glad to see you.")]
+        (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
+          (when haggadah-text
+            [:div  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))])
+     [:h1 {:class (styles/header)}"To see your dashboard please click on the button below"]
+     [:div 
+      [:button {:on-click #(re-frame/dispatch [::events/login :admin]) :id "load-user"
+                :class (styles/button)} "Load user"]]])
 
 (defmethod routes/panels :haggadah-panel [] [haggadah-panel])
 (defmethod routes/panels :about-panel [] [about-panel])
