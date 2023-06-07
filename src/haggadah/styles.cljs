@@ -34,7 +34,8 @@
 
 (defclass home-page
   []
-  {:background :blue})
+  {:background "linear-gradient(90deg, #d53369 0%, #daae51 100%)"})
+
 
 (defclass about
   []
