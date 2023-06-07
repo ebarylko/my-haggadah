@@ -15,7 +15,7 @@
 (defglobal defaults
   [:body
    {:color               :red
-    :background-color    :#7300FF
+    :background-color    :white
     #_#_#_#_#_#_:background-image    [(linear-gradient :white (px 2) :transparent (px 2))
                           (linear-gradient (deg 90) :white (px 2) :transparent (px 2))
                           (linear-gradient (rgba 255 255 255 0.3) (px 1) :transparent (px 1))

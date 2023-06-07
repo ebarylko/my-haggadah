@@ -14,7 +14,28 @@
 
 
 (defn home-panel []
-  [:div 
+  [:div.bg-gray-400.font-sans.leading-normal.tracking-normal
+   [:nav {:class "bg-gray-800 p-2 mt-0 fixed w-full z-10 top-0"}
+    [:div {:class "container mx-auto flex flex-wrap items-center"} "\t\t    " 
+     [:div {:class "flex w-full md:w-1/2 justify-center md:justify-start text-white font-extrabold"} "\t\t\t\t" 
+      [:a {:class "text-white no-underline hover:text-white hover:no-underline", :href "#"} "\t\t\t\t\t" 
+       [:span {:class "text-2xl pl-2"}
+        [:i {:class "em em-grinning"}]" Brand McBrandface"]"\t\t\t\t"]]"\t\t\t" 
+     [:div {:class "flex w-full pt-2 content-center justify-between md:w-1/2 md:justify-end"} "\t\t\t\t" 
+      [:ul {:class "list-reset flex justify-between flex-1 md:flex-none items-center"} "\t\t\t\t  " 
+       [:li {:class "mr-3"} "\t\t\t\t\t" 
+        [:a {:class "inline-block py-2 px-4 text-white no-underline", :href "#"} "Active"]"\t\t\t\t  "]"\t\t\t\t  " 
+       [:li {:class "mr-3"} "\t\t\t\t\t" 
+        [:a {:class "inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4", :href "#"} "link"]"\t\t\t\t  "]"\t\t\t\t  " 
+       [:li {:class "mr-3"} "\t\t\t\t\t" 
+        [:a {:class "inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4", :href "#"} "link"]"\t\t\t\t  "]"\t\t\t\t\t" 
+       [:li {:class "mr-3"} "\t\t\t\t\t" 
+        [:a {:class "inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4", :href "#"} "link"]"\t\t\t\t  "]"\t\t\t\t"]"\t\t\t"]]]"\t" "<!--Container-->" "\t" 
+   [:div {:class "container shadow-lg mx-auto bg-white mt-24 md:mt-16 h-screen"} "\t\t\n\t\n\t\t\n\t"] 
+   ]
+
+
+  #_[:div 
    [:div [:button {:on-click #(re-frame/dispatch [::events/navigate :about])
                    :class (styles/button)} "About"]]
    [:div [:h2 {:class (styles/header)}
