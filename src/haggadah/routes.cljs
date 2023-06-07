@@ -13,7 +13,8 @@
   (atom
     ["/" {""      :home
           "about" :about
-          "haggadah" :haggadah}
+          "haggadah" :haggadah
+          "login" :login}
      ]))
 
 
