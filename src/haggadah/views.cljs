@@ -59,10 +59,15 @@
    [menu] 
    
   [:section.hero.is-medium
-   [:div {:class "hero-body"}
-    [:p {:class "title"} "Hero title" [:img {:class "w-full md:w-4/5 z-50", :src "/images/hero.png"}]]
+   [:div.columns.container {:class "hero-body"}
+    [:div.column
+     [:p.title.has-text-weight-bold.is-size-1  "Hero title" ]
+     [:p {:class "subtitle"} "Hero subtitle"]]
+    [:div.column
+     [:img {:class "w-full md:w-4/5 z-50", :src "/images/hero.png"}] ]
     
-    [:p {:class "subtitle"} "Hero subtitle"]]
+
+    ]
    ]
  
    
