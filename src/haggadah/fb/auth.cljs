@@ -11,7 +11,7 @@
 (defn init [firebase-instance]
   (reset! auth (fb-auth/getAuth firebase-instance))
   (println FIREBASE_AUTH_HOST "1234" "hello there")
-  (fb-auth/connectAuthEmulator @auth FIREBASE_AUTH_HOST))
+  (fb-auth/connectAuthEmulator @auth FIREBASE_AUTH_HOST #js{:disableWarnings true}))
 
 (defn email-login
   [email password ]

@@ -1,0 +1,70 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+
+$purple: #8A4D76;
+$pink: #FA7C91;
+$brown: #757763;
+$beige-light: #D0D1CD;
+$beige-lighter: #EFF0EB;
+
+// palette
+
+/* SCSS HEX */
+$icterine: #fcfc62ff;
+$lapis-lazuli: #125e8aff;
+$ivory: #feffeaff;
+$atomic-tangerine: #ff934fff;
+$mountbatten-pink: #946e83ff;
+
+/* SCSS HSL */
+$icterine: hsla(60, 96%, 69%, 1);
+$lapis-lazuli: hsla(202, 77%, 31%, 1);
+$ivory: hsla(63, 100%, 96%, 1);
+$atomic-tangerine: hsla(23, 100%, 65%, 1);
+$mountbatten-pink: hsla(327, 15%, 51%, 1);
+
+/* SCSS RGB */
+$icterine: rgba(252, 252, 98, 1);
+$lapis-lazuli: rgba(18, 94, 138, 1);
+$ivory: rgba(254, 255, 234, 1);
+$atomic-tangerine: rgba(255, 147, 79, 1);
+$mountbatten-pink: rgba(148, 110, 131, 1);
+
+/* SCSS Gradient */
+$gradient-top: linear-gradient(0deg, #fcfc62ff, #125e8aff, #feffeaff, #ff934fff, #946e83ff);
+$gradient-right: linear-gradient(90deg, #fcfc62ff, #125e8aff, #feffeaff, #ff934fff, #946e83ff);
+$gradient-bottom: linear-gradient(180deg, #fcfc62ff, #125e8aff, #feffeaff, #ff934fff, #946e83ff);
+$gradient-left: linear-gradient(270deg, #fcfc62ff, #125e8aff, #feffeaff, #ff934fff, #946e83ff);
+$gradient-top-right: linear-gradient(45deg, #fcfc62ff, #125e8aff, #feffeaff, #ff934fff, #946e83ff);
+$gradient-bottom-right: linear-gradient(135deg, #fcfc62ff, #125e8aff, #feffeaff, #ff934fff, #946e83ff);
+$gradient-top-left: linear-gradient(225deg, #fcfc62ff, #125e8aff, #feffeaff, #ff934fff, #946e83ff);
+$gradient-bottom-left: linear-gradient(315deg, #fcfc62ff, #125e8aff, #feffeaff, #ff934fff, #946e83ff);
+$gradient-radial: radial-gradient(#fcfc62ff, #125e8aff, #feffeaff, #ff934fff, #946e83ff);$orange: #FB8500;
+$orange-peel: #FD9E02;
+$light-conflower-blue: #8ECAE6;
+
+
+
+// Update Bulma's global variables
+$family-sans-serif: "Nunito", sans-serif;
+$widescreen-enabled: false;
+$fullhd-enabled: false;
+
+
+:root {
+    --icterine: #fcfc62ff;
+    --lapis-lazuli: #125e8aff;
+    --ivory: #feffeaff;
+    --atomic-tangerine: #ff934fff;
+    --mountbatten-pink: #946e83ff;
+
+}
+
+// Update some of Bulma's component variables
+$body-background-color: $beige-lighter;
+$control-border-width: 2px;
+$input-border-color: transparent;
+$input-shadow: none;
+
+@import "../../../node_modules/bulma/bulma.sass";

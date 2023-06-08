@@ -14,14 +14,17 @@
 
 (defglobal defaults
   [:body
-   {:color               :red
+   {:color               :black
     :background-color    :white
     #_#_#_#_#_#_:background-image    [(linear-gradient :white (px 2) :transparent (px 2))
                           (linear-gradient (deg 90) :white (px 2) :transparent (px 2))
                           (linear-gradient (rgba 255 255 255 0.3) (px 1) :transparent (px 1))
                           (linear-gradient (deg 90) (rgba 255 255 255 0.3) (px 1) :transparent (px 1))]
     :background-size     [[(px 100) (px 100)] [(px 100) (px 100)] [(px 20) (px 20)] [(px 20) (px 20)]]
-    :background-position [[(px -2) (px -2)] [(px -2) (px -2)] [(px -1) (px -1)] [(px -1) (px -1)]]}])
+    :background-position [[(px -2) (px -2)] [(px -2) (px -2)] [(px -1) (px -1)] [(px -1) (px -1)]]}
+   ]
+  [:nav.navbar {:background-color :transparent}]
+  )
 
 (defclass header
   []
@@ -34,7 +37,7 @@
 
 (defclass home-page
   []
-  {:background "linear-gradient(90deg, #d53369 0%, #daae51 100%)"})
+  {:background "linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"})
 
 
 (defclass about

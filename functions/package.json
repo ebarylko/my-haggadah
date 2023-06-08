@@ -1,26 +1,27 @@
 {
-  "name": "functions",
-  "description": "Cloud Functions for Firebase",
-  "scripts": {
-    "serve": "firebase emulators:start --only functions",
-    "shell": "firebase functions:shell",
-    "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
-      "logs": "firebase functions:log",
-      "test": "npx shadow-cljs compile func-test",
-      "watch": "npx shadow-cljs watch func func-test"
-  },
-  "engines": {
-    "node": "18"
-  },
-  "main": "index.js",
-  "dependencies": {
-    "firebase-admin": "^11.5.0",
-    "firebase-functions": "^4.4.0"
-  },
-  "devDependencies": {
-    "firebase-functions-test": "^3.1.0",
-    "shadow-cljs": "^2.23.3"
-  },
-  "private": true
+    "name": "functions",
+    "description": "Cloud Functions for Firebase",
+    "scripts": {
+        "serve": "firebase emulators:start --only functions",
+        "shell": "firebase functions:shell",
+        "start": "npm run shell",
+        "release": "npx shadow-cljs release func",
+        "deploy": "firebase deploy --only functions",
+        "logs": "firebase functions:log",
+        "test": "npx shadow-cljs compile func-test",
+        "watch": "npx shadow-cljs watch func func-test"
+    },
+    "engines": {
+        "node": "18"
+    },
+    "main": "index.js",
+    "dependencies": {
+        "firebase-admin": "^11.5.0",
+        "firebase-functions": "^4.4.0"
+    },
+    "devDependencies": {
+        "firebase-functions-test": "^3.1.0",
+        "shadow-cljs": "^2.23.3"
+    },
+    "private": true
 }
