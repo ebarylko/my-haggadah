@@ -1,11 +1,11 @@
 {
 	"name": "haggadah",
 	"scripts": {
-		"tailwind": "npx tailwindcss -i ./src/haggadah/css/styles.css -o ./resources/public/css/styles.css ",
-		"tailwind:watch": "npm run tailwind -- --watch",
+		"css-build": "node-sass --omit-source-map-url src/haggadah/css/bulma.scss > resources/public/css/bulma.css",
+		"css-watch": "npm run css-build -- --watch",
+		"css-start": "npm run css-watch",
 		"ancient": "clojure -Sdeps '{:deps {com.github.liquidz/antq {:mvn/version \"RELEASE\"}}}' -m antq.core",
 		"watch": "npx shadow-cljs watch app ci func",
-		"func:watch": "npx shadow-cljs watch func",
 		"release": "npx shadow-cljs release app",
 		"build-report": "npx shadow-cljs run shadow.cljs.build-report app target/build-report.html",
 		"test": "npx shadow-cljs compile ci && npx karma start --single-run",
@@ -14,7 +14,6 @@
 	},
 	"dependencies": {
 		"firebase": "^9.21.0",
-		"firebase-admin": "^11.8.0",
 		"highlight.js": "11.5.1",
 		"markdown-clj": "^1.10.3",
 		"react": "17.0.2",
@@ -28,8 +27,9 @@
 		"postcss": "^8.4.23",
 		"postcss-import": "^15.1.0",
 		"shadow-cljs": "2.20.5",
+		"bulma": "^0.9.4",
+		"node-sass": "^7.0.1",
 		"socket.io-parser": "^4.2.3",
-		"tailwindcss": "^3.3.2",
 		"ws": "^8.13.0"
 	}
 }
