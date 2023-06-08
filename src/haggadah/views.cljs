@@ -55,23 +55,20 @@
   [:div {:class (styles/home-page)}
    [menu] 
    
-  [:section.hero.is-medium
-   [:div.columns.container {:class "hero-body"}
-    [:div.column
-     [:p.title.has-text-weight-bold.is-size-1"Share your haggadot with familiy and friends"  ]
-     [:p.subtitle.is-size-3  "Make a Haggadah effortlessly with just a click"  ]
-     [:div.columns
-      [:div.column
-       [:button.button.is-large.is-focused {:on-click #(re-frame/dispatch [::events/navigate :login]) :data-test-id "login"} "Log in"]]
-      [:div.column
-       [:button.button.is-large.is-focused {:on-click #(re-frame/dispatch [::events/navigate :register])} "Register"]]]]
-    [:div.column
-     [:img {:class "w-full md:w-4/5 z-50", :src "/images/hero.png"}] ]
-    
+   [:section.hero.is-medium.container
+    [:div.columns.container {:class "hero-body"}
 
-    ]
-   ]
- 
+     [:div.column
+      
+      [:p.title.has-text-weight-bold.is-size-1"Share your haggadot with familiy and friends"  ]
+      [:p.subtitle.is-size-3  "Make a Haggadah effortlessly with just a click"  ]
+      [:div.buttons.is-medium
+       [:button.button.is-focused {:on-click #(re-frame/dispatch [::events/navigate :login]) :data-test-id "login"} "Log in"]
+       [:button.button {:on-click #(re-frame/dispatch [::events/navigate :register])} "Register"]]
+      ]
+     [:div.column
+      [:img {:class "w-full md:w-4/5 z-50", :src "/images/hero.png"}] ]]]
+   
    
    
    [:svg {:class "wave-top", :viewBox "0 0 1439 147", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlnsXlink "http://www.w3.org/1999/xlink"}
@@ -83,65 +80,7 @@
        [:g {:transform "translate(719.500000, 68.500000) rotate(-180.000000) translate(-719.500000, -68.500000) "}
         [:path {:d "M0,0 C90.7283404,0.927527913 147.912752,27.187927 291.910178,59.9119003 C387.908462,81.7278826 543.605069,89.334785 759,82.7326078 C469.336065,156.254352 216.336065,153.6679 0,74.9732496", :opacity "0.100000001"}]
         [:path {:d "M100,104.708498 C277.413333,72.2345949 426.147877,52.5246657 546.203633,45.5787101 C666.259389,38.6327546 810.524845,41.7979068 979,55.0741668 C931.069965,56.122511 810.303266,74.8455141 616.699903,111.243176 C423.096539,147.640838 250.863238,145.462612 100,104.708498 Z", :opacity "0.100000001"}]
-        [:path {:d "M1046,51.6521276 C1130.83045,29.328812 1279.08318,17.607883 1439,40.1656806 L1439,120 C1271.17211,77.9435312 1140.17211,55.1609071 1046,51.6521276 Z", :opacity "0.200000003"}]]]]]]
-   #_
-   [:footer {:class "bg-white"}
-    [:div {:class "container mx-auto px-8"}
-     [:div {:class "w-full flex flex-col md:flex-row py-6"}
-      [:div {:class "flex-1 mb-6 text-black"}
-       [:a {:class "text-pink-600 no-underline hover:no-underline font-bold text-2xl lg:text-4xl", :href "#"}  
-        [:svg {:class "h-8 fill-current inline", :xmlns "http://www.w3.org/2000/svg", :viewBox "0 0 512.005 512.005"}
-         [:rect {:fill "#2a2a31", :x "16.539", :y "425.626", :width "479.767", :height "50.502", :transform "matrix(1,0,0,1,0,0)"}]
-         [:path {:class "plane-take-off", :d " M 510.7 189.151 C 505.271 168.95 484.565 156.956 464.365 162.385 L 330.156 198.367 L 155.924 35.878 L 107.19 49.008 L 211.729 230.183 L 86.232 263.767 L 36.614 224.754 L 0 234.603 L 45.957 314.27 L 65.274 347.727 L 105.802 336.869 L 240.011 300.886 L 349.726 271.469 L 483.935 235.486 C 504.134 230.057 516.129 209.352 510.7 189.151 Z "}]]]]
-      [:div {:class "flex-1"}
-       [:p {:class "uppercase text-gray-500 md:mb-6"} "Links"]
-       [:ul {:class "list-reset mb-6"}
-        [:li {:class "mt-2 inline-block mr-2 md:block md:mr-0"}
-         [:a {:href "#", :class "no-underline hover:underline text-gray-800 hover:text-pink-500"} "FAQ"]]
-        [:li {:class "mt-2 inline-block mr-2 md:block md:mr-0"}
-         [:a {:href "#", :class "no-underline hover:underline text-gray-800 hover:text-pink-500"} "Help"]]
-        [:li {:class "mt-2 inline-block mr-2 md:block md:mr-0"}
-         [:a {:href "#", :class "no-underline hover:underline text-gray-800 hover:text-pink-500"} "Support"]]]]
-      [:div {:class "flex-1"}
-       [:p {:class "uppercase text-gray-500 md:mb-6"} "Legal"]
-       [:ul {:class "list-reset mb-6"}
-        [:li {:class "mt-2 inline-block mr-2 md:block md:mr-0"}
-         [:a {:href "#", :class "no-underline hover:underline text-gray-800 hover:text-pink-500"} "Terms"]]
-        [:li {:class "mt-2 inline-block mr-2 md:block md:mr-0"}
-         [:a {:href "#", :class "no-underline hover:underline text-gray-800 hover:text-pink-500"} "Privacy"]]]]
-      [:div {:class "flex-1"}
-       [:p {:class "uppercase text-gray-500 md:mb-6"} "Social"]
-       [:ul {:class "list-reset mb-6"}
-        [:li {:class "mt-2 inline-block mr-2 md:block md:mr-0"}
-         [:a {:href "#", :class "no-underline hover:underline text-gray-800 hover:text-pink-500"} "Facebook"]]
-        [:li {:class "mt-2 inline-block mr-2 md:block md:mr-0"}
-         [:a {:href "#", :class "no-underline hover:underline text-gray-800 hover:text-pink-500"} "Linkedin"]]
-        [:li {:class "mt-2 inline-block mr-2 md:block md:mr-0"}
-         [:a {:href "#", :class "no-underline hover:underline text-gray-800 hover:text-pink-500"} "Twitter"]]]]
-      [:div {:class "flex-1"}
-       [:p {:class "uppercase text-gray-500 md:mb-6"} "Company"]
-       [:ul {:class "list-reset mb-6"}
-        [:li {:class "mt-2 inline-block mr-2 md:block md:mr-0"}
-         [:a {:href "#", :class "no-underline hover:underline text-gray-800 hover:text-pink-500"} "Official Blog"]]
-        [:li {:class "mt-2 inline-block mr-2 md:block md:mr-0"}
-         [:a {:href "#", :class "no-underline hover:underline text-gray-800 hover:text-pink-500"} "About Us"]]
-        [:li {:class "mt-2 inline-block mr-2 md:block md:mr-0"}
-         [:a {:href "#", :class "no-underline hover:underline text-gray-800 hover:text-pink-500"} "Contact"]]]]]]]]
-
-
-  #_[:div 
-     [:div [:button {:on-click #(re-frame/dispatch [::events/navigate :about])
-                     :class (styles/button)} "About"]]
-     [:div [:h2 {:class (styles/header)}
-            "Welcome to my-haggadah, a site where you can create your personal haggadah with just a click.
-Please login below to access your haggadot."]
-
-      (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
-        (when haggadah-text
-          [:div  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))
-      [:div 
-       [:button {:on-click #(re-frame/dispatch [::events/navigate :login]) :data-test-id "login"
-                 :class (styles/button)} "Log In"]]]])
+        [:path {:d "M1046,51.6521276 C1130.83045,29.328812 1279.08318,17.607883 1439,40.1656806 L1439,120 C1271.17211,77.9435312 1140.17211,55.1609071 1046,51.6521276 Z", :opacity "0.200000003"}]]]]]]])
 
 (defmethod routes/panels :home-panel [] [home-panel])
 ;; about
@@ -168,16 +107,19 @@ Please login below to access your haggadot."]
   [:div {:class (styles/home-page)}
    [menu]   
    [:section.hero.is-medium.container
+
     [:div.pt-24.hero-body
+     
      (let [name (re-frame/subscribe [::subs/name])]
        [:div
         [:h1.text-center.is-size-4 {:id "user"}
-         (str "Hello " @name ". We're glad to see you.")]])
+         (str "Hello " @name ". We're glad to see you.")]]
+       )
      [:div
       [:h1.text-center.is-size-4 {:id "user"}
        "Click the button below so you can see your haggadot and share them"]]
      [:div.pt-4
-      [:button.button.is-large.is-focuesd  { :on-click  #(re-frame/dispatch [::events/login :admin]) :data-test-id "load-haggadah"}  "Load haggadah"]]
+      [:button.button.is-large.is-focuesd  { :on-click  #(re-frame/dispatch [::events/login :admin]) :id "load-haggadah"}  "Load haggadah"]]
      (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
        (when haggadah-text
          [:div.pt-6
