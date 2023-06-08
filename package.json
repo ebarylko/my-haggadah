@@ -1,17 +1,16 @@
 {
 	"name": "haggadah",
-	"scripts": {
-		"css-build": "node-sass --omit-source-map-url src/haggadah/css/bulma.scss > resources/public/css/bulma.css",
-		"css-watch": "npm run css-build -- --watch",
-		"css-start": "npm run css-watch",
-		"ancient": "clojure -Sdeps '{:deps {com.github.liquidz/antq {:mvn/version \"RELEASE\"}}}' -m antq.core",
-		"watch": "npx shadow-cljs watch app ci func",
-		"release": "npx shadow-cljs release app",
-		"build-report": "npx shadow-cljs run shadow.cljs.build-report app target/build-report.html",
-		"test": "npx shadow-cljs compile ci && npx karma start --single-run",
-		"emulators": "firebase emulators:start --project my-haggadah --import emulator_data --export-on-exit emulator_data",
-		"test:acceptance": "firebase emulators:exec --project my-haggadah 'lein test'"
-	},
+    "scripts": {
+        "css-build": "sass  src/haggadah/css/bulma.scss  resources/public/css/bulma.css",
+        "css-watch": "npx sass  --watch src/haggadah/css/bulma.scss resources/public/css/bulma.css",
+        "ancient": "clojure -Sdeps '{:deps {com.github.liquidz/antq {:mvn/version \"RELEASE\"}}}' -m antq.core",
+        "watch": "npx shadow-cljs watch app ci ",
+        "release": "npx shadow-cljs release app",
+        "build-report": "npx shadow-cljs run shadow.cljs.build-report app target/build-report.html",
+        "test": "npx shadow-cljs compile ci && npx karma start --single-run",
+        "emulators": "firebase emulators:start --project my-haggadah --import emulator_data --export-on-exit emulator_data",
+        "test:acceptance": "firebase emulators:exec --project my-haggadah 'lein test'"
+    },
 	"dependencies": {
 		"firebase": "^9.21.0",
 		"highlight.js": "11.5.1",
@@ -21,14 +20,14 @@
 	},
 	"devDependencies": {
 		"autoprefixer": "^10.4.14",
+		"bulma": "^0.9.4",
 		"karma": "^6.4.2",
 		"karma-chrome-launcher": "^3.2.0",
 		"karma-cljs-test": "^0.1.0",
 		"postcss": "^8.4.23",
 		"postcss-import": "^15.1.0",
+		"sass": "^1.63.2",
 		"shadow-cljs": "2.20.5",
-		"bulma": "^0.9.4",
-		"node-sass": "^7.0.1",
 		"socket.io-parser": "^4.2.3",
 		"ws": "^8.13.0"
 	}

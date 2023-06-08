@@ -43,7 +43,7 @@
         [:a {:class "button is-primary"}
          [:strong "Sign up"]]
         [:a {:class "button is-light"} "Log in"]]]]]]
-    [:div {:class "relative -mt-12 lg:-mt-24"}
+   #_ [:div {:class "relative -mt-12 lg:-mt-24"}
      [:svg {:viewBox "0 0 1428 174", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlns:xlink "http://www.w3.org/1999/xlink"}
       [:g {:stroke "none", :stroke-width "1", :fill "none", :fill-rule "evenodd"}
        [:g {:transform "translate(-2.000000, 44.000000)", :fill "#FFFFFF", :fill-rule "nonzero"}
@@ -58,8 +58,12 @@
   [:div {:class (styles/home-page)}
    [menu] 
    
-  #_[:div {:class "w-full md:w-3/5 py-6 text-center"}
-   [:img {:class "w-full md:w-4/5 z-50", :src "/images/hero.png"}]]
+  [:section.hero.is-medium
+   [:div {:class "hero-body"}
+    [:p {:class "title"} "Hero title" [:img {:class "w-full md:w-4/5 z-50", :src "/images/hero.png"}]]
+    
+    [:p {:class "subtitle"} "Hero subtitle"]]
+   ]
  
    
    
