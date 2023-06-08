@@ -18,8 +18,7 @@
   [:div
   [:nav {:class "navbar", :role "navigation", :aria-label "main navigation"}
    [:div {:class "navbar-brand"}
-    [:a {:class "navbar-item", :href "https://ourhaggadah.com"}
-     [:img {:src "https://bulma.io/images/bulma-logo.png", :width "112", :height "28"}]]
+    [:h1.navbar-item.is-size-5.has-text-weight-bold "ourhaggadah"]
     [:a {:role "button", :class "navbar-burger", :aria-label "menu", :aria-expanded "false", :data-target "navbarBasicExample"}
      [:span {:aria-hidden "true"}]
      [:span {:aria-hidden "true"}]
@@ -38,11 +37,7 @@
         [:hr {:class "navbar-divider"}]
         [:a {:class "navbar-item"} "Report an issue"]]]]
      [:div {:class "navbar-end"}
-      [:div {:class "navbar-item"}
-       [:div {:class "buttons"}
-        [:a {:class "button is-primary"}
-         [:strong "Sign up"]]
-        [:a {:class "button is-light"} "Log in"]]]]]]
+      [:div {:class "navbar-item"}]]]]
    #_ [:div {:class "relative -mt-12 lg:-mt-24"}
      [:svg {:viewBox "0 0 1428 174", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlns:xlink "http://www.w3.org/1999/xlink"}
       [:g {:stroke "none", :stroke-width "1", :fill "none", :fill-rule "evenodd"}
@@ -61,8 +56,13 @@
   [:section.hero.is-medium
    [:div.columns.container {:class "hero-body"}
     [:div.column
-     [:p.title.has-text-weight-bold.is-size-1  "Hero title" ]
-     [:p {:class "subtitle"} "Hero subtitle"]]
+     [:p.title.has-text-weight-bold.is-size-1"Share your haggadot with familiy and friends"  ]
+     [:p.subtitle.is-size-3  "Make a Haggadah effortlessly with just a click"  ]
+     [:div.columns
+      [:div.column
+       [:button.button.is-large.is-focused {:on-click #(re-frame/dispatch [::events/navigate :login]) :data-test-id "login"} "Log in"]]
+      [:div.column
+       [:button.button.is-large.is-focused {:on-click #(re-frame/dispatch [::events/navigate :register])} "Register"]]]]
     [:div.column
      [:img {:class "w-full md:w-4/5 z-50", :src "/images/hero.png"}] ]
     
