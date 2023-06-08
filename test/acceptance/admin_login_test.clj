@@ -67,6 +67,7 @@
   (t/testing "When the admin user exists"
     (doto driver
       (e/go "http://localhost:5000/")
+      (e/screenshot "Screenshots/message-test-home-page")
       (e/click-visible {:tag :button :data-test-id "login"})
       (e/click-visible {:tag :button :data-test-id "load-haggadah"})
       (e/wait-has-text-everywhere admin-login-message))
