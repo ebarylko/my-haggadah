@@ -21,7 +21,10 @@
                           (linear-gradient (rgba 255 255 255 0.3) (px 1) :transparent (px 1))
                           (linear-gradient (deg 90) (rgba 255 255 255 0.3) (px 1) :transparent (px 1))]
     :background-size     [[(px 100) (px 100)] [(px 100) (px 100)] [(px 20) (px 20)] [(px 20) (px 20)]]
-    :background-position [[(px -2) (px -2)] [(px -2) (px -2)] [(px -1) (px -1)] [(px -1) (px -1)]]}])
+    :background-position [[(px -2) (px -2)] [(px -2) (px -2)] [(px -1) (px -1)] [(px -1) (px -1)]]}
+   ]
+  [:nav.navbar {:background-color :transparent}]
+  )
 
 (defclass header
   []
