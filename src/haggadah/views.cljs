@@ -19,14 +19,16 @@
   [:nav {:class "navbar", :role "navigation", :aria-label "main navigation"}
    [:div {:class "navbar-brand"}
     [:h1.navbar-item.is-size-5.has-text-weight-bold "ourhaggadah"]
+    [:a.navbar-item.is-size-5.has-text-weight-bold {:on-click  #(re-frame/dispatch [::events/navigate :home])} "Home"]
+    [:a.navbar-item.is-size-5.has-text-weight-bold {:on-click  #(re-frame/dispatch [::events/navigate :about])} "About"]
+
     [:a {:role "button", :class "navbar-burger", :aria-label "menu", :aria-expanded "false", :data-target "navbarBasicExample"}
      [:span {:aria-hidden "true"}]
      [:span {:aria-hidden "true"}]
      [:span {:aria-hidden "true"}]]]
     [:div {:id "navbarBasicExample", :class "navbar-menu"}
      [:div {:class "navbar-start"}
-      [:a {:class "navbar-item"
-           :on-click  #(re-frame/dispatch [::events/navigate :home])} "Home"]
+      
       [:a {:class "navbar-item"} "Documentation"]
       [:div {:class "navbar-item has-dropdown is-hoverable"}
        [:a {:class "navbar-link"} "More"]
@@ -163,30 +165,57 @@ Please login below to access your haggadot."]
 (str "Hello " "name" ". We're glad to see you")
 
 (defn login-panel []
-  [:div.leading-normal.tracking-normal.text-white.gradient.h-screen {:class (styles/home-page)}
+  [:div {:class (styles/home-page)}
    [menu]   
-   [:div {:class "pt-24"}
-    (let [name (re-frame/subscribe [::subs/name])]
-      [:div
-       [:h1.text-center.text-2xl {:id "user"}
-        (str "Hello " @name ". We're glad to see you.")]])
-    [:div {:class "container px-3 mx-auto flex flex-wrap flex-col  items-center"}  
-     [:div {:class "flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left"}
-      
-      [:p {:class "leading-normal text-2xl mb-8"} "Click the button below so you can see your haggadot and share them"]
-      [:button {:class "mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-                :on-click  #(re-frame/dispatch [::events/login :admin]) :data-test-id "load-haggadah"} "Load haggadah"]]
-     [:div.shadow-lg.flex-auto.text-align-left.bg-white
-      (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
-        (when haggadah-text
-          [:div.border-black.border-2.p-3.text-black  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))]]]])
+   [:section.hero.is-medium.container
+    [:div.pt-24.hero-body
+     (let [name (re-frame/subscribe [::subs/name])]
+       [:div
+        [:h1.text-center.is-size-4 {:id "user"}
+         (str "Hello " @name ". We're glad to see you.")]])
+     [:div
+      [:h1.text-center.is-size-4 {:id "user"}
+       "Click the button below so you can see your haggadot and share them"]]
+     [:div.pt-4
+      [:button.button.is-large.is-focuesd  { :on-click  #(re-frame/dispatch [::events/login :admin]) :data-test-id "load-haggadah"}  "Load haggadah"]]
+     (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
+       (when haggadah-text
+         [:div.pt-6
+          [:div.box.title  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]]))]
+    #_[:div.text-center {:class "pt-24"}
+     (let [name (re-frame/subscribe [::subs/name])]
+       [:div
+        [:h1.text-center.text-2xl {:id "user"}
+         (str "Hello " @name ". We're glad to see you.")]])
+     [:div {:class "container px-3 mx-auto flex flex-wrap flex-col  items-center"}  
+      [:div {:class "flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left"}
+       
+       [:p {:class "leading-normal text-2xl mb-8"} "Click the button below so you can see your haggadot and share them"]
+       [:button {:class "mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+                 :on-click  #(re-frame/dispatch [::events/login :admin]) :data-test-id "load-haggadah"} "Load haggadah"]]
+      [:div.shadow-lg.flex-auto.text-align-left.bg-white
+       (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
+         (when haggadah-text
+           [:div.border-black.border-2.p-3.text-black  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))]]]]])
+  
 
 
 (defn about-panel
   []
-  [:div.leading-normal.tracking-normal.text-white.gradient.h-screen {:class (styles/home-page)}
+
+  [:div {:class (styles/home-page)}
    [menu]
-   [:div {:class "lg:container lg:mx-auto md:container"}
+   [:sections.hero.is-large
+    [:div.columns.is-8.is-variable.container {:class "hero-body"}
+     [:div.column
+      [:h1.has-text-weight-bold.is-size-3 "Why ourhaggadah.com?"]
+      [:h1.pt-4.text-2xl "Creating a haggadah is daunting. There are so many questions to answer, such as what to include, who reads what portions, and how to accomodate speakers of different languages. I wanted to make the process easier so that people can focus on celebrating pesach with their friends and family."]]
+     [:div.column
+      [:h1.has-text-weight-bold.is-size-3 "About me"]
+      [:img.is-96x96.image  {:src "/images/about-page-photo.jpeg"}]
+      [:h1.pt-4.text-2xl "My name is Eitan Barylko and I am an undergraduate student at Simon Fraser University. I love programming, cooking, and complaining that all the interesting things are in Vancouver. If you want to see what else I've worked on, you can checkout my github repo on the link below."]
+      [:a.pt-4-text-2xl {:href "https://github.com/ebarylko"} "https://github.com/ebarylko"]]]]
+   #_[:div {:class "lg:container lg:mx-auto md:container"}
     [:div.pt-24.text-center
      [:h1.text-5xl "Why ourhaggadah.com?"]
      [:h1.pt-4.text-2xl "Creating a haggadah is daunting. There are so many questions to answer, such as what to include, who reads what portions, and how to accomodate speakers of different languages. I wanted to make the process easier so that people can focus on celebrating pesach with their friends and family."]]
