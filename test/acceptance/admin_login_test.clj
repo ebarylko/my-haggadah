@@ -20,7 +20,6 @@
 (def admin-login-message
   "Hello han@skywalker.com. We're glad to see you.")
 
- 1
 
 (defn- build-firebase-options []
   (-> (new FirebaseOptions$Builder)
