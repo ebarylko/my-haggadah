@@ -12,6 +12,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+
+      - name: install chromedriver
+        
+        run: |
+          CHROME_VERSION=114.0.5735.90
+          ARCH="linux64"
+          wget http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_${ARCH}.deb
+          sudo apt-get install ./google-chrome-stable_${CHROME_VERSION}_${ARCH}.deb
+          VERSION=$(curl --location --fail --retry 10 http://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION})
+          wget -c -nc --retry-connrefused --tries=0 https://chromedriver.storage.googleapis.com/${VERSION}/chromedriver_${ARCH}.zip
+          unzip -o -q chromedriver_${ARCH}.zip
+          sudo mv chromedriver /usr/local/bin/chromedriver
+          rm chromedriver_${ARCH}.zip
+
       - uses: actions/setup-node@v3 #Setup Node
         with:
           node-version: '18'
@@ -26,7 +40,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgconf-2-4 libatk1.0-0 libatk-bridge2.0-0 libgdk-pixbuf2.0-0 libgtk-3-0 libgbm-dev libnss3-dev libxss-dev libasound2
 
-      - uses: browser-actions/setup-chrome@latest
 
       - uses: DeLaGuardo/setup-clojure@11.0
         with:
