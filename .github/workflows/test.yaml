@@ -12,39 +12,60 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: get latest chromedriver version
+        run: |
+          CHROMEDRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`
+
+
+
+      # - name: Cache chromedriver
+      #   id: cache-chromedriver
+      #   uses: actions/cache@v3
+      #   env:
+      #     cache-name: cache-chromedriver
+      #   with:
+      #     # npm cache files are stored in `~/.npm` on Linux/macOS
+      #     path: ~/.npm
+      #     key: ${CHROMEDRIVER_VERSION}
+
+      # - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+      #   name: List the state of node modules
+      #   continue-on-error: true
+      #   run: npm list
 
       - name: install chromedriver
         run: |
           CHROMEDRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`
-
           mkdir -p /opt/chromedriver-$CHROMEDRIVER_VERSION 
           curl -sS -o /tmp/chromedriver_linux64.zip http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
           unzip -qq /tmp/chromedriver_linux64.zip -d /opt/chromedriver-$CHROMEDRIVER_VERSION 
           rm /tmp/chromedriver_linux64.zip 
           chmod +x /opt/chromedriver-$CHROMEDRIVER_VERSION/chromedriver 
           ln -fs /opt/chromedriver-$CHROMEDRIVER_VERSION/chromedriver /usr/local/bin/chromedriver
-
-
-
           curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - 
           echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list 
           apt-get -yqq update 
           apt-get -yqq install google-chrome-stable 
           rm -rf /var/lib/apt/lists/*
-          #which ~/bin/google-chrome
-          # CHROME_VERSION=114.0.5735.90
-          # ARCH="linux64"
-          # wget http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_${ARCH}.deb
-          # sudo apt-get install ./google-chrome-stable_${CHROME_VERSION}_${ARCH}.deb
-          # VERSION=$(curl --location --fail --retry 10 http://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION})
-          # wget -c -nc --retry-connrefused --tries=0 https://chromedriver.storage.googleapis.com/${VERSION}/chromedriver_${ARCH}.zip
-          # unzip -o -q chromedriver_${ARCH}.zip
-          # sudo mv chromedriver /usr/local/bin/chromedriver
-          # rm chromedriver_${ARCH}.zip
 
       - uses: actions/setup-node@v3 #Setup Node
         with:
           node-version: '18'
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
 
       - name: Prepare java
         uses: actions/setup-java@v3
@@ -52,9 +73,9 @@ jobs:
           distribution: 'zulu'
           java-version: '11'
 
-      - run: |
-          sudo apt-get update
-          sudo apt-get install -y libgconf-2-4 libatk1.0-0 libatk-bridge2.0-0 libgdk-pixbuf2.0-0 libgtk-3-0 libgbm-dev libnss3-dev libxss-dev libasound2
+      # #- run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y libgconf-2-4 libatk1.0-0 libatk-bridge2.0-0 libgdk-pixbuf2.0-0 libgtk-3-0 libgbm-dev libnss3-dev libxss-dev libasound2
 
 
       - uses: DeLaGuardo/setup-clojure@11.0
