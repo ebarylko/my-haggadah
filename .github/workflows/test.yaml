@@ -14,17 +14,33 @@ jobs:
 
 
       - name: install chromedriver
-        
         run: |
-          CHROME_VERSION=114.0.5735.90
-          ARCH="linux64"
-          wget http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_${ARCH}.deb
-          sudo apt-get install ./google-chrome-stable_${CHROME_VERSION}_${ARCH}.deb
-          VERSION=$(curl --location --fail --retry 10 http://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION})
-          wget -c -nc --retry-connrefused --tries=0 https://chromedriver.storage.googleapis.com/${VERSION}/chromedriver_${ARCH}.zip
-          unzip -o -q chromedriver_${ARCH}.zip
-          sudo mv chromedriver /usr/local/bin/chromedriver
-          rm chromedriver_${ARCH}.zip
+          CHROMEDRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`
+
+          mkdir -p /opt/chromedriver-$CHROMEDRIVER_VERSION 
+          curl -sS -o /tmp/chromedriver_linux64.zip http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+          unzip -qq /tmp/chromedriver_linux64.zip -d /opt/chromedriver-$CHROMEDRIVER_VERSION 
+          rm /tmp/chromedriver_linux64.zip 
+          chmod +x /opt/chromedriver-$CHROMEDRIVER_VERSION/chromedriver 
+          ln -fs /opt/chromedriver-$CHROMEDRIVER_VERSION/chromedriver /usr/local/bin/chromedriver
+
+
+
+          curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - 
+          echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list 
+          apt-get -yqq update 
+          apt-get -yqq install google-chrome-stable 
+          rm -rf /var/lib/apt/lists/*
+          #which ~/bin/google-chrome
+          # CHROME_VERSION=114.0.5735.90
+          # ARCH="linux64"
+          # wget http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_${ARCH}.deb
+          # sudo apt-get install ./google-chrome-stable_${CHROME_VERSION}_${ARCH}.deb
+          # VERSION=$(curl --location --fail --retry 10 http://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION})
+          # wget -c -nc --retry-connrefused --tries=0 https://chromedriver.storage.googleapis.com/${VERSION}/chromedriver_${ARCH}.zip
+          # unzip -o -q chromedriver_${ARCH}.zip
+          # sudo mv chromedriver /usr/local/bin/chromedriver
+          # rm chromedriver_${ARCH}.zip
 
       - uses: actions/setup-node@v3 #Setup Node
         with:
@@ -49,7 +65,7 @@ jobs:
       - name: run test
 
         env:
-          CHROME_BIN: "/opt/hostedtoolcache/chromium/latest/x64/chrome"
+          CHROME_BIN: "/usr/bin/google-chrome"
           GCLOUD_PROJECT: "my-haggadah"
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MY_HAGGADAH}}
         run: |
