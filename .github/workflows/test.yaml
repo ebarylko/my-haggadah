@@ -42,11 +42,12 @@ jobs:
           rm /tmp/chromedriver_linux64.zip 
           chmod +x /opt/chromedriver-$CHROMEDRIVER_VERSION/chromedriver 
           ln -fs /opt/chromedriver-$CHROMEDRIVER_VERSION/chromedriver /usr/local/bin/chromedriver
-          curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - 
-          # echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list 
-          # apt-get -yqq update 
-          # apt-get -yqq install google-chrome-stable 
-          # rm -rf /var/lib/apt/lists/*
+
+      - name: install chrome
+        run: |
+          wget http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_114.0.5735.106-1_amd64.deb
+          apt install -y /tmp/chrome.deb 
+          rm /tmp/chrome.deb
 
       - uses: actions/setup-node@v3 #Setup Node
         with:
