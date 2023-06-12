@@ -92,6 +92,7 @@
               (e/go "http://localhost:5000/")
               (e/click-visible {:tag :button :data-test-id "login"})
               (e/click-visible {:tag :button :id "load-haggadah"})
+              (e/screenshot "screenshots/show-text-test-when-the-admin-exists-when-haggaddah-exists.png")
               (e/wait-has-text-everywhere actual-haggadah-text))
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
 
