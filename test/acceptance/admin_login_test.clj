@@ -87,7 +87,9 @@
           write (-> db
                      (.collection "users")
                      (.document "user1")
-                     (.set haggadah))
+                     (.set haggadah)
+                     (.get) #_(#(println (.getData %)))
+                     )
           exists (-> db
                      (.collection "users")
                      (.document "user1")
@@ -104,7 +106,7 @@
                  (finally (e/screenshot driver "screenshots/show-text-test-when-the-admin-exists-when-haggaddah-exists.png")))
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
 
-      (t/is (= actual-haggadah-text "jkjj"#_haggadah-text)))))
+      (t/is (= actual-haggadah-text haggadah-text)))))
 
 ;; "http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents"
 
