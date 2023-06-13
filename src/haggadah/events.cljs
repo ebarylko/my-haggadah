@@ -76,7 +76,7 @@
             {:db (assoc db :name (.-email user))
              ::fetch-haggadah {:uid (.-uid user)
                                :on-success #(re-frame/dispatch [::set-haggadah %])
-                               :on-error #(js/console.log % :error)}}))
+                               :on-error #(js/console.log "Haggadah could not be fetched" % :error)}}))
 
 
 
