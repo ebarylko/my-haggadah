@@ -98,10 +98,11 @@
               (e/go "http://localhost:5000/")
               (e/click-visible {:tag :button :data-test-id "login"})
               (e/click-visible {:tag :button :id "load-haggadah"}))
+          _ (e/wait-has-text-everywhere driver actual-haggadah-text)
           _ (try (e/wait-has-text-everywhere driver actual-haggadah-text)
-                 (catch Exception e (str "Timeout error: " (.getMessage e)))
+                 (catch Exception e (prn (str "Timeout error: " (.getMessage e) )))
                  (finally (e/screenshot driver "screenshots/show-text-test-when-the-admin-exists-when-haggaddah-exists.png")))
-          #_#_haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
+          haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
 
       (t/is (= actual-haggadah-text "jkjj"#_haggadah-text)))))
 
