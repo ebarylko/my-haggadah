@@ -88,7 +88,8 @@
                      (.collection "users")
                      (.document "user1")
                      (.set haggadah)
-                     (.get) #_(#(println (.getData %)))
+                     (.get)
+                     (#(println (.getUpdateTime %)))
                      )
           exists (-> db
                      (.collection "users")
