@@ -95,7 +95,10 @@
           _ (try (e/wait-has-text-everywhere driver actual-haggadah-text)
                  (catch Exception e (str "Timeout error: " (.getMessage e)))
                  (finally (e/screenshot driver "screenshots/show-text-test-when-the-admin-exists-when-haggaddah-exists.png")))
-             _ (e/screenshot driver "screenshots/show-text-test-when-the-admin-exists-when-haggaddah-exists.png")
+          _ (e/screenshot driver "screenshots/show-text-test-when-the-admin-exists-when-haggaddah-exists.png")
+          _ (try (e/wait-has-text-everywhere driver actual-haggadah-text)
+                 (catch Exception e (str "Timeout error: " (.getMessage e)))
+                 (finally (e/screenshot driver "screenshots/show-text-test-when-the-admin-exists-when-haggaddah-exists.png")))
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
 
       (t/is (= actual-haggadah-text haggadah-text)))))
