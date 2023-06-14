@@ -8,6 +8,7 @@
                  [etaoin/etaoin "1.0.40"]
                  [com.google.firebase/firebase-admin "9.1.1"]
                  [environ "1.2.0"]]
+  :jvm-opts ["-Dclojure.main.report=stderr"]
   :repl-options {:init-ns haggadah.core
                  :init (init)})
 

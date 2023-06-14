@@ -20,7 +20,6 @@
 (def admin-login-message
   "Hello han@skywalker.com. We're glad to see you.")
 
- 1
 
 (defn- build-firebase-options []
   (-> (new FirebaseOptions$Builder)
@@ -60,8 +59,18 @@
   (create-user {:email "han@skywalker.com"  :pwd "123456789" :id "user1"})
   (tests))
 
-(t/use-fixtures :once init-firebase)
+(defn with-screenshot
+  "Pre: takes a test
+  Post: generates a screenshot after running the test"
+  [test]
+  (test)
+  #_(try
+    (test)
+    (finally (e/screenshot driver the-name-of-the-test) ))
+  )
 
+(t/use-fixtures :once init-firebase)
+(t/use-fixtures :each with-screenshot)
 
 (t/deftest message-test
   (t/testing "When the admin user exists"
@@ -88,14 +97,19 @@
           write (-> db
                      (.collection "users")
                      (.document "user1")
-                     (.set haggadah))
+                     (.set haggadah)
+                     (.get))
           _ (doto driver
               (e/go "http://localhost:5000/")
               (e/click-visible {:tag :button :data-test-id "login"})
-              (e/click-visible {:tag :button :id "load-haggadah"})
-              (e/wait-has-text-everywhere actual-haggadah-text))
+              (e/click-visible {:tag :button :id "load-haggadah"}))
+          _ (e/screenshot driver "screenshots/show-text-test-admin-exists-haggaddah-exists-before-interval.png")
+          _ (e/with-wait-interval 20 (e/wait-has-text-everywhere driver actual-haggadah-text) )
+          _ (e/screenshot driver "screenshots/show-text-test-when-the-admin-exists-when-haggaddah-exists.png")
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
 
       (t/is (= actual-haggadah-text haggadah-text)))))
 
 ;; "http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents"
+
+#_(-> m :var meta :name)

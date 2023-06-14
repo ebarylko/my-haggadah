@@ -107,14 +107,11 @@
   [:div {:class (styles/home-page)}
    [menu]   
    [:section.hero.is-medium.container
-
     [:div.pt-24.hero-body
-     
      (let [name (re-frame/subscribe [::subs/name])]
        [:div
         [:h1.text-center.is-size-4 {:id "user"}
-         (str "Hello " @name ". We're glad to see you.")]]
-       )
+         (str "Hello " @name ". We're glad to see you.")]])
      [:div
       [:h1.text-center.is-size-4 {:id "user"}
        "Click the button below so you can see your haggadot and share them"]]
@@ -123,7 +120,7 @@
      (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
        (when haggadah-text
          [:div.pt-6
-          [:div.box.title  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]]))]]])
+          [:div.box.title  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text #js{:mangle false :headerIds false }  )} :id "haggadah-text"}]]))]]])
   
 
 

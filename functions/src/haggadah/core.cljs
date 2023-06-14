@@ -1,5 +1,5 @@
 (ns haggadah.core
-  (:require ["firebase-functions" :as functions]
+  (:require ["firebase-functions/v2" :as functions]
             ["firebase-admin" :as admin]
             ["firebase-admin/firestore" :as firestore]))
 
