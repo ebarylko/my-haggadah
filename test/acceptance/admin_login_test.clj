@@ -59,8 +59,17 @@
   (create-user {:email "han@skywalker.com"  :pwd "123456789" :id "user1"})
   (tests))
 
-(t/use-fixtures :once init-firebase)
+(defn with-screenshot
+  "Pre: takes a test
+  Post: generates a screenshot after running the test"
+  [test]
+  (-> test :var meta 
+      (println "This is the name of the test")
+      )
+  (test))
 
+(t/use-fixtures :once init-firebase)
+(t/use-fixtures :each with-screenshot)
 
 (t/deftest message-test
   (t/testing "When the admin user exists"
@@ -88,26 +97,18 @@
                      (.collection "users")
                      (.document "user1")
                      (.set haggadah)
-                     (.get)
-                     (#(println (.getUpdateTime %)))
-                     )
-          exists (-> db
-                     (.collection "users")
-                     (.document "user1")
-                     (.get)
-                     (.get)
-                     (#(println "The document exists? "(.exists %))))
+                     (.get))
           _ (doto driver
               (e/go "http://localhost:5000/")
               (e/click-visible {:tag :button :data-test-id "login"})
               (e/click-visible {:tag :button :id "load-haggadah"}))
-          _ (e/wait-has-text-everywhere driver actual-haggadah-text)
-          _ (try (e/wait-has-text-everywhere driver actual-haggadah-text)
-                 (catch Exception e (prn (str "Timeout error: " (.getMessage e) )))
-                 (finally (e/screenshot driver "screenshots/show-text-test-when-the-admin-exists-when-haggaddah-exists.png")))
+          _ (e/screenshot driver "screenshots/show-text-test-admin-exists-haggaddah-exists-before-interval.png")
+          _ (e/with-wait-interval 20 (e/wait-has-text-everywhere driver actual-haggadah-text) )
+          _ (e/screenshot driver "screenshots/show-text-test-when-the-admin-exists-when-haggaddah-exists.png")
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
 
       (t/is (= actual-haggadah-text haggadah-text)))))
 
 ;; "http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents"
 
+#_(-> m :var meta :name)

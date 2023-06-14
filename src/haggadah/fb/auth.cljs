@@ -10,7 +10,7 @@
 
 (defn init [firebase-instance]
   (reset! auth (fb-auth/getAuth firebase-instance))
-  (when  FIREBASE_AUTH_HOST
+  (when FIREBASE_AUTH_HOST
     (println "Connecting to auth host "FIREBASE_AUTH_HOST)
     (fb-auth/connectAuthEmulator @auth FIREBASE_AUTH_HOST #js{:disableWarnings true}) ))
 

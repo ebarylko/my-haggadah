@@ -107,14 +107,11 @@
   [:div {:class (styles/home-page)}
    [menu]   
    [:section.hero.is-medium.container
-
     [:div.pt-24.hero-body
-     
      (let [name (re-frame/subscribe [::subs/name])]
        [:div
         [:h1.text-center.is-size-4 {:id "user"}
-         (str "Hello " @name ". We're glad to see you.")]]
-       )
+         (str "Hello " @name ". We're glad to see you.")]])
      [:div
       [:h1.text-center.is-size-4 {:id "user"}
        "Click the button below so you can see your haggadot and share them"]]
