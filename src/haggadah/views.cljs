@@ -20,7 +20,7 @@
    [:div {:class "navbar-brand"}
     [:h1.navbar-item.is-size-5.has-text-weight-bold "ourhaggadah"]
     [:a.navbar-item.is-size-5.has-text-weight-bold {:on-click  #(re-frame/dispatch [::events/navigate :home])} "Home"]
-    [:a.navbar-item.is-size-5.has-text-weight-bold {:on-click  #(re-frame/dispatch [::events/navigate :about])} "About"]
+    [:a.navbar-item.is-size-5.has-text-weight-bold {:on-click  #(re-frame/dispatch [::events/avigate :about])} "About"]
 
     [:a {:role "button", :class "navbar-burger", :aria-label "menu", :aria-expanded "false", :data-target "navbarBasicExample"}
      [:span {:aria-hidden "true"}]
@@ -116,12 +116,25 @@
       [:h1.text-center.is-size-4 {:id "user"}
        "Click the button below so you can see your haggadot and share them"]]
      [:div.pt-4
-      [:button.button.is-large.is-focuesd  { :on-click  #(re-frame/dispatch [::events/login :admin]) :id "load-haggadah"}  "Load haggadah"]]
+      [:button.button.is-large.is-focuesd  { :on-click  #(re-frame/dispatch [::events/login :admin]) :id "load-haggadah"}  "Take me to the dashboard"]]
      (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
        (when haggadah-text
          [:div.pt-6
           [:div.box.title  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text #js{:mangle false :headerIds false }  )} :id "haggadah-text"}]]))]]])
   
+
+(defn dashboard-panel
+  []
+  [:div {:class (styles/home-page)}
+   [menu]
+   [:section.hero.is-medium.container
+    [:div.pt-24.hero-body
+     (let [name (re-frame/subscribe [::subs/name])]
+       [:div
+        [:h1.text-center.is-size-4 {:id "user"}
+         (str "Hello " @name ". Welcome to your dashboard.
+To make a new haggadah, click the button to your right. 
+To share and edit your existing haggadah, look at your haggadot below ")]])]]])
 
 
 (defn about-panel
@@ -144,7 +157,7 @@
 (defmethod routes/panels :haggadah-panel [] [haggadah-panel])
 (defmethod routes/panels :about-panel [] [about-panel])
 (defmethod routes/panels :login-panel [] [login-panel])
-
+(defmethod routes/panels :dashboard-panel [] [dashboard-panel])
 ;; main
 
 (defn main-panel []

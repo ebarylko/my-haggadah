@@ -45,12 +45,24 @@
        (.catch on-error))))
 
 
-(re-frame/reg-event-fx
+#_(re-frame/reg-event-fx
  ::login
  interceptors
  (fn [_ [_]]
    {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %] ) :on-error #(js/console.log % :error)}}))
 
+
+(re-frame/reg-event-fx
+ ::load-dashboard
+ (fn [_ [_ user]]
+   {:fx [[:dispatch [::set-user user]]
+         [:dispatch [::navigate :dashboard]]]}))
+
+(re-frame/reg-event-fx
+ ::login
+ interceptors
+ (fn [_ [_]]
+   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::load-dashboard %]) :on-error #(js/console.log % :error)}}))
 
 (re-frame/reg-fx
  ::fetch-haggadah

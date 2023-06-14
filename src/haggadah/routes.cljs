@@ -14,7 +14,8 @@
     ["/" {""      :home
           "about" :about
           "haggadah" :haggadah
-          "login" :login}
+          "login" :login
+          "dashboard" :dashboard}
      ]))
 
 
