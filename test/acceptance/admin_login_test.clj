@@ -63,10 +63,11 @@
   "Pre: takes a test
   Post: generates a screenshot after running the test"
   [test]
-  (-> test :var meta 
-      (println "This is the name of the test")
-      )
-  (test))
+  (test)
+  #_(try
+    (test)
+    (finally (e/screenshot driver the-name-of-the-test) ))
+  )
 
 (t/use-fixtures :once init-firebase)
 (t/use-fixtures :each with-screenshot)
