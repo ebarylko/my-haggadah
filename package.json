@@ -9,15 +9,16 @@
 		"build-report": "npx shadow-cljs run shadow.cljs.build-report app target/build-report.html",
 		"test": "npx shadow-cljs compile ci && npx karma start --single-run",
 		"emulators": "firebase emulators:start --project my-haggadah --import=emulator_data --export-on-exit=emulator_data",
-		  "test:acceptance": "firebase emulators:exec --project my-haggadah 'lein test '",
-      "act:pr": "act pull_request --artifact-server-path /tmp/artifacts "
+		"test:acceptance": "firebase emulators:exec --project my-haggadah 'lein test '",
+		"act:pr": "act pull_request --artifact-server-path /tmp/artifacts "
 	},
 	"dependencies": {
 		"firebase": "^9.21.0",
 		"highlight.js": "11.5.1",
 		"marked": "^5.0.5",
 		"react": "17.0.2",
-		"react-dom": "17.0.2"
+		"react-dom": "17.0.2",
+		"ws": "^8.13.0"
 	},
 	"devDependencies": {
 		"autoprefixer": "^10.4.14",
@@ -29,7 +30,6 @@
 		"postcss-import": "^15.1.0",
 		"sass": "^1.63.2",
 		"shadow-cljs": "2.20.5",
-		"socket.io-parser": "^4.2.3",
-		"ws": "^8.13.0"
+		"socket.io-parser": "^4.2.3"
 	}
 }
