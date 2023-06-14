@@ -144,6 +144,7 @@
 (defmethod routes/panels :haggadah-panel [] [haggadah-panel])
 (defmethod routes/panels :about-panel [] [about-panel])
 (defmethod routes/panels :login-panel [] [login-panel])
+
 ;; main
 
 (defn main-panel []
