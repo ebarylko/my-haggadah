@@ -60,26 +60,33 @@
          [:dispatch [::navigate :dashboard]]
          [:dispatch [::fetch-haggadot user
                      #(re-frame/dispatch [::set-haggadot %])
-                     #(js/console.log % :error)]]]}))
+                     #(js/console.log "The haggadot could not be found" % :error)]]]}))
 
 (re-frame/reg-event-db
-::set-haggadot
-(fn [db [_ snap]]
-(assoc db :haggadot
-       (-> snap
-           (. data)
-           (js->clj :keywordize-keys true)
-           (:haggadot)
-           #_(vals)))))
+ ::set-haggadot
+ (fn [db [_ snap]]
+   (assoc db :haggadot
+          (->> snap
+               (.-docs)
+               js->clj
+               (map #(.data %))
+               (map #(js->clj % :keywordize-keys true))))))
+
+(re-frame/reg-fx
+ ::fetch-collection!
+ (fn [{:keys [path on-success on-error]}]
+   (println "This is the collection fetch" path)
+   (-> (firestore/instance)
+       (fire/collection  (clojure.string/join "/" path))
+       (fire/getDocs)
+       (.then on-success)
+       (.catch on-error))))
 
 (re-frame/reg-event-fx
  ::fetch-haggadot
  (fn [_ [_ user on-success on-error]]
-   (-> (firestore/instance)
-       (fire/doc "users" (.-uid user))
-       (fire/getDoc)
-       (.then on-success)
-       (.catch on-error))))
+   {::fetch-collection! {:path ["users" (.-uid user) "haggadot"] :on-success on-success :on-error on-error}}))
+
 
 (re-frame/reg-event-fx
  ::login

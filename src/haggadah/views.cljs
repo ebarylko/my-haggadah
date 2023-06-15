@@ -143,10 +143,11 @@ To share and edit your existing haggadah, look at your haggadot below ")]])
     [:div
      [:h1.is-size-3
       "Here are the haggadot you have created"]
-     (let [{:keys [haggadot]} @(re-frame/subscribe [::subs/haggadot])]
+     (let [haggadot @(re-frame/subscribe [::subs/haggadot])]
        (when haggadot
-         [:div  haggadot {:id "Haggadot"}]))
-     [:a {:on-click #(re-frame/dispatch [::events/fetch-haggadot %])} "Haggadah 1"]]]])
+         (for [{:keys [title content]} haggadot]
+           ^{:key title}[:a title]  )))
+     ]]])
 
 
 #_(re-frame/reg-event-fx
