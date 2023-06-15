@@ -105,30 +105,36 @@
 
 (defn login-panel []
   [:div {:class (styles/home-page)}
-   [menu]   
+   [menu]
+   [:section.hero.is-medium.container
+    [:div.pt-24.hero-body
+     (let [name (re-frame/subscribe [::subs/name])]
+       [:div
+        [:h1.text-center.is-size-4 {:id "user"}
+         (str "Hello " @name ". We're glad to see you.")]])
+     [:div
+      [:h1.text-center.is-size-4 {:id "user"}
+       "Enter your email and password in the form below so you can see your haggadot and share them"]]]]
    [:section.container
-    
     [:div.field 
      [:label {:class "label"} "Password"]
      [:div {:class "control has-icons-left has-icons-right"}
-      [:input {:class "input is-success", :type "text", :placeholder "Text input", :value "123456789"}]
+      [:input {:class "input", :type "text", :placeholder "Text input", :value "123456789"}]
       [:span {:class "icon is-small is-left"}
        [:i {:class "fas fa-user"}]]
       [:span {:class "icon is-small is-right"}
-       [:i {:class "fas fa-check"}]]]
-     [:p {:class "help is-success"} "This username is available"]]
+       [:i {:class "fas fa-check"}]]]]
     [:div {:class "field"}
      [:label {:class "label"} "Email"]
      [:div {:class "control has-icons-left has-icons-right"}
-      [:input {:class "input is-danger", :type "email", :placeholder "Email input", :value "han@skywalker.com"}]
+      [:input {:class "input", :type "email", :placeholder "Email input", :value "han@skywalker.com"}]
       [:span {:class "icon is-small is-left"}
        [:i {:class "fas fa-envelope"}]]
       [:span {:class "icon is-small is-right"}
-       [:i {:class "fas fa-exclamation-triangle"}]]]
-     [:p {:class "help is-danger"} "This email is invalid"]]
+       [:i {:class "fas fa-exclamation-triangle"}]]]]
     [:div {:class "field is-grouped"}
      [:div {:class "control"}
-      [:button {:class "button is-link"} "Submit"]]
+      [:button {:class "button is-link" :on-click  #(re-frame/dispatch [::events/login :admin])} "Submit"]]
      [:div {:class "control"}
       [:button {:class "button is-link is-light"} "Cancel"]]]]
    [:section.hero.is-medium.container
@@ -141,8 +147,8 @@
       [:h1.text-center.is-size-4 {:id "user"}
        "Click the button below so you can see your haggadot and share them"]]
      [:div.pt-4
-      [:button.button.is-large.is-focuesd  { :on-click  #(re-frame/dispatch [::events/login :admin]) :id "load-haggadah"}  "Take me to the dashboard"]]
-     (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
+      #_[:button.button.is-large.is-focuesd  { :on-click  #(re-frame/dispatch [::events/login :admin]) :id "load-haggadah"}  "Take me to the dashboard"]]
+     #_(let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
        (when haggadah-text
          [:div.pt-6
           [:div.box.title  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text #js{:mangle false :headerIds false }  )} :id "haggadah-text"}]]))]]])
