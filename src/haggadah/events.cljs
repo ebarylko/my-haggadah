@@ -65,13 +65,13 @@
 (re-frame/reg-event-db
  ::set-haggadot
  (fn [db [_ snap]]
-   (assoc db :haggadot
-          (->> snap
-               (.-docs)
-               js->clj
-               #_(map #((.-id %)))
-               (map #(.data %))
-               (map #(js->clj % :keywordize-keys true))))))
+   (let [docs (->> snap (.-docs) js->clj)
+         ids (map #(.-id %) docs)]
+     (assoc db :haggadot
+            (->> docs
+                 (map #(.data %))
+                 (map #(js->clj % :keywordize))
+                 (map #(assoc %2 :id %1) ids))))))
 
 (re-frame/reg-fx
  ::fetch-collection!

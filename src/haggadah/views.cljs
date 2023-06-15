@@ -159,8 +159,7 @@ To share and edit your existing haggadah, look at your haggadot below ")]])
      (let [haggadot @(re-frame/subscribe [::subs/haggadot])]
        (when haggadot
          (for [{:keys [title content]} haggadot]
-           ^{:key title}[:a title]  )))
-     ]]])
+           [:a {:key title} title]  )))]]])
 
 
 #_(re-frame/reg-event-fx
