@@ -69,6 +69,7 @@
           (->> snap
                (.-docs)
                js->clj
+               #_(map #((.-id %)))
                (map #(.data %))
                (map #(js->clj % :keywordize-keys true))))))
 

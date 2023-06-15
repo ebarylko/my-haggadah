@@ -39,6 +39,13 @@
   []
   {:background "linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"})
 
+(defclass menu
+  []
+  {:background "linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"})
+
+(defclass login-page
+  []
+  {:background "linear-gradient(90deg, var(--lapis-lazuli) 0%, var(--icterine) 100%)"#_:none})
 
 (defclass about
   []
