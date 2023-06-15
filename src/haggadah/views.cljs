@@ -123,6 +123,9 @@
           [:div.box.title  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text #js{:mangle false :headerIds false }  )} :id "haggadah-text"}]]))]]])
   
 
+
+
+
 (defn dashboard-panel
   []
   [:div {:class (styles/home-page)}
@@ -134,7 +137,24 @@
         [:h1.text-center.is-size-4 {:id "user"}
          (str "Hello " @name ". Welcome to your dashboard.
 To make a new haggadah, click the button to your right. 
-To share and edit your existing haggadah, look at your haggadot below ")]])]]])
+To share and edit your existing haggadah, look at your haggadot below ")]])
+     [:div.pl-6.buttons.is-right
+      [:button.button.is-large.is-focuesd.is-pulled-right  {:on-click  #(re-frame/dispatch [::events/create-haggadah]) :id "create-haggadah"}  "Create haggadah"]]]
+    [:div
+     [:h1.is-size-3
+      "Here are the haggadot you have created"]
+     (let [{:keys [haggadot]} @(re-frame/subscribe [::subs/haggadot])]
+       (when haggadot
+         [:div  haggadot {:id "Haggadot"}]))
+     [:a {:on-click #(re-frame/dispatch [::events/fetch-haggadot %])} "Haggadah 1"]]]])
+
+
+#_(re-frame/reg-event-fx
+ ::render-haggadah
+ (fn [_ _]
+   (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
+     (when haggadah-text
+       [:div  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))))
 
 
 (defn about-panel

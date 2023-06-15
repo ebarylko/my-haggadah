@@ -16,3 +16,13 @@
  ::haggadah-text
  (fn [db _]
    (:haggadah-text db)))
+
+(re-frame/reg-sub
+ ::uid
+ (fn [db _]
+   (:uid db)))
+
+(re-frame/reg-sub
+ ::haggadot
+ (fn [db _]
+   (:haggadot db)))

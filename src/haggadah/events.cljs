@@ -5,6 +5,7 @@
    [haggadah.fb.firestore :as firestore]
    ["firebase/firestore" :as fire]
    [haggadah.db :as db]
+   [haggadah.subs :as subs]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
    [haggadah.fb.auth :as auth]
    [haggadah.fb.functions :as func]))
@@ -56,7 +57,29 @@
  ::load-dashboard
  (fn [_ [_ user]]
    {:fx [[:dispatch [::set-user user]]
-         [:dispatch [::navigate :dashboard]]]}))
+         [:dispatch [::navigate :dashboard]]
+         [:dispatch [::fetch-haggadot user
+                     #(re-frame/dispatch [::set-haggadot %])
+                     #(js/console.log % :error)]]]}))
+
+(re-frame/reg-event-db
+::set-haggadot
+(fn [db [_ snap]]
+(assoc db :haggadot
+       (-> snap
+           (. data)
+           (js->clj :keywordize-keys true)
+           (:haggadot)
+           #_(vals)))))
+
+(re-frame/reg-event-fx
+ ::fetch-haggadot
+ (fn [_ [_ user on-success on-error]]
+   (-> (firestore/instance)
+       (fire/doc "users" (.-uid user))
+       (fire/getDoc)
+       (.then on-success)
+       (.catch on-error))))
 
 (re-frame/reg-event-fx
  ::login
@@ -82,7 +105,15 @@
               (. data)
               (js->clj :keywordize-keys true)))))
 
-(re-frame/reg-event-fx
+
+(re-frame/reg-event-db
+ ::set-user
+ (fn-traced [db [_ user]]
+            (-> db
+                     (#(assoc % :name (.-email user)))
+                     (#(assoc % :uid (.-uid user))))))
+
+#_(re-frame/reg-event-fx
  ::set-user
  (fn-traced [{:keys [db]} [_ user]]
             {:db (assoc db :name (.-email user))
@@ -91,6 +122,12 @@
                                :on-error #(js/console.log "Haggadah could not be fetched" % :error)}}))
 
 
+#_(re-frame/reg-event-fx
+ ::render-haggadah
+ (fn [_ _]
+   (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
+     (when haggadah-text
+       [:div  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))))
 
 (def example-haggadah
   "## Hello Why, who are you
