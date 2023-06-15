@@ -106,6 +106,31 @@
 (defn login-panel []
   [:div {:class (styles/home-page)}
    [menu]   
+   [:section.container
+    
+    [:div.field 
+     [:label {:class "label"} "Password"]
+     [:div {:class "control has-icons-left has-icons-right"}
+      [:input {:class "input is-success", :type "text", :placeholder "Text input", :value "123456789"}]
+      [:span {:class "icon is-small is-left"}
+       [:i {:class "fas fa-user"}]]
+      [:span {:class "icon is-small is-right"}
+       [:i {:class "fas fa-check"}]]]
+     [:p {:class "help is-success"} "This username is available"]]
+    [:div {:class "field"}
+     [:label {:class "label"} "Email"]
+     [:div {:class "control has-icons-left has-icons-right"}
+      [:input {:class "input is-danger", :type "email", :placeholder "Email input", :value "han@skywalker.com"}]
+      [:span {:class "icon is-small is-left"}
+       [:i {:class "fas fa-envelope"}]]
+      [:span {:class "icon is-small is-right"}
+       [:i {:class "fas fa-exclamation-triangle"}]]]
+     [:p {:class "help is-danger"} "This email is invalid"]]
+    [:div {:class "field is-grouped"}
+     [:div {:class "control"}
+      [:button {:class "button is-link"} "Submit"]]
+     [:div {:class "control"}
+      [:button {:class "button is-link is-light"} "Cancel"]]]]
    [:section.hero.is-medium.container
     [:div.pt-24.hero-body
      (let [name (re-frame/subscribe [::subs/name])]
