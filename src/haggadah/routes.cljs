@@ -29,7 +29,7 @@
          :controllers [{:start
                         (fn [_]
                           (let [uid @(re-frame/subscribe [::subs/uid])]
-                            (re-frame/dispatch [::events/fetch-haggadot uid #(re-frame/dispatch [::set-haggadot %])
+                            (re-frame/dispatch [::events/fetch-haggadot uid #(re-frame/dispatch [::events/set-haggadot %])
                                                 #(js/console.log "The haggadah could not be fetched")])))}]}]
     ["/:id" {:name :haggadah-view
               :view views/home-panel

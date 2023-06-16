@@ -3,7 +3,8 @@
    [re-frame.core :as re-frame]
    [haggadah.styles :as styles]
    [haggadah.subs :as subs]
-   [reitit.frontend.easy :as rfe]))
+   [reitit.frontend.easy :as rfe]
+   [haggadah.events :as events]))
 
 (goog-define WRITE false)
 
@@ -116,7 +117,7 @@
        [:i {:class "fas fa-exclamation-triangle"}]]]]
     [:div {:class "field is-grouped"}
      [:div {:class "control"}
-      [:a.button.is-link {:href  (href :dashboard)} "Submit"]]
+      [:a.button.is-link {:on-click  #(re-frame/dispatch [::events/login])} "Submit"]]
      [:div {:class "control"}
       [:button {:class "button is-link is-light"} "Cancel"]]]]])
 
