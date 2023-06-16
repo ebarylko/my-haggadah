@@ -7,7 +7,8 @@
    [haggadah.db :as db]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
    [haggadah.fb.auth :as auth]
-   [haggadah.fb.functions :as func]))
+   [haggadah.fb.functions :as func]
+   [haggadah.subs :as subs]))
 
 (def interceptors [re-frame/trim-v])
 
@@ -76,6 +77,14 @@
  (fn [_ [_ uid on-success on-error]]
    {::fetch-collection! {:path ["users" uid "haggadot"] :on-success on-success :on-error on-error}}))
 
+(re-frame/reg-event-fx
+ ::fetch-haggadah
+ (fn [_ [_ uid id on-success on-error]]
+   (-> (firestore/instance)
+       (fire/doc "users" uid "haggadot" id)
+       (fire/getDoc)
+       (.then on-success)
+       (.catch on-error))))
 
 (re-frame/reg-event-fx
  ::login
@@ -83,12 +92,14 @@
  (fn [_ [_]]
    {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %]) :on-error #(js/console.log % :error)}}))
 
-(re-frame/reg-fx
+(re-frame/reg-event-fx
  ::fetch-doc
- (fn [_ [_ id on-success on-error]]
-   {::fetch-collection! {:path ["users" (.-uid id) "haggadot"] :on-success on-success :on-error on-error}}))
+ (fn [_ [_ on-success on-error]]
+   (let [uid @(re-frame/subscribe [::subs/uid])]
+    {::fetch-collection! {:path ["users" uid "haggadot"] :on-success on-success :on-error on-error}}))
+ )
 
-(re-frame/reg-fx
+#_(re-frame/reg-fx
  ::fetch-doc
  (fn [{:keys [path on-success on-error]}]
    (println path)
@@ -104,7 +115,8 @@
    (assoc db :haggadah-text
           (-> snap
               (. data)
-              (js->clj :keywordize-keys true)))))
+              (js->clj :keywordize-keys true)
+              (:content)))))
 
 
 (re-frame/reg-event-fx

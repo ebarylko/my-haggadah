@@ -143,13 +143,17 @@ To share and edit your existing haggadah, look at your haggadot below ")]])
        (when haggadot
          [:div
           (for [{:keys [title id]} haggadot]
-            ^{:key id }[:a {:on-click (href id)} title])
+            ^{:key id }[:a {:href (href :haggadah-view {:id id})} title])
           ]
          ))]]])
 
 (defn haggadah-view-panel
   []
-  )
+  [:div
+   [:h1 "Haggadah title"
+    (let [text @(re-frame/subscribe [::subs/haggadah-text])]
+      [:div.container
+       [:p text]])]])
 
 (defn about-panel
   []

@@ -32,8 +32,14 @@
                             (re-frame/dispatch [::events/fetch-haggadot uid #(re-frame/dispatch [::events/set-haggadot %])
                                                 #(js/console.log "The haggadah could not be fetched")])))}]}]
     ["/:id" {:name :haggadah-view
-              :view views/home-panel
-              :link-text "haggadah"}]]])
+             :view views/haggadah-view-panel
+             :link-text "haggadah"
+             :controllers [{:parameters {:path [:id]}
+                            :start (fn [params]
+                                     (let [id (-> params :path :id)
+                                           uid @(re-frame/subscribe [::subs/uid])]
+                                       (re-frame/dispatch [::events/fetch-haggadah uid id #(re-frame/dispatch [::events/set-haggadah %])
+                                                           #(js/console.log "The haggadah could not be fetched" %)])))}]}]]])
 
 
 (defn on-navigate [new-match]
