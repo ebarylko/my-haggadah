@@ -136,7 +136,9 @@
       [:button {:class "button is-link is-light"} "Cancel"]]]]])
   
 
-
+(defn load-haggadah
+  [id]
+ #(re-frame/dispatch [::events/load-haggadah id]))
 
 
 (defn dashboard-panel
@@ -158,9 +160,11 @@ To share and edit your existing haggadah, look at your haggadot below ")]])
       "Here are the haggadot you have created"]
      (let [haggadot @(re-frame/subscribe [::subs/haggadot])]
        (when haggadot
-         (for [{:keys [title content]} haggadot]
-           [:a {:key title} title]  )))]]])
-
+         [:div
+          (for [{:keys [title id]} haggadot]
+            ^{:key id }[:a {:on-click (load-haggadah id)} title])
+          ]
+         ))]]])
 
 #_(re-frame/reg-event-fx
  ::render-haggadah
@@ -191,6 +195,7 @@ To share and edit your existing haggadah, look at your haggadot below ")]])
 (defmethod routes/panels :about-panel [] [about-panel])
 (defmethod routes/panels :login-panel [] [login-panel])
 (defmethod routes/panels :dashboard-panel [] [dashboard-panel])
+#_(defmethod routes/panels :haggadah-view-panel [] [haggadah-view-panel])
 ;; main
 
 (defn main-panel []

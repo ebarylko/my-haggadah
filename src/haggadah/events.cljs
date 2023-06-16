@@ -70,7 +70,7 @@
      (assoc db :haggadot
             (->> docs
                  (map #(.data %))
-                 (map #(js->clj % :keywordize))
+                 (map #(js->clj % :keywordize-keys true))
                  (map #(assoc %2 :id %1) ids))))))
 
 (re-frame/reg-fx
@@ -96,11 +96,16 @@
    {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::load-dashboard %]) :on-error #(js/console.log % :error)}}))
 
 (re-frame/reg-fx
- ::fetch-haggadah
- (fn [{:keys [uid on-success on-error]}]
+ ::fetch-doc
+ (fn [_ [_ id on-success on-error]]
+   {::fetch-collection! {:path ["users" (.-uid user) "haggadot"] :on-success on-success :on-error on-error}}))
+
+(re-frame/reg-fx
+ ::fetch-doc
+ (fn [{:keys [path on-success on-error]}]
    (println uid)
    (-> (firestore/instance)
-       (fire/doc "users" uid )
+       (fire/doc )
        (fire/getDoc)
        (.then on-success)
        (.catch on-error))))
@@ -121,21 +126,6 @@
                      (#(assoc % :name (.-email user)))
                      (#(assoc % :uid (.-uid user))))))
 
-#_(re-frame/reg-event-fx
- ::set-user
- (fn-traced [{:keys [db]} [_ user]]
-            {:db (assoc db :name (.-email user))
-             ::fetch-haggadah {:uid (.-uid user)
-                               :on-success #(re-frame/dispatch [::set-haggadah %])
-                               :on-error #(js/console.log "Haggadah could not be fetched" % :error)}}))
-
-
-#_(re-frame/reg-event-fx
- ::render-haggadah
- (fn [_ _]
-   (let [{:keys [haggadah-text]} @(re-frame/subscribe [::subs/haggadah-text])]
-     (when haggadah-text
-       [:div  {:dangerouslySetInnerHTML #js{:__html (js/marked.parse haggadah-text)} :id "haggadah-text"}]))))
 
 (def example-haggadah
   "## Hello Why, who are you

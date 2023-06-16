@@ -2,6 +2,11 @@
   (:require
    [bidi.bidi :as bidi]
    [pushy.core :as pushy]
+   [reitit.frontend.easy :as rfe]
+   [reitit.frontend.controllers :as rfc]
+   [reitit.coercion.spec :as rss]
+   [reitit.core :as r]
+   [reitit.frontend :as rf]
    [re-frame.core :as re-frame]
    [haggadah.events :as events]))
 
@@ -15,9 +20,9 @@
           "about" :about
           "haggadah" :haggadah
           "login" :login
-          "dashboard" :dashboard}
+          "dashboard" { ""  :dashboard
+                       ["/" :id] :haggadah-view}}
      ]))
-
 
 
 (defn parse
