@@ -7,8 +7,7 @@
    [haggadah.db :as db]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
    [haggadah.fb.auth :as auth]
-   [haggadah.fb.functions :as func]
-   [haggadah.subs :as subs]))
+   [haggadah.fb.functions :as func]))
 
 (def interceptors [re-frame/trim-v])
 
@@ -79,12 +78,10 @@
 
 (re-frame/reg-event-fx
  ::fetch-haggadah
- (fn [_ [_ uid id on-success on-error]]
-   (-> (firestore/instance)
-       (fire/doc "users" uid "haggadot" id)
-       (fire/getDoc)
-       (.then on-success)
-       (.catch on-error))))
+ (fn [{:keys [db]} [_ id on-success on-error]]
+   {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
+                 :on-success on-success
+                 :on-error on-error}}))
 
 (re-frame/reg-event-fx
  ::login
@@ -92,22 +89,27 @@
  (fn [_ [_]]
    {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %]) :on-error #(js/console.log % :error)}}))
 
-(re-frame/reg-event-fx
- ::fetch-doc
- (fn [_ [_ on-success on-error]]
-   (let [uid @(re-frame/subscribe [::subs/uid])]
-    {::fetch-collection! {:path ["users" uid "haggadot"] :on-success on-success :on-error on-error}}))
- )
+(defn keyword->func
+  [key]
+  (cond
+    (fn? key) key
+    (vector? key) #(re-frame/dispatch (conj key %))
+    :else #(re-frame/dispatch [key %])))
 
-#_(re-frame/reg-fx
+(re-frame/reg-fx
  ::fetch-doc
- (fn [{:keys [path on-success on-error]}]
-   (println path)
+ (fn [_ {:keys [path on-success on-error] :or {on-error ::error }}]
    (-> (firestore/instance)
-       (fire/doc )
+       (fire/doc (clojure.string/join "/" path))
        (fire/getDoc)
-       (.then on-success)
-       (.catch on-error))))
+       (.then (keyword->func on-success))
+       (.catch (keyword->func on-error)))))
+
+(re-frame/reg-event-db
+ ::error
+ (fn [db [_ error]]
+   (js/console.log "There was an error" error)
+   (assoc db :error error)))
 
 (re-frame/reg-event-db
  ::set-haggadah

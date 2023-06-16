@@ -87,39 +87,40 @@
    [wave-top]])
 
 
-;; about
-
 
 
 (defn login-panel []
-  [:div {:class (styles/login-page)}
-   [:section.container.pt-4
-    [:div
-     [:div
-      [:h1.text-center.is-size-4 {:id "user"}
-       "Enter your email and password in the form below so you can see your haggadot and share them"]]]]
-   [:section.container
-    [:div.field 
-     [:label {:class "label"} "Password"]
-     [:div {:class "control has-icons-left has-icons-right"}
-      [:input {:class "input", :type "text", :placeholder "Text input", :defaultValue "123456789"}]
-      [:span {:class "icon is-small is-left"}
-       [:i {:class "fas fa-user"}]]
-      [:span {:class "icon is-small is-right"}
-       [:i {:class "fas fa-check"}]]]]
-    [:div {:class "field"}
-     [:label {:class "label"} "Email"]
-     [:div {:class "control has-icons-left has-icons-right"}
-      [:input {:class "input", :type "email", :placeholder "Email input", :defaultValue "han@skywalker.com"}]
-      [:span {:class "icon is-small is-left"}
-       [:i {:class "fas fa-envelope"}]]
-      [:span {:class "icon is-small is-right"}
-       [:i {:class "fas fa-exclamation-triangle"}]]]]
-    [:div {:class "field is-grouped"}
-     [:div {:class "control"}
-      [:a.button.is-link {:on-click  #(re-frame/dispatch [::events/login])} "Submit"]]
-     [:div {:class "control"}
-      [:button {:class "button is-link is-light"} "Cancel"]]]]])
+  [:div.is-dark {:class (styles/login-page)}
+   [:section.pt-4.hero.is-fullheight-with-navbar.container
+    [:div.columns.is-centered
+     
+     [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
+      [:div.text-center 
+       "Enter your email and password in the form below so you can see your haggadot and share them"]
+      [:form.box
+       [:div.field
+        [:label {:class "label"} "Password"]
+        [:div {:class "control has-icons-left has-icons-right"}
+         [:input {:class "input", :type "text", :placeholder "Text input", :defaultValue "123456789"}]
+         [:span {:class "icon is-small is-left"}
+          [:i {:class "fas fa-user"}]]
+         [:span {:class "icon is-small is-right"}
+          [:i {:class "fas fa-check"}]]]]
+       [:div {:class "field"}
+        [:label {:class "label"} "Email"]
+        [:div {:class "control has-icons-left has-icons-right"}
+         [:input {:class "input", :type "email", :placeholder "Email input", :defaultValue "han@skywalker.com"}]
+         [:span {:class "icon is-small is-left"}
+          [:i {:class "fas fa-envelope"}]]
+         [:span {:class "icon is-small is-right"}
+          [:i {:class "fas fa-exclamation-triangle"}]]]]
+       [:div {:class "field is-grouped"}
+        [:div {:class "control"}
+         [:a.button.is-link {:on-click  #(re-frame/dispatch [::events/login])} "Submit"]]
+        [:div {:class "control"}
+         [:button {:class "button is-link is-light"} "Cancel"]]]
+       ]]]
+    ]])
 
 
 
@@ -150,15 +151,13 @@ To share and edit your existing haggadah, look at your haggadot below ")]])
 (defn haggadah-view-panel
   []
   [:div
-   [:h1 "Haggadah title"
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
-      [:div.container
-       [:p text]])]])
+      [:div.container.has-background-primary {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text)} :id "haggadah-text"}])])
 
 (defn about-panel
   []
-  [:div {:class (styles/home-page)}
-   [:sections.hero.is-large
+  [:div {:class (styles/about-page)}
+   [:section.hero.is-fullheight-with-navbar
     [:div.columns.is-8.is-variable.container {:class "hero-body"}
      [:div.column
       [:h1.has-text-weight-bold.is-size-3 "Why ourhaggadah.com?"]

@@ -36,10 +36,8 @@
              :link-text "haggadah"
              :controllers [{:parameters {:path [:id]}
                             :start (fn [params]
-                                     (let [id (-> params :path :id)
-                                           uid @(re-frame/subscribe [::subs/uid])]
-                                       (re-frame/dispatch [::events/fetch-haggadah uid id #(re-frame/dispatch [::events/set-haggadah %])
-                                                           #(js/console.log "The haggadah could not be fetched" %)])))}]}]]])
+                                     (let [id (-> params :path :id)]
+                                       (re-frame/dispatch [::events/fetch-haggadah id ::events/set-haggadah])))}]}]]])
 
 
 (defn on-navigate [new-match]
