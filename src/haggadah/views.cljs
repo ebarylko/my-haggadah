@@ -2,18 +2,34 @@
   (:require
    [re-frame.core :as re-frame]
    [haggadah.styles :as styles]
-   [haggadah.events :as events]
-   [haggadah.subs :as subs]))
+   [haggadah.subs :as subs]
+   [reitit.frontend.easy :as rfe]))
 
 (goog-define WRITE false)
+
+(defn href
+  "Return relative url for given route. Url can be used in HTML links."
+  ([k]
+   (href k nil nil))
+  ([k params]
+   (href k params nil))
+  ([k params query]
+   (rfe/href k params query)))
+
+
+(re-frame/reg-event-fx
+ ::push-state
+ (fn [_ [_ & route]]
+   {:push-state route}))
+
 
 (defn top-menu [{:keys [router current-route]}]
   [:div {:class (styles/menu)}
    [:nav {:class "navbar", :role "navigation", :aria-label "main navigation"}
     [:div {:class "navbar-brand"}
      [:h1.navbar-item.is-size-5.has-text-weight-bold "ourhaggadah"]
-     [:a.navbar-item.is-size-5.has-text-weight-bold {:on-click  #(re-frame/dispatch [::events/navigate :home])} "Home"]
-     [:a.navbar-item.is-size-5.has-text-weight-bold {:on-click  #(re-frame/dispatch [::events/avigate :about])} "About"]
+     [:a.navbar-item.is-size-5.has-text-weight-bold {:on-click  #(re-frame/dispatch [::push-state :home])} "Home"]
+     [:a.navbar-item.is-size-5.has-text-weight-bold {:on-click  #(re-frame/dispatch [::push-state :about])} "About"]
      [:a {:role "button", :class "navbar-burger", :aria-label "menu", :aria-expanded "false", :data-target "navbarBasicExample"}
       [:span {:aria-hidden "true"}]
       [:span {:aria-hidden "true"}]
@@ -62,8 +78,8 @@
       [:p.title.has-text-weight-bold.is-size-1"Share your haggadot with familiy and friends"  ]
       [:p.subtitle.is-size-3  "Make a Haggadah effortlessly with just a click"  ]
       [:div.buttons.is-medium
-       [:button.button.is-focused {:on-click #(re-frame/dispatch [::events/navigate :login]) :data-test-id "login"} "Log in"]
-       [:button.button {:on-click #(re-frame/dispatch [::events/navigate :register])} "Register"]]
+       [:a.button.is-focused {:href (href :login) :data-test-id "login"} "Log in"]
+       [:a.button  "Register"]]
       ]
      [:div.column
       [:img {:class "w-full md:w-4/5 z-50", :src "/images/hero.png"}] ]]]
@@ -73,16 +89,6 @@
 ;; about
 
 
-(defn haggadah-panel []
-  [:div
-   [:h1#haggadah-text "This is the Haggadah Page"]
-   [:div
-    [:a {:on-click #(re-frame/dispatch [::events/navigate :home])} "go to Home Page"]
-    [:div
-     [:button {:on-click #(re-frame/dispatch [::events/render-login-text "haggadah-example.md"])}
-      "Click here to see the haggadah"]]
-    (let [haggadah-text (re-frame/subscribe [::subs/haggadah-text])]
-      [:div  {:dangerouslySetInnerHTML #js{:__html @haggadah-text} :id "haggadah-text"}])]])
 
 (defn login-panel []
   [:div {:class (styles/login-page)}
@@ -110,14 +116,11 @@
        [:i {:class "fas fa-exclamation-triangle"}]]]]
     [:div {:class "field is-grouped"}
      [:div {:class "control"}
-      [:button {:class "button is-link" :on-click  #(re-frame/dispatch [::events/login :admin])} "Submit"]]
+      [:a.button.is-link {:href  (href :dashboard)} "Submit"]]
      [:div {:class "control"}
       [:button {:class "button is-link is-light"} "Cancel"]]]]])
 
 
-(defn load-haggadah
-  [id]
- #(re-frame/dispatch [::events/load-haggadah id]))
 
 (defn dashboard-panel
   []
@@ -131,7 +134,7 @@
 To make a new haggadah, click the button to your right. 
 To share and edit your existing haggadah, look at your haggadot below ")]])
      [:div.pl-6.buttons.is-right
-      [:button.button.is-large.is-focuesd.is-pulled-right  {:on-click  #(re-frame/dispatch [::events/create-haggadah]) :id "create-haggadah"}  "Create haggadah"]]]
+      #_[:a.button.is-large.is-focuesd.is-pulled-right    "Create haggadah"]]]
     [:div
      [:h1.is-size-3
       "Here are the haggadot you have created"]
@@ -139,9 +142,13 @@ To share and edit your existing haggadah, look at your haggadot below ")]])
        (when haggadot
          [:div
           (for [{:keys [title id]} haggadot]
-            ^{:key id }[:a {:on-click (load-haggadah id)} title])
+            ^{:key id }[:a {:on-click (href id)} title])
           ]
          ))]]])
+
+(defn haggadah-view-panel
+  []
+  )
 
 (defn about-panel
   []

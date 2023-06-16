@@ -4,30 +4,36 @@
    [reitit.frontend.easy :as rfe]
    [reitit.frontend.controllers :as rfc]
    [reitit.coercion.spec :as rss]
-   [reitit.core :as r]
    [reitit.frontend :as rf]
    [re-frame.core :as re-frame]
+   [haggadah.views :as views]
    [haggadah.events :as events]
-   [haggadah.views :as views]))
-
-
-
-
-
-
+   [haggadah.subs :as subs]))
 
 (def routes
-  ["/"
-   ["" {:name      :home
+  [
+   ["/" {:name      :home
         :view      views/home-panel
         :link-text "Home"}]
 
-   ["login" {:name      :login
+   ["/login" {:name      :login
              :view      views/login-panel
-             :link-text "Login"}]
-   "dashboard" {:name :dashboard
-                :view views/dashboard-panel
-                :link-text  "Submit"}])
+             :link-text "Log in"}]
+   ["/about" {:name :about
+             :view views/about-panel
+             :link-text "about" }]
+   ["/dashboard"
+    ["" {:name :dashboard
+         :view views/dashboard-panel
+         :link-text  "Submit"
+         :controllers [{:start
+                        (fn [_]
+                          (let [uid @(re-frame/subscribe [::subs/uid])]
+                            (re-frame/dispatch [::events/fetch-haggadot uid #(re-frame/dispatch [::set-haggadot %])
+                                                #(js/console.log "The haggadah could not be fetched")])))}]}]
+    ["/:id" {:name :haggadah-view
+              :view views/home-panel
+              :link-text "haggadah"}]]])
 
 
 (defn on-navigate [new-match]
@@ -37,10 +43,6 @@
 
 ;; events
 
-(re-frame/reg-event-fx
- :push-state
- (fn [_ [_ & route]]
-   {:push-state route}))
 
 (re-frame/reg-event-db
  :navigated
