@@ -4,7 +4,6 @@
    [re-frame.core :as re-frame]
    [haggadah.events :as events]
    [haggadah.routes :as routes]
-   [haggadah.views :as views]
    [haggadah.config :as config]
    ["firebase/app" :as fba]
    [haggadah.fb.functions :as fb-fn]
@@ -23,7 +22,7 @@
   (re-frame/clear-subscription-cache!)
   (let [root-el (.getElementById js/document "app")]
     (rdom/unmount-component-at-node root-el)
-    (rdom/render [views/main-panel] root-el)))
+    (rdom/render [routes/router-component {:router routes/router}] root-el)))
 
 (defn fb-init [config]
   (when-not @firebase-instance
@@ -38,9 +37,9 @@
   (fb-init cfg/firebase))
 
 (defn init []
-  (routes/start!)
   (re-frame/dispatch-sync [::events/initialize-db])
   (dev-setup)
   (mount-root)
-  (firebase-init!))
+  (firebase-init!)
+  (routes/init-routes!))
 

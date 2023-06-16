@@ -98,12 +98,12 @@
 (re-frame/reg-fx
  ::fetch-doc
  (fn [_ [_ id on-success on-error]]
-   {::fetch-collection! {:path ["users" (.-uid user) "haggadot"] :on-success on-success :on-error on-error}}))
+   {::fetch-collection! {:path ["users" (.-uid id) "haggadot"] :on-success on-success :on-error on-error}}))
 
 (re-frame/reg-fx
  ::fetch-doc
  (fn [{:keys [path on-success on-error]}]
-   (println uid)
+   (println path)
    (-> (firestore/instance)
        (fire/doc )
        (fire/getDoc)
