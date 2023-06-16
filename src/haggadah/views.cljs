@@ -150,9 +150,12 @@ To share and edit your existing haggadah, look at your haggadot below ")]])
 
 (defn haggadah-view-panel
   []
-  [:div.container
+  [:div.container.hero.is-medium
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
-      [:div.container.has-background-primary {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text)} :id "haggadah-text"}])])
+      [:div.hero-body
+       [:div.container {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text)} :id "haggadah-text"}]
+       ]
+      )])
 
 (defn about-panel
   []
