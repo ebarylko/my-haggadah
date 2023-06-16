@@ -79,6 +79,7 @@
 (re-frame/reg-event-fx
  ::fetch-haggadah
  (fn [{:keys [db]} [_ id on-success on-error]]
+   (println "Id: " id "uid: " (:uid db))
    {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
                  :on-success on-success
                  :on-error on-error}}))
@@ -98,7 +99,8 @@
 
 (re-frame/reg-fx
  ::fetch-doc
- (fn [_ {:keys [path on-success on-error] :or {on-error ::error }}]
+ (fn [{:keys [path on-success on-error] :or {on-error ::error }}]
+   (println "Here's the path" path)
    (-> (firestore/instance)
        (fire/doc (clojure.string/join "/" path))
        (fire/getDoc)
