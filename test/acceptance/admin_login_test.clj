@@ -120,4 +120,3 @@
 
 ;; "http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents"
 
-#_(-> m :var meta :name)
