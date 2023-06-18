@@ -116,7 +116,7 @@
           [:i {:class "fas fa-exclamation-triangle"}]]]]
        [:div {:class "field is-grouped"}
         [:div {:class "control"}
-         [:a.button.is-link {:on-click  #(re-frame/dispatch [::events/login])} "Submit"]]
+         [:a.button.is-link {:on-click  #(re-frame/dispatch [::events/login]) :id "submit"} "Submit"]]
         [:div {:class "control"}
          [:button {:class "button is-link is-light"} "Cancel"]]]
        ]]]
@@ -132,9 +132,7 @@
      (let [name (re-frame/subscribe [::subs/name])]
        [:div
         [:h1.text-center.is-size-4 {:id "user"}
-         (str "Hello " @name ". Welcome to your dashboard.
-To make a new haggadah, click the button to your right. 
-To share and edit your existing haggadah, look at your haggadot below ")]])
+         (str "Hello " @name ". Welcome to your dashboard. To make a new haggadah, click the button to your right. To share and edit your existing haggadah, look at your haggadot below ")]])
      [:div.pl-6.buttons.is-right
       #_[:a.button.is-large.is-focuesd.is-pulled-right    "Create haggadah"]]]
     [:div
