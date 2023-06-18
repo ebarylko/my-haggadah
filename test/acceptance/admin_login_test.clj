@@ -95,7 +95,7 @@
 (def actual-haggadah-text
   "Amir's Haggadah")
 
-#_(t/deftest show-text-test
+(t/deftest show-text-test
   (t/testing "When the current user has a haggadah"
     (let [db (FirestoreClient/getFirestore)
           haggadah {"content" "## Amir's Haggadah"
@@ -104,15 +104,16 @@
                      (.collection "users")
                      (.document "user1")
                      (.collection "haggadot")
-                     (.set haggadah)
+                     (.add haggadah)
                      (.get))
           _ (doto driver
               (e/go "http://localhost:5000/")
               (e/click-visible {:tag :a :data-test-id "login"})
-              (e/click-visible {:tag :a :id "submit"}))
-          _ (e/screenshot driver "screenshots/show-text-test-admin-exists-haggaddah-exists-before-interval.png")
-          _ (e/click-visible {:tag :a :fn/text haggadah-title})
-          _ (e/wait-visible {:tag :div :id "haggadah-text"})
+              (e/click-visible {:tag :a :id "submit"})
+              (e/screenshot  "screenshots/show-text-test-admin-exists-haggaddah-exists-before-clicking-haggadah.png")
+              (e/click-visible  {:tag :a :fn/text haggadah-title})
+              (e/wait-visible  {:tag :div :id "haggadah-text"})
+              (e/screenshot "screenshots/show-text-test-admin-exists-haggadah-exists-after-clicking-haggadah"))
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
 
       (t/is (= actual-haggadah-text haggadah-text)))))
