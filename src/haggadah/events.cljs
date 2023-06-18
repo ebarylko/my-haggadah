@@ -45,22 +45,6 @@
        (.catch on-error))))
 
 
-#_(re-frame/reg-event-fx
- ::login
- interceptors
- (fn [_ [_]]
-   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %] ) :on-error #(js/console.log % :error)}}))
-
-
-(re-frame/reg-event-fx
- ::load-dashboard
- (fn [_ [_ user]]
-   {:fx [[:dispatch [::set-user user]]
-         [:dispatch [::fetch-haggadot user
-                     #(re-frame/dispatch [::set-haggadot %])
-                     #(js/console.log "The haggadot could not be found" % :error)]]]}))
-
-
 (re-frame/reg-fx
  ::fetch-collection!
  (fn [{:keys [path on-success on-error]}]

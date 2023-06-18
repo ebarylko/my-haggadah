@@ -18,7 +18,8 @@
   "Hello (Unknown). We're glad to see you.")
 
 (def admin-login-message
-  "Hello han@skywalker.com. We're glad to see you.")
+  "Hello han@skywalker.com. Welcome to your dashboard. To make a new haggadah, click the button to your right. To share and edit your existing haggadah, look at your haggadot below")
+
 
 
 (defn- build-firebase-options []
@@ -77,8 +78,9 @@
     (doto driver
       (e/go "http://localhost:5000/")
       (e/screenshot "Screenshots/message-test-home-page.png")
-      (e/click-visible {:tag :button :data-test-id "login"})
-      (e/click-visible {:tag :button :id "load-haggadah"})
+      (e/click-visible {:tag :a :data-test-id "login"})
+      (e/click-visible {:tag :a :id "submit"})
+      (e/screenshot "screenshots/message-test-dashboard.png")
       (e/wait-has-text-everywhere admin-login-message))
     (let [actual (e/get-element-text driver {:id "user"})]
       (e/screenshot driver "screenshots/message-test-when-the-admin-exists.png")
@@ -87,29 +89,34 @@
 (def default-haggadah-text
   "The default haggadah")
 
+(def haggadah-title
+  "haggadah2023")
+
 (def actual-haggadah-text
-  "This is Amir's excellent Haggadah")
+  "Amir's Haggadah")
 
 (t/deftest show-text-test
   (t/testing "When the current user has a haggadah"
     (let [db (FirestoreClient/getFirestore)
-          haggadah {"haggadah-text" "## This is Amir's excellent Haggadah"}
+          haggadah {"content" "## Amir's Haggadah"
+                    "title" "haggadah2023"}
           write (-> db
                      (.collection "users")
                      (.document "user1")
-                     (.set haggadah)
+                     (.collection "haggadot")
+                     (.add haggadah)
                      (.get))
           _ (doto driver
               (e/go "http://localhost:5000/")
-              (e/click-visible {:tag :button :data-test-id "login"})
-              (e/click-visible {:tag :button :id "load-haggadah"}))
-          _ (e/screenshot driver "screenshots/show-text-test-admin-exists-haggaddah-exists-before-interval.png")
-          _ (e/with-wait-interval 20 (e/wait-has-text-everywhere driver actual-haggadah-text) )
-          _ (e/screenshot driver "screenshots/show-text-test-when-the-admin-exists-when-haggaddah-exists.png")
+              (e/click-visible {:tag :a :data-test-id "login"})
+              (e/click-visible {:tag :a :id "submit"})
+              (e/screenshot  "screenshots/show-text-test-admin-exists-haggaddah-exists-before-clicking-haggadah.png")
+              (e/click-visible  {:tag :a :fn/text haggadah-title})
+              (e/wait-visible  {:tag :div :id "haggadah-text"})
+              (e/screenshot "screenshots/show-text-test-admin-exists-haggadah-exists-after-clicking-haggadah"))
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
 
       (t/is (= actual-haggadah-text haggadah-text)))))
 
 ;; "http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents"
 
-#_(-> m :var meta :name)
