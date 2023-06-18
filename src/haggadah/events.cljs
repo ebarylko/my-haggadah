@@ -45,22 +45,73 @@
        (.catch on-error))))
 
 
-(re-frame/reg-event-fx
+#_(re-frame/reg-event-fx
  ::login
  interceptors
  (fn [_ [_]]
    {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %] ) :on-error #(js/console.log % :error)}}))
 
 
+(re-frame/reg-event-fx
+ ::load-dashboard
+ (fn [_ [_ user]]
+   {:fx [[:dispatch [::set-user user]]
+         [:dispatch [::fetch-haggadot user
+                     #(re-frame/dispatch [::set-haggadot %])
+                     #(js/console.log "The haggadot could not be found" % :error)]]]}))
+
+
 (re-frame/reg-fx
- ::fetch-haggadah
- (fn [{:keys [uid on-success on-error]}]
-   (println uid)
+ ::fetch-collection!
+ (fn [{:keys [path on-success on-error]}]
+   (println "This is the collection fetch" path)
    (-> (firestore/instance)
-       (fire/doc "users" uid )
-       (fire/getDoc)
+       (fire/collection  (clojure.string/join "/" path))
+       (fire/getDocs)
        (.then on-success)
        (.catch on-error))))
+
+(re-frame/reg-event-fx
+ ::fetch-haggadot
+ (fn [_ [_ uid on-success on-error]]
+   {::fetch-collection! {:path ["users" uid "haggadot"] :on-success on-success :on-error on-error}}))
+
+(re-frame/reg-event-fx
+ ::fetch-haggadah
+ (fn [{:keys [db]} [_ id on-success on-error]]
+   (println "Id: " id "uid: " (:uid db))
+   {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
+                 :on-success on-success
+                 :on-error on-error}}))
+
+(re-frame/reg-event-fx
+ ::login
+ interceptors
+ (fn [_ [_]]
+   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %]) :on-error #(js/console.log % :error)}}))
+
+(defn keyword->func
+  [key]
+  (cond
+    (fn? key) key
+    (vector? key) #(re-frame/dispatch (conj key %))
+    :else #(re-frame/dispatch [key %])))
+
+(re-frame/reg-fx
+ ::fetch-doc
+ (fn [{:keys [path on-success on-error] :or {on-error ::error }}]
+   (println "Here's the path" path)
+   (-> (firestore/instance)
+       (fire/doc (clojure.string/join "/" path))
+       (fire/getDoc)
+       (.then (keyword->func on-success))
+       (.catch (keyword->func on-error)))))
+
+(re-frame/reg-event-db
+ ::error
+ (fn [db [_ error]]
+   (js/console.log "There was an error" error)
+   (assoc db :error error)))
 
 (re-frame/reg-event-db
  ::set-haggadah
@@ -68,17 +119,34 @@
    (assoc db :haggadah-text
           (-> snap
               (. data)
-              (js->clj :keywordize-keys true)))))
+              (js->clj :keywordize-keys true)
+              (:content)))))
+
+
+(re-frame/reg-event-fx
+ ::push-state
+ (fn [_ [_ & route]]
+   {:push-state route}))
 
 (re-frame/reg-event-fx
  ::set-user
  (fn-traced [{:keys [db]} [_ user]]
-            {:db (assoc db :name (.-email user))
-             ::fetch-haggadah {:uid (.-uid user)
-                               :on-success #(re-frame/dispatch [::set-haggadah %])
-                               :on-error #(js/console.log "Haggadah could not be fetched" % :error)}}))
+            {:db 
+             (-> db
+                 (#(assoc % :name (.-email user)))
+                 (#(assoc % :uid (.-uid user))))
+             :fx [[:dispatch [::push-state :dashboard]]]}))
 
-
+(re-frame/reg-event-db
+ ::set-haggadot
+ (fn [db [_ snap]]
+   (let [docs (->> snap (.-docs) js->clj)
+         ids (map #(.-id %) docs)]
+     (assoc db :haggadot
+            (->> docs
+                 (map #(.data %))
+                 (map #(js->clj % :keywordize-keys true))
+                 (map #(assoc %2 :id %1) ids))))))
 
 (def example-haggadah
   "## Hello Why, who are you
@@ -89,14 +157,6 @@
 
 
 
-#_(re-frame/reg-event-db
- ::render-login-text
- (fn [db [_ _]]
-   {::email-login!
-    {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::render-haggadah %] ) :on-error #(js/console.log % :error)}
-
-    }
-   (assoc db :haggadah-text (js/marked.parse example-haggadah))))
 
 
 
