@@ -16,6 +16,14 @@
      ;;Assert the initial state
      (t/is (=  "(Unknown)" @name)))))
 
+(def login-error "You tried to log in, but you are not registered. Please register and log in.")
 
+(t/deftest unregistered-user-login
+  (rf-test/run-test-sync
+   (rf/dispatch [::events/initialize-db])
+   #_(rf/dispatch [::events/login])
+   (let [error (rf/subscribe [::subs/error])]
+     (println "this is the error" @error)
+     (t/is (= login-error @error)))))
 
 

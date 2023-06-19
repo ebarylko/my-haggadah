@@ -11,7 +11,6 @@
   @firestore)
 
 (defn init [firebase-instance]
-  
   (reset! firestore (fs/getFirestore firebase-instance))
   (when FIREBASE_FIRESTORE_HOST
     (println  "Connecting to firestore host " FIREBASE_FIRESTORE_HOST)

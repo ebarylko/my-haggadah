@@ -68,11 +68,6 @@
                  :on-success on-success
                  :on-error on-error}}))
 
-(re-frame/reg-event-fx
- ::login
- interceptors
- (fn [_ [_]]
-   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %]) :on-error #(js/console.log % :error)}}))
 
 (defn keyword->func
   [key]
@@ -80,6 +75,13 @@
     (fn? key) key
     (vector? key) #(re-frame/dispatch (conj key %))
     :else #(re-frame/dispatch [key %])))
+
+(re-frame/reg-event-fx
+ ::login
+ interceptors
+ (fn [_ [_]]
+   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %]) :on-error (keyword->func [::error])}}))
+
 
 (re-frame/reg-fx
  ::fetch-doc
