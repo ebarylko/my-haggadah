@@ -3,7 +3,8 @@
             [cljs.test :as t :include-macros true]
             [re-frame.core :as rf]
             [day8.re-frame.test :as rf-test]
-            [haggadah.events :as events]))
+            [haggadah.events :as events]
+            [haggadah.core :as core]))
 
 
 (t/deftest admin-login
@@ -20,8 +21,9 @@
 
 (t/deftest unregistered-user-login
   (rf-test/run-test-sync
+   (core/firebase-init!)
    (rf/dispatch [::events/initialize-db])
-   #_(rf/dispatch [::events/login])
+   (rf/dispatch [::events/login])
    (let [error (rf/subscribe [::subs/error])]
      (println "this is the error" @error)
      (t/is (= login-error @error)))))

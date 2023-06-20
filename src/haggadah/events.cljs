@@ -40,10 +40,11 @@
 (re-frame/reg-fx
  ::email-login!
  (fn [{:keys [email password on-success on-error]}]
+   (println "We are authenticating the user")
    (-> (auth/email-login email password)
-       (.then (fn [user]  (on-success (.-user user))))
-       (.catch on-error))))
-
+       (.then (fn [user] (println "The user --" user "--") (on-success (.-user user))))
+       (.catch (fn [error] (println "Catch route this is the error " error) (on-error error) )))))
+ 
 
 (re-frame/reg-fx
  ::fetch-collection!
@@ -80,7 +81,7 @@
  ::login
  interceptors
  (fn [_ [_]]
-   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %]) :on-error (keyword->func [::error])}}))
+   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %]) :on-error #(re-frame/dispatch [::error %])}}))
 
 
 (re-frame/reg-fx

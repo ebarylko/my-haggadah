@@ -7,7 +7,7 @@
 		"watch": "npx shadow-cljs watch app ci ",
 		"release": "npx shadow-cljs release app",
 		"build-report": "npx shadow-cljs run shadow.cljs.build-report app target/build-report.html",
-		"test": "npx shadow-cljs compile ci && npx karma start --single-run",
+		"test": "npx shadow-cljs compile ci && firebase emulators:exec --project my-haggadah 'npx karma start --single-run'",
 		"emulators": "firebase emulators:start --project my-haggadah --import=emulator_data --export-on-exit=emulator_data",
 		"test:acceptance": "firebase emulators:exec --project my-haggadah 'lein test '",
 		"act:pr": "act pull_request --artifact-server-path /tmp/artifacts "

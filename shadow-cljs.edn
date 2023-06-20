@@ -42,10 +42,10 @@
           :ci {:target :karma
                :output-to "target/ci.js"
                :js-options {:js-package-dirs ["node_modules" "functions/node_modules"]}
-               :dev {:compiler-options {:closure-defines {haggadah.fb.auth/FIREBASE_AUTH_HOST "localhost:9098"
-                                                          haggadah.fb.auth/FIREBASE_HOSTING_HOST "localhost:5003"
-                                                          haggadah.fb.auth/FIREBASE_FUNCTIONS_HOST "localhost:5004"
-                                                          haggadah.fb.auth/FIREBASE_FIRESTORE_HOST "localhost:8081"}}
+               :dev {:compiler-options {:closure-defines {haggadah.fb.auth/FIREBASE_AUTH_HOST "http://localhost:9099"
+                                                          haggadah.fb.auth/FIREBASE_HOSTING_HOST "localhost:5000"
+                                                          haggadah.fb.auth/FIREBASE_FUNCTIONS_HOST "localhost:5001"
+                                                          haggadah.fb.auth/FIREBASE_FIRESTORE_HOST "localhost:8080"}}
                      }}
           }}
 
