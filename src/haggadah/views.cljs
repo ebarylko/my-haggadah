@@ -142,41 +142,45 @@
        (when haggadot
          [:div
           (for [{:keys [title id]} haggadot]
-            ^{:key id }[:a {:href (href :haggadah-view {:id id})} title])
-          ]
-         ))]]])
+            [:div
+             ^{:key id }[:a {:href (href :haggadah-view {:id id})} title]])]))]]])
+
+(defn form-content
+  "Pre: takes an id for a form field
+  Post: returns the text of the field if it exists, ni otherwise"
+  [id]
+  (-> (.getElementById js/document id)
+      (.-value)))
+
+(defn add-haggadah-success
+  [_]
+  (println "THe haggadah has been made")
+  [:div "Your haggadah has been successfully made. Please click the button below to return to the dashboard and see it"]
+  )
+
+(defn add-haggadah-fail
+  [_]
+  [:div "Your haggadah was not made. Please try again"])
 
 (defn haggadah-creation-panel
   []
   [:div.columns.is-centered
-
    [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
-    [:form.box
-     [:div.field
-      [:label {:class "label"} "Title"]
-      [:div #_{:class "control has-icons-left has-icons-right"}
-       [:input {:class "input", :type "text", :placeholder "Text input", :defaultValue "my-haggadah"}]
-       #_[:span {:class "icon is-small is-left"}
-          [:i {:class "fas fa-user"}]]
-       #_[:span {:class "icon is-small is-right"}
-          [:i {:class "fas fa-check"}]]]]
-     [:div {:class "field"}
-      [:label {:class "label"} "Content"]
-      [:div #_{:class "control has-icons-left has-icons-right"}
-       [:input {:class "input", :type "text", :placeholder "Email input", :defaultValue "## The best possible haggadah"}]
-       #_[:span {:class "icon is-small is-left"}
-          [:i {:class "fas fa-envelope"}]]
-       #_[:span {:class "icon is-small is-right"}
-          [:i {:class "fas fa-exclamation-triangle"}]]]]
-     [:div {:class "field is-grouped"}
-      [:div {:class "control"}
-       [:a.button.is-link {:on-click  #(re-frame/dispatch [::events/login]) :id "submit"} "Submit"]]
-      [:div {:class "control"}
-       [:button {:class "button is-link is-light"} "Cancel"]]]
-     ]
-    ]
-   ]
-  )
+     [:form.box
+      [:div.field
+       [:label {:class "label"} "Title"]
+       [:div #_{:class "control has-icons-left has-icons-right"}
+        [:input#haggadah-title {:class "input", :type "text", :placeholder "Text input", :defaultValue "my-haggadah"}]
+        ]]
+      [:div {:class "field"}
+       [:label {:class "label"} "Content"]
+       [:div #_{:class "control has-icons-left has-icons-right"}
+        [:input#haggadah-text {:class "input", :type "text", :placeholder "Email input", :defaultValue "## The best possible haggadah"}]]]
+      [:div {:class "field is-grouped"}
+       [:div {:class "control"}
+        [:a.button.is-link {:on-click #(re-frame/dispatch [::events/add-haggadah (form-content "haggadah-title") (form-content "haggadah-text") println  (events/keyword->func [::events/error]) %]) :id "submit"} "Create"]]]]]])
+
+
 
 (defn haggadah-view-panel
   []
