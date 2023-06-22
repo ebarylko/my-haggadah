@@ -17,15 +17,15 @@
      ;;Assert the initial state
      (t/is (=  "(Unknown)" @name)))))
 
-(def login-error "You tried to log in, but you are not registered. Please register and log in.")
+(def user-not-found "auth/user-not-found")
 
 (t/deftest unregistered-user-login
-  (rf-test/run-test-sync
+  (rf-test/run-test-async
    (core/firebase-init!)
-   (rf/dispatch [::events/initialize-db])
-   (rf/dispatch [::events/login])
-   (let [error (rf/subscribe [::subs/error])]
-     (println "this is the error" @error)
-     (t/is (= login-error @error)))))
+   (rf/dispatch-sync [::events/initialize-db])
+   (rf/dispatch-sync [::events/login])
+   (rf-test/wait-for [::events/error]
+   (let [{:keys [code]} @(rf/subscribe [::subs/error])]
+     (t/is (= user-not-found code))))))
 
 

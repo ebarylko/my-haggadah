@@ -41,6 +41,9 @@
  ::email-login!
  (fn [{:keys [email password on-success on-error]}]
    (println "We are authenticating the user")
+   (println "The user" (-> (auth/email-login email password)
+                           (.then (fn [user] (println "User details " (.-user user))))
+                           (.catch #(println "User login failed " %))))
    (-> (auth/email-login email password)
        (.then (fn [user] (println "The user --" user "--") (on-success (.-user user))))
        (.catch (fn [error] (println "Catch route this is the error " error) (on-error error) )))))
@@ -58,8 +61,8 @@
 
 (re-frame/reg-event-fx
  ::fetch-haggadot
- (fn [_ [_ uid on-success on-error]]
-   {::fetch-collection! {:path ["users" uid "haggadot"] :on-success on-success :on-error on-error}}))
+ (fn [{:keys [db]} [_ on-success on-error]]
+   {::fetch-collection! {:path ["users" (:uid db) "haggadot"] :on-success on-success :on-error on-error}}))
 
 (re-frame/reg-event-fx
  ::fetch-haggadah
@@ -97,8 +100,9 @@
 (re-frame/reg-event-db
  ::error
  (fn [db [_ error]]
-   (js/console.log "There was an error" error)
-   (assoc db :error error)))
+   (assoc db :error {:error error
+                     :code (. error -code)
+                     :message (. error -message)})))
 
 (re-frame/reg-event-db
  ::set-haggadah
