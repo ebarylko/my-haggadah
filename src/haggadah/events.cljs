@@ -40,19 +40,14 @@
 (re-frame/reg-fx
  ::email-login!
  (fn [{:keys [email password on-success on-error]}]
-   (println "We are authenticating the user")
-   (println "The user" (-> (auth/email-login email password)
-                           (.then (fn [user] (println "User details " (.-user user))))
-                           (.catch #(println "User login failed " %))))
    (-> (auth/email-login email password)
-       (.then (fn [user] (println "The user --" user "--") (on-success (.-user user))))
-       (.catch (fn [error] (println "Catch route this is the error " error) (on-error error) )))))
+       (.then (fn [user]  (on-success (.-user user))))
+       (.catch (fn [error]  (on-error error) )))))
  
 
 (re-frame/reg-fx
  ::fetch-collection!
  (fn [{:keys [path on-success on-error]}]
-   (println "This is the collection fetch" path)
    (-> (firestore/instance)
        (fire/collection  (clojure.string/join "/" path))
        (fire/getDocs)
@@ -67,7 +62,6 @@
 (re-frame/reg-event-fx
  ::fetch-haggadah
  (fn [{:keys [db]} [_ id on-success on-error]]
-   (println "Id: " id "uid: " (:uid db))
    {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
                  :on-success on-success
                  :on-error on-error}}))

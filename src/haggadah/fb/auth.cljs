@@ -16,5 +16,4 @@
 
 (defn email-login
   [email password ]
-  (println "This is the email login")
   (fb-auth/signInWithEmailAndPassword @auth email password))
