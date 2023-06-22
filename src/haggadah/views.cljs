@@ -155,9 +155,10 @@
 
 (defn haggadah-success-panel
   [_]
-  [:div.container.notification.is-success
-   "Your haggadah has been successfully made. Please click the button below to return to the dashboard and see it"
-   [:a.button.is-focused.is-pulled-right {:on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
+  [:div.container.has-text-centered
+   [:div.notification.is-success
+    "Your haggadah has been successfully made. Please click the button below to return to the dashboard and see it"]
+   [:a.button.is-focused {:on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
 
 (defn haggadah-creation-panel
   []
