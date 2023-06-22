@@ -134,7 +134,8 @@
         [:h1.text-center.is-size-4 {:id "user"}
          (str "Hello " @name ". Welcome to your dashboard. To make a new haggadah, click the button to your right. To share and edit your existing haggadah, look at your haggadot below ")]])
      [:div.pl-6.buttons.is-right
-      [:a.button.is-large.is-focused.is-pulled-right {:on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create haggadah"]]]
+      [:a.button.is-large.is-focused.is-pulled-right {:data-test-id "create-haggadah"
+                                                      :on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create haggadah"]]]
     [:div
      [:h1.is-size-3
       "Here are the haggadot you have created"]
@@ -142,7 +143,9 @@
        (when haggadot
          [:div
           (for [{:keys [title id]} haggadot]
-            ^{:key id}[:a {:href (href :haggadah-view {:id id})} title]
+            [:div
+             ^{:key id}[:a {:href (href :haggadah-view {:id id})} title]
+             ]
             )]))]]])
 
 (defn form-content
@@ -158,13 +161,14 @@
   [:div.container.has-text-centered
    [:div.notification.is-success
     "Your haggadah has been successfully made. Please click the button below to return to the dashboard and see it"]
-   [:a.button.is-focused {:on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
+   [:a.button.is-focused.is-link {:data-test-id "return-dashboard":on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
 
 (defn haggadah-creation-panel
   []
   [:div.columns.is-centered
    [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
-     [:form.box
+    [:h1 "Please fill in the details of your haggadah below"]
+    [:form.box.mt-4
       [:div.field
        [:label {:class "label"} "Title"]
        [:div 
@@ -175,7 +179,7 @@
         [:input#haggadah-text.input {:type "text", :placeholder "Email input", :defaultValue "## The best possible haggadah"}]]]
       [:div {:class "field is-grouped"}
        [:div {:class "control"}
-        [:a.button.is-link {:on-click #(re-frame/dispatch [::events/add-haggadah
+        [:a.button.is-link {:data-test-id "add-haggadah" :on-click #(re-frame/dispatch [::events/add-haggadah
                                                            (form-content "haggadah-title")
                                                            (form-content "haggadah-text") %])
                             :id "submit"} "Create"]]]]]])
@@ -187,9 +191,7 @@
   [:div.container.hero.is-medium
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:div.hero-body
-       [:div.container {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text)} :id "haggadah-text"}]
-       ]
-      )])
+       [:div.container {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text)} :id "haggadah-text"}]])])
 
 (defn about-panel
   []

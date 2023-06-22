@@ -118,5 +118,29 @@
 
       (t/is (= actual-haggadah-text haggadah-text)))))
 
+(def new-haggadah-title "The best haggadah of the year")
+(def new-haggadah-text "## We begin in Egypt")
+
+(t/deftest create-haggadah-test
+  (t/testing "When the current user creates a new haggadah"
+    (let [_ (doto driver
+              (e/go "http://localhost:5000/")
+              (e/click-visible {:tag :a :data-test-id "login"})
+              (e/click-visible {:tag :a :id "submit"})
+              (e/screenshot  "screenshots/create-haggadah-test-admin-exists-before-clicking-create.png")
+              (e/click-visible {:tag :a :data-test-id "create-haggadah"})
+              (e/wait-visible {:tag :input :id "haggadah-title"})
+              (e/screenshot  "screenshots/create-haggadah-test-admin-exists-after-clicking-create.png")
+              (e/fill {:tag :input :id "haggadah-title"} new-haggadah-title)
+              (e/fill {:tag :input :id "haggadah-text"} new-haggadah-text)
+              (e/click-visible {:tag :a :data-test-id "add-haggadah"})
+              (e/click-visible {:tag :a :data-test-id "return-dashboard"})
+              (e/click-visible {:tag :a :fn/text new-haggadah-title})
+              (e/wait-has-text-everywhere new-haggadah-text))
+          haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
+
+      (t/is (= new-haggadah-text haggadah-text)))
+    ))
+
 ;; "http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents"
 
