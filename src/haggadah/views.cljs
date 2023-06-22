@@ -155,9 +155,9 @@
 
 (defn haggadah-success-panel
   [_]
-  [:div.container
-   [:div "Your haggadah has been successfully made. Please click the button below to return to the dashboard and see it"]
-   [:a.button {:on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
+  [:div.container.notification.is-success
+   "Your haggadah has been successfully made. Please click the button below to return to the dashboard and see it"
+   [:a.button.is-focused.is-pulled-right {:on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
 
 (defn haggadah-creation-panel
   []
@@ -166,21 +166,17 @@
      [:form.box
       [:div.field
        [:label {:class "label"} "Title"]
-       [:div #_{:class "control has-icons-left has-icons-right"}
-        [:input#haggadah-title {:class "input", :type "text", :placeholder "Text input", :defaultValue "my-haggadah"}]
-        ]]
+       [:div 
+        [:input#haggadah-title.input {:placeholder "Text input", :defaultValue "my-haggadah"}]]]
       [:div {:class "field"}
        [:label {:class "label"} "Content"]
-       [:div #_{:class "control has-icons-left has-icons-right"}
-        [:input#haggadah-text {:class "input", :type "text", :placeholder "Email input", :defaultValue "## The best possible haggadah"}]]]
+       [:div 
+        [:input#haggadah-text.input {:type "text", :placeholder "Email input", :defaultValue "## The best possible haggadah"}]]]
       [:div {:class "field is-grouped"}
        [:div {:class "control"}
         [:a.button.is-link {:on-click #(re-frame/dispatch [::events/add-haggadah
                                                            (form-content "haggadah-title")
-                                                           (form-content "haggadah-text")
-                                                           (events/keyword->func [::push-state :haggadah-success])
-                                                           (events/keyword->func [::events/error])
-                                                           %])
+                                                           (form-content "haggadah-text") %])
                             :id "submit"} "Create"]]]]]])
 
 
