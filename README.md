@@ -46,3 +46,6 @@ Run `firebase emulators:exec 'npm test`
 
 ## Running act with artifacts stored
 run `npm run act:pr`
+
+## Merging branches
+Complete the pr. Then change to the main branch and run `git fetch -p`. After that run `git rebase origin/name-of-branch`. Finally, delete the local branch by running `git b -D name-of-branch`.
