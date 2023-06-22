@@ -142,8 +142,8 @@
        (when haggadot
          [:div
           (for [{:keys [title id]} haggadot]
-            [:div
-             ^{:key id }[:a {:href (href :haggadah-view {:id id})} title]])]))]]])
+            ^{:key id}[:a {:href (href :haggadah-view {:id id})} title]
+            )]))]]])
 
 (defn form-content
   "Pre: takes an id for a form field
@@ -152,15 +152,12 @@
   (-> (.getElementById js/document id)
       (.-value)))
 
-(defn add-haggadah-success
-  [_]
-  (println "THe haggadah has been made")
-  [:div "Your haggadah has been successfully made. Please click the button below to return to the dashboard and see it"]
-  )
 
-(defn add-haggadah-fail
+(defn haggadah-success-panel
   [_]
-  [:div "Your haggadah was not made. Please try again"])
+  [:div.container
+   [:div "Your haggadah has been successfully made. Please click the button below to return to the dashboard and see it"]
+   [:a.button {:on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
 
 (defn haggadah-creation-panel
   []
@@ -178,7 +175,13 @@
         [:input#haggadah-text {:class "input", :type "text", :placeholder "Email input", :defaultValue "## The best possible haggadah"}]]]
       [:div {:class "field is-grouped"}
        [:div {:class "control"}
-        [:a.button.is-link {:on-click #(re-frame/dispatch [::events/add-haggadah (form-content "haggadah-title") (form-content "haggadah-text") println  (events/keyword->func [::events/error]) %]) :id "submit"} "Create"]]]]]])
+        [:a.button.is-link {:on-click #(re-frame/dispatch [::events/add-haggadah
+                                                           (form-content "haggadah-title")
+                                                           (form-content "haggadah-text")
+                                                           (events/keyword->func [::push-state :haggadah-success])
+                                                           (events/keyword->func [::events/error])
+                                                           %])
+                            :id "submit"} "Create"]]]]]])
 
 
 
