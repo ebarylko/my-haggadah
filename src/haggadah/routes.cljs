@@ -36,7 +36,9 @@
              :controllers [{:parameters {:path [:id]}
                             :start (fn [params]
                                      (let [id (-> params :path :id)]
-                                       (re-frame/dispatch [::events/fetch-haggadah id ::events/set-haggadah])))}]}]]])
+                                       (re-frame/dispatch [::events/fetch-haggadah id ::events/set-haggadah])))}]}]]
+   ["/haggadah-creation" {:name :haggadah-creation
+                          :view views/haggadah-creation-panel}]])
 
 
 (defn on-navigate [new-match]

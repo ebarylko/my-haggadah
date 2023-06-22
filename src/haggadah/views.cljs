@@ -134,7 +134,7 @@
         [:h1.text-center.is-size-4 {:id "user"}
          (str "Hello " @name ". Welcome to your dashboard. To make a new haggadah, click the button to your right. To share and edit your existing haggadah, look at your haggadot below ")]])
      [:div.pl-6.buttons.is-right
-      #_[:a.button.is-large.is-focuesd.is-pulled-right    "Create haggadah"]]]
+      [:a.button.is-large.is-focused.is-pulled-right {:on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create haggadah"]]]
     [:div
      [:h1.is-size-3
       "Here are the haggadot you have created"]
@@ -145,6 +145,38 @@
             ^{:key id }[:a {:href (href :haggadah-view {:id id})} title])
           ]
          ))]]])
+
+(defn haggadah-creation-panel
+  []
+  [:div.columns.is-centered
+
+   [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
+    [:form.box
+     [:div.field
+      [:label {:class "label"} "Title"]
+      [:div #_{:class "control has-icons-left has-icons-right"}
+       [:input {:class "input", :type "text", :placeholder "Text input", :defaultValue "my-haggadah"}]
+       #_[:span {:class "icon is-small is-left"}
+          [:i {:class "fas fa-user"}]]
+       #_[:span {:class "icon is-small is-right"}
+          [:i {:class "fas fa-check"}]]]]
+     [:div {:class "field"}
+      [:label {:class "label"} "Content"]
+      [:div #_{:class "control has-icons-left has-icons-right"}
+       [:input {:class "input", :type "text", :placeholder "Email input", :defaultValue "## The best possible haggadah"}]
+       #_[:span {:class "icon is-small is-left"}
+          [:i {:class "fas fa-envelope"}]]
+       #_[:span {:class "icon is-small is-right"}
+          [:i {:class "fas fa-exclamation-triangle"}]]]]
+     [:div {:class "field is-grouped"}
+      [:div {:class "control"}
+       [:a.button.is-link {:on-click  #(re-frame/dispatch [::events/login]) :id "submit"} "Submit"]]
+      [:div {:class "control"}
+       [:button {:class "button is-link is-light"} "Cancel"]]]
+     ]
+    ]
+   ]
+  )
 
 (defn haggadah-view-panel
   []
