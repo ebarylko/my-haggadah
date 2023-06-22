@@ -3,7 +3,8 @@
             [cljs.test :as t :include-macros true]
             [re-frame.core :as rf]
             [day8.re-frame.test :as rf-test]
-            [haggadah.events :as events]))
+            [haggadah.events :as events]
+            [haggadah.core :as core]))
 
 
 (t/deftest admin-login
@@ -16,6 +17,15 @@
      ;;Assert the initial state
      (t/is (=  "(Unknown)" @name)))))
 
+(def user-not-found "auth/user-not-found")
 
+(t/deftest unregistered-user-login
+  (rf-test/run-test-async
+   (core/firebase-init!)
+   (rf/dispatch-sync [::events/initialize-db])
+   (rf/dispatch-sync [::events/login])
+   (rf-test/wait-for [::events/error]
+   (let [{:keys [code]} @(rf/subscribe [::subs/error])]
+     (t/is (= user-not-found code))))))
 
 

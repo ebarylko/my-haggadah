@@ -4,4 +4,5 @@
   {:name "(Unknown)"
    :haggadah-text "The default haggadah"
    :uid "The default user id"
-   :haggadot ["The sole haggadah"]})
+   :haggadot ["The sole haggadah"]
+   :error "none"})

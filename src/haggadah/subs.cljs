@@ -26,3 +26,8 @@
  ::haggadot
  (fn [db _]
    (:haggadot db)))
+
+(re-frame/reg-sub
+ ::error
+ (fn [db _]
+   (:error db)))

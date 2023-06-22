@@ -28,9 +28,8 @@
          :link-text  "Submit"
          :controllers [{:start
                         (fn [_]
-                          (let [uid @(re-frame/subscribe [::subs/uid])]
-                            (re-frame/dispatch [::events/fetch-haggadot uid #(re-frame/dispatch [::events/set-haggadot %])
-                                                #(js/console.log "The haggadah could not be fetched")])))}]}]
+                          (re-frame/dispatch [::events/fetch-haggadot #(re-frame/dispatch [::events/set-haggadot %])
+                                              #(js/console.log "The haggadah could not be fetched")]))}]}]
     ["/:id" {:name :haggadah-view
              :view views/haggadah-view-panel
              :link-text "haggadah"

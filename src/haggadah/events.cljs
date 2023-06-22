@@ -42,13 +42,12 @@
  (fn [{:keys [email password on-success on-error]}]
    (-> (auth/email-login email password)
        (.then (fn [user]  (on-success (.-user user))))
-       (.catch on-error))))
-
+       (.catch (fn [error]  (on-error error) )))))
+ 
 
 (re-frame/reg-fx
  ::fetch-collection!
  (fn [{:keys [path on-success on-error]}]
-   (println "This is the collection fetch" path)
    (-> (firestore/instance)
        (fire/collection  (clojure.string/join "/" path))
        (fire/getDocs)
@@ -57,22 +56,16 @@
 
 (re-frame/reg-event-fx
  ::fetch-haggadot
- (fn [_ [_ uid on-success on-error]]
-   {::fetch-collection! {:path ["users" uid "haggadot"] :on-success on-success :on-error on-error}}))
+ (fn [{:keys [db]} [_ on-success on-error]]
+   {::fetch-collection! {:path ["users" (:uid db) "haggadot"] :on-success on-success :on-error on-error}}))
 
 (re-frame/reg-event-fx
  ::fetch-haggadah
  (fn [{:keys [db]} [_ id on-success on-error]]
-   (println "Id: " id "uid: " (:uid db))
    {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
                  :on-success on-success
                  :on-error on-error}}))
 
-(re-frame/reg-event-fx
- ::login
- interceptors
- (fn [_ [_]]
-   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %]) :on-error #(js/console.log % :error)}}))
 
 (defn keyword->func
   [key]
@@ -80,6 +73,13 @@
     (fn? key) key
     (vector? key) #(re-frame/dispatch (conj key %))
     :else #(re-frame/dispatch [key %])))
+
+(re-frame/reg-event-fx
+ ::login
+ interceptors
+ (fn [_ [_]]
+   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %]) :on-error #(re-frame/dispatch [::error %])}}))
+
 
 (re-frame/reg-fx
  ::fetch-doc
@@ -94,8 +94,9 @@
 (re-frame/reg-event-db
  ::error
  (fn [db [_ error]]
-   (js/console.log "There was an error" error)
-   (assoc db :error error)))
+   (assoc db :error {:error error
+                     :code (. error -code)
+                     :message (. error -message)})))
 
 (re-frame/reg-event-db
  ::set-haggadah
