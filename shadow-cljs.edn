@@ -46,8 +46,8 @@
                                                           haggadah.fb.auth/FIREBASE_FIRESTORE_HOST "http://localhost:8080"}}
                      }}
           :app-no-dev  {:target     :browser
-                        :output-dir "resources/public/js/compiled"
-                        :asset-path "/js/compiled"
+                        :output-dir "resources/public/no-dev/js/compiled"
+                        :asset-path "/no-dev/js/compiled"
                         :modules {:app {:init-fn haggadah.core/init}}
                         :dev {:compiler-options {:closure-defines {
                                                                    haggadah.fb.auth/FIREBASE_AUTH_HOST  "http://localhost:9099"
