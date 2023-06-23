@@ -123,32 +123,44 @@
 (def new-haggadah-text "## We begin in Egypt")
 (def parsed-haggadah-text  "We begin in Egypt")
 
+(defn home->dashboard
+  [d]
+  (doto d
+   (e/go "http://localhost:5000/")
+   (e/click-visible {:tag :a :data-test-id "login"})
+   (e/click-visible {:tag :a :id "submit"})
+   (e/wait-visible {:tag :a :data-test-id "create-haggadah"})
+   (e/screenshot  "screenshots/create-haggadah-test-admin-exists-before-clicking-create.png")))
+
+(defn create-haggadah
+  [d]
+  (doto d
+   (e/click-visible {:tag :a :data-test-id "create-haggadah"})
+   (e/wait-visible {:tag :input :id "haggadah-title"})
+   (e/screenshot  "screenshots/create-haggadah-test-admin-exists-after-clicking-create.png")
+   (e/fill  {:tag :input :id "haggadah-title"} k/home (k/with-shift k/end) k/delete)
+   (e/fill {:tag :input :id "haggadah-title"} new-haggadah-title)
+   (e/fill {:tag :input :id "haggadah-text"} k/home (k/with-shift k/end) k/delete)
+   (e/fill {:tag :input :id "haggadah-text"} new-haggadah-text)
+   (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-creating-haggadah.png")
+   (e/click-visible {:tag :a :data-test-id "add-haggadah"})
+   (e/click-visible {:tag :a :data-test-id "return-dashboard"})))
+
+(defn click-on-haggadah
+  [d]
+  (doto d
+   (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-clicking-haggadah.png")
+   (e/click-visible {:tag :a :fn/text new-haggadah-title})
+   (e/wait-has-text-everywhere parsed-haggadah-text)
+   (e/screenshot "screenshots/create-haggadah-test-admin-exists-haggadah-text.png")))
+
 (t/deftest create-haggadah-test
   (t/testing "When the current user creates a new haggadah"
-    (let [_ (doto driver
-              (e/go "http://localhost:5000/")
-              (e/click-visible {:tag :a :data-test-id "login"})
-              (e/click-visible {:tag :a :id "submit"})
-              (e/wait-visible {:tag :a :data-test-id "create-haggadah"})
-              (e/screenshot  "screenshots/create-haggadah-test-admin-exists-before-clicking-create.png")
-              (e/click-visible {:tag :a :data-test-id "create-haggadah"})
-              (e/wait-visible {:tag :input :id "haggadah-title"})
-              (e/screenshot  "screenshots/create-haggadah-test-admin-exists-after-clicking-create.png")
-              (e/fill  {:tag :input :id "haggadah-title"} k/home (k/with-shift k/end) k/delete)
-              (e/fill {:tag :input :id "haggadah-title"} new-haggadah-title)
-              (e/fill {:tag :input :id "haggadah-text"} k/home (k/with-shift k/end) k/delete)
-              (e/fill {:tag :input :id "haggadah-text"} new-haggadah-text)
-              (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-creating-haggadah.png")
-              (e/click-visible {:tag :a :data-test-id "add-haggadah"})
-              (e/click-visible {:tag :a :data-test-id "return-dashboard"})
-              (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-clicking-haggadah.png")
-              (e/click-visible {:tag :a :fn/text new-haggadah-title})
-              (e/wait-has-text-everywhere parsed-haggadah-text)
-              (e/screenshot "screenshots/create-haggadah-test-admin-exists-haggadah-text.png"))
+    (let [_ (home->dashboard driver)
+          _ (create-haggadah driver)
+          _ (click-on-haggadah driver)
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
-
-      (t/is (= parsed-haggadah-text haggadah-text)))
-    ))
+      (t/is (= parsed-haggadah-text haggadah-text)))))
 
 ;; "http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents"
 
