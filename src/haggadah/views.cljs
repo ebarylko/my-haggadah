@@ -144,9 +144,7 @@
          [:div
           (for [{:keys [title id]} haggadot]
             [:div
-             ^{:key id}[:a {:href (href :haggadah-view {:id id})} title]
-             ]
-            )]))]]])
+             ^{:key id}[:a {:href (href :haggadah-view {:id id})} title]])]))]]])
 
 (defn form-content
   "Pre: takes an id for a form field
