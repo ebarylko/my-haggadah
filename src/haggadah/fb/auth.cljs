@@ -44,22 +44,22 @@
    {::fetch-collection! {:path ["users" (:uid db) "haggadot"] :on-success on-success :on-error on-error}}))
 
 
-(re-frame/reg-event-db
+#_(re-frame/reg-event-db
  ::store-user-info
  (fn [db [_ user]]
     (-> db
         (#(assoc % :name (.-email user)))
         (#(assoc % :uid (.-uid user))))))
 
-#_(re-frame/reg-event-fx
+(re-frame/reg-event-fx
  ::store-user-info
  (fn [{:keys [db] } [_ user]]
    {:db
     (-> db
         (#(assoc % :name (.-email user)))
-        (#(assoc % :uid (.-uid user))))}
+        (#(assoc % :uid (.-uid user))))
    :fx [[:dispatch [::fetch-haggadot #(re-frame/dispatch [::set-haggadot %])
-                    #(js/console.log "the haggadah was not fetched")]]]))
+                    #(js/console.log "the haggadah was not fetched")]]]}))
 
 (defn auth-user-success
   "Pre: takes a user
