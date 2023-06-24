@@ -12,7 +12,7 @@
 		"acceptance": "cp -r resources/public/css  test/acceptance/resources/public && npx shadow-cljs compile acceptance && cd test/acceptance && firebase emulators:exec --project my-haggadah 'lein test '",
 		  "acceptance:base": "cp -r resources  test/acceptance && npx shadow-cljs release acceptance",
 		  "act:pr": "act pull_request --artifact-server-path /tmp/artifacts ",
-      "acceptance:view": "npm run acceptance:base && cd test/acceptance && firebase emulators:start --project my-haggadah"
+      "acceptance:view": "cd test/acceptance && npm run acceptance:base && firebase emulators:start --project my-haggadah"
 	},
 	"dependencies": {
 		"firebase": "^9.21.0",
