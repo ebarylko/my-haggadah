@@ -66,13 +66,35 @@
                  :on-success on-success
                  :on-error on-error}}))
 
-
 (defn keyword->func
   [key]
   (cond
     (fn? key) key
     (vector? key) #(re-frame/dispatch (conj key %))
     :else #(re-frame/dispatch [key %])))
+
+
+
+(re-frame/reg-event-fx
+ ::add-haggadah
+ (fn [{:keys [db]} [_ title content]]
+   (println "Content " content "Title " title)
+   {::add-haggadah! {:path ["users" (:uid db) "haggadot"]
+                     :haggadah {:title title
+                                :content content}
+                    :on-success (re-frame/dispatch [::push-state :haggadah-success])
+                     :on-error (keyword->func ::error)}}))
+
+
+(re-frame/reg-fx
+ ::add-haggadah!
+ (fn [{:keys [path haggadah on-success on-error]}]
+   (-> (firestore/instance)
+       (fire/collection (clojure.string/join "/" path))
+       (fire/addDoc (clj->js haggadah))
+       (.then on-success)
+       (.catch on-error))))
+
 
 (re-frame/reg-event-fx
  ::login
