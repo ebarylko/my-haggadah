@@ -82,6 +82,7 @@
 (re-frame/reg-fx
  ::signout!
  (fn [{:keys [on-success on-error]}]
+   (println "We are processing the signout of the user")
      (-> (auth/signout)
          (.then on-success)
          (.catch on-error))))

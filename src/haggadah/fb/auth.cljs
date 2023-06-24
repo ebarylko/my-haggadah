@@ -3,7 +3,8 @@
    ["firebase/auth" :as fb-auth]
    [re-frame.core :as re-frame]
    [haggadah.fb.firestore :as firestore]
-   ["firebase/firestore" :as fire]))
+   ["firebase/firestore" :as fire]
+   [haggadah.db :as db]))
 
 
 (defonce auth (atom nil))
@@ -61,13 +62,26 @@
    :fx [[:dispatch [::fetch-haggadot #(re-frame/dispatch [::set-haggadot %])
                     #(js/console.log "the haggadah was not fetched")]]]}))
 
+(re-frame/reg-event-fx
+ ::push-state
+ (fn [_ [_ & route]]
+   {:push-state route}))
+
+(re-frame/reg-event-fx
+ ::logout-user
+ (fn [_ [_]]
+   (println "The user is logging out")
+   {:db db/default-db
+    :fx [[:dispatch [::push-state :home]]]}))
+
+
 (defn auth-user-success
   "Pre: takes a user
   Post: navigates to dashboard and stores user info if the user is logged in, otherwise navigates them to the home page"
   [user]
   (if user
     (re-frame/dispatch [::store-user-info user])
-    (println "The user is logging out")))
+    (re-frame/dispatch [::logout-user user])))
 
 
 (defn init [firebase-instance]
