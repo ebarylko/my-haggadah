@@ -135,7 +135,10 @@
          (str "Hello " @name ". Welcome to your dashboard. To make a new haggadah, click the button to your right. To share and edit your existing haggadah, look at your haggadot below ")]])
      [:div.pl-6.buttons.is-right
       [:a.button.is-large.is-focused.is-pulled-right {:data-test-id "create-haggadah"
-                                                      :on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create haggadah"]]]
+                                                      :on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create haggadah"]]
+     [:div.pl-6.buttons.is-right
+      [:a.button.is-large.is-focused.is-pulled-right {:data-test-id "signout"
+                                                      :on-click #(re-frame/dispatch [::events/signout])} "Signout"]]]
     [:div
      [:h1.is-size-3
       "Here are the haggadot you have created"]

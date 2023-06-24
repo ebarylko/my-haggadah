@@ -81,3 +81,6 @@
   [email password ]
   (fb-auth/signInWithEmailAndPassword @auth email password))
 
+(defn signout
+  []
+  (fb-auth/signOut @auth))

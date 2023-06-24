@@ -73,7 +73,18 @@
     (vector? key) #(re-frame/dispatch (conj key %))
     :else #(re-frame/dispatch [key %])))
 
+(re-frame/reg-event-fx
+ ::signout
+ (fn [_ [_]]
+   {::signout! {:on-success #(re-frame/dispatch [::push-state :home %])
+                :on-error (keyword->func ::error)}}))
 
+(re-frame/reg-fx
+ ::signout!
+ (fn [{:keys [on-success on-error]}]
+     (-> (auth/signout)
+         (.then on-success)
+         (.catch on-error))))
 
 (re-frame/reg-event-fx
  ::add-haggadah
