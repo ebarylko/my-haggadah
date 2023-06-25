@@ -58,7 +58,8 @@
    {:db
     (-> db
         (#(assoc % :name (.-email user)))
-        (#(assoc % :uid (.-uid user))))
+        (#(assoc % :uid (.-uid user)))
+        (assoc :user :registered))
    :fx [[:dispatch [::fetch-haggadot #(re-frame/dispatch [::set-haggadot %])
                     #(js/console.log "the haggadah was not fetched")]]]}))
 
@@ -71,7 +72,7 @@
  ::logout-user
  (fn [_ [_]]
    (println "The user is logging out")
-   {:db db/default-db
+   {:db (assoc db/default-db :user :unregisterd)
     :fx [[:dispatch [::push-state :home]]]}))
 
 

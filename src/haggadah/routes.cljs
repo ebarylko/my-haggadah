@@ -55,7 +55,6 @@
 
 ;; events
 
-;; hago el check del estado antes
 
 (re-frame/reg-event-db
  :navigated
