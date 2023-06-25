@@ -37,6 +37,7 @@
                             :start (fn [params]
                                      (let [id (-> params :path :id)
                                            uid @(re-frame/subscribe [::subs/uid])]
+                                       (println "Before the haggadah is fetched")
                                        (when uid
                                          (println "Here's the user id --" uid)
                                        (re-frame/dispatch [::events/fetch-haggadah id ::events/set-haggadah]))))}]}]]
@@ -54,6 +55,7 @@
 
 ;; events
 
+;; hago el check del estado antes
 
 (re-frame/reg-event-db
  :navigated
