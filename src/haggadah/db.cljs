@@ -4,6 +4,6 @@
   {:name "(Unknown)"
    :haggadah-text "The default haggadah"
    :uid nil
-   :haggadot ["The sole haggadah"]
+   :haggadot nil
    :error "none"
    :user :unloaded})

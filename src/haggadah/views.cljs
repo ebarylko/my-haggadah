@@ -144,10 +144,10 @@
       "Here are the haggadot you have created"]
      (let [haggadot @(re-frame/subscribe [::subs/haggadot])]
        (when haggadot
-         [:div
-          (for [{:keys [title id]} haggadot]
-            [:div
-             ^{:key id}[:a {:href (href :haggadah-view {:id id})} title]])]))]]])
+         [:ul
+          (for [{:keys [title id]} haggadot :when id] 
+            ^{:key id}[:li
+            [:a {:href (href :haggadah-view {:id id})} title]])]))]]])
 
 (defn form-content
   "Pre: takes an id for a form field
