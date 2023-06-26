@@ -52,16 +52,86 @@
         (#(assoc % :name (.-email user)))
         (#(assoc % :uid (.-uid user))))))
 
+
+
+; fetch-haggadah necesita un id, pero no tengo un id. puedo link fetch-haggadah con el resultado de login para aseguarame que va a estar ahi.
+
 (re-frame/reg-event-fx
  ::store-user-info
  (fn [{:keys [db] } [_ user]]
+   (let [route (:current-route db)]
    {:db
     (-> db
         (#(assoc % :name (.-email user)))
         (#(assoc % :uid (.-uid user)))
         (assoc :user :registered))
-   :fx [[:dispatch [::fetch-haggadot #(re-frame/dispatch [::set-haggadot %])
-                    #(js/console.log "the haggadah was not fetched")]]]}))
+    :fx [[:dispatch [::login]
+
+          ]]})))
+
+(def route-events
+  {:home []
+   :login []
+   :about []
+   :dashboard [::fetch-haggadot #(re-frame/dispatch [::set-haggadot %])
+               #(js/console.log "The haggadah could not be fetched")]
+})
+
+
+(re-frame/reg-fx
+ ::fetch-collection!
+ (fn [{:keys [path on-success on-error]}]
+   (-> (firestore/instance)
+       (fire/collection  (clojure.string/join "/" path))
+       (fire/getDocs)
+       (.then on-success)
+       (.catch on-error))))
+
+(re-frame/reg-event-fx
+ ::fetch-haggadot
+ (fn [{:keys [db]} [_ on-success on-error]]
+   {::fetch-collection! {:path ["users" (:uid db) "haggadot"] :on-success on-success :on-error on-error}}))
+
+(re-frame/reg-event-db
+ ::set-haggadot
+ (fn [db [_ snap]]
+   (let [docs (->> snap (.-docs) js->clj)
+         ids (map #(.-id %) docs)]
+     (assoc db :haggadot
+            (->> docs
+                 (map #(.data %))
+                 (map #(js->clj % :keywordize-keys true))
+                 (map #(assoc %2 :id %1) ids))))))
+
+#_(re-frame/reg-event-db
+ ::set-user
+ (fn [db [_ user]]
+   (-> db
+       (#(assoc % :name (.-email user)))
+       (#(assoc % :uid (.-uid user))))))
+
+(defn email-login
+  [email password ]
+  (fb-auth/signInWithEmailAndPassword @auth email password))
+
+(re-frame/reg-fx
+ ::email-login!
+ (fn [{:keys [email password on-success on-error]}]
+   (-> (email-login email password)
+       (.then (fn [user]  (on-success (.-user user))))
+       (.catch (fn [error]  (on-error error) )))))
+
+(re-frame/reg-event-db
+ ::error
+ (fn [db [_ error]]
+   (assoc db :error {:error error
+                     :code (. error -code)
+                     :message (. error -message)})))
+
+(re-frame/reg-event-fx
+ ::login
+ (fn [_ [_]]
+   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %]) :on-error #(re-frame/dispatch [::error %])}}))
 
 (re-frame/reg-event-fx
  ::push-state
@@ -75,13 +145,36 @@
    {:db (assoc db/default-db :user :unregisterd)
     :fx [[:dispatch [::push-state :home]]]}))
 
+(re-frame/reg-event-fx
+ ::set-user
+ (fn [{:keys [db]} [_ user]]
+   (let [route (get-in db [:current-route :data :name])]
+     (println "This is the route " route)
+   {:db
+    (-> db
+        (#(assoc % :name (.-email user)))
+        (#(assoc % :uid (.-uid user)))
+        (assoc :user :registered))
+    :fx [[:dispatch (route route-events)]]})))
+
+
+(re-frame/reg-event-fx
+ ::store-user-info
+ (fn [{:keys [db] } [_ user]]
+   {:db
+    (-> db
+        (#(assoc % :name (.-email user)))
+        (#(assoc % :uid (.-uid user)))
+        (assoc :user :registered))
+    :fx [[:dispatch [::fetch-haggadot #(re-frame/dispatch [::set-haggadot %])
+                     #(js/console.log "the haggadah was not fetched")]]]}))
 
 (defn auth-user-success
   "Pre: takes a user
   Post: navigates to dashboard and stores user info if the user is logged in, otherwise navigates them to the home page"
   [user]
   (if user
-    (re-frame/dispatch [::store-user-info user])
+    (re-frame/dispatch [::set-user user])
     (re-frame/dispatch [::logout-user user])))
 
 
@@ -92,9 +185,6 @@
     (fb-auth/connectAuthEmulator @auth FIREBASE_AUTH_HOST #js{:disableWarnings true}))
   (.onAuthStateChanged ^js @auth auth-user-success))
 
-(defn email-login
-  [email password ]
-  (fb-auth/signInWithEmailAndPassword @auth email password))
 
 (defn signout
   []

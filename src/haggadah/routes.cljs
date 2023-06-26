@@ -10,6 +10,7 @@
    [haggadah.events :as events]
    [haggadah.subs :as subs]))
 
+
 (def routes
   [
    ["/" {:name      :home
@@ -26,6 +27,7 @@
     ["" {:name :dashboard
          :view views/dashboard-panel
          :link-text  "Submit"
+         :prerequisites ["logged in"]
          :controllers [{:start
                         (fn [_]
                           (re-frame/dispatch [::events/fetch-haggadot #(re-frame/dispatch [::events/set-haggadot %])
@@ -36,11 +38,10 @@
              :controllers [{:parameters {:path [:id]}
                             :start (fn [params]
                                      (let [id (-> params :path :id)
-                                           uid @(re-frame/subscribe [::subs/uid])]
+                                           #_#_uid @(re-frame/subscribe [::subs/uid])]
                                        (println "Before the haggadah is fetched")
-                                       (when uid
-                                         (println "Here's the user id --" uid)
-                                       (re-frame/dispatch [::events/fetch-haggadah id ::events/set-haggadah]))))}]}]]
+                                       (re-frame/dispatch [::login])
+                                       (re-frame/dispatch [::events/fetch-haggadah id ::events/set-haggadah]) ))}]}]]
    ["/haggadah-creation"
     ["" {:name :haggadah-creation
          :view views/haggadah-creation-panel}]
