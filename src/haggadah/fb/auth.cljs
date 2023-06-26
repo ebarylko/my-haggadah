@@ -54,7 +54,6 @@
 
 
 
-; fetch-haggadah necesita un id, pero no tengo un id. puedo link fetch-haggadah con el resultado de login para aseguarame que va a estar ahi.
 
 (re-frame/reg-event-fx
  ::store-user-info
@@ -69,13 +68,48 @@
 
           ]]})))
 
+(re-frame/reg-event-fx
+ ::fetch-haggadah
+ (fn [{:keys [db]} [_ on-success on-error]]
+   (let [id (get-in db [:current-route :path-params :id])]
+     (println "The id is " id)
+    {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
+                  :on-success on-success
+                  :on-error on-error}})))
+
+(defn keyword->func
+  [key]
+  (cond
+    (fn? key) key
+    (vector? key) #(re-frame/dispatch (conj key %))
+    :else #(re-frame/dispatch [key %])))
+
+(re-frame/reg-fx
+ ::fetch-doc
+ (fn [{:keys [path on-success on-error] :or {on-error ::error }}]
+   (println "Here's the path" path)
+   (-> (firestore/instance)
+       (fire/doc (clojure.string/join "/" path))
+       (fire/getDoc)
+       (.then (keyword->func on-success))
+       (.catch (keyword->func on-error)))))
+
+(re-frame/reg-event-db
+ ::set-haggadah
+ (fn [db [_ snap]]
+   (assoc db :haggadah-text
+          (-> snap
+              (. data)
+              (js->clj :keywordize-keys true)
+              (:content)))))
+
 (def route-events
   {:home []
    :login []
    :about []
    :dashboard [::fetch-haggadot #(re-frame/dispatch [::set-haggadot %])
                #(js/console.log "The haggadah could not be fetched")]
-})
+:haggadah-view [::fetch-haggadah ::set-haggadah]})
 
 
 (re-frame/reg-fx

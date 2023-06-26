@@ -28,19 +28,19 @@
          :view views/dashboard-panel
          :link-text  "Submit"
          :prerequisites ["logged in"]
-         :controllers [{:start
+         #_#_:controllers [{:start
                         (fn [_]
                           (re-frame/dispatch [::events/fetch-haggadot #(re-frame/dispatch [::events/set-haggadot %])
                                               #(js/console.log "The haggadah could not be fetched")]))}]}]
     ["/:id" {:name :haggadah-view
              :view views/haggadah-view-panel
              :link-text "haggadah"
-             :controllers [{:parameters {:path [:id]}
+             #_#_:controllers [{:parameters {:path [:id]}
                             :start (fn [params]
                                      (let [id (-> params :path :id)
                                            #_#_uid @(re-frame/subscribe [::subs/uid])]
                                        (println "Before the haggadah is fetched")
-                                       (re-frame/dispatch [::login])
+                                       #_(re-frame/dispatch [::login])
                                        (re-frame/dispatch [::events/fetch-haggadah id ::events/set-haggadah]) ))}]}]]
    ["/haggadah-creation"
     ["" {:name :haggadah-creation
