@@ -28,7 +28,7 @@
   (when-not @firebase-instance
     (let [cfg (clj->js config)]
       (reset! firebase-instance (fba/initializeApp cfg))
-      (fb-auth/init @firebase-instance)
+      (fb-auth/init @firebase-instance events/auth-user-success)
       (fb-fs/init @firebase-instance)
       (fb-fn/init @firebase-instance))))
 

@@ -54,27 +54,33 @@
        (.then on-success)
        (.catch on-error))))
 
-(re-frame/reg-event-fx
- ::fetch-haggadot
- (fn [{:keys [db]} [_ on-success on-error]]
-   {::fetch-collection! {:path ["users" (:uid db) "haggadot"] :on-success on-success :on-error on-error}}))
-
-
-(re-frame/reg-event-fx
- ::fetch-haggadah
- (fn [{:keys [db]} [_ on-success on-error]]
-   (let [id (get-in db [:current-route :path-params :id])]
-     (println "The id is " id)
-     {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
-                   :on-success on-success
-                   :on-error on-error}})))
-
 (defn keyword->func
   [key]
   (cond
     (fn? key) key
     (vector? key) #(re-frame/dispatch (conj key %))
     :else #(re-frame/dispatch [key %])))
+
+(re-frame/reg-event-fx
+ ::fetch-haggadot
+ (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
+   (println "Uid: " (:uid db))
+   (if (:uid db)
+     {::fetch-collection! {:path ["users" (:uid db) "haggadot"]
+                           :on-success (keyword->func on-success)
+                           :on-error (keyword->func on-error)}}
+     {})))
+
+
+(re-frame/reg-event-fx
+ ::fetch-haggadah
+ (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
+   (let [id (get-in db [:current-route :path-params :id])]
+     (println "The id is " id)
+     {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
+                   :on-success (keyword->func on-success)
+                   :on-error (keyword->func on-error)}})))
+
 
 (re-frame/reg-event-fx
  ::signout
@@ -89,6 +95,28 @@
      (-> (auth/signout)
          (.then on-success)
          (.catch on-error))))
+
+(re-frame/reg-event-fx
+ ::logout-user
+ (fn [_ [_]]
+   (println "The user is logging out")
+   {:db (assoc db/default-db :user :unregisterd)
+    :fx [[:dispatch [::push-state :home]]]}))
+
+(def route-events
+  {:dashboard [::fetch-haggadot {:on-success ::set-haggadot}]
+   :haggadah-view [::fetch-haggadah {:on-success ::set-haggadah }]})
+
+(re-frame/reg-event-fx
+ ::store-user-info
+ (fn [{:keys [db] } [_ user]]
+   (let [route (get-in db [:current-route :data :name])
+         fx (get route-events route [])]
+     (println "This is the effect " fx "The route " route)
+   {:db (-> db
+            (assoc :name (.-email user)  :uid (.-uid user) :user :registered))
+    :fx [[:dispatch fx]]})))
+
 
 (re-frame/reg-event-fx
  ::add-haggadah
@@ -159,6 +187,14 @@
                  (#(assoc % :uid (.-uid user))))
              :fx [[:dispatch [::push-state :dashboard]]]}))
 
+(defn auth-user-success
+  "Pre: takes a user
+  Post: navigates to dashboard and stores user info if the user is logged in, otherwise navigates them to the home page"
+  [user]
+  (if user
+    (re-frame/dispatch [::store-user-info user])
+    (re-frame/dispatch [::logout-user])))
+
 (re-frame/reg-event-db
  ::set-haggadot
  (fn [db [_ snap]]
@@ -176,6 +212,10 @@
   ### Look at all we `can show you`"
   )
 
+(re-frame/reg-event-db
+ ::do-nothing
+ (fn [db [_]]
+   db))
 
 
 (re-frame/reg-event-fx

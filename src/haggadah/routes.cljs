@@ -1,40 +1,14 @@
 (ns haggadah.routes
   (:require
-   [pushy.core :as pushy]
    [reitit.frontend.easy :as rfe]
    [reitit.frontend.controllers :as rfc]
    [reitit.coercion.spec :as rss]
    [reitit.frontend :as rf]
    [re-frame.core :as re-frame]
    [haggadah.views :as views]
-   [haggadah.events :as events]
-   [haggadah.subs :as subs]))
+   [haggadah.events :as events]))
 
 
-(def route-events
-  {:home []
-   :login []
-   :about []
-   :dashboard [::events/fetch-haggadot #(re-frame/dispatch [::events/set-haggadot %])
-               #(js/console.log "The haggadah could not be fetched")]
-   :haggadah-view [::events/fetch-haggadah ::events/set-haggadah]})
-
-(re-frame/reg-event-fx
- ::setup-route!
- (fn [{:keys [db]} [_ user]]
-   (let [route (get-in db [:current-route :data :name])]
-     (println "This is the route " route)
-     {:db
-      (-> db
-          (#(assoc % :name (.-email user)))
-          (#(assoc % :uid (.-uid user)))
-          (assoc :user :registered))
-      :fx [[:dispatch (route route-events)]]})))
-
-(re-frame/reg-event-fx
- ::setup-route
- (fn [_ [_]]
-   {::events/email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::setup-route! %]) :on-error #(re-frame/dispatch [::events/error %])}}))
 
 
 (def routes
@@ -53,10 +27,7 @@
     ["" {:name :dashboard
          :view views/dashboard-panel
          :link-text  "Submit"
-         :prerequisites ["logged in"]
-        :controllers [{:start
-                        (fn [_]
-                          (re-frame/dispatch [::setup-route ]))}]}]
+        :controllers [{:start (fn [_] (re-frame/dispatch (:dashboard events/route-events)))}]}]
     ["/:id" {:name :haggadah-view
              :view views/haggadah-view-panel
              :link-text "haggadah"
