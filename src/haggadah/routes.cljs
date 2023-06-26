@@ -11,6 +11,32 @@
    [haggadah.subs :as subs]))
 
 
+(def route-events
+  {:home []
+   :login []
+   :about []
+   :dashboard [::events/fetch-haggadot #(re-frame/dispatch [::events/set-haggadot %])
+               #(js/console.log "The haggadah could not be fetched")]
+   :haggadah-view [::events/fetch-haggadah ::events/set-haggadah]})
+
+(re-frame/reg-event-fx
+ ::setup-route!
+ (fn [{:keys [db]} [_ user]]
+   (let [route (get-in db [:current-route :data :name])]
+     (println "This is the route " route)
+     {:db
+      (-> db
+          (#(assoc % :name (.-email user)))
+          (#(assoc % :uid (.-uid user)))
+          (assoc :user :registered))
+      :fx [[:dispatch (route route-events)]]})))
+
+(re-frame/reg-event-fx
+ ::setup-route
+ (fn [_ [_]]
+   {::events/email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::setup-route! %]) :on-error #(re-frame/dispatch [::events/error %])}}))
+
+
 (def routes
   [
    ["/" {:name      :home
@@ -28,20 +54,15 @@
          :view views/dashboard-panel
          :link-text  "Submit"
          :prerequisites ["logged in"]
-         #_#_:controllers [{:start
+        :controllers [{:start
                         (fn [_]
-                          (re-frame/dispatch [::events/fetch-haggadot #(re-frame/dispatch [::events/set-haggadot %])
-                                              #(js/console.log "The haggadah could not be fetched")]))}]}]
+                          (re-frame/dispatch [::setup-route ]))}]}]
     ["/:id" {:name :haggadah-view
              :view views/haggadah-view-panel
              :link-text "haggadah"
-             #_#_:controllers [{:parameters {:path [:id]}
-                            :start (fn [params]
-                                     (let [id (-> params :path :id)
-                                           #_#_uid @(re-frame/subscribe [::subs/uid])]
-                                       (println "Before the haggadah is fetched")
-                                       #_(re-frame/dispatch [::login])
-                                       (re-frame/dispatch [::events/fetch-haggadah id ::events/set-haggadah]) ))}]}]]
+             :controllers [{:start (fn []
+                                     (println "Before the haggadah is fetched")
+                                     (re-frame/dispatch [::setup-route]))}]}]]
    ["/haggadah-creation"
     ["" {:name :haggadah-creation
          :view views/haggadah-creation-panel}]

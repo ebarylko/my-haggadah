@@ -59,12 +59,15 @@
  (fn [{:keys [db]} [_ on-success on-error]]
    {::fetch-collection! {:path ["users" (:uid db) "haggadot"] :on-success on-success :on-error on-error}}))
 
+
 (re-frame/reg-event-fx
  ::fetch-haggadah
- (fn [{:keys [db]} [_ id on-success on-error]]
-   {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
-                 :on-success on-success
-                 :on-error on-error}}))
+ (fn [{:keys [db]} [_ on-success on-error]]
+   (let [id (get-in db [:current-route :path-params :id])]
+     (println "The id is " id)
+     {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
+                   :on-success on-success
+                   :on-error on-error}})))
 
 (defn keyword->func
   [key]
@@ -172,10 +175,6 @@
   ### This is the example haggadah
   ### Look at all we `can show you`"
   )
-
-
-
-
 
 
 

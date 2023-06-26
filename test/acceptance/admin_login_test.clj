@@ -109,6 +109,7 @@
                      (.get))
           _ (doto driver
               (e/go "http://localhost:5000/")
+              (e/screenshot "screenshots/show-text-test-arriving-to-site.png")
               (e/click-visible {:tag :a :data-test-id "login"})
               (e/click-visible {:tag :a :id "submit"})
               (e/screenshot  "screenshots/show-text-test-admin-exists-haggaddah-exists-before-clicking-haggadah.png")
