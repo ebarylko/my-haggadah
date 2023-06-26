@@ -77,9 +77,10 @@
  (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
    (let [id (get-in db [:current-route :path-params :id])]
      (println "The id is " id)
-     {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
-                   :on-success (keyword->func on-success)
-                   :on-error (keyword->func on-error)}})))
+     (when (:uid db)
+       {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
+                     :on-success (keyword->func on-success)
+                     :on-error (keyword->func on-error)}}))))
 
 
 (re-frame/reg-event-fx
