@@ -1,10 +1,6 @@
 (ns haggadah.fb.auth
   (:require
-   ["firebase/auth" :as fb-auth]
-   [re-frame.core :as re-frame]
-   [haggadah.fb.firestore :as firestore]
-   ["firebase/firestore" :as fire]
-   [haggadah.db :as db]))
+   ["firebase/auth" :as fb-auth]))
 
 
 (defonce auth (atom nil))

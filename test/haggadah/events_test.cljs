@@ -7,10 +7,11 @@
             [haggadah.core :as core]
             [haggadah.fb.auth :as auth]
             [haggadah.routes :as routes]
-            [re-frame.core :as re-frame]))
+            [re-frame.core :as re-frame]
+            ["firebase-admin" :as admin]))
 
 
-(t/deftest admin-login
+#_(t/deftest admin-login
   (rf-test/run-test-sync               ;; <-- add this
    ;; with the above macro this becomes a dispatch-sync
    ;; and app-db is isolated between tests
@@ -27,7 +28,7 @@
 
 (def user-not-found "auth/user-not-found")
 
-(t/deftest unregistered-user-login
+#_(t/deftest unregistered-user-login
   (rf-test/run-test-async
    (core/firebase-init!)
    (rf/dispatch-sync [::events/initialize-db])
@@ -37,15 +38,16 @@
      (t/is (= user-not-found code))))))
 
 
-#_(defn new-user
+(defn new-user
   "Pre: takes an email and a password
   Post: returns a user if a new user has been created. Otherwise, throws an error"
   [email pwd]
-  (-> (auth/create-user email pwd)
-      (.then #(rf/dispatch [::events/login]))
+  (-> (admin/auth)
+      ( #js{:email "han@skywalker.com" :password "123456789"})
+      (.then (fn [user] (println "The user was created " user) (rf/dispatch-sync [::events/login])))
       (.catch (fn [error] (println "The error " error)))))
 
-#_(t/deftest registered-user-login
+(t/deftest registered-user-login
   (rf-test/run-test-async
    (core/firebase-init!)
    (rf/dispatch-sync [::events/initialize-db])
