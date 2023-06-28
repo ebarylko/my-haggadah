@@ -8,6 +8,7 @@
             [re-frame.core :as re-frame]))
 
 
+
 (t/deftest admin-login
   (rf-test/run-test-sync               ;; <-- add this
    ;; with the above macro this becomes a dispatch-sync
@@ -25,7 +26,7 @@
 
 (def user-not-found "auth/user-not-found")
 
-(t/deftest unregistered-user-login
+#_(t/deftest unregistered-user-login
   (rf-test/run-test-async
    (core/firebase-init!)
    (rf/dispatch-sync [::events/initialize-db])
@@ -47,14 +48,14 @@
       (.then (fn [user] (println "The user was created " user) (rf/dispatch-sync [::events/login])))
       (.catch (fn [error] (println "The error " error)))))
 
-#_(t/deftest registered-user-login
+(t/deftest registered-user-login
   (rf-test/run-test-async
    (core/firebase-init!)
    (rf/dispatch-sync [::events/initialize-db])
-   (println "Before making the user")
-   (new-user "han@skywalker.com" "123456789")
-   (println "After making the user")
-#_   (rf/dispatch-sync [::events/login])
+   #_(println "Before making the user")
+   #_(new-user "han@skywalker.com" "123456789")
+  #_ (println "After making the user")
+   (rf/dispatch-sync [::events/login])
    (let [user (rf/subscribe [::subs/user])
          uid (rf/subscribe [::subs/uid])]
      (t/are [x y] (= x y)

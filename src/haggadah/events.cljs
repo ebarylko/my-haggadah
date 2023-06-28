@@ -191,6 +191,7 @@
 (re-frame/reg-event-fx
  ::set-user
  (fn-traced [{:keys [db]} [_ user]]
+            (println "Setting up the user")
             {:db 
              (-> db
                  (#(assoc % :name (.-email user)))

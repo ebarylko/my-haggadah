@@ -45,7 +45,9 @@
                                                           haggadah.fb.auth/FIREBASE_FIRESTORE_HOST "http://localhost:8080"}}}}
           :ci-setup {:target :node-script
            :output-to "target/ci-setup.js"
-          :main haggadah.setup/main}
+                     :main haggadah.setup/main
+                     :compiler-options {:closure-defines {haggadah.setup/PROJECT_ID "my-haggadah"}}
+                     }
           :acceptance  {:target     :browser
                         :output-dir "test/acceptance/resources/public/js/compiled"
                         :asset-path "/js/compiled"
