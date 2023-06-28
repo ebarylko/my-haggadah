@@ -60,6 +60,7 @@
 (re-frame/reg-fx
  :push-state
  (fn [route]
+   (println "The route in push-state " route)
    (apply rfe/push-state route)))
 
 ;; subscriptions

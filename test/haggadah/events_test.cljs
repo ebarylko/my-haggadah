@@ -29,10 +29,13 @@
   (rf-test/run-test-async
    (core/firebase-init!)
    (rf/dispatch-sync [::events/initialize-db])
+   (println "Before logging in")
    (rf/dispatch-sync [::events/login])
+   (println "After logging in")
    (rf-test/wait-for [::events/error]
-   (let [{:keys [code]} @(rf/subscribe [::subs/error])]
-     (t/is (= user-not-found code))))))
+                     (println "Found the error")
+                     (let [{:keys [code]} @(rf/subscribe [::subs/error])]
+                       (t/is (= user-not-found code))))))
 
 
 #_(defn new-user

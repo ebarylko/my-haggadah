@@ -105,8 +105,16 @@
     :fx [[:dispatch [::push-state :home]]]}))
 
 (def route-events
-  {:dashboard [::fetch-haggadot {:on-success ::set-haggadot}]
+  {nil [::do-nothing]
+   :home [::do-nothing]
+   :login [::do-nothing]
+   :dashboard [::fetch-haggadot {:on-success ::set-haggadot}]
    :haggadah-view [::fetch-haggadah {:on-success ::set-haggadah }]})
+
+(re-frame/reg-event-db
+ ::do-nothing
+ (fn [db [_]]
+   db))
 
 (re-frame/reg-event-fx
  ::store-user-info
@@ -177,6 +185,7 @@
 (re-frame/reg-event-fx
  ::push-state
  (fn [_ [_ & route]]
+   (println "the current route " route)
    {:push-state route}))
 
 (re-frame/reg-event-fx
@@ -192,6 +201,7 @@
   "Pre: takes a user
   Post: navigates to dashboard and stores user info if the user is logged in, otherwise navigates them to the home page"
   [user]
+  (println "The user is now being saved or moved")
   (if user
     (re-frame/dispatch [::store-user-info user])
     (re-frame/dispatch [::logout-user])))
@@ -213,10 +223,6 @@
   ### Look at all we `can show you`"
   )
 
-(re-frame/reg-event-db
- ::do-nothing
- (fn [db [_]]
-   db))
 
 
 (re-frame/reg-event-fx
