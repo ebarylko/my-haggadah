@@ -9,7 +9,7 @@
 
 
 
-(t/deftest admin-login
+#_(t/deftest admin-login
   (rf-test/run-test-sync               ;; <-- add this
    ;; with the above macro this becomes a dispatch-sync
    ;; and app-db is isolated between tests

@@ -15,7 +15,8 @@
 (re-frame/reg-event-db
  ::initialize-db
  (fn-traced [_ _]
-   db/default-db))
+            (println "The db is being initialized")
+            db/default-db))
 
 (re-frame/reg-event-fx
  ::call-func
