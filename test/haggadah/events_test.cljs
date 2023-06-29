@@ -39,25 +39,18 @@
                        (t/is (= user-not-found code))))))
 
 
-#_(defn new-user
-  "Pre: takes an email and a password
-  Post: returns a user if a new user has been created. Otherwise, throws an error"
-  [email pwd]
-  (-> (admin/auth)
-      ( #js{:email "han@skywalker.com" :password "123456789"})
-      (.then (fn [user] (println "The user was created " user) (rf/dispatch-sync [::events/login])))
-      (.catch (fn [error] (println "The error " error)))))
 
 (t/deftest registered-user-login
   (rf-test/run-test-async
    (core/firebase-init!)
-   (rf/dispatch-sync [::events/initialize-db])
-   #_(println "Before making the user")
-   #_(new-user "han@skywalker.com" "123456789")
-  #_ (println "After making the user")
-   (rf/dispatch-sync [::events/login])
-   (let [user (rf/subscribe [::subs/user])
-         uid (rf/subscribe [::subs/uid])]
-     (t/are [x y] (= x y)
-       :registered @user
-       "1234" @uid))))
+   (rf/dispatch [::events/login])
+   (rf-test/wait-for [::events/store-user-info ] [::events/logout-user ]
+    (let [user (rf/subscribe [::subs/user])
+          uid (rf/subscribe [::subs/uid])
+          name (rf/subscribe [::subs/name])]
+      (t/are [x y] (= x y)
+        :registered @user
+        "1234" @uid
+        "hana@skywalker.com" @name))
+    )
+   ))

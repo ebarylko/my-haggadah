@@ -37,9 +37,9 @@
   (fb-init cfg/firebase))
 
 (defn init []
-  (re-frame/dispatch-sync [::events/initialize-db])
   (dev-setup)
+  (routes/init-routes!)
   (mount-root)
   (firebase-init!)
-  (routes/init-routes!))
+  (re-frame/dispatch-sync [::events/initialize-db]))
 

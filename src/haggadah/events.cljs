@@ -102,13 +102,10 @@
  (fn [_ [_]]
    (println "The user is logging out")
    {:db (assoc db/default-db :user :unregisterd)
-    :fx [[:dispatch [::push-state :home]]]}))
+   #_#_ :fx [[:dispatch [::push-state :home]]]}))
 
 (def route-events
-  {nil [::do-nothing]
-   :home [::do-nothing]
-   :login [::do-nothing]
-   :dashboard [::fetch-haggadot {:on-success ::set-haggadot}]
+  {:dashboard [::fetch-haggadot {:on-success ::set-haggadot}]
    :haggadah-view [::fetch-haggadah {:on-success ::set-haggadah }]})
 
 (re-frame/reg-event-db
@@ -119,12 +116,14 @@
 (re-frame/reg-event-fx
  ::store-user-info
  (fn [{:keys [db] } [_ user]]
-   (let [route (get-in db [:current-route :data :name])
-         fx (get route-events route [])]
-     (println "This is the effect " fx "The route " route)
-   {:db (-> db
-            (assoc :name (.-email user)  :uid (.-uid user) :user :registered))
-    :fx [[:dispatch fx]]})))
+   (if user 
+     (let [route (get-in db [:current-route :data :name])
+           fx (get route-events route [])]
+       (println "This is the effect " fx "The route " route)
+       {:db (-> db
+                (assoc :name (.-email user)  :uid (.-uid user) :user :registered))
+        :fx [[:dispatch fx]]})
+     {:db (assoc db :name nil :uid nil :user :unregistered)})))
 
 
 (re-frame/reg-event-fx
@@ -152,7 +151,7 @@
  ::login
  interceptors
  (fn [_ [_]]
-   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %]) :on-error #(re-frame/dispatch [::error %])}}))
+   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::push-state :dashboard]) :on-error #(re-frame/dispatch [::error %])}}))
 
 
 (re-frame/reg-fx
@@ -200,12 +199,10 @@
 
 (defn auth-user-success
   "Pre: takes a user
-  Post: navigates to dashboard and stores user info if the user is logged in, otherwise navigates them to the home page"
+  Post: triggers an event which stores the user info "
   [user]
-  (println "The user is now being saved or moved")
-  (if user
-    (re-frame/dispatch [::store-user-info user])
-    (re-frame/dispatch [::logout-user])))
+  (println "The user is now being saved or moved " user)
+  (re-frame/dispatch [::store-user-info user]))
 
 (re-frame/reg-event-db
  ::set-haggadot
@@ -221,8 +218,7 @@
 (def example-haggadah
   "## Hello Why, who are you
   ### This is the example haggadah
-  ### Look at all we `can show you`"
-  )
+  ### Look at all we `can show you`")
 
 
 
