@@ -57,6 +57,7 @@
      (assoc db :current-route (assoc new-match :controllers controllers)))))
 
 
+
 (re-frame/reg-fx
  :push-state
  (fn [route]
@@ -74,7 +75,6 @@
    routes
    {:data {:coercion rss/coercion}}))
 
-#_(defonce history (atom nil))
 
 (defn init-routes! []
   (js/console.log "initializing routes")
