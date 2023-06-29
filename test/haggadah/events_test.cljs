@@ -43,14 +43,14 @@
 (t/deftest registered-user-login
   (rf-test/run-test-async
    (core/firebase-init!)
+   (rf/dispatch-sync [::events/initialize-db])
    (rf/dispatch [::events/login])
-   (rf-test/wait-for [::events/store-user-info ] [::events/logout-user ]
+   (rf-test/wait-for [::events/fetch-haggadot] 
     (let [user (rf/subscribe [::subs/user])
           uid (rf/subscribe [::subs/uid])
           name (rf/subscribe [::subs/name])]
       (t/are [x y] (= x y)
         :registered @user
         "1234" @uid
-        "hana@skywalker.com" @name))
-    )
+        "hana@skywalker.com" @name)))
    ))

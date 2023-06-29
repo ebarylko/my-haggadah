@@ -75,6 +75,7 @@
    routes
    {:data {:coercion rss/coercion}}))
 
+(defonce history (atom nil))
 
 (defn init-routes! []
   (js/console.log "initializing routes")

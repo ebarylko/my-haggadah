@@ -114,17 +114,34 @@
  (fn [db [_]]
    db))
 
-(re-frame/reg-event-fx
+#_(re-frame/reg-event-fx
  ::store-user-info
- (fn [{:keys [db] } [_ user]]
+ (fn [{:keys [db]}[_ user]]
+   (println "here is the user" user "The db " db)
    (if user 
      (let [route (get-in db [:current-route :data :name])
-           fx (get route-events route [])]
+           fx (get route-events route [])
+           user-db (:db db)]
        (println "This is the effect " fx "The route " route)
        {:db (-> db
                 (assoc :name (.-email user)  :uid (.-uid user) :user :registered))
         :fx [[:dispatch fx]]})
      {:db (assoc db :name nil :uid nil :user :unregistered)})))
+
+
+(re-frame/reg-event-fx
+ ::store-user-info
+ (fn [db [_ user]]
+   (println "here is the user" user "The db " db)
+   (if user 
+     (let [route (get-in db [:current-route #_#_:data :name])
+           fx (get route-events route [])
+           user-db (:db db)]
+       (println "This is the effect " fx "The route " route)
+       {:db (-> user-db
+                (assoc :name (.-email user)  :uid (.-uid user) :user :registered))
+        :fx [[:dispatch fx]]})
+     {:db (assoc (:db db) :name nil :uid nil :user :unregistered)})))
 
 
 (re-frame/reg-event-fx
