@@ -172,15 +172,18 @@
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
       (t/is (= parsed-haggadah-text haggadah-text)))))
 
+(def unparsed-bracha "### סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
+(def haggadah-with-bracha-title "Haggadah with a bracha")
+(def parsed-bracha "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
 
-#_(t/deftest bracha-rendered-test
+(t/deftest bracha-rendered-test
   (t/testing "When the current user creates a haggadah with a bracha"
     (let [_ (home->dashboard driver)
-          _ (create-haggadah driver content)
-          _ (click-on-haggadah driver title)
+          _ (create-haggadah driver haggadah-with-bracha-title unparsed-bracha)
+          _ (click-on-haggadah driver haggadah-with-bracha-title parsed-bracha)
           _ (e/wait-has-text-everywhere driver parsed-bracha)
-           bracha (e/get-element-text driver {:tag :h3 :id "haggadah-text"})]
-      (t/is (= parsed-bracha bracha)))
-    ))
+          _ (e/screenshot driver "screenshots/bracha-rendered-test-bracha-is-visible")
+           bracha (e/get-element-text driver {:tag :h3 :fn/text parsed-bracha})]
+      (t/is (= parsed-bracha bracha)))))
 ;; "http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents"
 
