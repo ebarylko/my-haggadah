@@ -192,7 +192,7 @@
   [:div.container.hero.is-medium
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:div.hero-body
-       [:div.container {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:mangle false :headerIds false})} :id "haggadah-text"}]])])
+       [:div.container.content {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:mangle false :headerIds false})} :id "haggadah-text"}]])])
 
 (defn about-panel
   []

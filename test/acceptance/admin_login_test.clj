@@ -134,43 +134,56 @@
    (e/screenshot  "screenshots/create-haggadah-test-admin-exists-before-clicking-create.png")))
 
 (defn create-haggadah
-  [d]
+  [d title text]
   (doto d
    (e/click-visible {:tag :a :data-test-id "create-haggadah"})
    (e/wait-visible {:tag :input :id "haggadah-title"})
    (e/screenshot  "screenshots/create-haggadah-test-admin-exists-after-clicking-create.png")
    (e/fill  {:tag :input :id "haggadah-title"} k/home (k/with-shift k/end) k/delete)
-   (e/fill {:tag :input :id "haggadah-title"} new-haggadah-title)
+   (e/fill {:tag :input :id "haggadah-title"} title)
    (e/fill {:tag :input :id "haggadah-text"} k/home (k/with-shift k/end) k/delete)
-   (e/fill {:tag :input :id "haggadah-text"} new-haggadah-text)
+   (e/fill {:tag :input :id "haggadah-text"} text)
    (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-creating-haggadah.png")
    (e/click-visible {:tag :a :data-test-id "add-haggadah"})
    (e/click-visible {:tag :a :data-test-id "return-dashboard"})))
 
 (defn click-on-haggadah
-  [d]
+  [d title text]
   (doto d
    (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-clicking-haggadah.png")
-   (e/click-visible {:tag :a :fn/text new-haggadah-title})
-   (e/wait-has-text-everywhere parsed-haggadah-text)
+   (e/click-visible {:tag :a :fn/text title})
+   (e/wait-has-text-everywhere text)
    (e/screenshot "screenshots/create-haggadah-test-admin-exists-haggadah-text.png")))
 
 (t/deftest create-haggadah-test
   (t/testing "When the current user creates a new haggadah"
     (let [_ (home->dashboard driver)
-          _ (create-haggadah driver)
-          _ (click-on-haggadah driver)
+          _ (create-haggadah driver new-haggadah-title new-haggadah-text)
+          _ (click-on-haggadah driver new-haggadah-title parsed-haggadah-text)
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
       (t/is (= parsed-haggadah-text haggadah-text)))))
 
 (t/deftest refresh-page-test
   (t/testing "When the current user refreshes the haggadah"
     (let [_ (home->dashboard driver)
-          _ (click-on-haggadah driver)
+          _ (click-on-haggadah driver new-haggadah-title parsed-haggadah-text)
           _ (e/refresh driver)
           _ (e/wait-has-text-everywhere driver parsed-haggadah-text)
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
       (t/is (= parsed-haggadah-text haggadah-text)))))
 
+(def unparsed-bracha "### סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
+(def haggadah-with-bracha-title "Haggadah with a bracha")
+(def parsed-bracha "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
+
+(t/deftest bracha-rendered-test
+  (t/testing "When the current user creates a haggadah with a bracha"
+    (let [_ (home->dashboard driver)
+          _ (create-haggadah driver haggadah-with-bracha-title unparsed-bracha)
+          _ (click-on-haggadah driver haggadah-with-bracha-title parsed-bracha)
+          _ (e/wait-has-text-everywhere driver parsed-bracha)
+          _ (e/screenshot driver "screenshots/bracha-rendered-test-bracha-is-visible")
+           bracha (e/get-element-text driver {:tag :h3 :fn/text parsed-bracha})]
+      (t/is (= parsed-bracha bracha)))))
 ;; "http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents"
 
