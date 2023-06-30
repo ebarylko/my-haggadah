@@ -15,7 +15,6 @@
 (re-frame/reg-event-db
  ::initialize-db
  (fn-traced [_ _]
-            (println "The db is being initialized")
             db/default-db))
 
 (re-frame/reg-event-fx
@@ -93,17 +92,10 @@
 (re-frame/reg-fx
  ::signout!
  (fn [{:keys [on-success on-error]}]
-   (println "We are processing the signout of the user")
      (-> (auth/signout)
          (.then on-success)
          (.catch on-error))))
 
-(re-frame/reg-event-fx
- ::logout-user
- (fn [_ [_]]
-   (println "The user is logging out")
-   {:db (assoc db/default-db :user :unregisterd)
-   #_#_ :fx [[:dispatch [::push-state :home]]]}))
 
 (def route-events
   {:dashboard [::fetch-haggadot {:on-success ::set-haggadot}]
@@ -114,34 +106,19 @@
  (fn [db [_]]
    db))
 
-#_(re-frame/reg-event-fx
+(re-frame/reg-event-fx
  ::store-user-info
  (fn [{:keys [db]}[_ user]]
-   (println "here is the user" user "The db " db)
    (if user 
      (let [route (get-in db [:current-route :data :name])
            fx (get route-events route [])
            user-db (:db db)]
-       (println "This is the effect " fx "The route " route)
        {:db (-> db
                 (assoc :name (.-email user)  :uid (.-uid user) :user :registered))
         :fx [[:dispatch fx]]})
      {:db (assoc db :name nil :uid nil :user :unregistered)})))
 
 
-(re-frame/reg-event-fx
- ::store-user-info
- (fn [db [_ user]]
-   (println "here is the user" user "The db " db)
-   (if user 
-     (let [route (get-in db [:current-route #_#_:data :name])
-           fx (get route-events route [])
-           user-db (:db db)]
-       (println "This is the effect " fx "The route " route)
-       {:db (-> user-db
-                (assoc :name (.-email user)  :uid (.-uid user) :user :registered))
-        :fx [[:dispatch fx]]})
-     {:db (assoc (:db db) :name nil :uid nil :user :unregistered)})))
 
 
 (re-frame/reg-event-fx
@@ -202,13 +179,11 @@
 (re-frame/reg-event-fx
  ::push-state
  (fn [_ [_ & route]]
-   (println "the current route " route)
    {:push-state route}))
 
 (re-frame/reg-event-fx
  ::set-user
  (fn-traced [{:keys [db]} [_ user]]
-            (println "Setting up the user")
             {:db 
              (-> db
                  (#(assoc % :name (.-email user)))
@@ -219,7 +194,6 @@
   "Pre: takes a user
   Post: triggers an event which stores the user info "
   [user]
-  (println "The user is now being saved or moved " user)
   (re-frame/dispatch [::store-user-info user]))
 
 (re-frame/reg-event-db

@@ -163,5 +163,14 @@
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
       (t/is (= parsed-haggadah-text haggadah-text)))))
 
+(t/deftest refresh-page-test
+  (t/testing "When the current user refreshes the haggadah"
+    (let [_ (home->dashboard driver)
+          _ (click-on-haggadah driver)
+          _ (e/refresh driver)
+          _ (e/wait-has-text-everywhere driver parsed-haggadah-text)
+          haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
+      (t/is (= parsed-haggadah-text haggadah-text)))))
+
 ;; "http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents"
 

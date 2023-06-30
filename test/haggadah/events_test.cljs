@@ -5,11 +5,11 @@
             [day8.re-frame.test :as rf-test]
             [haggadah.events :as events]
             [haggadah.core :as core]
-            [re-frame.core :as re-frame]))
+            [haggadah.routes :as routes]))
 
 
 
-#_(t/deftest admin-login
+(t/deftest admin-login
   (rf-test/run-test-sync               ;; <-- add this
    ;; with the above macro this becomes a dispatch-sync
    ;; and app-db is isolated between tests
@@ -42,15 +42,29 @@
 
 (t/deftest registered-user-login
   (rf-test/run-test-async
+   (routes/init-routes!)
    (core/firebase-init!)
    (rf/dispatch-sync [::events/initialize-db])
    (rf/dispatch [::events/login])
    (rf-test/wait-for [::events/fetch-haggadot] 
     (let [user (rf/subscribe [::subs/user])
-          uid (rf/subscribe [::subs/uid])
           name (rf/subscribe [::subs/name])]
       (t/are [x y] (= x y)
         :registered @user
-        "1234" @uid
-        "hana@skywalker.com" @name)))
-   ))
+        "han@skywalker.com" @name)))))
+
+#_(t/deftest routes-exist
+  (rf-test/run-test-sync
+   (routes/init-routes!)
+   (core/firebase-init!)
+   (rf/dispatch [::events/initialize-db])
+   (rf/dispatch [::events/push-state :login])
+   (let [user (rf/subscribe [::subs/user])
+         uid (rf/subscribe [::subs/uid])
+         name (rf/subscribe [::subs/name])
+         route (rf/subscribe [:current-route])]
+     (t/are [x y] (= x y)
+       :registered @user
+       "1234" @uid
+       "hana@skywalker.com" @name
+       :home @route))))

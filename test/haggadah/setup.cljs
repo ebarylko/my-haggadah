@@ -13,8 +13,6 @@
 (goog-define PROJECT_ID false)
 
 (defn main [& args]
-  (println "Creating the user")
-  (println "this is the project id " PROJECT_ID)
   (-> (.createUser (admin-auth/getAuth) #js{:email "han@skywalker.com" :password "123456789"})
       (.then (fn [user] (js/console.log user)
                (js/process.exit)))
