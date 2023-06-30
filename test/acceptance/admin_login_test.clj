@@ -109,6 +109,7 @@
                      (.get))
           _ (doto driver
               (e/go "http://localhost:5000/")
+              (e/screenshot "screenshots/show-text-test-arriving-to-site.png")
               (e/click-visible {:tag :a :data-test-id "login"})
               (e/click-visible {:tag :a :id "submit"})
               (e/screenshot  "screenshots/show-text-test-admin-exists-haggaddah-exists-before-clicking-haggadah.png")
@@ -159,6 +160,15 @@
     (let [_ (home->dashboard driver)
           _ (create-haggadah driver)
           _ (click-on-haggadah driver)
+          haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
+      (t/is (= parsed-haggadah-text haggadah-text)))))
+
+(t/deftest refresh-page-test
+  (t/testing "When the current user refreshes the haggadah"
+    (let [_ (home->dashboard driver)
+          _ (click-on-haggadah driver)
+          _ (e/refresh driver)
+          _ (e/wait-has-text-everywhere driver parsed-haggadah-text)
           haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
       (t/is (= parsed-haggadah-text haggadah-text)))))
 

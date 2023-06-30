@@ -6,15 +6,17 @@
 		"ancient": "clojure -Sdeps '{:deps {com.github.liquidz/antq {:mvn/version \"RELEASE\"}}}' -m antq.core",
 		"release": "npx shadow-cljs release app",
 		"build-report": "npx shadow-cljs run shadow.cljs.build-report app target/build-report.html",
-		"test": "npx shadow-cljs compile ci && firebase emulators:exec --project my-haggadah 'npx karma start'",
-    "test:watch": "npx shadow-cljs watch ci ",
+		  "test": "firebase emulators:exec --project my-haggadah 'node target/ci-setup.js && npx karma start'",
+      "karma:watch": "firebase emulators:exec  --project my-haggadah 'npx karma watch'",
+		"test:watch": "npx shadow-cljs watch ci ci-setup ",
 		"emulators": "firebase emulators:start --project my-haggadah --import=emulator_data --export-on-exit=emulator_data",
-      "acceptance": "cd test/acceptance && npm run acceptance:base && firebase emulators:exec --project my-haggadah 'lein test'",
-		  "acceptance:base": "cp -r resources  test/acceptance && npx shadow-cljs release acceptance",
-		  "act:pr": "act pull_request --artifact-server-path /tmp/artifacts "
+		"acceptance": "cd test/acceptance && npm run acceptance:base && firebase emulators:exec --project my-haggadah 'lein test'",
+		"acceptance:base": "cp -r resources  test/acceptance && npx shadow-cljs release acceptance",
+		"act:pr": "act pull_request --artifact-server-path /tmp/artifacts "
 	},
 	"dependencies": {
 		"firebase": "^9.21.0",
+		"firebase-admin": "^11.9.0",
 		"highlight.js": "11.5.1",
 		"marked": "^5.0.5",
 		"react": "17.0.2",
@@ -24,6 +26,7 @@
 	"devDependencies": {
 		"autoprefixer": "^10.4.14",
 		"bulma": "^0.9.4",
+		"jest-preset-cljest": "^1.1.4",
 		"karma": "^6.4.2",
 		"karma-chrome-launcher": "^3.2.0",
 		"karma-cljs-test": "^0.1.0",

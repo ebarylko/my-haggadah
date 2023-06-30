@@ -15,7 +15,7 @@
 (re-frame/reg-event-db
  ::initialize-db
  (fn-traced [_ _]
-   db/default-db))
+            db/default-db))
 
 (re-frame/reg-event-fx
  ::call-func
@@ -54,24 +54,70 @@
        (.then on-success)
        (.catch on-error))))
 
-(re-frame/reg-event-fx
- ::fetch-haggadot
- (fn [{:keys [db]} [_ on-success on-error]]
-   {::fetch-collection! {:path ["users" (:uid db) "haggadot"] :on-success on-success :on-error on-error}}))
-
-(re-frame/reg-event-fx
- ::fetch-haggadah
- (fn [{:keys [db]} [_ id on-success on-error]]
-   {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
-                 :on-success on-success
-                 :on-error on-error}}))
-
 (defn keyword->func
   [key]
   (cond
     (fn? key) key
     (vector? key) #(re-frame/dispatch (conj key %))
     :else #(re-frame/dispatch [key %])))
+
+(re-frame/reg-event-fx
+ ::fetch-haggadot
+ (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
+   (println "Uid: " (:uid db))
+   (if (:uid db)
+     {::fetch-collection! {:path ["users" (:uid db) "haggadot"]
+                           :on-success (keyword->func on-success)
+                           :on-error (keyword->func on-error)}}
+     {})))
+
+
+(re-frame/reg-event-fx
+ ::fetch-haggadah
+ (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
+   (let [id (get-in db [:current-route :path-params :id])]
+     (println "The id is " id)
+     (when (:uid db)
+       {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
+                     :on-success (keyword->func on-success)
+                     :on-error (keyword->func on-error)}}))))
+
+
+(re-frame/reg-event-fx
+ ::signout
+ (fn [_ [_]]
+   {::signout! {:on-success #(re-frame/dispatch [::push-state :home %])
+                :on-error (keyword->func ::error)}}))
+
+(re-frame/reg-fx
+ ::signout!
+ (fn [{:keys [on-success on-error]}]
+     (-> (auth/signout)
+         (.then on-success)
+         (.catch on-error))))
+
+
+(def route-events
+  {:dashboard [::fetch-haggadot {:on-success ::set-haggadot}]
+   :haggadah-view [::fetch-haggadah {:on-success ::set-haggadah }]})
+
+(re-frame/reg-event-db
+ ::do-nothing
+ (fn [db [_]]
+   db))
+
+(re-frame/reg-event-fx
+ ::store-user-info
+ (fn [{:keys [db]}[_ user]]
+   (if user 
+     (let [route (get-in db [:current-route :data :name])
+           fx (get route-events route [])
+           user-db (:db db)]
+       {:db (-> db
+                (assoc :name (.-email user)  :uid (.-uid user) :user :registered))
+        :fx [[:dispatch fx]]})
+     {:db (assoc db :name nil :uid nil :user :unregistered)})))
+
 
 
 
@@ -100,7 +146,7 @@
  ::login
  interceptors
  (fn [_ [_]]
-   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::set-user %]) :on-error #(re-frame/dispatch [::error %])}}))
+   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::push-state :dashboard]) :on-error #(re-frame/dispatch [::error %])}}))
 
 
 (re-frame/reg-fx
@@ -144,6 +190,12 @@
                  (#(assoc % :uid (.-uid user))))
              :fx [[:dispatch [::push-state :dashboard]]]}))
 
+(defn auth-user-success
+  "Pre: takes a user
+  Post: triggers an event which stores the user info "
+  [user]
+  (re-frame/dispatch [::store-user-info user]))
+
 (re-frame/reg-event-db
  ::set-haggadot
  (fn [db [_ snap]]
@@ -158,12 +210,7 @@
 (def example-haggadah
   "## Hello Why, who are you
   ### This is the example haggadah
-  ### Look at all we `can show you`"
-  )
-
-
-
-
+  ### Look at all we `can show you`")
 
 
 

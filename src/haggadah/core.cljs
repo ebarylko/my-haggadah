@@ -23,11 +23,12 @@
     (rdom/unmount-component-at-node root-el)
     (rdom/render [routes/router-component {:router routes/router}] root-el)))
 
+
 (defn fb-init [config]
   (when-not @firebase-instance
     (let [cfg (clj->js config)]
       (reset! firebase-instance (fba/initializeApp cfg))
-      (fb-auth/init @firebase-instance)
+      (fb-auth/init @firebase-instance events/auth-user-success)
       (fb-fs/init @firebase-instance)
       (fb-fn/init @firebase-instance))))
 

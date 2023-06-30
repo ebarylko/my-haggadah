@@ -3,6 +3,7 @@
 (def default-db
   {:name "(Unknown)"
    :haggadah-text "The default haggadah"
-   :uid "The default user id"
-   :haggadot ["The sole haggadah"]
-   :error "none"})
+   :uid nil
+   :haggadot nil
+   :error "none"
+   :user :unloaded})

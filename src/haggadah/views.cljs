@@ -135,16 +135,19 @@
          (str "Hello " @name ". Welcome to your dashboard. To make a new haggadah, click the button to your right. To share and edit your existing haggadah, look at your haggadot below ")]])
      [:div.pl-6.buttons.is-right
       [:a.button.is-large.is-focused.is-pulled-right {:data-test-id "create-haggadah"
-                                                      :on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create haggadah"]]]
+                                                      :on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create haggadah"]]
+     [:div.pl-6.buttons.is-right
+      [:a.button.is-large.is-focused.is-pulled-right {:data-test-id "signout"
+                                                      :on-click #(re-frame/dispatch [::events/signout])} "Signout"]]]
     [:div
      [:h1.is-size-3
       "Here are the haggadot you have created"]
      (let [haggadot @(re-frame/subscribe [::subs/haggadot])]
        (when haggadot
-         [:div
-          (for [{:keys [title id]} haggadot]
-            [:div
-             ^{:key id}[:a {:href (href :haggadah-view {:id id})} title]])]))]]])
+         [:ul
+          (for [{:keys [title id]} haggadot :when id] 
+            ^{:key id}[:li
+            [:a {:href (href :haggadah-view {:id id})} title]])]))]]])
 
 (defn form-content
   "Pre: takes an id for a form field
@@ -189,7 +192,7 @@
   [:div.container.hero.is-medium
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:div.hero-body
-       [:div.container {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text)} :id "haggadah-text"}]])])
+       [:div.container {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:mangle false :headerIds false})} :id "haggadah-text"}]])])
 
 (defn about-panel
   []

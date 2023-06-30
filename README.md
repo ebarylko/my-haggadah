@@ -49,3 +49,11 @@ run `npm run act:pr`
 
 ## Merging branches
 Complete the pr. Then change to the main branch and run `git fetch -p`. After that run `git rebase origin/name-of-branch`. Finally, delete the local branch by running `git b -D name-of-branch`.
+
+## User authentication model
+
+### Possible states
+There are three possible states for a user, unloaded, unregistered, and registered. The user will start off by being unloaded, and when logging in/out or refreshing the page the user will either be unregistered or registered. If the user has no uid, they will be marked as unregistered. Otherwise, they are marked as registered.
+
+### Accessing pages
+If a user does not have certain prerequisites to access a page, such as being logged in, the user will be moved to the home page. 

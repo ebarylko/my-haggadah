@@ -31,3 +31,8 @@
  ::error
  (fn [db _]
    (:error db)))
+
+(re-frame/reg-sub
+ ::user
+ (fn [db _]
+   (:user db)))

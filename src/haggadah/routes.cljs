@@ -1,14 +1,15 @@
 (ns haggadah.routes
   (:require
-   [pushy.core :as pushy]
    [reitit.frontend.easy :as rfe]
    [reitit.frontend.controllers :as rfc]
    [reitit.coercion.spec :as rss]
    [reitit.frontend :as rf]
    [re-frame.core :as re-frame]
    [haggadah.views :as views]
-   [haggadah.events :as events]
-   [haggadah.subs :as subs]))
+   [haggadah.events :as events]))
+
+
+
 
 (def routes
   [
@@ -26,17 +27,13 @@
     ["" {:name :dashboard
          :view views/dashboard-panel
          :link-text  "Submit"
-         :controllers [{:start
-                        (fn [_]
-                          (re-frame/dispatch [::events/fetch-haggadot #(re-frame/dispatch [::events/set-haggadot %])
-                                              #(js/console.log "The haggadah could not be fetched")]))}]}]
+        :controllers [{:start (fn [_] (re-frame/dispatch (:dashboard events/route-events)))}]}]
     ["/:id" {:name :haggadah-view
              :view views/haggadah-view-panel
              :link-text "haggadah"
-             :controllers [{:parameters {:path [:id]}
-                            :start (fn [params]
-                                     (let [id (-> params :path :id)]
-                                       (re-frame/dispatch [::events/fetch-haggadah id ::events/set-haggadah])))}]}]]
+             :controllers [{:start (fn []
+                                     (println "Before the haggadah is fetched")
+                                     (re-frame/dispatch (:haggadah-view events/route-events)))}]}]]
    ["/haggadah-creation"
     ["" {:name :haggadah-creation
          :view views/haggadah-creation-panel}]
@@ -60,6 +57,7 @@
      (assoc db :current-route (assoc new-match :controllers controllers)))))
 
 
+
 (re-frame/reg-fx
  :push-state
  (fn [route]
@@ -75,6 +73,8 @@
   (rf/router
    routes
    {:data {:coercion rss/coercion}}))
+
+(defonce history (atom nil))
 
 (defn init-routes! []
   (js/console.log "initializing routes")
