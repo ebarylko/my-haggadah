@@ -156,10 +156,6 @@
   (-> (.getElementById js/document id)
       (.-value)))
 
-(defn text-area-content
-  [id]
-  (-> (.getElementById js/document id)
-      (.-textContent)))
 
 
 (defn haggadah-success-panel
