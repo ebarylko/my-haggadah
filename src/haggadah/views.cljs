@@ -157,6 +157,7 @@
       (.-value)))
 
 
+
 (defn haggadah-success-panel
   [_]
   [:div.container.has-text-centered
@@ -164,28 +165,29 @@
     "Your haggadah has been successfully made. Please click the button below to return to the dashboard and see it"]
    [:a.button.is-focused.is-link {:data-test-id "return-dashboard":on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
 
+
+
 (defn haggadah-creation-panel
   []
-  [:div.columns.is-centered
-   [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
-    [:h1 "Please fill in the details of your haggadah below"]
-    [:form.box.mt-4
-      [:div.field
-       [:label {:class "label"} "Title"]
-       [:div 
-        [:input#haggadah-title.input {:placeholder "Text input", :defaultValue "my-haggadah"}]]]
-      [:div {:class "field"}
-       [:label {:class "label"} "Content"]
-       [:div 
-        [:input#haggadah-text.input {:type "text", :placeholder "Email input", :defaultValue "## The best possible haggadah"}]]]
-      [:div {:class "field is-grouped"}
-       [:div {:class "control"}
-        [:a.button.is-link {:data-test-id "add-haggadah" :on-click #(re-frame/dispatch [::events/add-haggadah
-                                                           (form-content "haggadah-title")
-                                                           (form-content "haggadah-text") %])
-                            :id "submit"} "Create"]]]]]])
-
-
+  (let [text (atom "## The best possible haggadah")]
+     [:div.columns.is-centered
+      [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
+       [:h1 "Please fill in the details of your haggadah below"]
+       [:form.box.mt-4
+        [:div.field
+         [:label {:class "label"} "Title"]
+         [:div 
+          [:input#haggadah-title.input {:placeholder "Text input", :defaultValue "my-haggadah"}]]]
+        [:div {:class "field"}
+         [:label {:class "label"} "Content"]
+         [:div
+          [:textarea#haggadah-text.textarea {:type "text", :placeholder "Haggadah content", :defaultValue "## The best possible haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
+        [:div {:class "field is-grouped"}
+         [:div {:class "control"}
+          [:a.button.is-link {:data-test-id "add-haggadah" :on-click #(re-frame/dispatch [::events/add-haggadah
+                                                                                          (form-content "haggadah-title")
+                                                                                          (form-content "haggadah-text") %])
+                              :id "submit"} "Create"]]]]]]))
 
 (defn haggadah-view-panel
   []
