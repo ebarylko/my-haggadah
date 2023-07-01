@@ -177,7 +177,7 @@
       [:div {:class "field"}
        [:label {:class "label"} "Content"]
        [:div 
-        [:input#haggadah-text.input {:type "text", :placeholder "Email input", :defaultValue "## The best possible haggadah"}]]]
+        [:textarea#haggadah-text.textarea {:type "text", :placeholder "Email input", :defaultValue "## The best possible haggadah"}]]]
       [:div {:class "field is-grouped"}
        [:div {:class "control"}
         [:a.button.is-link {:data-test-id "add-haggadah" :on-click #(re-frame/dispatch [::events/add-haggadah
