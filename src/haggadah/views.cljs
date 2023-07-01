@@ -176,7 +176,7 @@
         [:input#haggadah-title.input {:placeholder "Text input", :defaultValue "my-haggadah"}]]]
       [:div {:class "field"}
        [:label {:class "label"} "Content"]
-       [:div 
+       [:div.flex-container
         [:textarea#haggadah-text.textarea {:type "text", :placeholder "Email input", :defaultValue "## The best possible haggadah"}]]]
       [:div {:class "field is-grouped"}
        [:div {:class "control"}
@@ -185,7 +185,32 @@
                                                            (form-content "haggadah-text") %])
                             :id "submit"} "Create"]]]]]])
 
-
+#_(defn haggadah-creation-panel
+  []
+  [:div.columns.is-centered
+   [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
+    [:h1 "Please fill in the details of your haggadah below"]
+    [:form.box.mt-4
+      [:div.field
+       [:label {:class "label"} "Title"]
+       [:div 
+        [:input#haggadah-title.input {:placeholder "Text input", :defaultValue "my-haggadah"}]]]
+      #_[:div {:class "field"}
+       [:label {:class "label"} "Content"]
+       [:div.flex-container
+        [:textarea#haggadah-text.textarea {:type "text", :placeholder "Email input", :defaultValue "## The best possible haggadah"}]]]
+      [:div {:class "field is-grouped"}
+       [:div {:class "control"}
+        [:a.button.is-link {:data-test-id "add-haggadah" :on-click #(re-frame/dispatch [::events/add-haggadah
+                                                           (form-content "haggadah-title")
+                                                           (form-content "haggadah-text") %])
+                            :id "submit"} "Create"]]]]
+    [:form
+     [:div {:class "field"}
+      [:label {:class "label"} "Content"]
+      [:div.flex-container
+       [:textarea#haggadah-text.textarea {:type "text", :placeholder "Email input", :defaultValue "## The best possible haggadah"}]]]]
+    ]])
 
 (defn haggadah-view-panel
   []
