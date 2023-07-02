@@ -99,7 +99,8 @@
 
 (def route-events
   {:dashboard [::fetch-haggadot {:on-success ::set-haggadot}]
-   :haggadah-view [::fetch-haggadah {:on-success ::set-haggadah }]})
+   :haggadah-view [::fetch-haggadah {:on-success ::set-haggadah }]
+   :haggadah-edit [::fetch-haggadah {:on-success ::set-haggadah }]})
 
 (re-frame/reg-event-db
  ::do-nothing

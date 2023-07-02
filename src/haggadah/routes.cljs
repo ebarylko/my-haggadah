@@ -32,13 +32,21 @@
              :view views/haggadah-view-panel
              :link-text "haggadah"
              :controllers [{:start (fn []
+                                    (println "Before the haggadah is fetched")
+                                     (re-frame/dispatch (:haggadah-view events/route-events)))}]}]
+    ["/:id/edit" {:name :haggadah-edit
+             :view views/haggadah-edit-panel
+             :link-text "haggadah"
+             :controllers [{:start (fn []
                                      (println "Before the haggadah is fetched")
-                                     (re-frame/dispatch (:haggadah-view events/route-events)))}]}]]
+                                     (re-frame/dispatch (:haggadah-edit events/route-events)))}]}]
+    ]
    ["/haggadah-creation"
     ["" {:name :haggadah-creation
          :view views/haggadah-creation-panel}]
     ["/success" {:name :haggadah-success
-                 :view views/haggadah-success-panel}]]])
+                 :view views/haggadah-success-panel}]]
+   ])
 
 
 (defn on-navigate [new-match]

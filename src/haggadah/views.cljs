@@ -146,8 +146,14 @@
        (when haggadot
          [:ul
           (for [{:keys [title id]} haggadot :when id] 
-            ^{:key id}[:li
-            [:a {:href (href :haggadah-view {:id id})} title]])]))]]])
+            ^{:key id}[:li.mb-2
+                       [:a {:href (href :haggadah-view {:id id})} title] [:a.button.is-small.ml-2 {:data-test-id "edit-haggadah"
+                                                                                          :href (href :haggadah-edit {:id id})} "Edit"]])]))]]])
+
+(defn haggadah-edit-panel
+  []
+  [:div
+   "You have reached the haggadah edit page"])
 
 (defn form-content
   "Pre: takes an id for a form field

@@ -187,3 +187,16 @@
       (t/is (= parsed-bracha bracha)))))
 ;; "http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents"
 
+
+#_(t/deftest edit-haggadah-test
+  (t/testing "When the current user edits an existing haggadah"
+    (let [haggadah-text "#### This is the edited text"
+          parsed-haggadah-text "This is the edited text"
+          _ (home->dashboard driver)
+         _ (dashboard->edit-page driver haggadah-title)
+          _ (edit-haggadah driver haggadah-text)
+          _ (click-on-haggadah driver haggadah-title parsed-haggadah-text)
+         _ (e/wait-has-text-everywhere driver parsed-haggadah-text)
+         _ (e/screenshot driver "screenshots/edit-haggadah-test-haggadah-has-been-edited")
+         edited-haggadah (e/get-element-text driver {:tag :h4 :fn/text parsed-haggadah-text})]
+        (t/is (= parsed-haggadah-text edited-haggadah)))))
