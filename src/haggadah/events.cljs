@@ -181,6 +181,26 @@
  (fn [db [_ new-content]]
      (assoc db :haggadah-text new-content)))
 
+
+(re-frame/reg-event-fx
+ ::modify-haggadah
+ (fn [{:keys [db]} {:keys [new-haggadah on-success on-error] :or {on-error :error}}]
+   (let [id (get-in db [:current-route :path-params :id])]
+     {::update-doc {:path ["users" (db :uid) "haggadot" id]
+                    :content #js{:content new-haggadah}
+                    :on-success (keyword->func on-success)
+                    :on-error (keyword->func on-error)}})))
+
+(re-frame/reg-fx
+ ::update-doc
+ (fn [{:keys [path content on-success on-error] :or {on-error ::error }}]
+   (println "Here's the update path" path)
+   (-> (firestore/instance)
+       (fire/doc (clojure.string/join "/" path))
+       (fire/updateDoc content)
+       (.then (keyword->func on-success))
+       (.catch (keyword->func on-error)))))
+
 (re-frame/reg-event-fx
  ::push-state
  (fn [_ [_ & route]]
