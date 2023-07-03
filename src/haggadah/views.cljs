@@ -79,7 +79,7 @@
       [:p.title.has-text-weight-bold.is-size-1"Share your haggadot with familiy and friends"  ]
       [:p.subtitle.is-size-3  "Make a Haggadah effortlessly with just a click"  ]
       [:div.buttons.is-medium
-       [:a.button.is-focused {:href (href :login) :data-test-id "login"} "Log in"]
+       [:a.button.is-focused {:href (href :login) :data-testid "login"} "Log in"]
        [:a.button  "Register"]]
       ]
      [:div.column
@@ -116,7 +116,7 @@
           [:i {:class "fas fa-exclamation-triangle"}]]]]
        [:div {:class "field is-grouped"}
         [:div {:class "control"}
-         [:a.button.is-link {:on-click  #(re-frame/dispatch [::events/login]) :id "submit"} "Submit"]]
+         [:a.button.is-link {:on-click  #(re-frame/dispatch [::events/login]) :data-testid "submit"} "Submit"]]
         [:div {:class "control"}
          [:button {:class "button is-link is-light"} "Cancel"]]]
        ]]]
@@ -134,10 +134,10 @@
         [:h1.text-center.is-size-4 {:id "user"}
          (str "Hello " @name ". Welcome to your dashboard. To make a new haggadah, click the button to your right. To share and edit your existing haggadah, look at your haggadot below ")]])
      [:div.pl-6.buttons.is-right
-      [:a.button.is-large.is-focused.is-pulled-right {:data-test-id "create-haggadah"
+      [:a.button.is-large.is-focused.is-pulled-right {:data-testid "create-haggadah"
                                                       :on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create haggadah"]]
      [:div.pl-6.buttons.is-right
-      [:a.button.is-large.is-focused.is-pulled-right {:data-test-id "signout"
+      [:a.button.is-large.is-focused.is-pulled-right {:data-testid "signout"
                                                       :on-click #(re-frame/dispatch [::events/signout])} "Signout"]]]
     [:div
      [:h1.is-size-3
@@ -147,7 +147,7 @@
          [:ul
           (for [{:keys [title id]} haggadot :when id] 
             ^{:key id}[:li.mb-2
-                       [:a {:href (href :haggadah-view {:id id})} title] [:a.button.is-small.ml-2 {:data-test-id "edit-haggadah"
+                       [:a {:href (href :haggadah-view {:id id})} title] [:a.button.is-small.ml-2 {:data-testid "edit-haggadah"
                                                                                           :href (href :haggadah-edit {:id id})} (str "Edit " title)]])]))]]])
 
 (def edit-explanation
@@ -230,7 +230,7 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
           [:textarea#haggadah-text.textarea {:type "text", :placeholder "Haggadah content", :defaultValue "## The best possible haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
         [:div {:class "field is-grouped"}
          [:div {:class "control"}
-          [:a.button.is-link {:data-test-id "add-haggadah" :on-click #(re-frame/dispatch [::events/add-haggadah
+          [:a.button.is-link {:data-testid "add-haggadah" :on-click #(re-frame/dispatch [::events/add-haggadah
                                                                                           (form-content "haggadah-title")
                                                                                           (form-content "haggadah-text") %])
                               :id "submit"} "Create"]]]]]]))
