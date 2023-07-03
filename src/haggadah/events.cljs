@@ -192,6 +192,11 @@
                     :on-success (keyword->func on-success)
                     :on-error (keyword->func on-error)}})))
 
+(re-frame/reg-event-db
+ ::set-preview
+ (fn [db [_ preview?]]
+   (assoc db :preview preview?)))
+
 (re-frame/reg-fx
  ::update-doc
  (fn [{:keys [path content on-success on-error] :or {on-error ::error }}]

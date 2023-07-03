@@ -157,24 +157,33 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
 
 (defn haggadah-edit-panel
   []
-  (let [text @(re-frame/subscribe [::subs/haggadah-text])]
-  [:div
-   [:div.has-text-centered.box
-    edit-explanation]
-      [:div.level
-       [:div.level-left
-        [:form.container.level-item.box
-         [:div.field
-          [:div
-           [:textarea.textarea {:placeholder "Text input", :defaultValue text
-                   :value text             :on-change #(re-frame/dispatch [::events/edit-haggadah (-> %
-                                                             (.-target)
-                                                             (.-value))])}]]]]]
-       [:div.level-right
-        [:div.level-item
-         [:div.container.content.level-item {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:breaks true :mangle false :headerIds false})} :id "haggadah-text"}]]]]
-   [:div
-    [:button.button {:on-click #(re-frame/dispatch [::events/modify-haggadah {:new-haggadah text :on-success [::events/push-state :edit-success] }])} "Submit changes"]]]))
+  (let [text @(re-frame/subscribe [::subs/haggadah-text])
+        preview? @(re-frame/subscribe [::subs/src-preview])]
+    [:div.container
+     [:div.has-text-centered.box
+      edit-explanation]
+     [:div.tabs
+      [:ul
+       [:li {:class (if-not preview? "is-active" "") }
+        [:a {:on-click #(re-frame/dispatch [::events/set-preview false])
+             }"Source"]]
+       [:li {:class (if preview? "is-active" "")}
+        [:a {:on-click #(re-frame/dispatch [::events/set-preview true])
+             } "Preview"]]]]
+     [:div 
+      [:div {:class (when preview? "is-hidden")}
+       [:form.box
+        [:div.field
+         [:div
+          [:textarea.textarea {:placeholder "Text input", :defaultValue text
+                               :value text
+                               :on-change #(re-frame/dispatch [::events/edit-haggadah (-> %
+                                                                                          (.-target)
+                                                                                          (.-value))])}]]]]]
+       [:div {:class (when-not preview? "is-hidden")}
+        [:div.content {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:breaks true :mangle false :headerIds false})} :id "haggadah-text"}]]]
+     [:div
+      [:button.button {:on-click #(re-frame/dispatch [::events/modify-haggadah {:new-haggadah text :on-success [::events/push-state :edit-success] }])} "Submit changes"]]]))
 
 (defn form-content
   "Pre: takes an id for a form field
