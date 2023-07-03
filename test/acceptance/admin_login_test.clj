@@ -152,6 +152,7 @@
   (doto d
    (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-clicking-haggadah.png")
    (e/click-visible {:tag :a :fn/text title})
+   #(println "it exists " (e/exists? % {:tag :h4 :fn/text text}))
    (e/wait-has-text-everywhere text)
    (e/screenshot "screenshots/create-haggadah-test-admin-exists-haggadah-text.png")))
 
@@ -200,6 +201,7 @@
     (e/wait-visible {:tag :textarea #_#_:data-test-id "preveiw"})
     (e/fill  {:tag :textarea #_#_:data-test-id "preveiw"} k/home (k/with-shift k/end) k/delete)
     (e/fill  {:tag :textarea #_#_:data-test-id "preveiw"} text)
+    (e/screenshot "screenshots/edit-test-editing-haggadah.png")
     (e/click-visible {:tag :button :data-test-id "Edit haggadah"})
     (e/click-visible {:tag :a :data-test-id "return-dashboard"})))
 
@@ -215,6 +217,7 @@
           _ (dashboard->edit-page driver haggadah-title unedited-text)
           _ (edit-haggadah driver haggadah-text)
           _ (click-on-haggadah driver haggadah-title parsed-haggadah-text)
-          _ (e/screenshot driver "screenshots/edit-haggadah-test-haggadah-has-been-edited")
+          _ (e/wait-has-text-everywhere driver parsed-haggadah-text)
+          _ (e/screenshot driver "screenshots/edit-haggadah-test-haggadah-has-been-edited.png")
           edited-haggadah (e/get-element-text driver {:tag :h4 :fn/text parsed-haggadah-text})]
       (t/is (= parsed-haggadah-text edited-haggadah)))))
