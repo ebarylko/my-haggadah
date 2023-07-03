@@ -150,10 +150,35 @@
                        [:a {:href (href :haggadah-view {:id id})} title] [:a.button.is-small.ml-2 {:data-test-id "edit-haggadah"
                                                                                           :href (href :haggadah-edit {:id id})} "Edit"]])]))]]])
 
+(def edit-explanation
+  " On the left you have your unparsed haggadah, and on the right is your parsed haggadah.
+To see changes in the parsed haggadah please edit the haggadah to your left.
+ When you are satisfied with your changes please click the submit button below ")
+
 (defn haggadah-edit-panel
   []
   [:div
-   "You have reached the haggadah edit page"])
+   [:div.has-text-centered.box
+    edit-explanation]
+  #_ [:div.level
+    [:div.level-left
+     [:h1.level-item "To the left"]]
+    [:div.level-right
+     [:h1.level-right "To the right"]]]
+   (let [text (re-frame/subscribe [::subs/haggadah-text])]
+     [:div.level
+       [:div.level-left
+        [:form.container.level-item
+         [:div.field
+          [:label {:class "label"} "Unparsed-haggadah"]
+          [:div
+           [:textarea.textarea {:placeholder "Text input", :defaultValue @text}]]]]
+        ]
+       [:div.level-right
+        [:div.level-item
+         [:div.container.content.level-item {:dangerouslySetInnerHTML #js{:__html (js/marked.parse @text #js{:mangle false :headerIds false})} :id "haggadah-text"}]
+         ]
+        ]])])
 
 (defn form-content
   "Pre: takes an id for a form field
