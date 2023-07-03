@@ -165,20 +165,25 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
      [:h1.level-item "To the left"]]
     [:div.level-right
      [:h1.level-right "To the right"]]]
-   (let [text (re-frame/subscribe [::subs/haggadah-text])]
-     [:div.level
+   (let [text @(re-frame/subscribe [::subs/haggadah-text])]
+      [:div.level
        [:div.level-left
-        [:form.container.level-item
+        [:form.container.level-item.box
          [:div.field
-          [:label {:class "label"} "Unparsed-haggadah"]
           [:div
-           [:textarea.textarea {:placeholder "Text input", :defaultValue @text}]]]]
+           [:textarea.textarea {:placeholder "Text input", :defaultValue text
+                   :value text             :on-change #(re-frame/dispatch [::events/edit-haggadah (-> %
+                                                             (.-target)
+                                                             (.-value))])}]]]]
         ]
        [:div.level-right
         [:div.level-item
-         [:div.container.content.level-item {:dangerouslySetInnerHTML #js{:__html (js/marked.parse @text #js{:mangle false :headerIds false})} :id "haggadah-text"}]
+         [:div.container.content.level-item {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:gfm true :breaks true :mangle false :headerIds false})} :id "haggadah-text"}]
          ]
-        ]])])
+        ]]
+      )
+   [:div
+    [:button.button {:on-click #(re-frame/dispatch [::events/edit-haggadah "## The edited text" %])} "Submit changes"]]])
 
 (defn form-content
   "Pre: takes an id for a form field

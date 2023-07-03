@@ -176,6 +176,10 @@
               (js->clj :keywordize-keys true)
               (:content)))))
 
+(re-frame/reg-event-db
+ ::edit-haggadah
+ (fn [db [_ new-content]]
+     (assoc db :haggadah-text new-content)))
 
 (re-frame/reg-event-fx
  ::push-state
