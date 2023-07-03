@@ -148,7 +148,7 @@
           (for [{:keys [title id]} haggadot :when id] 
             ^{:key id}[:li.mb-2
                        [:a {:href (href :haggadah-view {:id id})} title] [:a.button.is-small.ml-2 {:data-test-id "edit-haggadah"
-                                                                                          :href (href :haggadah-edit {:id id})} "Edit"]])]))]]])
+                                                                                          :href (href :haggadah-edit {:id id})} (str "Edit " title)]])]))]]])
 
 (def edit-explanation
   " On the left you have your unparsed haggadah, and on the right is your parsed haggadah.
@@ -176,6 +176,7 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
         [:div.field
          [:div
           [:textarea.textarea {:placeholder "Text input", :defaultValue text
+                               :data-test-id "preview"
                                :value text
                                :on-change #(re-frame/dispatch [::events/edit-haggadah (-> %
                                                                                           (.-target)
@@ -183,7 +184,8 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
        [:div {:class (when-not preview? "is-hidden")}
         [:div.content {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:breaks true :mangle false :headerIds false})} :id "haggadah-text"}]]]
      [:div
-      [:button.button {:on-click #(re-frame/dispatch [::events/modify-haggadah {:new-haggadah text :on-success [::events/push-state :edit-success] }])} "Submit changes"]]]))
+      [:button.button {:on-click #(re-frame/dispatch [::events/modify-haggadah {:new-haggadah text :on-success [::events/push-state :edit-success] }])
+                       :data-test-id "Edit haggadah"} "Submit changes"]]]))
 
 (defn form-content
   "Pre: takes an id for a form field

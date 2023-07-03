@@ -187,16 +187,34 @@
       (t/is (= parsed-bracha bracha)))))
 ;; "http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents"
 
+(defn dashboard->edit-page
+  [d title text]
+  (doto d
+    (e/click-visible {:tag :a :fn/text (str "Edit " title)})
+    (e/wait-has-text-everywhere text)))
 
-#_(t/deftest edit-haggadah-test
+(defn edit-haggadah
+  [d text]
+  (doto d
+    (e/screenshot "screenshots/edit-haggadah-test-edit-page.png")
+    (e/wait-visible {:tag :textarea #_#_:data-test-id "preveiw"})
+    (e/fill  {:tag :textarea #_#_:data-test-id "preveiw"} k/home (k/with-shift k/end) k/delete)
+    (e/fill  {:tag :textarea #_#_:data-test-id "preveiw"} text)
+    (e/click-visible {:tag :button :data-test-id "Edit haggadah"})
+    (e/click-visible {:tag :a :data-test-id "return-dashboard"})))
+
+
+(t/deftest edit-haggadah-test
   (t/testing "When the current user edits an existing haggadah"
-    (let [haggadah-text "#### This is the edited text"
+    (let [haggadah-title "Edited haggadah"
+          unedited-text "## This is unedited"
+          haggadah-text "#### This is the edited text"
           parsed-haggadah-text "This is the edited text"
           _ (home->dashboard driver)
-         _ (dashboard->edit-page driver haggadah-title)
+          _ (create-haggadah driver haggadah-title unedited-text)
+          _ (dashboard->edit-page driver haggadah-title unedited-text)
           _ (edit-haggadah driver haggadah-text)
           _ (click-on-haggadah driver haggadah-title parsed-haggadah-text)
-         _ (e/wait-has-text-everywhere driver parsed-haggadah-text)
-         _ (e/screenshot driver "screenshots/edit-haggadah-test-haggadah-has-been-edited")
-         edited-haggadah (e/get-element-text driver {:tag :h4 :fn/text parsed-haggadah-text})]
-        (t/is (= parsed-haggadah-text edited-haggadah)))))
+          _ (e/screenshot driver "screenshots/edit-haggadah-test-haggadah-has-been-edited")
+          edited-haggadah (e/get-element-text driver {:tag :h4 :fn/text parsed-haggadah-text})]
+      (t/is (= parsed-haggadah-text edited-haggadah)))))
