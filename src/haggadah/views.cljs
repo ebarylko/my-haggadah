@@ -157,10 +157,10 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
 
 (defn haggadah-edit-panel
   []
+  (let [text @(re-frame/subscribe [::subs/haggadah-text])]
   [:div
    [:div.has-text-centered.box
     edit-explanation]
-   (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:div.level
        [:div.level-left
         [:form.container.level-item.box
@@ -172,9 +172,9 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
                                                              (.-value))])}]]]]]
        [:div.level-right
         [:div.level-item
-         [:div.container.content.level-item {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:breaks true :mangle false :headerIds false})} :id "haggadah-text"}]]]])
+         [:div.container.content.level-item {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:breaks true :mangle false :headerIds false})} :id "haggadah-text"}]]]]
    [:div
-    [:button.button {:on-click #(re-frame/dispatch [::events/modify-haggadah {:new-haggadah "## The edited text" :on-success [::events/push-state :edit-success]}])} "Submit changes"]]])
+    [:button.button {:on-click #(re-frame/dispatch [::events/modify-haggadah {:new-haggadah text :on-success [::events/push-state :edit-success] }])} "Submit changes"]]]))
 
 (defn form-content
   "Pre: takes an id for a form field
