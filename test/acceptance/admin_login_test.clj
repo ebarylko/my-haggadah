@@ -79,11 +79,11 @@
     (doto driver
       (e/go "http://localhost:5000/")
       (e/screenshot "Screenshots/message-test-home-page.png")
-      (e/click-visible {:tag :a :data-test-id "login"})
-      (e/click-visible {:tag :a :id "submit"})
+      (e/click-visible {:tag :a :data-testid "login"})
+      (e/click-visible {:tag :a :data-testid "submit"})
       (e/screenshot "screenshots/message-test-dashboard.png")
       (e/wait-has-text-everywhere admin-login-message))
-    (let [actual (e/get-element-text driver {:id "user"})]
+    (let [actual (e/get-element-text driver {:data-testid "user"})]
       (e/screenshot driver "screenshots/message-test-when-the-admin-exists.png")
       (t/is (= admin-login-message actual)))))
 
@@ -110,13 +110,13 @@
           _ (doto driver
               (e/go "http://localhost:5000/")
               (e/screenshot "screenshots/show-text-test-arriving-to-site.png")
-              (e/click-visible {:tag :a :data-test-id "login"})
-              (e/click-visible {:tag :a :id "submit"})
+              (e/click-visible {:tag :a :data-testid "login"})
+              (e/click-visible {:tag :a :data-testid "submit"})
               (e/screenshot  "screenshots/show-text-test-admin-exists-haggaddah-exists-before-clicking-haggadah.png")
               (e/click-visible  {:tag :a :fn/text haggadah-title})
-              (e/wait-visible  {:tag :div :id "haggadah-text"})
+              (e/wait-visible  {:tag :div :data-testid "haggadah-text"})
               (e/screenshot "screenshots/show-text-test-admin-exists-haggadah-exists-after-clicking-haggadah"))
-          haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
+          haggadah-text (e/get-element-text driver {:tag :div :data-testid "haggadah-text"})]
 
       (t/is (= actual-haggadah-text haggadah-text)))))
 
@@ -128,24 +128,24 @@
   [d]
   (doto d
    (e/go "http://localhost:5000/")
-   (e/click-visible {:tag :a :data-test-id "login"})
-   (e/click-visible {:tag :a :id "submit"})
-   (e/wait-visible {:tag :a :data-test-id "create-haggadah"})
+   (e/click-visible {:tag :a :data-testid "login"})
+   (e/click-visible {:tag :a :data-testid "submit"})
+   (e/wait-visible {:tag :a :data-testid "create-haggadah"})
    (e/screenshot  "screenshots/create-haggadah-test-admin-exists-before-clicking-create.png")))
 
 (defn create-haggadah
   [d title text]
   (doto d
-   (e/click-visible {:tag :a :data-test-id "create-haggadah"})
-   (e/wait-visible {:tag :input :id "haggadah-title"})
+   (e/click-visible {:tag :a :data-testid "create-haggadah"})
+   (e/wait-visible {:tag :input :data-testid "haggadah-title"})
    (e/screenshot  "screenshots/create-haggadah-test-admin-exists-after-clicking-create.png")
-   (e/fill  {:tag :input :id "haggadah-title"} k/home (k/with-shift k/end) k/delete)
-   (e/fill {:tag :input :id "haggadah-title"} title)
-   (e/fill {:tag :textarea :id "haggadah-text"} k/home (k/with-shift k/end) k/delete)
-   (e/fill {:tag :textarea :id "haggadah-text"} text)
+   (e/fill  {:tag :input :data-testid "haggadah-title"} k/home (k/with-shift k/end) k/delete)
+   (e/fill {:tag :input :data-testid "haggadah-title"} title)
+   (e/fill {:tag :textarea :data-testid "haggadah-text"} k/home (k/with-shift k/end) k/delete)
+   (e/fill {:tag :textarea :data-testid "haggadah-text"} text)
    (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-creating-haggadah.png")
-   (e/click-visible {:tag :a :data-test-id "add-haggadah"})
-   (e/click-visible {:tag :a :data-test-id "return-dashboard"})))
+   (e/click-visible {:tag :a :data-testid "add-haggadah"})
+   (e/click-visible {:tag :a :data-testid "return-dashboard"})))
 
 (defn click-on-haggadah
   [d title text]
@@ -161,7 +161,7 @@
     (let [_ (home->dashboard driver)
           _ (create-haggadah driver new-haggadah-title new-haggadah-text)
           _ (click-on-haggadah driver new-haggadah-title parsed-haggadah-text)
-          haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
+          haggadah-text (e/get-element-text driver {:tag :div :data-testid "haggadah-text"})]
       (t/is (= parsed-haggadah-text haggadah-text)))))
 
 (t/deftest refresh-page-test
@@ -170,7 +170,7 @@
           _ (click-on-haggadah driver new-haggadah-title parsed-haggadah-text)
           _ (e/refresh driver)
           _ (e/wait-has-text-everywhere driver parsed-haggadah-text)
-          haggadah-text (e/get-element-text driver {:tag :div :id "haggadah-text"})]
+          haggadah-text (e/get-element-text driver {:data-testid "haggadah-text"})]
       (t/is (= parsed-haggadah-text haggadah-text)))))
 
 (def unparsed-bracha "### סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
@@ -198,12 +198,12 @@
   [d text]
   (doto d
     (e/screenshot "screenshots/edit-haggadah-test-edit-page.png")
-    (e/wait-visible {:tag :textarea #_#_:data-test-id "preveiw"})
-    (e/fill  {:tag :textarea #_#_:data-test-id "preveiw"} k/home (k/with-shift k/end) k/delete)
-    (e/fill  {:tag :textarea #_#_:data-test-id "preveiw"} text)
+    (e/wait-visible {:data-testid :preview})
+    (e/fill  {:data-testid :preview} k/home (k/with-shift k/end) k/delete)
+    (e/fill  {:data-testid :preview} text)
     (e/screenshot "screenshots/edit-test-editing-haggadah.png")
-    (e/click-visible {:tag :button :data-test-id "Edit haggadah"})
-    (e/click-visible {:tag :a :data-test-id "return-dashboard"})))
+    (e/click-visible {:data-testid :submit})
+    (e/click-visible {:data-testid :eturn-dashboard})))
 
 
 (t/deftest edit-haggadah-test

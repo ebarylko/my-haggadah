@@ -176,7 +176,7 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
         [:div.field
          [:div
           [:textarea.textarea {:placeholder "Text input", :defaultValue text
-                               :data-test-id "preview"
+                               :data-testid :preview
                                :value text
                                :on-change #(re-frame/dispatch [::events/edit-haggadah (-> %
                                                                                           (.-target)
@@ -185,7 +185,7 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
         [:div.content {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:breaks true :mangle false :headerIds false})} :id "haggadah-text"}]]]
      [:div
       [:button.button {:on-click #(re-frame/dispatch [::events/modify-haggadah {:new-haggadah text :on-success [::events/push-state :edit-success] }])
-                       :data-test-id "Edit haggadah"} "Submit changes"]]]))
+                       :data-testid :submit} "Submit changes"]]]))
 
 (defn form-content
   "Pre: takes an id for a form field
@@ -201,7 +201,7 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
   [:div.container.has-text-centered
    [:div.notification.is-success
     "Your haggadah has been successfully made. Please click the button below to return to the dashboard and see it"]
-   [:a.button.is-focused.is-link {:data-test-id "return-dashboard":on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
+   [:a.button.is-focused.is-link {:data-testid "return-dashboard":on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
 
 
 (defn haggadah-edit-success
@@ -209,7 +209,9 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
   [:div.container.has-text-centered
    [:div.notification.is-success
     "Your haggadah has been successfully changed. Please click the button below to return to the dashboard and see it"]
-   [:a.button.is-focused.is-link {:data-test-id "return-dashboard":on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
+   [:a.button.is-focused.is-link {:data-testid :return-dashboard
+                                  :on-click #(re-frame/dispatch [::push-state :dashboard])}
+    "Return to dashboard"]])
 
 (defn haggadah-creation-panel
   []
