@@ -149,8 +149,10 @@
          [:ul
           (for [{:keys [title id]} haggadot :when id] 
             ^{:key id}[:li.mb-2
-                       [:a {:href (href :haggadah-view {:id id})} title] [:a.button.is-small.ml-2 {:data-testid "edit-haggadah"
-                                                                                          :href (href :haggadah-edit {:id id})} (str "Edit " title)]])]))]]])
+                       [:a {:data-testid (str "view-" id)
+                            :href (href :haggadah-view {:id id})} title]
+                       [:a.button.is-small.ml-2 {:data-testid (str "edit-" id )
+                                                 :href (href :haggadah-edit {:id id})} "Edit " title]])]))]]])
 
 (def edit-explanation
   " On the left you have your unparsed haggadah, and on the right is your parsed haggadah.
