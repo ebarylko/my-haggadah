@@ -41,7 +41,6 @@
   (doto d
    (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-clicking-haggadah.png")
    (e/click-visible {:fn/text title})
-   #(println "it exists " (e/exists? % {:tag :h4 :fn/text text}))
    (e/wait-has-text-everywhere text)
    (e/screenshot "screenshots/create-haggadah-test-admin-exists-haggadah-text.png")))
 

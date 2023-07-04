@@ -62,3 +62,37 @@
   #_(try
     (test)
     (finally (e/screenshot driver (format "screenshots/%" (inst-ms (java.time.Instant/now)))) )))
+
+
+(defn home->dashboard
+  [d]
+  (doto d
+    (e/go "http://localhost:5000/")
+    (e/click-visible {:data-testid :login})
+    (e/click-visible {:data-testid :submit})
+    (e/wait-visible {:data-testid :create-haggadah})
+    (e/screenshot  "screenshots/create-haggadah-test-admin-exists-before-clicking-create.png")))
+
+
+(defn create-haggadah
+  [d title text]
+  (doto d
+   (e/click-visible {:data-testid :create-haggadah})
+   (e/wait-visible {:data-testid :haggadah-title})
+   (e/screenshot  "screenshots/create-haggadah-test-admin-exists-after-clicking-create.png")
+   (e/fill  {:data-testid :haggadah-title} k/home (k/with-shift k/end) k/delete)
+   (e/fill {:data-testid :haggadah-title} title)
+   (e/fill {:data-testid :haggadah-text} k/home (k/with-shift k/end) k/delete)
+   (e/fill {:data-testid :haggadah-text} text)
+   (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-creating-haggadah.png")
+   (e/click-visible {:data-testid :add-haggadah})
+   (e/click-visible {:data-testid :return})))
+
+(defn click-on-haggadah
+  [d title text]
+  (doto d
+   (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-clicking-haggadah.png")
+   (e/click-visible {:fn/text title})
+   #(println "it exists " (e/exists? % {:tag :h4 :fn/text text}))
+   (e/wait-has-text-everywhere text)
+   (e/screenshot "screenshots/create-haggadah-test-admin-exists-haggadah-text.png")))

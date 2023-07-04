@@ -21,11 +21,7 @@
 (t/deftest message-test
   (t/testing "When the admin user exists"
     (doto driver
-      (e/go "http://localhost:5000/")
-      (e/screenshot "Screenshots/message-test-home-page.png")
-      (e/click-visible {:data-testid :login})
-      (e/click-visible {:data-testid :submit})
-      (e/screenshot "screenshots/message-test-dashboard.png")
+      (c/home->dashboard)
       (e/wait-has-text-everywhere admin-login-message))
     (let [actual (e/get-element-text driver {:data-testid :user})]
       (e/screenshot driver "screenshots/message-test-when-the-admin-exists.png")
@@ -52,13 +48,8 @@
                      (.add haggadah)
                      (.get))
           _ (doto driver
-              (e/go "http://localhost:5000/")
-              (e/screenshot "screenshots/show-text-test-arriving-to-site.png")
-              (e/click-visible {:data-testid :login})
-              (e/click-visible {:data-testid :submit})
-              (e/screenshot  "screenshots/show-text-test-admin-exists-haggaddah-exists-before-clicking-haggadah.png")
-              (e/click-visible  {:fn/text haggadah-title})
-              (e/wait-visible  {:data-testid :haggadah-text})
+              (c/home->dashboard)
+              (c/click-on-haggadah haggadah-title actual-haggadah-text)
               (e/screenshot "screenshots/show-text-test-admin-exists-haggadah-exists-after-clicking-haggadah"))
           haggadah-text (e/get-element-text driver {:data-testid :haggadah-text})]
 
