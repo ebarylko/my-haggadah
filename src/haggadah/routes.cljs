@@ -40,9 +40,6 @@
              :controllers [{:start (fn []
                                      (println "Before the haggadah is fetched")
                                      (re-frame/dispatch (:haggadah-edit events/route-events)))}]}]
-    #_["/:id/edit/success" {:name :haggadah-edit
-                  :view views/haggadah-edit-success
-                  :link-text "haggadah"}]
     ]
    ["/haggadah-creation"
     ["" {:name :haggadah-creation

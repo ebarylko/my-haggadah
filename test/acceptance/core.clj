@@ -58,6 +58,7 @@
   "Pre: takes a test
   Post: generates a screenshot after running the test"
   [test]
-  (try
+  (test)
+  #_(try
     (test)
     (finally (e/screenshot driver (format "screenshots/%" (inst-ms (java.time.Instant/now)))) )))

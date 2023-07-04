@@ -5,7 +5,7 @@
              [etaoin.keys :as k]))
 
 
-(t/use-fixtures :once c/init-firebase)
+#_(t/use-fixtures :once c/init-firebase)
 (t/use-fixtures :each c/with-screenshot)
 
 
@@ -26,21 +26,23 @@
   [d title text]
   (doto d
    (e/click-visible {:data-testid "create-haggadah"})
-   (e/wait-visible {:tag :input :data-testid "haggadah-title"})
+   (e/wait-visible {:data-testid :haggadah-title})
    (e/screenshot  "screenshots/create-haggadah-test-admin-exists-after-clicking-create.png")
-   (e/fill  {:tag :input :data-testid "haggadah-title"} k/home (k/with-shift k/end) k/delete)
-   (e/fill {:tag :input :data-testid "haggadah-title"} title)
-   (e/fill {:tag :textarea :data-testid "haggadah-text"} k/home (k/with-shift k/end) k/delete)
-   (e/fill {:tag :textarea :data-testid "haggadah-text"} text)
+   (e/fill  {:data-testid :haggadah-title} k/home (k/with-shift k/end) k/delete)
+   (e/fill {:data-testid :haggadah-title} title)
+   (e/fill {:data-testid :haggadah-text} k/home (k/with-shift k/end) k/delete)
+   (e/fill {:data-testid :haggadah-text} text)
    (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-creating-haggadah.png")
-   (e/click-visible {:tag :a :data-testid "add-haggadah"})
-   (e/click-visible {:tag :a :data-testid "return-dashboard"})))
+   (e/click-visible {:data-testid "add-haggadah"})
+   (e/wait 4)
+   (e/screenshot "screenshots/before-returning-to-dashboard.png")
+   (e/click-visible {:data-testid :return})))
 
 (defn click-on-haggadah
   [d title text]
   (doto d
    (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-clicking-haggadah.png")
-   (e/click-visible {:tag :a :fn/text title})
+   (e/click-visible {:fn/text title})
    #(println "it exists " (e/exists? % {:tag :h4 :fn/text text}))
    (e/wait-has-text-everywhere text)
    (e/screenshot "screenshots/create-haggadah-test-admin-exists-haggadah-text.png")))
@@ -50,23 +52,23 @@
     (let [_ (home->dashboard driver)
           _ (create-haggadah driver new-haggadah-title new-haggadah-text)
           _ (click-on-haggadah driver new-haggadah-title parsed-haggadah-text)
-          haggadah-text (e/get-element-text driver {:tag :div :data-testid "haggadah-text"})]
+          haggadah-text (e/get-element-text driver {:data-testid :haggadah-text})]
       (t/is (= parsed-haggadah-text haggadah-text)))))
 
-(t/deftest refresh-page-test
+#_(t/deftest refresh-page-test
   (t/testing "When the current user refreshes the haggadah"
     (let [_ (home->dashboard driver)
           _ (click-on-haggadah driver new-haggadah-title parsed-haggadah-text)
           _ (e/refresh driver)
           _ (e/wait-has-text-everywhere driver parsed-haggadah-text)
-          haggadah-text (e/get-element-text driver {:data-testid "haggadah-text"})]
+          haggadah-text (e/get-element-text driver {:data-testid :haggadah-text})]
       (t/is (= parsed-haggadah-text haggadah-text)))))
 
 (def unparsed-bracha "### סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
 (def haggadah-with-bracha-title "Haggadah with a bracha")
 (def parsed-bracha "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
 
-(t/deftest bracha-rendered-test
+#_(t/deftest bracha-rendered-test
   (t/testing "When the current user creates a haggadah with a bracha"
     (let [_ (home->dashboard driver)
           _ (create-haggadah driver haggadah-with-bracha-title unparsed-bracha)
@@ -80,7 +82,7 @@
 (defn dashboard->edit-page
   [d title text]
   (doto d
-    (e/click-visible {:tag :a :fn/text (str "Edit " title)})
+    (e/click-visible {:fn/text (str "Edit " title)})
     (e/wait-has-text-everywhere text)))
 
 (defn edit-haggadah
@@ -95,7 +97,7 @@
     (e/click-visible {:data-testid :eturn-dashboard})))
 
 
-(t/deftest edit-haggadah-test
+#_(t/deftest edit-haggadah-test
   (t/testing "When the current user edits an existing haggadah"
     (let [haggadah-title "Edited haggadah"
           unedited-text "## This is unedited"

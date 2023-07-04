@@ -2,7 +2,7 @@
   (:require  [clojure.test :as t]
              [etaoin.api :as e]
              [etaoin.keys :as k]
-             [acceeptance.core :as c :refer [driver]])
+             [acceptance.core :as c :refer [driver]])
   (:import com.google.firebase.cloud.FirestoreClient
             ))
 
@@ -27,7 +27,7 @@
       (e/click-visible {:data-testid "submit"})
       (e/screenshot "screenshots/message-test-dashboard.png")
       (e/wait-has-text-everywhere admin-login-message))
-    (let [actual (e/get-element-text driver {:data-testid "user"})]
+    (let [actual (e/get-element-text driver {:data-testid :user})]
       (e/screenshot driver "screenshots/message-test-when-the-admin-exists.png")
       (t/is (= admin-login-message actual)))))
 

@@ -4,7 +4,9 @@
    [haggadah.styles :as styles]
    [haggadah.subs :as subs]
    [reitit.frontend.easy :as rfe]
-   [haggadah.events :as events]))
+   [haggadah.events :as events]
+   [goog.string :as gstring]
+   [goog.string.format]))
 
 (goog-define WRITE false)
 
@@ -131,7 +133,7 @@
     [:div.pt-24.hero-body
      (let [name (re-frame/subscribe [::subs/name])]
        [:div
-        [:h1.text-center.is-size-4 {:id "user"}
+        [:h1.text-center.is-size-4 {:data-testid :user}
          (str "Hello " @name ". Welcome to your dashboard. To make a new haggadah, click the button to your right. To share and edit your existing haggadah, look at your haggadot below ")]])
      [:div.pl-6.buttons.is-right
       [:a.button.is-large.is-focused.is-pulled-right {:data-testid "create-haggadah"
@@ -201,7 +203,7 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
   [:div.container.has-text-centered
    [:div.notification.is-success
     "Your haggadah has been successfully made. Please click the button below to return to the dashboard and see it"]
-   [:a.button.is-focused.is-link {:data-testid "return-dashboard":on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
+   [:a.button.is-focused.is-link {:data-testid :return :on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
 
 
 (defn haggadah-edit-success
@@ -223,11 +225,11 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
         [:div.field
          [:label {:class "label"} "Title"]
          [:div 
-          [:input#haggadah-title.input {:placeholder "Text input", :defaultValue "my-haggadah"}]]]
+          [:input#haggadah-title.input {:data-testid :haggadah-title :placeholder "Text input", :defaultValue "my-haggadah"}]]]
         [:div {:class "field"}
          [:label {:class "label"} "Content"]
          [:div
-          [:textarea#haggadah-text.textarea {:type "text", :placeholder "Haggadah content", :defaultValue "## The best possible haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
+          [:textarea#haggadah-text.textarea {:data-testid :haggadah-text :type "text", :placeholder "Haggadah content", :defaultValue "## The best possible haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
         [:div {:class "field is-grouped"}
          [:div {:class "control"}
           [:a.button.is-link {:data-testid "add-haggadah" :on-click #(re-frame/dispatch [::events/add-haggadah
@@ -240,7 +242,7 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
   [:div.container.hero.is-medium
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:div.hero-body
-       [:div.container.content {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:mangle false :headerIds false})} :id "haggadah-text"}]])])
+       [:div.container.content {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:mangle false :headerIds false})} :data-testid :haggadah-text}]])])
 
 (defn about-panel
   []
