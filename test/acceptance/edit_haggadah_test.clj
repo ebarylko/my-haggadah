@@ -24,7 +24,7 @@
 
 (t/deftest edit-haggadah-test
   (t/testing "When the current user edits an existing haggadah"
-    (let [haggadah-title "Edited haggadah"
+    (let [haggadah-title "Unique Edited haggadah"
           unedited-text "## This is unedited"
           haggadah-text "#### This is the edited text"
           parsed-haggadah-text "This is the edited text"
@@ -32,9 +32,12 @@
       (doto driver
         (c/home->dashboard)
         (dash/open-edit-haggadah id unedited-text)
-        (edit-haggadah haggadah-text)
-        (h/click-on-haggadah id parsed-haggadah-text)
-        (e/wait-has-text-everywhere parsed-haggadah-text)
-        (e/screenshot "screenshots/edit-haggadah-test-haggadah-has-been-edited.png"))
+        (edit-haggadah haggadah-text))
+      (try
+        (doto driver 
+       (h/click-on-haggadah id parsed-haggadah-text)
+       (e/wait-has-text-everywhere parsed-haggadah-text))
+        (finally (e/screenshot driver "screenshots/edit-haggadah-test-haggadah-has-been-edited.png"))
+      #_(e/screenshot "screenshots/edit-haggadah-test-haggadah-has-been-edited.png"))
       (let [edited-haggadah (e/get-element-text driver {:tag :h4 :fn/text parsed-haggadah-text}) ]
         (t/is (= parsed-haggadah-text edited-haggadah))))))
