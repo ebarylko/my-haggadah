@@ -62,10 +62,10 @@
   "Pre: takes a test
   Post: generates a screenshot after running the test"
   [test]
-  (test)
-  #_(try
+  (try
     (test)
-    (finally (e/screenshot driver (format "screenshots/%" (inst-ms (java.time.Instant/now)))) )))
+    (finally (e/screenshot driver
+                           (format "screenshots/%o.png" (inst-ms (java.time.Instant/now)))) )))
 
 
 (defn home->dashboard
