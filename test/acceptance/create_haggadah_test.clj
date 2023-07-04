@@ -17,15 +17,15 @@
   [d]
   (doto d
    (e/go "http://localhost:5000/")
-   (e/click-visible {:data-testid "login"})
-   (e/click-visible {:data-testid "submit"})
-   (e/wait-visible {:data-testid "create-haggadah"})
+   (e/click-visible {:data-testid :login})
+   (e/click-visible {:data-testid :submit})
+   (e/wait-visible {:data-testid :create-haggadah})
    (e/screenshot  "screenshots/create-haggadah-test-admin-exists-before-clicking-create.png")))
 
 (defn create-haggadah
   [d title text]
   (doto d
-   (e/click-visible {:data-testid "create-haggadah"})
+   (e/click-visible {:data-testid :create-haggadah})
    (e/wait-visible {:data-testid :haggadah-title})
    (e/screenshot  "screenshots/create-haggadah-test-admin-exists-after-clicking-create.png")
    (e/fill  {:data-testid :haggadah-title} k/home (k/with-shift k/end) k/delete)
@@ -33,9 +33,7 @@
    (e/fill {:data-testid :haggadah-text} k/home (k/with-shift k/end) k/delete)
    (e/fill {:data-testid :haggadah-text} text)
    (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-creating-haggadah.png")
-   (e/click-visible {:data-testid "add-haggadah"})
-   (e/wait 4)
-   (e/screenshot "screenshots/before-returning-to-dashboard.png")
+   (e/click-visible {:data-testid :add-haggadah})
    (e/click-visible {:data-testid :return})))
 
 (defn click-on-haggadah
@@ -55,7 +53,7 @@
           haggadah-text (e/get-element-text driver {:data-testid :haggadah-text})]
       (t/is (= parsed-haggadah-text haggadah-text)))))
 
-#_(t/deftest refresh-page-test
+(t/deftest refresh-page-test
   (t/testing "When the current user refreshes the haggadah"
     (let [_ (home->dashboard driver)
           _ (click-on-haggadah driver new-haggadah-title parsed-haggadah-text)
@@ -68,7 +66,7 @@
 (def haggadah-with-bracha-title "Haggadah with a bracha")
 (def parsed-bracha "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
 
-#_(t/deftest bracha-rendered-test
+(t/deftest bracha-rendered-test
   (t/testing "When the current user creates a haggadah with a bracha"
     (let [_ (home->dashboard driver)
           _ (create-haggadah driver haggadah-with-bracha-title unparsed-bracha)
@@ -94,10 +92,10 @@
     (e/fill  {:data-testid :preview} text)
     (e/screenshot "screenshots/edit-test-editing-haggadah.png")
     (e/click-visible {:data-testid :submit})
-    (e/click-visible {:data-testid :eturn-dashboard})))
+    (e/click-visible {:data-testid :return-dashboard})))
 
 
-#_(t/deftest edit-haggadah-test
+(t/deftest edit-haggadah-test
   (t/testing "When the current user edits an existing haggadah"
     (let [haggadah-title "Edited haggadah"
           unedited-text "## This is unedited"

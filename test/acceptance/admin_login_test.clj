@@ -23,8 +23,8 @@
     (doto driver
       (e/go "http://localhost:5000/")
       (e/screenshot "Screenshots/message-test-home-page.png")
-      (e/click-visible {:data-testid "login"})
-      (e/click-visible {:data-testid "submit"})
+      (e/click-visible {:data-testid :login})
+      (e/click-visible {:data-testid :submit})
       (e/screenshot "screenshots/message-test-dashboard.png")
       (e/wait-has-text-everywhere admin-login-message))
     (let [actual (e/get-element-text driver {:data-testid :user})]
@@ -54,13 +54,13 @@
           _ (doto driver
               (e/go "http://localhost:5000/")
               (e/screenshot "screenshots/show-text-test-arriving-to-site.png")
-              (e/click-visible {:data-testid "login"})
-              (e/click-visible {:data-testid "submit"})
+              (e/click-visible {:data-testid :login})
+              (e/click-visible {:data-testid :submit})
               (e/screenshot  "screenshots/show-text-test-admin-exists-haggaddah-exists-before-clicking-haggadah.png")
               (e/click-visible  {:fn/text haggadah-title})
-              (e/wait-visible  {:data-testid "haggadah-text"})
+              (e/wait-visible  {:data-testid :haggadah-text})
               (e/screenshot "screenshots/show-text-test-admin-exists-haggadah-exists-after-clicking-haggadah"))
-          haggadah-text (e/get-element-text driver {:data-testid "haggadah-text"})]
+          haggadah-text (e/get-element-text driver {:data-testid :haggadah-text})]
 
       (t/is (= actual-haggadah-text haggadah-text)))))
 
