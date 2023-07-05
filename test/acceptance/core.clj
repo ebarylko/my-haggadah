@@ -83,17 +83,12 @@
 
 ;; Override clojure.test reporting methods to capture their results
 
-(defmethod t/report :begin-test-ns [_])
 
-(defmethod t/report :pass [m]
-  (println "Here is the name of the test"
-   (:name (meta (first t/*testing-vars*)))))
+(defonce test-names (atom []))
 
-;; (defmethod t/report :fail [m]
-;;   (swap! fails+errors conj (report m)))
 
-;; (defmethod t/report :error [m]
-;;   (swap! fails+errors conj (report m)))
+(defmethod clojure.test/report :begin-test-var [m]
+  (swap! test-names conj (-> m :var meta :name)))
 
 
 
@@ -101,13 +96,14 @@
   "Pre: takes a test
   Post: generates a screenshot after running the test"
   [test]
-  #_(println "Here are the test names " (symbol? test))
+  (println "The test name at the start" (last @test-names))
   (try
     (test)
     (finally
-      (println "Here are the test names " t/*testing-vars*)
+      (println "The test name at the end" (last @test-names))
       (e/screenshot driver
-                           (format "screenshots/%o.png" (inst-ms (java.time.Instant/now)))) )))
+                    (format "screenshots/%s-%o.png" (last @test-names) (inst-ms (java.time.Instant/now)))))))
+
 
 
 (defn home->dashboard
