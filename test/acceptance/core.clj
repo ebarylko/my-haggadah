@@ -15,7 +15,7 @@
 
 (def project-id (env :gcloud-project))
 
-(def driver (e/chrome-headless { :args ["no-sandbox" "--disable-dev-shm-usage" "--disable-gpu" "--disable-extensions"  "--start-maximized" ] }))
+(def driver (e/chrome { :args ["no-sandbox" "--disable-dev-shm-usage" "--disable-gpu" "--disable-extensions"  "--start-maximized" ] }))
 
 (defn- build-firebase-options []
   (-> (new FirebaseOptions$Builder)

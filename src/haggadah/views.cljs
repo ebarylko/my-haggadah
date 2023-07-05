@@ -179,7 +179,7 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
        [:form.box
         [:div.field
          [:div
-          [:textarea.textarea {:placeholder "Text input", :defaultValue text
+          [:textarea.textarea {:placeholder "Text input" 
                                :data-testid :preview
                                :value text
                                :on-change #(re-frame/dispatch [::events/edit-haggadah (-> %
@@ -231,7 +231,7 @@ To see changes in the parsed haggadah please edit the haggadah to your left.
         [:div {:class "field"}
          [:label {:class "label"} "Content"]
          [:div
-          [:textarea#haggadah-text.textarea {:data-testid :haggadah-text :type "text", :placeholder "Haggadah content", :defaultValue "## The best possible haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
+          [:input#haggadah-text.textarea {:data-testid :haggadah-text :type "text", :placeholder "Haggadah content", :defaultValue "## The best possible haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
         [:div {:class "field is-grouped"}
          [:div {:class "control"}
           [:a.button.is-link {:data-testid :add-haggadah :on-click #(re-frame/dispatch [::events/add-haggadah
