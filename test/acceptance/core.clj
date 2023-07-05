@@ -61,50 +61,20 @@
    (create-user {:email "han@skywalker.com"  :pwd "123456789" :id "user1"}))
   (tests))
 
-
-
-;; ;; (def old-report t/report)
-
-;; ;; (defmulti custom-report :type)
-
-;; ;; (defmethod custom-report :default [m]
-;; ;;   (old-report m))
-
-;; (defmethod t/report :begin-test-var [m]
-;;   (println (-> m :var meta :name)))
-
-
-
-;; ;; (defmethod custom-report :begin-test-var [m]
-;; ;;   (println (-> m :var meta :name)))
-
-;; ;; (binding [t/report custom-report]
-;; ;;   (t/run-all-tests))
-
-;; Override clojure.test reporting methods to capture their results
-
-
 (defonce test-names (atom []))
-
 
 (defmethod clojure.test/report :begin-test-var [m]
   (swap! test-names conj (-> m :var meta :name)))
-
-
 
 (defn with-screenshot
   "Pre: takes a test
   Post: generates a screenshot after running the test"
   [test]
-  (println "The test name at the start" (last @test-names))
   (try
     (test)
     (finally
-      (println "The test name at the end" (last @test-names))
       (e/screenshot driver
                     (format "screenshots/%s-%o.png" (last @test-names) (inst-ms (java.time.Instant/now)))))))
-
-
 
 (defn home->dashboard
   [d]

@@ -20,8 +20,8 @@
   (doto d
     (e/screenshot "screenshots/edit-haggadah-test-edit-page.png")
     (e/click-visible preview-field)
-    (e/fill preview-field k/home (k/with-shift k/end) k/delete #_text)
-    (e/fill-human preview-field text)
+    (e/fill preview-field k/home (k/with-shift k/end) k/delete)
+    (e/fill-human preview-field text {:mistake-prob 0})
     (e/screenshot "screenshots/edit-test-editing-haggadah.png")
     (e/click-visible submit-changes)
     (e/click-visible return-to-dashboard)))
