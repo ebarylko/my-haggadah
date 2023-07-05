@@ -17,7 +17,6 @@
 
 (defn edit-haggadah
   [d text]
-  (println "This is the haggadah " text)
   (doto d
     (e/screenshot "screenshots/edit-haggadah-test-edit-page.png")
     (e/click-visible preview-field)

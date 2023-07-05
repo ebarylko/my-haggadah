@@ -1,13 +1,11 @@
 (ns acceptance.core
-  (:require  [clojure.test :as t]
-             [etaoin.api :as e]
-             [environ.core :refer [env]]
-             [clojure.walk :as w]
-             [etaoin.keys :as k])
+  (:require [clojure.test :as t]
+            [etaoin.api :as e]
+            [environ.core :refer [env]]
+            [clojure.walk :as w])
   (:import com.google.firebase.FirebaseApp
            com.google.firebase.internal.EmulatorCredentials
            com.google.firebase.cloud.FirestoreClient
-           com.google.cloud.firestore.Firestore
            com.google.firebase.FirebaseOptions$Builder
            com.google.firebase.auth.FirebaseAuth
            com.google.firebase.auth.UserRecord$CreateRequest))
@@ -15,7 +13,12 @@
 
 (def project-id (env :gcloud-project))
 
-(def driver (e/chrome-headless { :args ["no-sandbox" "--disable-dev-shm-usage" "--disable-gpu" "--disable-extensions"  "--start-maximized" ] }))
+(def driver (e/chrome-headless
+             {:args ["no-sandbox"
+                     "--disable-dev-shm-usage"
+                     "--disable-gpu"
+                     "--disable-extensions"
+                     "--start-maximized"]}))
 
 (defn- build-firebase-options []
   (-> (new FirebaseOptions$Builder)
@@ -58,13 +61,52 @@
    (create-user {:email "han@skywalker.com"  :pwd "123456789" :id "user1"}))
   (tests))
 
+
+
+;; ;; (def old-report t/report)
+
+;; ;; (defmulti custom-report :type)
+
+;; ;; (defmethod custom-report :default [m]
+;; ;;   (old-report m))
+
+;; (defmethod t/report :begin-test-var [m]
+;;   (println (-> m :var meta :name)))
+
+
+
+;; ;; (defmethod custom-report :begin-test-var [m]
+;; ;;   (println (-> m :var meta :name)))
+
+;; ;; (binding [t/report custom-report]
+;; ;;   (t/run-all-tests))
+
+;; Override clojure.test reporting methods to capture their results
+
+(defmethod t/report :begin-test-ns [_])
+
+(defmethod t/report :pass [m]
+  (println "Here is the name of the test"
+   (:name (meta (first t/*testing-vars*)))))
+
+;; (defmethod t/report :fail [m]
+;;   (swap! fails+errors conj (report m)))
+
+;; (defmethod t/report :error [m]
+;;   (swap! fails+errors conj (report m)))
+
+
+
 (defn with-screenshot
   "Pre: takes a test
   Post: generates a screenshot after running the test"
   [test]
+  #_(println "Here are the test names " (symbol? test))
   (try
     (test)
-    (finally (e/screenshot driver
+    (finally
+      (println "Here are the test names " t/*testing-vars*)
+      (e/screenshot driver
                            (format "screenshots/%o.png" (inst-ms (java.time.Instant/now)))) )))
 
 
