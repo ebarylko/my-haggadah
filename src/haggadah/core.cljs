@@ -1,6 +1,7 @@
 (ns haggadah.core
   (:require
    ["firebase/app" :as fba]
+   ["react-dom/client" :refer [createRoot]]
    [haggadah.config :as config]
    [haggadah.events :as events]
    [haggadah.fb.auth :as fb-auth]
@@ -9,6 +10,8 @@
    [haggadah.fb.functions :as fb-fn]
    [haggadah.routes :as routes]
    [re-frame.core :as re-frame]
+   [haggadah.views :as view]
+   [reagent.core :as r]
    [reagent.dom :as rdom]))
 
 (defonce firebase-instance (atom nil))
@@ -17,12 +20,17 @@
   (when config/debug?
     (println "dev mode")))
 
+(defn ui []
+  [:div "hello world"])
+
+(defonce root (createRoot (.getElementById js/document "app")))
+
 (defn ^:dev/after-load mount-root []
   (re-frame/clear-subscription-cache!)
   (println "We are now rendering the app")
-  (let [root-el (.getElementById js/document "app")]
+  (.render root (r/as-element [routes/router-component {:router routes/router}]))
+  #_(let [root-el (.getElementById js/document "app")]
     (rdom/unmount-component-at-node root-el)
-    (println "Efasdf;lkjad;lfkj")
     (rdom/render [(fn [] routes/router-component) {:router routes/router}] root-el)))
 
 

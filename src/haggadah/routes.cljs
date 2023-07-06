@@ -4,6 +4,7 @@
    [reitit.frontend.controllers :as rfc]
    [reitit.coercion.spec :as rss]
    [reitit.frontend :as rf]
+   [reagent.core :as r]
    [re-frame.core :as re-frame]
    [haggadah.views :as views]
    [haggadah.events :as events]))
@@ -94,12 +95,19 @@
    {:use-fragment true}))
 
 (defn router-component [{:keys [router]}]
-  (let [current-route @(re-frame/subscribe [:current-route])]
-    (println "At the router component " current-route)
+  (let [current-route @(re-frame/subscribe [:current-route])
+        view (case (-> current-route :data :name)
+               :home  views/home-panel
+               :login views/login-panel
+               :about views/about-panel
+               :dashboard views/dashboard-panel
+               :haggadah-view views/haggadah-view-panel
+               :haggadah-edit views/haggadah-edit-panel
+               :haggadah-creation views/haggadah-creation-panel
+               :haggadah-success views/haggadah-success-panel
+               :edit-success views/haggadah-edit-success
+               views/home-panel)]
     [:div.main-container
      [views/top-menu {:router router :current-route current-route}]
      (when current-route
-       (println "The router component is true?" current-route " View "
-                (fn? (-> current-route :data :view))
-                )
-       [(-> current-route :data :view)])]))
+       [view])]))
