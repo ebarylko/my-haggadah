@@ -5,7 +5,6 @@
    [haggadah.subs :as subs]
    [reitit.frontend.easy :as rfe]
    [haggadah.events :as events]
-   [goog.string :as gstring]
    [goog.string.format]))
 
 (goog-define WRITE false)
