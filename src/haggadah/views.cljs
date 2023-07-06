@@ -4,7 +4,8 @@
    [haggadah.styles :as styles]
    [haggadah.subs :as subs]
    [reitit.frontend.easy :as rfe]
-   [haggadah.events :as events]))
+   [haggadah.events :as events]
+   [goog.string.format]))
 
 (goog-define WRITE false)
 
@@ -79,7 +80,7 @@
       [:p.title.has-text-weight-bold.is-size-1"Share your haggadot with familiy and friends"  ]
       [:p.subtitle.is-size-3  "Make a Haggadah effortlessly with just a click"  ]
       [:div.buttons.is-medium
-       [:a.button.is-focused {:href (href :login) :data-test-id "login"} "Log in"]
+       [:a.button.is-focused {:href (href :login) :data-testid :login} "Log in"]
        [:a.button  "Register"]]
       ]
      [:div.column
@@ -116,7 +117,7 @@
           [:i {:class "fas fa-exclamation-triangle"}]]]]
        [:div {:class "field is-grouped"}
         [:div {:class "control"}
-         [:a.button.is-link {:on-click  #(re-frame/dispatch [::events/login]) :id "submit"} "Submit"]]
+         [:a.button.is-link {:on-click  #(re-frame/dispatch [::events/login]) :data-testid :submit} "Submit"]]
         [:div {:class "control"}
          [:button {:class "button is-link is-light"} "Cancel"]]]
        ]]]
@@ -131,13 +132,13 @@
     [:div.pt-24.hero-body
      (let [name (re-frame/subscribe [::subs/name])]
        [:div
-        [:h1.text-center.is-size-4 {:id "user"}
+        [:h1.text-center.is-size-4 {:data-testid :user}
          (str "Hello " @name ". Welcome to your dashboard. To make a new haggadah, click the button to your right. To share and edit your existing haggadah, look at your haggadot below ")]])
      [:div.pl-6.buttons.is-right
-      [:a.button.is-large.is-focused.is-pulled-right {:data-test-id "create-haggadah"
+      [:a.button.is-large.is-focused.is-pulled-right {:data-testid :create-haggadah
                                                       :on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create haggadah"]]
      [:div.pl-6.buttons.is-right
-      [:a.button.is-large.is-focused.is-pulled-right {:data-test-id "signout"
+      [:a.button.is-large.is-focused.is-pulled-right {:data-testid "signout"
                                                       :on-click #(re-frame/dispatch [::events/signout])} "Signout"]]]
     [:div
      [:h1.is-size-3
@@ -146,8 +147,48 @@
        (when haggadot
          [:ul
           (for [{:keys [title id]} haggadot :when id] 
-            ^{:key id}[:li
-            [:a {:href (href :haggadah-view {:id id})} title]])]))]]])
+            ^{:key id}[:li.mb-2
+                       [:a {:data-testid (str "view-" id)
+                            :href (href :haggadah-view {:id id})} title]
+                       [:a.button.is-small.ml-2 {:data-testid (str "edit-" id )
+                                                 :href (href :haggadah-edit {:id id})} "Edit " title]])]))]]])
+
+(def edit-explanation
+  "Source contains the haggadah with markdown, while preview shows you how the haggadah will appear after applying the markdown.
+To see changes in preview edit source and then click on preview.
+ When you are satisfied with your changes please click the submit button below ")
+
+(defn haggadah-edit-panel
+  []
+  (let [text @(re-frame/subscribe [::subs/haggadah-text])
+        preview? @(re-frame/subscribe [::subs/src-preview])]
+    [:div.container
+     [:div.has-text-centered.box
+      edit-explanation]
+     [:div.tabs
+      [:ul
+       [:li {:class (if-not preview? "is-active" "") }
+        [:a {:on-click #(re-frame/dispatch [::events/set-preview false])
+             }"Source"]]
+       [:li {:class (if preview? "is-active" "")}
+        [:a {:on-click #(re-frame/dispatch [::events/set-preview true])
+             } "Preview"]]]]
+     [:div 
+      [:div {:class (when preview? "is-hidden")}
+       [:form.box
+        [:div.field
+         [:div
+          [:textarea.textarea {:placeholder "Text input" 
+                               :data-testid :preview
+                               :value text
+                               :on-change #(re-frame/dispatch [::events/edit-haggadah (-> %
+                                                                                          (.-target)
+                                                                                          (.-value))])}]]]]]
+       [:div {:class (when-not preview? "is-hidden")}
+        [:div.content {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:breaks true :mangle false :headerIds false})} :id "haggadah-text"}]]]
+     [:div
+      [:button.button {:on-click #(re-frame/dispatch [::events/modify-haggadah {:new-haggadah text :on-success [::events/push-state :edit-success] }])
+                       :data-testid :submit} "Submit changes"]]]))
 
 (defn form-content
   "Pre: takes an id for a form field
@@ -163,9 +204,17 @@
   [:div.container.has-text-centered
    [:div.notification.is-success
     "Your haggadah has been successfully made. Please click the button below to return to the dashboard and see it"]
-   [:a.button.is-focused.is-link {:data-test-id "return-dashboard":on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
+   [:a.button.is-focused.is-link {:data-testid :return :on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]])
 
 
+(defn haggadah-edit-success
+  [_]
+  [:div.container.has-text-centered
+   [:div.notification.is-success
+    "Your haggadah has been successfully changed. Please click the button below to return to the dashboard and see it"]
+   [:a.button.is-focused.is-link {:data-testid :return-dashboard
+                                  :on-click #(re-frame/dispatch [::push-state :dashboard])}
+    "Return to dashboard"]])
 
 (defn haggadah-creation-panel
   []
@@ -177,14 +226,14 @@
         [:div.field
          [:label {:class "label"} "Title"]
          [:div 
-          [:input#haggadah-title.input {:placeholder "Text input", :defaultValue "my-haggadah"}]]]
+          [:input#haggadah-title.input {:data-testid :haggadah-title :placeholder "Text input", :defaultValue "my-haggadah"}]]]
         [:div {:class "field"}
          [:label {:class "label"} "Content"]
          [:div
-          [:textarea#haggadah-text.textarea {:type "text", :placeholder "Haggadah content", :defaultValue "## The best possible haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
+          [:input#haggadah-text.textarea {:data-testid :haggadah-text :type "text", :placeholder "Haggadah content", :defaultValue "## The best possible haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
         [:div {:class "field is-grouped"}
          [:div {:class "control"}
-          [:a.button.is-link {:data-test-id "add-haggadah" :on-click #(re-frame/dispatch [::events/add-haggadah
+          [:a.button.is-link {:data-testid :add-haggadah :on-click #(re-frame/dispatch [::events/add-haggadah
                                                                                           (form-content "haggadah-title")
                                                                                           (form-content "haggadah-text") %])
                               :id "submit"} "Create"]]]]]]))
@@ -194,7 +243,7 @@
   [:div.container.hero.is-medium
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:div.hero-body
-       [:div.container.content {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:mangle false :headerIds false})} :id "haggadah-text"}]])])
+       [:div.container.content {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:mangle false :headerIds false})} :data-testid :haggadah-text}]])])
 
 (defn about-panel
   []

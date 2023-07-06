@@ -28,6 +28,11 @@
    (:haggadot db)))
 
 (re-frame/reg-sub
+ ::src-preview
+ (fn [db _]
+   (:preview db)))
+
+(re-frame/reg-sub
  ::error
  (fn [db _]
    (:error db)))

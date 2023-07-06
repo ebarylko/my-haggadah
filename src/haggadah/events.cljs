@@ -99,7 +99,8 @@
 
 (def route-events
   {:dashboard [::fetch-haggadot {:on-success ::set-haggadot}]
-   :haggadah-view [::fetch-haggadah {:on-success ::set-haggadah }]})
+   :haggadah-view [::fetch-haggadah {:on-success ::set-haggadah }]
+   :haggadah-edit [::fetch-haggadah {:on-success ::set-haggadah }]})
 
 (re-frame/reg-event-db
  ::do-nothing
@@ -175,6 +176,36 @@
               (js->clj :keywordize-keys true)
               (:content)))))
 
+(re-frame/reg-event-db
+ ::edit-haggadah
+ (fn [db [_ new-content]]
+     (assoc db :haggadah-text new-content)))
+
+
+(re-frame/reg-event-fx
+ ::modify-haggadah
+ (fn [{:keys [db]} [_ {:keys [new-haggadah on-success on-error] :or {on-error :error}}]]
+   (println "The haggadah " new-haggadah)
+   (let [id (get-in db [:current-route :path-params :id])]
+     {::update-doc {:path ["users" (db :uid) "haggadot" id]
+                    :content #js{:content new-haggadah}
+                    :on-success (keyword->func on-success)
+                    :on-error (keyword->func on-error)}})))
+
+(re-frame/reg-event-db
+ ::set-preview
+ (fn [db [_ preview?]]
+   (assoc db :preview preview?)))
+
+(re-frame/reg-fx
+ ::update-doc
+ (fn [{:keys [path content on-success on-error] :or {on-error ::error }}]
+   (println "Here's the update path" path "Here's the content " content)
+   (-> (firestore/instance)
+       (fire/doc (clojure.string/join "/" path))
+       (fire/updateDoc content)
+       (.then on-success)
+       (.catch on-error))))
 
 (re-frame/reg-event-fx
  ::push-state
