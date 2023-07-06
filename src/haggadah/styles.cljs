@@ -4,7 +4,9 @@
   (:require
     [spade.core   :refer [defglobal defclass]]
     [garden.units :refer [deg px]]
-    [garden.color :refer [rgba]]))
+    [garden.color :refer [lighten as-hsl rgb]]))
+
+(def atomic-tangerine (rgb 255 153 102))
 
 (defcssfn linear-gradient
  ([c1 p1 c2 p2]
@@ -15,14 +17,7 @@
 (defglobal defaults
   [:body
    {:color               :black
-    :background-color    :white
-    #_#_#_#_#_#_:background-image    [(linear-gradient :white (px 2) :transparent (px 2))
-                          (linear-gradient (deg 90) :white (px 2) :transparent (px 2))
-                          (linear-gradient (rgba 255 255 255 0.3) (px 1) :transparent (px 1))
-                          (linear-gradient (deg 90) (rgba 255 255 255 0.3) (px 1) :transparent (px 1))]
-    :background-size     [[(px 100) (px 100)] [(px 100) (px 100)] [(px 20) (px 20)] [(px 20) (px 20)]]
-    :background-position [[(px -2) (px -2)] [(px -2) (px -2)] [(px -1) (px -1)] [(px -1) (px -1)]]}
-   ]
+    :background-color    :white}]
   [:nav.navbar {:background-color :transparent}]
   )
 
@@ -47,7 +42,8 @@
 
 (defclass login-page
   []
-  {:background :none})
+  {:background :papayawhip}
+  #_[:form {:background (lighten (as-hsl atomic-tangerine) 15)}])
 
 (defclass about-page
   []

@@ -94,19 +94,10 @@
   [:div.is-dark {:class (styles/login-page)}
    [:section.pt-4.hero.is-fullheight-with-navbar.container
     [:div.columns.is-centered
-     
      [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
-      [:div.text-center 
-       "Enter your email and password in the form below so you can see your haggadot and share them"]
       [:form.box
-       [:div.field
-        [:label {:class "label"} "Password"]
-        [:div {:class "control has-icons-left has-icons-right"}
-         [:input {:class "input", :type "text", :placeholder "Text input", :defaultValue "123456789"}]
-         [:span {:class "icon is-small is-left"}
-          [:i {:class "fas fa-user"}]]
-         [:span {:class "icon is-small is-right"}
-          [:i {:class "fas fa-check"}]]]]
+       [:div.text-center 
+        "Enter your email and password in the form below so you can see your haggadot and share them"]
        [:div {:class "field"}
         [:label {:class "label"} "Email"]
         [:div {:class "control has-icons-left has-icons-right"}
@@ -115,13 +106,20 @@
           [:i {:class "fas fa-envelope"}]]
          [:span {:class "icon is-small is-right"}
           [:i {:class "fas fa-exclamation-triangle"}]]]]
-       [:div {:class "field is-grouped"}
+       [:div.field
+        [:label {:class "label"} "Password"]
+        [:div {:class "control has-icons-left has-icons-right"}
+         [:input {:class "input", :type "text", :placeholder "Text input", :defaultValue "123456789"}]
+         [:span {:class "icon is-small is-left"}
+          [:i {:class "fas fa-user"}]]
+         [:span {:class "icon is-small is-right"}
+          [:i {:class "fas fa-check"}]]]]
+       [:div.field.is-grouped.is-grouped-right 
         [:div {:class "control"}
-         [:a.button.is-link {:on-click  #(re-frame/dispatch [::events/login]) :data-testid :submit} "Submit"]]
+         [:button.is-small.button.is-danger  "Cancel"]]
         [:div {:class "control"}
-         [:button {:class "button is-link is-light"} "Cancel"]]]
-       ]]]
-    ]])
+         [:a.button.is-small.is-primary {:on-click  #(re-frame/dispatch [::events/login]) :data-testid :submit} "Submit"]]]
+       ]]]]])
 
 
 
