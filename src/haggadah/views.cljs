@@ -166,7 +166,7 @@ To see changes in preview edit source and then click on preview.
         preview? @(re-frame/subscribe [::subs/src-preview])]
     (println "Inside the let")
     [:div.container
- #_    [:div.has-text-centered.box
+     [:div.has-text-centered.box
       edit-explanation]
      [:div.tabs
       [:ul
