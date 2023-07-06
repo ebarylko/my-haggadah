@@ -10,9 +10,7 @@
    [haggadah.fb.functions :as fb-fn]
    [haggadah.routes :as routes]
    [re-frame.core :as re-frame]
-   [haggadah.views :as view]
-   [reagent.core :as r]
-   [reagent.dom :as rdom]))
+   [reagent.core :as r]))
 
 (defonce firebase-instance (atom nil))
 
@@ -20,18 +18,12 @@
   (when config/debug?
     (println "dev mode")))
 
-(defn ui []
-  [:div "hello world"])
-
 (defonce root (createRoot (.getElementById js/document "app")))
 
 (defn ^:dev/after-load mount-root []
   (re-frame/clear-subscription-cache!)
   (println "We are now rendering the app")
-  (.render root (r/as-element [routes/router-component {:router routes/router}]))
-  #_(let [root-el (.getElementById js/document "app")]
-    (rdom/unmount-component-at-node root-el)
-    (rdom/render [(fn [] routes/router-component) {:router routes/router}] root-el)))
+  (.render root (r/as-element [routes/router-component {:router routes/router}])))
 
 
 (defn fb-init [config]
