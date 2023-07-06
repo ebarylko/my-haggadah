@@ -154,8 +154,8 @@
                                                  :href (href :haggadah-edit {:id id})} "Edit " title]])]))]]])
 
 (def edit-explanation
-  " On the left you have your unparsed haggadah, and on the right is your parsed haggadah.
-To see changes in the parsed haggadah please edit the haggadah to your left.
+  "Source contains the haggadah with markdown, while preview shows you how the haggadah will appear after applying the markdown.
+To see changes in preview edit source and then click on preview.
  When you are satisfied with your changes please click the submit button below ")
 
 (defn haggadah-edit-panel
