@@ -160,10 +160,12 @@ To see changes in preview edit source and then click on preview.
 
 (defn haggadah-edit-panel
   []
+  (println "Looking at the edit panel")
   (let [text @(re-frame/subscribe [::subs/haggadah-text])
         preview? @(re-frame/subscribe [::subs/src-preview])]
+    (println "Inside the let")
     [:div.container
-     [:div.has-text-centered.box
+ #_    [:div.has-text-centered.box
       edit-explanation]
      [:div.tabs
       [:ul

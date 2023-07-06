@@ -1,4 +1,4 @@
-(ns haggadah.routes
+(ns ^:dev/always haggadah.routes
   (:require
    [reitit.frontend.easy :as rfe]
    [reitit.frontend.controllers :as rfc]
@@ -95,7 +95,11 @@
 
 (defn router-component [{:keys [router]}]
   (let [current-route @(re-frame/subscribe [:current-route])]
+    (println "At the router component " current-route)
     [:div.main-container
      [views/top-menu {:router router :current-route current-route}]
      (when current-route
+       (println "The router component is true?" current-route " View "
+                (fn? (-> current-route :data :view))
+                )
        [(-> current-route :data :view)])]))

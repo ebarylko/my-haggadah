@@ -19,9 +19,11 @@
 
 (defn ^:dev/after-load mount-root []
   (re-frame/clear-subscription-cache!)
+  (println "We are now rendering the app")
   (let [root-el (.getElementById js/document "app")]
     (rdom/unmount-component-at-node root-el)
-    (rdom/render [routes/router-component {:router routes/router}] root-el)))
+    (println "Efasdf;lkjad;lfkj")
+    (rdom/render [(fn [] routes/router-component) {:router routes/router}] root-el)))
 
 
 (defn fb-init [config]
