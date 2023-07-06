@@ -1,4 +1,4 @@
-(ns ^:dev/always haggadah.views
+(ns  haggadah.views
   (:require
    [re-frame.core :as re-frame]
    [haggadah.styles :as styles]
@@ -74,7 +74,6 @@
 
 
 (defn home-panel []
-  (println "Home page is being loaded")
   [:div {:class (styles/home-page)}
    [:section.hero.is-medium.container
     [:div.columns.container {:class "hero-body"}
@@ -161,10 +160,8 @@ To see changes in preview edit source and then click on preview.
 
 (defn haggadah-edit-panel
   []
-  (println "Looking at the edit panel")
   (let [text @(re-frame/subscribe [::subs/haggadah-text])
         preview? @(re-frame/subscribe [::subs/src-preview])]
-    (println "Inside the let")
     [:div.container
      [:div.has-text-centered.box
       edit-explanation]

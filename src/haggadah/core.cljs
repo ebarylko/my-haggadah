@@ -22,7 +22,6 @@
 
 (defn ^:dev/after-load mount-root []
   (re-frame/clear-subscription-cache!)
-  (println "We are now rendering the app")
   (.render root (r/as-element [routes/router-component {:router routes/router}])))
 
 
