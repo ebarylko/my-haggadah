@@ -232,8 +232,8 @@ To see changes in preview edit source and then click on preview.
   (let [text (atom "## The best possible haggadah")]
      [:div.columns.is-centered
       [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
-       [:h1 "Please fill in the details of your haggadah below"]
        [:form.box.mt-4
+        [:h1.pb-4 "Please fill in the details of your haggadah below"]
         [:div.field
          [:label {:class "label"} "Title"]
          [:div 
@@ -241,13 +241,15 @@ To see changes in preview edit source and then click on preview.
         [:div {:class "field"}
          [:label {:class "label"} "Content"]
          [:div
-          [:input#haggadah-text.textarea {:data-testid :haggadah-text :type "text", :placeholder "Haggadah content", :defaultValue "## The best possible haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
-        [:div {:class "field is-grouped"}
-         [:div {:class "control"}
-          [:a.button.is-link {:data-testid :add-haggadah :on-click #(re-frame/dispatch [::events/add-haggadah
-                                                                                          (form-content "haggadah-title")
-                                                                                          (form-content "haggadah-text") %])
-                              :id "submit"} "Create"]]]]]]))
+          [:textarea#haggadah-text.textarea {:data-testid :haggadah-text :type "text", :placeholder "Haggadah content", :defaultValue "## The best possible haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
+        [:div.field.is-grouped.is-grouped-right 
+           [:a.button "Cancel"]
+           [:a.button.is-link {:data-testid :add-haggadah :on-click #(re-frame/dispatch [::events/add-haggadah
+                                                                                         (form-content "haggadah-title")
+                                                                                         (form-content "haggadah-text") %])
+                               :id "submit"} "Create"]
+           
+          ]]]]))
 
 (defn haggadah-view-panel
   []
