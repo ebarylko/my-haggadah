@@ -25,7 +25,7 @@
    {:push-state route}))
 
 
-(defn top-menu [{:keys [router current-route]}]
+(defn top-menu [{:keys [router current-route uid]}]
   [:div {:class (styles/menu)}
    [:nav {:class "navbar", :role "navigation", :aria-label "main navigation"}
     [:div {:class "navbar-brand"}
@@ -58,7 +58,8 @@
           [:path {:d "M1046,51.6521276 C1130.83045,29.328812 1279.08318,17.607883 1439,40.1656806 L1439,120 C1271.17211,77.9435312 1140.17211,55.1609071 1046,51.6521276 Z", :id "Path-4", :opacity "0.200000003"}]]
          [:g {:transform "translate(-4.000000, 76.000000)", :fill "#FFFFFF", :fill-rule "nonzero"}
           [:path {:d "M0.457,34.035 C57.086,53.198 98.208,65.809 123.822,71.865 C181.454,85.495 234.295,90.29 272.033,93.459 C311.355,96.759 396.635,95.801 461.025,91.663 C486.76,90.01 518.727,86.372 556.926,80.752 C595.747,74.596 622.372,70.008 636.799,66.991 C663.913,61.324 712.501,49.503 727.605,46.128 C780.47,34.317 818.839,22.532 856.324,15.904 C922.689,4.169 955.676,2.522 1011.185,0.432 C1060.705,1.477 1097.39,3.129 1121.236,5.387 C1161.703,9.219 1208.621,17.821 1235.4,22.304 C1285.855,30.748 1354.351,47.432 1440.886,72.354 L1441.191,104.352 L1.121,104.031 L0.457,34.035 Z"}]]]]]
-   ])
+   ]
+  )
 
 (defn wave-top []
   [:svg {:class "wave-top", :viewBox "0 0 1439 147", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlnsXlink "http://www.w3.org/1999/xlink"}
@@ -133,11 +134,24 @@
         [:h1.text-center.is-size-4 {:data-testid :user}
          (str "Hello " @name ". Welcome to your dashboard. To make a new haggadah, click the button to your right. To share and edit your existing haggadah, look at your haggadot below ")]])
      [:div.pl-6.buttons.is-right
-      [:a.button.is-large.is-focused.is-pulled-right {:data-testid :create-haggadah
+      [:a.button.is-medium.is-focused.is-pulled-right {:data-testid :create-haggadah
                                                       :on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create haggadah"]]
      [:div.pl-6.buttons.is-right
-      [:a.button.is-large.is-focused.is-pulled-right {:data-testid "signout"
-                                                      :on-click #(re-frame/dispatch [::events/signout])} "Signout"]]]
+      [:a.button.is-medium.is-focused.is-pulled-right {:data-testid "signout"
+                                                      :on-click #(re-frame/dispatch [::events/signout])} "Signout"]]
+     [:div
+      [:h1.is-size-3
+       "Here are the haggadot you have created"]
+      (let [haggadot @(re-frame/subscribe [::subs/haggadot])]
+        (when haggadot
+          [:ul
+           (for [{:keys [title id]} haggadot :when id] 
+             ^{:key id}[:li.mb-2
+                        [:a {:data-testid (str "view-" id)
+                             :href (href :haggadah-view {:id id})} title]
+                        [:a.is-small.ml-2 {:data-testid (str "edit-" id )
+                                           :href (href :haggadah-edit {:id id})}
+                         [:i.fas.fa-edit]]])]))] ]
     [:div
      [:h1.is-size-3
       "Here are the haggadot you have created"]

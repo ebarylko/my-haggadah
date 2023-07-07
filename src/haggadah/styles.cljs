@@ -58,4 +58,4 @@
 
 (defclass about-page
   []
-  {:background :none})
+  {:background :papayawhip})
