@@ -96,10 +96,10 @@
     [:div.columns.is-centered
      [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
       [:form.box
-       [:div.text-center 
+       [:div.text-center.pb-2
         "Enter your email and password in the form below so you can see your haggadot and share them"]
        [:div {:class "field"}
-        [:label {:class "label"} "Email"]
+        [:label "Email"]
         [:div {:class "control has-icons-left has-icons-right"}
          [:input {:class "input", :type "email", :placeholder "Email input", :defaultValue "han@skywalker.com"}]
          [:span {:class "icon is-small is-left"}
@@ -107,7 +107,7 @@
          [:span {:class "icon is-small is-right"}
           [:i {:class "fas fa-exclamation-triangle"}]]]]
        [:div.field
-        [:label {:class "label"} "Password"]
+        [:label  "Password"]
         [:div {:class "control has-icons-left has-icons-right"}
          [:input {:class "input", :type "text", :placeholder "Text input", :defaultValue "123456789"}]
          [:span {:class "icon is-small is-left"}
@@ -116,9 +116,9 @@
           [:i {:class "fas fa-check"}]]]]
        [:div.field.is-grouped.is-grouped-right 
         [:div {:class "control"}
-         [:button.is-small.button.is-danger  "Cancel"]]
+         [:button.is-small.button {:class (styles/cancel-button)}  "Cancel"]]
         [:div {:class "control"}
-         [:a.button.is-small.is-primary {:on-click  #(re-frame/dispatch [::events/login]) :data-testid :submit} "Submit"]]]
+         [:a.button.is-small {:class (styles/submit-button) :on-click  #(re-frame/dispatch [::events/login]) :data-testid :submit} "Submit"]]]
        ]]]]])
 
 

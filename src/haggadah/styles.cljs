@@ -7,6 +7,8 @@
     [garden.color :refer [lighten as-hsl rgb]]))
 
 (def atomic-tangerine (rgb 255 153 102))
+(def dark-pastel-green (rgb 17, 191, 32))
+(def cinnibar (rgb 233, 79, 55))
 
 (defcssfn linear-gradient
  ([c1 p1 c2 p2]
@@ -39,6 +41,15 @@
   {:background "linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"
    }
   [:.navbar-item {:color "var(--ivory)"}])
+
+(defclass submit-button
+  []
+  {:background dark-pastel-green})
+
+(defclass cancel-button
+  []
+  {:background cinnibar})
+
 
 (defclass login-page
   []
