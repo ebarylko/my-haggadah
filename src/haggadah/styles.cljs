@@ -63,4 +63,5 @@
 
 (defclass haggadah-creation-page
   []
-  {:background periwinkle})
+  {:background periwinkle}
+  [:form {:background :whitesmoke}])
