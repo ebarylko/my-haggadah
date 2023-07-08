@@ -107,7 +107,8 @@
                :haggadah-success views/haggadah-success-panel
                :edit-success views/haggadah-edit-success
                views/home-panel)]
-    [:div.main-container
+    [:div.main-container.is-flex.is-flex-direction-column
      [views/top-menu {:router router :current-route current-route}]
      (when current-route
-       [view])]))
+       [:div.is-flex-grow-1.is-flex
+        [view]])]))

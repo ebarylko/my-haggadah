@@ -19,9 +19,12 @@
   [dir [c1 p1] [c2 p2]]))
 
 (defglobal defaults
-  [:body
-   {:color               :black
-    :background-color    :white}]
+  [:div#app {:height :100%}]
+  [:.main-container {:height :100%}]
+  [:html {:height :100%}]
+  [:body {:height :100%
+          :color               :black
+          :background-color    :white}]
   [:nav.navbar {:background-color :transparent}]
   )
 
@@ -71,3 +74,4 @@
   []
   {:background :papayawhip}
   [:div {:background :papayawhip}])
+

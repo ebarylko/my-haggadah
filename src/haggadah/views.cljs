@@ -212,12 +212,11 @@ To see changes in preview edit source and then click on preview.
 
 (defn haggadah-success-panel
   [_]
-  [:div.hero.is-large {:class (styles/haggadah-success-page)}
-   [:div.container.has-text-centered.hero-body.pt-3
+  [:div.is-flex-is-flex-grow-1 {:class (styles/haggadah-success-page)}
+   [:div.container.has-text-centered.pt-3
     [:div.pb-5
      "Your haggadah has been successfully made. Please click the button below to return to the dashboard and see it"]
-    [:div [:a.button.is-focused.is-link {:data-testid :return :on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]]]
-   [wave-bottom]])
+    [:div [:a.button.is-focused.is-link {:data-testid :return :on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]]]])
 
 
 (defn haggadah-edit-success
