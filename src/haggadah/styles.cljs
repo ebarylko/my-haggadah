@@ -66,3 +66,8 @@
   []
   {:background periwinkle}
   [:form {:background tea-green}])
+
+(defclass haggadah-success-page
+  []
+  {:background :papayawhip}
+  [:div {:background :papayawhip}])
