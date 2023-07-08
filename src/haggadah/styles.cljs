@@ -10,6 +10,7 @@
 (def dark-pastel-green (rgb 17, 191, 32))
 (def cinnibar (rgb 233, 79, 55))
 (def periwinkle (rgb 216, 220, 255))
+(def tea-green (rgb 197, 239, 203 ))
 
 (defcssfn linear-gradient
  ([c1 p1 c2 p2]
@@ -64,4 +65,4 @@
 (defclass haggadah-creation-page
   []
   {:background periwinkle}
-  [:form {:background :whitesmoke}])
+  [:form {:background tea-green}])
