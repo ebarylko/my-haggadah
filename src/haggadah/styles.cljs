@@ -78,16 +78,17 @@
 
 (defclass about-page
   []
-  {:background :papayawhip})
+  {:background page-background
+   :width :100%})
 
 (defclass haggadah-creation-page
   []
-  {:background periwinkle
+  {:background page-background
    :width :100%}
   [:form {:background tea-green}])
 
 (defclass haggadah-success-page
   []
-  {:background :papayawhip}
-  [:div {:background :papayawhip}])
+  {:background page-background
+   :width :100%})
 
