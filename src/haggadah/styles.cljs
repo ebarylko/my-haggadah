@@ -11,6 +11,12 @@
 (def cinnibar (rgb 233, 79, 55))
 (def periwinkle (rgb 216, 220, 255))
 (def tea-green (rgb 197, 239, 203 ))
+(def success (rgb 130, 140, 81 ))
+(def danger :#881600)
+
+
+(def page-background periwinkle)
+(def form-background (lighten (as-hsl success) 25))
 
 (defcssfn linear-gradient
  ([c1 p1 c2 p2]
@@ -26,6 +32,9 @@
           :color               :black
           :background-color    :white}]
   [:nav.navbar {:background-color :transparent}]
+  [:form {:background form-background}]
+  [:.page {:background page-background
+           :width :100%}]
   )
 
 (defclass header
@@ -39,11 +48,16 @@
 
 (defclass home-page
   []
-  {:background "linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"})
+  {:width :100%
+   :background "linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"})
+
+(defclass dashboard
+  []
+  {:width :100%})
 
 (defclass menu
   []
-  {:background "linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"
+  {:background atomic-tangerine #_"linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"
    }
   [:.navbar-item {:color "var(--ivory)"}])
 
@@ -53,13 +67,14 @@
 
 (defclass cancel-button
   []
-  {:background cinnibar})
+  {:background danger
+   :color :white})
 
 
 (defclass login-page
   []
-  {:background :papayawhip}
-  #_[:form {:background (lighten (as-hsl atomic-tangerine) 15)}])
+  {:background (lighten (as-hsl atomic-tangerine) 25)
+   :width :100%})
 
 (defclass about-page
   []
@@ -67,7 +82,8 @@
 
 (defclass haggadah-creation-page
   []
-  {:background periwinkle}
+  {:background periwinkle
+   :width :100%}
   [:form {:background tea-green}])
 
 (defclass haggadah-success-page

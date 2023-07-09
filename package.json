@@ -26,7 +26,6 @@
 	"devDependencies": {
 		"autoprefixer": "^10.4.14",
 		"bulma": "^0.9.4",
-		"jest-preset-cljest": "^1.1.4",
 		"karma": "^6.4.2",
 		"karma-chrome-launcher": "^3.2.0",
 		"karma-cljs-test": "^0.1.0",

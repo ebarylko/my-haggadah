@@ -138,7 +138,7 @@
 
 (defn dashboard-panel
   []
-  [:div {:class (styles/home-page)}
+  [:div.page #_{:class (styles/dashboard)}
    [:div.container.is-large.hero.is-flex
     [:div.hero-body.pt-6
      [:div.pt-24.column
@@ -231,11 +231,11 @@ To see changes in preview edit source and then click on preview.
 (defn haggadah-creation-panel
   []
   (let [text (atom "## The best possible haggadah")]
-    [:div.pt-4 {:class (styles/haggadah-creation-page)}
+    [:div.pt-4.page #_{:class (styles/haggadah-creation-page)}
      [:div.hero.is-fullheight
       [:div.columns.is-centered
        [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
-        [:form.box.mt-4 {:class (styles/haggadah-creation-page)}
+        [:form.box.mt-4 #_{:class (styles/haggadah-creation-page)}
          [:h1.pb-4 "Please fill in the details of your haggadah below"]
          [:div.field
           [:div 
