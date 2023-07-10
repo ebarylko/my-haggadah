@@ -68,6 +68,7 @@
 
 
 (defn home-panel []
+  (println "Inner height " (.-innerHeight js/window))
   [:div {:class (styles/home-page)}
    [:section.hero.container
     [:div {:class "hero-body"}

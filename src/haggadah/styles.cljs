@@ -4,7 +4,9 @@
   (:require
     [spade.core   :refer [defglobal defclass]]
     [garden.units :refer [deg px]]
-    [garden.color :refer [lighten as-hsl rgb]]))
+    [garden.color :refer [lighten as-hsl rgb]]
+    [garden.core :refer [css]]
+    [garden.stylesheet :refer [at-media]]))
 
 (def atomic-tangerine (rgb 255 153 102))
 (def dark-pastel-green (rgb 17, 191, 32))
@@ -51,7 +53,9 @@
   {:width :100%
    :background "linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"}
   [:img {:width :50%
-         :margin :auto}])
+         :margin :auto}]
+  (at-media {:max-width :768px}
+            [:img {:width :70%}]))
 
 (defclass dashboard
   []
@@ -59,10 +63,10 @@
 
 (defclass menu
   []
-  {#_#_:overflow :auto
-   :background atomic-tangerine #_"linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"
-   }
-  [:.navbar-item {:color "var(--ivory)"}])
+  {:background atomic-tangerine}
+  [:a.navbar-item {:background-color atomic-tangerine
+                  :color "var(--ivory)"}]
+  [:.navbar-menu {:padding 0}])
 
 (defclass submit-button
   []
@@ -101,3 +105,5 @@
   []
   {:background page-background
    :width :100%})
+
+
