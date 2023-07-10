@@ -40,10 +40,10 @@
   [:div {:class (styles/menu)}
    [:nav {:class "navbar", :role "navigation", :aria-label "main navigation"}
     [:div {:class "navbar-brand"}
-     [:a.navbar-item.is-size-6.has-text-weight-bold "ourhaggadah"]
-     [:a.navbar-item.is-size-6.has-text-weight-bold {:on-click  #(re-frame/dispatch [::push-state :home])} "Home"]
-     [:a.navbar-item.is-size-6.has-text-weight-bold {:on-click  #(re-frame/dispatch [::push-state :about])} "About"]
-     [:a.navbar-item.is-size-6.has-text-weight-bold {:on-click #(re-frame/dispatch [::events/signout])} "Sign out"]
+     [:a.navbar-item "ourhaggadah"]
+     [:a.navbar-item {:on-click  #(re-frame/dispatch [::push-state :home])} "Home"]
+     [:a.navbar-item {:on-click  #(re-frame/dispatch [::push-state :about])} "About"]
+     [:a.navbar-item {:on-click #(re-frame/dispatch [::events/signout])} "Sign out"]
      [:a {:role "button", :class "navbar-burger", :aria-label "menu", :aria-expanded "false", :data-target "navbarBasicExample"}
       [:span {:aria-hidden "true"}]
       [:span {:aria-hidden "true"}]
@@ -241,9 +241,9 @@ To see changes in preview edit source and then click on preview.
 
 (defn about-panel
   []
-  [:div.is-5-tablet.is-4-desktop.is-3-widescreen {:class (styles/about-page)}
-   [:section.hero.is-fullheight-with-navbar
-    [:div.columns.is-8.is-variable.container {:class "hero-body"}
+  [:div.page {:class (styles/about-page)}
+   [:section.container
+    [:div.columns.is-8.is-variable.container 
      [:div.column
       [:h1.has-text-weight-bold.is-size-3 "Why ourhaggadah.com?"]
       [:h1.pt-4.text-2xl "Creating a haggadah is daunting. There are so many questions to answer, such as what to include, who reads what portions, and how to accomodate speakers of different languages. I wanted to make the process easier so that people can focus on celebrating pesach with their friends and family."]]

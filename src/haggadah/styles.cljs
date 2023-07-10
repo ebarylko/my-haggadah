@@ -81,7 +81,7 @@
   []
   {:background page-background
    :width :100%
-   :overflow :auto})
+   #_#_:overflow :auto})
 
 (defclass haggadah-creation-page
   []
