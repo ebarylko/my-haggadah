@@ -57,7 +57,8 @@
 
 (defclass menu
   []
-  {:background atomic-tangerine #_"linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"
+  {#_#_:overflow :auto
+   :background atomic-tangerine #_"linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"
    }
   [:.navbar-item {:color "var(--ivory)"}])
 
