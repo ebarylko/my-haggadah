@@ -36,21 +36,7 @@
      [:a {:role "button", :class "navbar-burger", :aria-label "menu", :aria-expanded "false", :data-target "navbarBasicExample"}
       [:span {:aria-hidden "true"}]
       [:span {:aria-hidden "true"}]
-      [:span {:aria-hidden "true"}]]]
-    [:div {:id "navbarBasicExample", :class "navbar-menu"}
-     [:div {:class "navbar-start"}
-      
-      [:a {:class "navbar-item"} "Documentation"]
-      [:div {:class "navbar-item has-dropdown is-hoverable"}
-       [:a {:class "navbar-link"} "More"]
-       [:div {:class "navbar-dropdown"}
-        [:a {:class "navbar-item"} "Item 1"]
-        [:a {:class "navbar-item"} "Item 2"]
-        [:a {:class "navbar-item"} "Item 3"]
-        [:hr {:class "navbar-divider"}]
-        [:a {:class "navbar-item"} "Report an issue"]]]]
-     [:div {:class "navbar-end"}
-      [:div {:class "navbar-item"}]]]]
+      [:span {:aria-hidden "true"}]]]]
    #_ [:div {:class "relative -mt-12 lg:-mt-24"}
        [:svg {:viewBox "0 0 1428 174", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlnsXlink "http://www.w3.org/1999/xlink"}
         [:g {:stroke "none", :stroke-width "1", :fill "none", :fill-rule "evenodd"}
@@ -255,7 +241,7 @@ To see changes in preview edit source and then click on preview.
 
 (defn about-panel
   []
-  [:div {:class (styles/about-page)}
+  [:div.is-5-tablet.is-4-desktop.is-3-widescreen {:class (styles/about-page)}
    [:section.hero.is-fullheight-with-navbar
     [:div.columns.is-8.is-variable.container {:class "hero-body"}
      [:div.column

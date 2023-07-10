@@ -79,7 +79,8 @@
 (defclass about-page
   []
   {:background page-background
-   :width :100%})
+   :width :100%
+   :overflow :auto})
 
 (defclass haggadah-creation-page
   []
