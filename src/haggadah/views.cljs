@@ -249,7 +249,16 @@ To see changes in preview edit source and then click on preview.
   []
   [:div.page {:class (styles/about-page)}
    [:section.container
-    [:div.columns.is-8.is-variable.container 
+    [:div.is-variable
+     [:div
+      [:h1.has-text-weight-bold.is-size-3 "Why ourhaggadah.com?"]
+      [:h1.pt-4.text-2xl "Creating a haggadah is daunting. There are so many questions to answer, such as what to include, who reads what portions, and how to accomodate speakers of different languages. I wanted to make the process easier so that people can focus on celebrating pesach with their friends and family."]]
+     [:div
+      [:h1.has-text-weight-bold.is-size-3 "About me"]
+      [:img.is-96x96.image  {:src "/images/about-page-photo.jpeg"}]
+      [:h1.pt-4.text-2xl "My name is Eitan Barylko and I am an undergraduate student at Simon Fraser University. I love programming, cooking, and complaining that all the interesting things are in Vancouver. If you want to see what else I've worked on, you can checkout my github repo on the link below."]
+      [:a.pt-4-text-2xl {:href "https://github.com/ebarylko"} "https://github.com/ebarylko"]]]
+    #_[:div.columns.is-8.is-variable.container 
      [:div.column
       [:h1.has-text-weight-bold.is-size-3 "Why ourhaggadah.com?"]
       [:h1.pt-4.text-2xl "Creating a haggadah is daunting. There are so many questions to answer, such as what to include, who reads what portions, and how to accomodate speakers of different languages. I wanted to make the process easier so that people can focus on celebrating pesach with their friends and family."]]
