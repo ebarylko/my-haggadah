@@ -52,7 +52,7 @@
      [:div {:class "navbar-end"}
       [:div {:class "navbar-item"}]]]]
    #_ [:div {:class "relative -mt-12 lg:-mt-24"}
-       [:svg {:viewBox "0 0 1428 174", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlns:xlink "http://www.w3.org/1999/xlink"}
+       [:svg {:viewBox "0 0 1428 174", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlnsXlink "http://www.w3.org/1999/xlink"}
         [:g {:stroke "none", :stroke-width "1", :fill "none", :fill-rule "evenodd"}
          [:g {:transform "translate(-2.000000, 44.000000)", :fill "#FFFFFF", :fill-rule "nonzero"}
           [:path {:d "M0,0 C90.7283404,0.927527913 147.912752,27.187927 291.910178,59.9119003 C387.908462,81.7278826 543.605069,89.334785 759,82.7326078 C469.336065,156.254352 216.336065,153.6679 0,74.9732496", :opacity "0.100000001"}]
@@ -106,17 +106,13 @@
         [:div {:class "control has-icons-left has-icons-right"}
          [:input {:class "input", :type "email", :placeholder "Email input", :defaultValue "han@skywalker.com"}]
          [:span {:class "icon is-small is-left"}
-          [:i {:class "fas fa-envelope"}]]
-         [:span {:class "icon is-small is-right"}
-          [:i {:class "fas fa-exclamation-triangle"}]]]]
+          [:i {:class "fas fa-envelope"}]]]]
        [:div.field
         [:label  "Password"]
         [:div {:class "control has-icons-left has-icons-right"}
          [:input {:class "input", :type "text", :placeholder "Text input", :defaultValue "123456789"}]
          [:span {:class "icon is-small is-left"}
-          [:i {:class "fas fa-user"}]]
-         [:span {:class "icon is-small is-right"}
-          [:i {:class "fas fa-check"}]]]]
+          [:i {:class "fas fa-key"}]]]]
        [:div.field.is-grouped.is-grouped-right 
         [:div {:class "control"}
          [:button.is-small.button {:class (styles/cancel-button)}  "Cancel"]]
@@ -127,7 +123,7 @@
 (defn wave-bottom
   []
 [:div {:class "relative -mt-12 lg:-mt-24"}
-       [:svg {:viewBox "0 0 1428 174", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlns:xlink "http://www.w3.org/1999/xlink"}
+       [:svg {:viewBox "0 0 1428 174", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlnsXlink "http://www.w3.org/1999/xlink"}
         [:g {:stroke "none", :stroke-width "1", :fill "none", :fill-rule "evenodd"}
          [:g {:transform "translate(-2.000000, 44.000000)", :fill "#FFFFFF", :fill-rule "nonzero"}
           [:path {:d "M0,0 C90.7283404,0.927527913 147.912752,27.187927 291.910178,59.9119003 C387.908462,81.7278826 543.605069,89.334785 759,82.7326078 C469.336065,156.254352 216.336065,153.6679 0,74.9732496", :opacity "0.100000001"}]
@@ -147,7 +143,7 @@
          [:h1.text-center.is-size-4 {:data-testid :user}
           (str "Hello " @name ". Welcome to your dashboard. To make a new haggadah, click the button to your right. To share and edit your existing haggadah, look at your haggadot below ")]])
       [:div.pl-6.buttons.is-right
-       [:a.button.is-medium.is-focused.is-pulled-right.mt-2 {:data-testid :create-haggadah
+       [:a.button.is-smalll.is-pulled-right.mt-2 {:data-testid :create-haggadah
                                                         :on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create haggadah"]]
       [:div
        [:h1.is-size-3
@@ -252,7 +248,7 @@ To see changes in preview edit source and then click on preview.
 
 (defn haggadah-view-panel
   []
-  [:div.container.hero.is-medium
+  [:div.hero.is-medium {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:div.hero-body
        [:div.container.content {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:mangle false :headerIds false})} :data-testid :haggadah-text}]])])

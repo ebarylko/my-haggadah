@@ -92,3 +92,7 @@
   {:background page-background
    :width :100%})
 
+(defclass haggadah-view
+  []
+  {:background page-background
+   :width :100%})
