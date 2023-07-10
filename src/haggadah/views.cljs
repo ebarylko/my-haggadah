@@ -65,17 +65,17 @@
 
 (defn home-panel []
   [:div {:class (styles/home-page)}
-   [:section.hero.is-medium.container
-    [:div.columns.container {:class "hero-body"}
-     [:div.column
-      [:p.title.has-text-weight-bold.is-size-1"Share your haggadot with familiy and friends"  ]
-      [:p.subtitle.is-size-3  "Make a Haggadah effortlessly with just a click"  ]
-      [:div.buttons.is-medium
-       [:a.button.is-focused {:href (href :login) :data-testid :login} "Log in"]
-       [:a.button  "Register"]]]
-     [:div.column
-      [:img {:class "w-full md:w-4/5 z-50", :src "/images/hero.png"}] ]]]
-   [wave]])
+   [:section.hero.container
+    [:div {:class "hero-body"}
+     [:figure.image
+      [:img {:src "/images/hero.png"}] ]
+     [:p.title.has-text-weight-bold.is-size-1"Share your haggadot with familiy and friends"  ]
+     [:p.subtitle.is-size-3  "Make a Haggadah effortlessly with just a click"  ]
+     [:div.buttons
+      [:a.button.is-focused {:href (href :login) :data-testid :login} "Log in"]
+      [:a.button  "Register"]]
+     ]]
+   #_[wave]])
 
 
 
@@ -128,7 +128,7 @@
       (let [name (re-frame/subscribe [::subs/name])]
         [:div
          [:h1.text-center.is-size-4 {:data-testid :user}
-          (str "Hello " @name ". Welcome to your dashboard. To make a new haggadah, click the button to your right. To share and edit your existing haggadah, look at your haggadot below ")]])
+          (str "Hello " @name ". Welcome. To make a new haggadah, click the button to your right. To share and edit your existing haggadah, look at your haggadot below ")]])
       [:div.pl-6.buttons.is-right
        [:a.button.is-smalll.is-pulled-right.mt-2 {:data-testid :create-haggadah
                                                         :on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create haggadah"]]

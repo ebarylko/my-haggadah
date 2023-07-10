@@ -13,9 +13,9 @@
 (def tea-green (rgb 197, 239, 203 ))
 (def success (rgb 130, 140, 81 ))
 (def danger :#881600)
+(def uranian-blue :#b9e4ff)
 
-
-(def page-background periwinkle)
+(def page-background uranian-blue)
 (def form-background (lighten (as-hsl success) 25))
 
 (defcssfn linear-gradient
@@ -49,7 +49,9 @@
 (defclass home-page
   []
   {:width :100%
-   :background "linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"})
+   :background "linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"}
+  [:img {:width :50%
+         :margin :auto}])
 
 (defclass dashboard
   []
@@ -75,7 +77,8 @@
 (defclass login-page
   []
   {:background (lighten (as-hsl atomic-tangerine) 25)
-   :width :100%})
+   :width :100%}
+  [:form {:background :whitesmoke}])
 
 (defclass about-page
   []
