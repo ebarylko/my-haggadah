@@ -41,17 +41,16 @@
    [:nav {:class "navbar", :role "navigation", :aria-label "main navigation"}
     [:div {:class "navbar-brand"}
      [:a.navbar-item "ourhaggadah"]
-     [:a {:on-click #(re-frame/dispatch [::events/active-menu true]) :role "button", :class "navbar-burger", :aria-label "menu", :aria-expanded "false", :data-target "menu"}
+     [:a {:on-click #(re-frame/dispatch [::events/active-menu]) :role "button", :class "navbar-burger", :aria-label "menu", :aria-expanded "false", :data-target "menu"}
       [:span {:aria-hidden "true"}]
       [:span {:aria-hidden "true"}]
       [:span {:aria-hidden "true"}]]]
     (let [active-menu? @(re-frame/subscribe [::subs/active-menu?])
-          class (when active-menu? "is-active")]
-      (println "Menu val " active-menu?)
-     [:div#menu.navbar-menu {:class class}
-      [:a.navbar-item {:class class :on-click  #(re-frame/dispatch [::push-state :home])} "Home"]
-      [:a.navbar-item {:class class :on-click  #(re-frame/dispatch [::push-state :about])} "About"]
-      [:a.navbar-item {:class class :on-click #(re-frame/dispatch [::events/signout])} "Sign out"]]
+          active-menu (when active-menu? "is-active")]
+     [:div#menu.navbar-menu {:class active-menu}
+      [:a.navbar-item {:class active-menu :on-click  #(re-frame/dispatch [::push-state :home])} "Home"]
+      [:a.navbar-item {:class active-menu :on-click  #(re-frame/dispatch [::push-state :about])} "About"]
+      [:a.navbar-item {:class active-menu :on-click #(re-frame/dispatch [::events/signout])} "Sign out"]]
      )
     ]])
 

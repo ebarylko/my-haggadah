@@ -239,9 +239,10 @@
                  (map #(assoc %2 :id %1) ids))))))
 
 (re-frame/reg-event-db
- ::active-menu?
- (fn [db [_ active?]]
-   (assoc db :active-menu? active?)))
+ ::active-menu
+ (fn [db [_]]
+   (let [active? (not (:active-menu? db))]
+     (assoc db :active-menu? active?))))
 
 (def example-haggadah
   "## Hello Why, who are you
