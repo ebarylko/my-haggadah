@@ -36,19 +36,24 @@
          [:g {:transform "translate(-4.000000, 76.000000)", :fill "#FFFFFF", :fill-rule "nonzero"}
           [:path {:d "M0.457,34.035 C57.086,53.198 98.208,65.809 123.822,71.865 C181.454,85.495 234.295,90.29 272.033,93.459 C311.355,96.759 396.635,95.801 461.025,91.663 C486.76,90.01 518.727,86.372 556.926,80.752 C595.747,74.596 622.372,70.008 636.799,66.991 C663.913,61.324 712.501,49.503 727.605,46.128 C780.47,34.317 818.839,22.532 856.324,15.904 C922.689,4.169 955.676,2.522 1011.185,0.432 C1060.705,1.477 1097.39,3.129 1121.236,5.387 C1161.703,9.219 1208.621,17.821 1235.4,22.304 C1285.855,30.748 1354.351,47.432 1440.886,72.354 L1441.191,104.352 L1.121,104.031 L0.457,34.035 Z"}]]]]])
 
-(defn top-menu [{:keys [router current-route uid]}]
+(defn top-menu [{:keys [router current-route]}]
   [:div {:class (styles/menu)}
    [:nav {:class "navbar", :role "navigation", :aria-label "main navigation"}
     [:div {:class "navbar-brand"}
      [:a.navbar-item "ourhaggadah"]
-     [:a {:role "button", :class "navbar-burger", :aria-label "menu", :aria-expanded "false", :data-target "menu"}
+     [:a {:on-click #(re-frame/dispatch [::events/active-menu true]) :role "button", :class "navbar-burger", :aria-label "menu", :aria-expanded "false", :data-target "menu"}
       [:span {:aria-hidden "true"}]
       [:span {:aria-hidden "true"}]
       [:span {:aria-hidden "true"}]]]
-     [:div#menu.navbar-menu
-      [:a.navbar-item.is-active {:on-click  #(re-frame/dispatch [::push-state :home])} "Home"]
-      [:a.navbar-item {:on-click  #(re-frame/dispatch [::push-state :about])} "About"]
-      [:a.navbar-item {:on-click #(re-frame/dispatch [::events/signout])} "Sign out"]]]])
+    (let [active-menu? @(re-frame/subscribe [::subs/active-menu?])
+          class (when active-menu? "is-active")]
+      (println "Menu val " active-menu?)
+     [:div#menu.navbar-menu {:class class}
+      [:a.navbar-item {:class class :on-click  #(re-frame/dispatch [::push-state :home])} "Home"]
+      [:a.navbar-item {:class class :on-click  #(re-frame/dispatch [::push-state :about])} "About"]
+      [:a.navbar-item {:class class :on-click #(re-frame/dispatch [::events/signout])} "Sign out"]]
+     )
+    ]])
 
 (defn wave-top []
   [:svg {:class "wave-top", :viewBox "0 0 1439 147", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlnsXlink "http://www.w3.org/1999/xlink"}
@@ -198,7 +203,7 @@ To see changes in preview edit source and then click on preview.
   [:div.is-flex-is-flex-grow-1 {:class (styles/haggadah-success-page)}
    [:div.container.has-text-centered.pt-3
     [:div.pb-5
-     "Your haggadah has been successfully made. Please click the button below to return to the dashboard and see it"]
+     "Your haggadah is ready. Please click the button below to return to the dashboard and see it"]
     [:div [:a.button.is-focused.is-link {:data-testid :return :on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]]]])
 
 

@@ -238,6 +238,11 @@
                  (map #(js->clj % :keywordize-keys true))
                  (map #(assoc %2 :id %1) ids))))))
 
+(re-frame/reg-event-db
+ ::active-menu?
+ (fn [db [_ active?]]
+   (assoc db :active-menu? active?)))
+
 (def example-haggadah
   "## Hello Why, who are you
   ### This is the example haggadah
