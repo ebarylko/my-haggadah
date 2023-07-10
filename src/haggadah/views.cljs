@@ -41,13 +41,14 @@
    [:nav {:class "navbar", :role "navigation", :aria-label "main navigation"}
     [:div {:class "navbar-brand"}
      [:a.navbar-item "ourhaggadah"]
-     [:a.navbar-item {:on-click  #(re-frame/dispatch [::push-state :home])} "Home"]
-     [:a.navbar-item {:on-click  #(re-frame/dispatch [::push-state :about])} "About"]
-     [:a.navbar-item {:on-click #(re-frame/dispatch [::events/signout])} "Sign out"]
-     [:a {:role "button", :class "navbar-burger", :aria-label "menu", :aria-expanded "false", :data-target "navbarBasicExample"}
+     [:a {:role "button", :class "navbar-burger", :aria-label "menu", :aria-expanded "false", :data-target "menu"}
       [:span {:aria-hidden "true"}]
       [:span {:aria-hidden "true"}]
-      [:span {:aria-hidden "true"}]]]]])
+      [:span {:aria-hidden "true"}]]]
+     [:div#menu.navbar-menu
+      [:a.navbar-item.is-active {:on-click  #(re-frame/dispatch [::push-state :home])} "Home"]
+      [:a.navbar-item {:on-click  #(re-frame/dispatch [::push-state :about])} "About"]
+      [:a.navbar-item {:on-click #(re-frame/dispatch [::events/signout])} "Sign out"]]]])
 
 (defn wave-top []
   [:svg {:class "wave-top", :viewBox "0 0 1439 147", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlnsXlink "http://www.w3.org/1999/xlink"}
