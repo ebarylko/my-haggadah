@@ -74,7 +74,7 @@
     [:div {:class "hero-body"}
      [:figure.image
       [:img {:src "/images/hero.png"}] ]
-     [:p.title.has-text-weight-bold "Share your haggadot with familiy and friends"  ]
+     [:p.title.has-text-weight-bold "Share your Haggadot with familiy and friends"  ]
      [:p.subtitle "Make a Haggadah effortlessly"  ]
      [:div.buttons
       [:a.button.is-focused {:href (href :login) :data-testid :login} "Log in"]
@@ -85,12 +85,12 @@
 
 (defn login-panel []
   [:div.is-dark {:class (styles/login-page)}
-   [:section.pt-4.hero.is-fullheight-with-navbar.container
-    [:div.is-centered
-     [:div.is-5-tablet.is-4-desktop.is-3-widescreen
+   [:section.pt-4
+    [:div.is-centered.columns
+     [:div.is-5-tablet.is-4-desktop.is-3-widescreen.column
       [:form.box
        [:div.text-center.pb-2
-        "Enter your email and password in the form below so you can see your haggadot and share them"]
+        "Enter your email and password in the form below so you can see your Haggadot and share them"]
        [:div {:class "field"}
         [:label "Email"]
         [:div {:class "control has-icons-left has-icons-right"}
@@ -131,10 +131,10 @@
       (let [name (re-frame/subscribe [::subs/name])]
         [:div
          [:h1.text-center.is-size-4 {:data-testid :user}
-          (str "Hello " @name ". Welcome. To make a new haggadah, click the button to your right. To share and edit your existing haggadah, look at your haggadot below ")]])
+          (str "Hello " @name ". Welcome. To make a new Haggadah, click the button to your right. To share and edit your existing Haggadah, look at your Haggadot below ")]])
       [:div.pl-6.buttons.is-right
        [:a.button.is-smalll.is-pulled-right.mt-2 {:data-testid :create-haggadah
-                                                        :on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create haggadah"]]
+                                                        :on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create Haggadah"]]
       [:div
        [:h1.is-size-3
         "Haggadot created"]
@@ -151,7 +151,7 @@
    [wave-bottom]])
 
 (def edit-explanation
-  "Source contains the haggadah with markdown, while preview shows you how the haggadah will appear after applying the markdown.
+  "Source contains the Haggadah with markdown, while preview shows you how the Haggadah will appear after applying the markdown.
 To see changes in preview edit source and then click on preview.
  When you are satisfied with your changes please click the submit button below ")
 
@@ -201,7 +201,7 @@ To see changes in preview edit source and then click on preview.
   [:div.is-flex-is-flex-grow-1 {:class (styles/haggadah-success-page)}
    [:div.container.has-text-centered.pt-3
     [:div.pb-5
-     "Your haggadah is ready. Please click the button below to return to the dashboard and see it"]
+     "Your Haggadah is ready. Please click the button below to return to the dashboard and see it"]
     [:div [:a.button.is-focused.is-link {:data-testid :return :on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]]]])
 
 
@@ -209,14 +209,14 @@ To see changes in preview edit source and then click on preview.
   [_]
   [:div.container.has-text-centered
    [:div.notification.is-success
-    "Your haggadah has been successfully changed. Please click the button below to return to the dashboard and see it"]
+    "Your Haggadah has been successfully changed. Please click the button below to return to the dashboard and see it"]
    [:a.button.is-focused.is-link {:data-testid :return-dashboard
                                   :on-click #(re-frame/dispatch [::push-state :dashboard])}
     "Return to dashboard"]])
 
 (defn haggadah-creation-panel
   []
-  (let [text (atom "## The best possible haggadah")]
+  (let [text (atom "## The best possible Haggadah")]
     [:div.pt-4.page #_{:class (styles/haggadah-creation-page)}
      [:div.hero.is-fullheight
       [:div.columns.is-centered
@@ -225,7 +225,7 @@ To see changes in preview edit source and then click on preview.
          [:h1.pb-4 "Please fill in the details of your haggadah below"]
          [:div.field
           [:div 
-           [:input#haggadah-title.input {:data-testid :haggadah-title :placeholder "The title of your haggadah" }]]]
+           [:input#haggadah-title.input {:data-testid :haggadah-title :placeholder "The title of your Haggadah" }]]]
          [:div {:class "field"}
           [:div
            [:textarea#haggadah-text.textarea {:data-testid :haggadah-text :type "text", :placeholder "The content of your haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
@@ -250,9 +250,9 @@ To see changes in preview edit source and then click on preview.
     [:div.is-variable
      [:div
       [:h1.has-text-weight-bold.is-size-3 "Why ourhaggadah.com?"]
-      [:h1.pt-4.text-2xl "Creating a haggadah is daunting. There are so many questions to answer, such as what to include, who reads what portions, and how to accomodate speakers of different languages. I wanted to make the process easier so that people can focus on celebrating pesach with their friends and family."]]
+      [:h1.pt-4.text-2xl "Creating a Haggadah can feel daunting. There are so many questions to answer, such as what to include, who reads what portions, and how to accomodate speakers of different languages. I wanted to make the process easier so that people can focus on celebrating Pesach with their friends and family."]]
      [:div
       [:h1.has-text-weight-bold.is-size-3 "About me"]
       [:img.is-96x96.image  {:src "/images/about-page-photo.jpeg"}]
-      [:h1.pt-4.text-2xl "My name is Eitan Barylko and I am an undergraduate student at Simon Fraser University. I love programming, cooking, and complaining that all the interesting things are in Vancouver. If you want to see what else I've worked on, you can checkout my github repo on the link below."]
+      [:h1.pt-4.text-2xl "My name is Eitan Barylko and I am a university student. I love programming, cooking, and reading. If you want to see what else I've worked on, you can checkout my github repository on the link below."]
       [:a.pt-4-text-2xl {:href "https://github.com/ebarylko"} "https://github.com/ebarylko"]]]]])

@@ -82,7 +82,9 @@
   []
   {:background (lighten (as-hsl atomic-tangerine) 25)
    :width :100%}
-  [:form {:background :whitesmoke}])
+  [:form {:background :whitesmoke
+          #_#_:width :37%}]
+  [:.columns {:padding-right :0rem}])
 
 (defclass about-page
   []
