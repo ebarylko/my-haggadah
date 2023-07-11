@@ -68,13 +68,12 @@
 
 
 (defn home-panel []
-  (println "Inner height " (.-innerHeight js/window))
   [:div {:class (styles/home-page)}
    [:section.hero.container
     [:div {:class "hero-body"}
      [:figure.image
       [:img {:src "/images/hero.png"}] ]
-     [:p.title.has-text-weight-bold "Share your Haggadot with familiy and friends"  ]
+     [:p.title.is-4 "Share your Haggadot with familiy and friends"  ]
      [:p.subtitle "Make a Haggadah effortlessly"  ]
      [:div.buttons
       [:a.button.is-focused {:href (href :login) :data-testid :login} "Log in"]
