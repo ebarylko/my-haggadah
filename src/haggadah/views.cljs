@@ -217,18 +217,18 @@ To see changes in preview edit source and then click on preview.
 (defn haggadah-creation-panel
   []
   (let [text (atom "## The best possible Haggadah")]
-    [:div.pt-4.page #_{:class (styles/haggadah-creation-page)}
+    [:div.pt-4.page 
      [:div.hero.is-fullheight
       [:div.columns.is-centered
        [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
-        [:form.box.mt-4 #_{:class (styles/haggadah-creation-page)}
-         [:h1.pb-4 "Please fill in the details of your haggadah below"]
+        [:form.box.mt-4 
+         [:h1.pb-4 "Please fill in the details of your Haggadah below"]
          [:div.field
           [:div 
            [:input#haggadah-title.input {:data-testid :haggadah-title :placeholder "The title of your Haggadah" }]]]
          [:div {:class "field"}
           [:div
-           [:textarea#haggadah-text.textarea {:data-testid :haggadah-text :type "text", :placeholder "The content of your haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
+           [:textarea#haggadah-text.textarea {:data-testid :haggadah-text :type "text", :placeholder "The content of your Haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
          [:div.field.is-grouped.is-grouped-right 
           [:a.button.mr-3 "Cancel"]
           [:a.button {:class (styles/submit-button):data-testid :add-haggadah :on-click #(re-frame/dispatch [::events/add-haggadah
