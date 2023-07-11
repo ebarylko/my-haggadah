@@ -4,7 +4,21 @@
   (:require
     [spade.core   :refer [defglobal defclass]]
     [garden.units :refer [deg px]]
-    [garden.color :refer [rgba]]))
+    [garden.color :refer [lighten as-hsl rgb]]
+    [garden.core :refer [css]]
+    [garden.stylesheet :refer [at-media]]))
+
+(def atomic-tangerine (rgb 255 153 102))
+(def dark-pastel-green (rgb 17, 191, 32))
+(def cinnibar (rgb 233, 79, 55))
+(def periwinkle (rgb 216, 220, 255))
+(def tea-green (rgb 197, 239, 203 ))
+(def success (rgb 130, 140, 81 ))
+(def danger :#881600)
+(def uranian-blue :#b9e4ff)
+
+(def page-background uranian-blue)
+(def form-background (lighten (as-hsl success) 25))
 
 (defcssfn linear-gradient
  ([c1 p1 c2 p2]
@@ -13,17 +27,16 @@
   [dir [c1 p1] [c2 p2]]))
 
 (defglobal defaults
-  [:body
-   {:color               :black
-    :background-color    :white
-    #_#_#_#_#_#_:background-image    [(linear-gradient :white (px 2) :transparent (px 2))
-                          (linear-gradient (deg 90) :white (px 2) :transparent (px 2))
-                          (linear-gradient (rgba 255 255 255 0.3) (px 1) :transparent (px 1))
-                          (linear-gradient (deg 90) (rgba 255 255 255 0.3) (px 1) :transparent (px 1))]
-    :background-size     [[(px 100) (px 100)] [(px 100) (px 100)] [(px 20) (px 20)] [(px 20) (px 20)]]
-    :background-position [[(px -2) (px -2)] [(px -2) (px -2)] [(px -1) (px -1)] [(px -1) (px -1)]]}
-   ]
+  [:div#app {:height :100%}]
+  [:.main-container {:height :100%}]
+  [:html {:height :100%}]
+  [:body {:height :100%
+          :color               :black
+          :background-color    :white}]
   [:nav.navbar {:background-color :transparent}]
+  [:form {:background form-background}]
+  [:.page {:background page-background
+           :width :100%}]
   )
 
 (defclass header
@@ -37,18 +50,62 @@
 
 (defclass home-page
   []
-  {:background "linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"})
+  {:width :100%
+   :background "linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"}
+  [:img {:width :50%
+         :margin :auto}]
+  (at-media {:max-width :768px}
+            [:img {:width :70%}]))
+
+(defclass dashboard
+  []
+  {:width :100%})
 
 (defclass menu
   []
-  {:background "linear-gradient(90deg, var(--atomic-tangerine ) 0%, var(--mountbatten-pink ) 100%)"
-   }
-  [:.navbar-item {:color "var(--ivory)"}])
+  {:background atomic-tangerine}
+  [:a.navbar-item {:background-color atomic-tangerine
+                  :color "var(--ivory)"}]
+  [:.navbar-menu {:padding 0}])
+
+(defclass submit-button
+  []
+  {:background dark-pastel-green})
+
+(defclass cancel-button
+  []
+  {:background danger
+   :color :white})
+
 
 (defclass login-page
   []
-  {:background :none})
+  {:background (lighten (as-hsl atomic-tangerine) 25)
+   :width :100%}
+  [:form {:background :whitesmoke
+          #_#_:width :37%}]
+  [:.columns {:padding-right :0rem}])
 
 (defclass about-page
   []
-  {:background :none})
+  {:background page-background
+   :width :100%
+   #_#_:overflow :auto})
+
+(defclass haggadah-creation-page
+  []
+  {:background page-background
+   :width :100%}
+  [:form {:background tea-green}])
+
+(defclass haggadah-success-page
+  []
+  {:background page-background
+   :width :100%})
+
+(defclass haggadah-view
+  []
+  {:background page-background
+   :width :100%})
+
+
