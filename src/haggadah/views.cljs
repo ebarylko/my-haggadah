@@ -89,7 +89,7 @@
      [:div.is-5-tablet.is-4-desktop.is-3-widescreen.column
       [:form.box
        [:div.text-center.pb-2
-        "Enter your email and password in the form below so you can see your Haggadot and share them"]
+        "Please enter your email and password."]
        [:div {:class "field"}
         [:label "Email"]
         [:div {:class "control has-icons-left has-icons-right"}
