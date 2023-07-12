@@ -221,13 +221,25 @@ To see changes in preview edit source and then click on preview.
       [:div.columns.is-centered
        [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
         [:form.box.mt-4 
-         [:h1.pb-4 "Please fill in the details of your Haggadah below"]
+         [:h1.pb-4 "Please make a title and select the haggadah template"]
          [:div.field
           [:div 
            [:input#haggadah-title.input {:data-testid :haggadah-title :placeholder "The title of your Haggadah" }]]]
-         [:div {:class "field"}
-          [:div
-           [:textarea#haggadah-text.textarea {:data-testid :haggadah-text :type "text", :placeholder "The content of your Haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
+         [:div.field
+          (let [dropdown? @(re-frame/subscribe [::subs/dropdown])
+                expand (when dropdown? "is-active")
+                haggadah-option @(re-frame/subscribe [::subs/haggadah-option])
+                active? (when haggadah-option "is-active")]
+           [:div.dropdown {:class expand}
+            [:div {:class "dropdown-trigger"}
+             [:button.button {:on-click #(re-frame/dispatch [::events/set-dropdown]) :aria-haspopup "true", :aria-controls "dropdown-menu"}
+              [:span "Dropdown button"]
+              [:span {:class "icon is-small"}
+               [:i {:class "fas fa-angle-down", :aria-hidden "true"}]]]]
+            [:div {:class "dropdown-menu", :id "dropdown-menu", :role "menu"}
+             [:div {:class "dropdown-content"}
+              [:a.dropdown-item {:class active?
+                                 :on-click #(re-frame/dispatch [::events/haggadah-option])} "Base Haggadah" ]]]])]
          [:div.field.is-grouped.is-grouped-right 
           [:a.button.mr-3 "Cancel"]
           [:a.button {:class (styles/submit-button):data-testid :add-haggadah :on-click #(re-frame/dispatch [::events/add-haggadah

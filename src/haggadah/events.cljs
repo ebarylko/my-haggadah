@@ -238,6 +238,19 @@
                  (map #(js->clj % :keywordize-keys true))
                  (map #(assoc %2 :id %1) ids))))))
 
+
+(re-frame/reg-event-db
+ ::set-dropdown
+ (fn [db [_]]
+   (let [active? (not (:dropdown db))]
+     (assoc db :dropdown active?))))
+
+(re-frame/reg-event-db
+ ::haggadah-option
+ (fn [db [_]]
+   (let [active? (not (:haggadah-option db))]
+     (assoc db :haggadah-option active?))))
+
 (re-frame/reg-event-db
  ::active-menu
  (fn [db [_]]
