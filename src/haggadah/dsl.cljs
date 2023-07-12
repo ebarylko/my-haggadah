@@ -16,14 +16,13 @@
 (defonce haggadah
   (create-haggadah "Wine" bracha))
 
-(defn key->hiccup
+(defn haggadah->hiccup
   [[k {:keys [title content]}]]
   (case k
     :bracha [:div
-             [:div.has-text-centered title]
-             [:div.has-text-right content]]
+             [:div.has-text-centered.has-text-weight-bold title]
+             [:div.has-text-right.is-size-5 content]]
     :else [:div]))
-
 
 
 #_(defn parse-haggadah
@@ -37,8 +36,7 @@
   Post: returns the same Haggadah represented in hiccup"
   [content]
   (->> content
-       ((partial map key->hiccup))
+       ((partial map haggadah->hiccup))
        first))
 
-(parse-haggadah (:content (assoc-in haggadah [:content :song ] "faslkjdfhlkajsdhfkljh")))
 

@@ -121,6 +121,12 @@
      {:db (assoc db :name nil :uid nil :user :unregistered)})))
 
 
+(re-frame/reg-event-fx
+ ::add-new-haggadah-id
+ (fn [{:keys [db]} [_ haggadah]]
+   {:db (assoc db :haggadah-id (.-id haggadah))
+    :fx [[:dispatch [::push-state :haggadah-success]]]}))
+
 
 
 (re-frame/reg-event-fx
@@ -129,9 +135,17 @@
    (println "Title " title "haggadah " dsl/haggadah)
    {::add-haggadah! {:path ["users" (:uid db) "haggadot"]
                      :haggadah (assoc dsl/haggadah :title title)
-                    :on-success (re-frame/dispatch [::push-state :haggadah-success])
+                    :on-success (keyword->func ::add-new-haggadah-id)
                      :on-error (keyword->func ::error)}}))
 
+;; (re-frame/reg-event-fx
+;;  ::add-haggadah
+;;  (fn [{:keys [db]} [_ title]]
+;;    (println "Title " title "haggadah " dsl/haggadah)
+;;    {::add-haggadah! {:path ["users" (:uid db) "haggadot"]
+;;                      :haggadah (assoc dsl/haggadah :title title)
+;;                      :on-success (re-frame/dispatch [::push-state :haggadah-success])
+;;                      :on-error (keyword->func ::error)}}))
 
 (re-frame/reg-fx
  ::add-haggadah!
