@@ -5,6 +5,7 @@
    [haggadah.fb.firestore :as firestore]
    ["firebase/firestore" :as fire]
    [haggadah.db :as db]
+   [haggadah.dsl :as dsl]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
    [haggadah.fb.auth :as auth]
    [haggadah.fb.functions :as func]))
@@ -124,11 +125,10 @@
 
 (re-frame/reg-event-fx
  ::add-haggadah
- (fn [{:keys [db]} [_ title content]]
-   (println "Content " content "Title " title)
+ (fn [{:keys [db]} [_ title]]
+   (println "Title " title "haggadah " dsl/haggadah)
    {::add-haggadah! {:path ["users" (:uid db) "haggadot"]
-                     :haggadah {:title title
-                                :content content}
+                     :haggadah (assoc dsl/haggadah :title title)
                     :on-success (re-frame/dispatch [::push-state :haggadah-success])
                      :on-error (keyword->func ::error)}}))
 

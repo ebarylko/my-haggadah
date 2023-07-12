@@ -215,7 +215,7 @@ To see changes in preview edit source and then click on preview.
 
 (defn haggadah-creation-panel
   []
-  (let [text (atom "## The best possible Haggadah")]
+  (let [haggadah (atom nil)]
     [:div.pt-4.page 
      [:div.hero.is-fullheight
       [:div.columns.is-centered
@@ -232,7 +232,8 @@ To see changes in preview edit source and then click on preview.
                 active? (when haggadah-option "is-active")]
            [:div.dropdown {:class expand}
             [:div {:class "dropdown-trigger"}
-             [:button.button {:on-click #(re-frame/dispatch [::events/set-dropdown]) :aria-haspopup "true", :aria-controls "dropdown-menu"}
+             [:button.button {:on-click #((re-frame/dispatch [::events/set-dropdown]))
+                              :aria-haspopup "true", :aria-controls "dropdown-menu"}
               [:span "Dropdown button"]
               [:span {:class "icon is-small"}
                [:i {:class "fas fa-angle-down", :aria-hidden "true"}]]]]
@@ -244,7 +245,7 @@ To see changes in preview edit source and then click on preview.
           [:a.button.mr-3 "Cancel"]
           [:a.button {:class (styles/submit-button):data-testid :add-haggadah :on-click #(re-frame/dispatch [::events/add-haggadah
                                                                                         (form-content "haggadah-title")
-                                                                                        (form-content "haggadah-text") %])
+                                                                                         %])
                               :id "submit"} "Create"]]]]]]]))
 
 (defn haggadah-view-panel
@@ -252,7 +253,7 @@ To see changes in preview edit source and then click on preview.
   [:div.hero.is-medium {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:div.hero-body
-       [:div.container.content {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:mangle false :headerIds false})} :data-testid :haggadah-text}]])])
+       [:div.container.content text #_{:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:mangle false :headerIds false})} :data-testid :haggadah-text}]])])
 
 (defn about-panel
   []
