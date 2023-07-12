@@ -174,7 +174,8 @@
           (-> snap
               (. data)
               (js->clj :keywordize-keys true)
-              (:content)))))
+              (:content)
+              dsl/parse-haggadah))))
 
 (re-frame/reg-event-db
  ::edit-haggadah

@@ -1,20 +1,44 @@
-(ns haggadah.dsl)
+(ns haggadah.dsl
+  (:require [clojure.walk :as w]))
 
 
 (defn create-haggadah
   "Pre: takes a bracha B
   Post: returns a Haggadah with bracha B"
-  [bracha]
+  [title bracha]
   {:content 
-   {:bracha bracha}})
+   {:bracha {:title title :content bracha }}})
+
+;; Bracha tiene contenido y un titulo por ahora
 
 (def bracha "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
 
 (defonce haggadah
-  (create-haggadah bracha))
+  (create-haggadah "Wine" bracha))
+
+(defn key->hiccup
+  [[k {:keys [title content]}]]
+  (case k
+    :bracha [:div
+             [:div.has-text-centered title]
+             [:div.has-text-right content]]
+    :else [:div]))
+
+
+
+#_(defn parse-haggadah
+  "Pre: takes a Haggadah
+  Post: returns the same Haggadah represented in hiccup"
+  [content]
+  (w/walk key->hiccup #(conj [] %) #_#(into [] %) content))
 
 (defn parse-haggadah
   "Pre: takes a Haggadah
   Post: returns the same Haggadah represented in hiccup"
-  [{:keys [bracha]}]
-  [:div bracha])
+  [content]
+  (->> content
+       ((partial map key->hiccup))
+       first))
+
+(parse-haggadah (:content (assoc-in haggadah [:content :song ] "faslkjdfhlkajsdhfkljh")))
+

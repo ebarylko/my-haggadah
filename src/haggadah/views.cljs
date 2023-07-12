@@ -252,8 +252,9 @@ To see changes in preview edit source and then click on preview.
   []
   [:div.hero.is-medium {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
+      (println text)
       [:div.hero-body
-       [:div.container.content text #_{:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:mangle false :headerIds false})} :data-testid :haggadah-text}]])])
+       [:div.container.content  text #_{:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:mangle false :headerIds false})} :data-testid :haggadah-text}]])])
 
 (defn about-panel
   []
