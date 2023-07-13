@@ -106,6 +106,7 @@
 (defclass haggadah-view
   []
   {:background page-background
-   :width :100%})
+   :width :100%
+   :padding "20px 0px"})
 
 

@@ -53,6 +53,8 @@
         :registered @user
         "han@skywalker.com" @name)))))
 
+#_(t/deftest making-bracha-with-dsl
+  (rf-test/run-test-async))
 #_(t/deftest routes-exist
   (rf-test/run-test-sync
    (routes/init-routes!)

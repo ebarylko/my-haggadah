@@ -227,20 +227,17 @@ To see changes in preview edit source and then click on preview.
            [:input#haggadah-title.input {:data-testid :haggadah-title :placeholder "The title of your Haggadah" }]]]
          [:div.field
           (let [dropdown? @(re-frame/subscribe [::subs/dropdown])
-                expand (when dropdown? "is-active")
-                haggadah-option @(re-frame/subscribe [::subs/haggadah-option])
-                active? (when haggadah-option "is-active")]
+                expand (when dropdown? "is-active")]
            [:div.dropdown {:class expand}
             [:div {:class "dropdown-trigger"}
-             [:button.button {:on-click #((re-frame/dispatch [::events/set-dropdown]))
+             [:button.button {:readonly true
                               :aria-haspopup "true", :aria-controls "dropdown-menu"}
-              [:span "Dropdown button"]
+              [:span "Base Haggadah"]
               [:span {:class "icon is-small"}
                [:i {:class "fas fa-angle-down", :aria-hidden "true"}]]]]
             [:div {:class "dropdown-menu", :id "dropdown-menu", :role "menu"}
              [:div {:class "dropdown-content"}
-              [:a.dropdown-item {:class active?
-                                 :on-click #(re-frame/dispatch [::events/haggadah-option])} "Base Haggadah" ]]]])]
+              [:a.dropdown-item.is-active "Base Haggadah" ]]]])]
          [:div.field.is-grouped.is-grouped-right 
           [:a.button.mr-3 "Cancel"]
           [:a.button {:class (styles/submit-button):data-testid :add-haggadah :on-click #(re-frame/dispatch [::events/add-haggadah
@@ -250,11 +247,10 @@ To see changes in preview edit source and then click on preview.
 
 (defn haggadah-view-panel
   []
-  [:div.hero.is-medium {:class (styles/haggadah-view)}
+  [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
-      (println text)
-      [:div.hero-body
-       [:div.container.content  text #_{:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:mangle false :headerIds false})} :data-testid :haggadah-text}]])])
+      [:section.container.is-flex
+       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} text ]])])
 
 (defn about-panel
   []

@@ -56,18 +56,6 @@
 (def haggadah-with-bracha-title "Haggadah with a bracha")
 (def parsed-bracha "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
 
-#_(t/deftest bracha-rendered-test
-  (t/testing "When the current user creates a haggadah with a bracha"
-    (doto driver
-     (c/home->dashboard)
-     (create-haggadah haggadah-with-bracha-title unparsed-bracha)
-     (vh/click-on-haggadah haggadah-with-bracha-title parsed-bracha)
-     (e/wait-has-text-everywhere parsed-bracha)
-     (e/screenshot "screenshots/bracha-rendered-test-bracha-is-visible"))
-    (let [bracha (e/get-element-text driver {:tag :h3 :fn/text parsed-bracha})]
-      (t/is (= parsed-bracha bracha)))))
-;; "http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents"
-
 
 
 
