@@ -51,8 +51,8 @@
                       first
                       vals
                       first)]
-      (println "HAggadah value " title)
       (t/is (= new-haggadah-title title)))))
+
 
 (def new-haggadah-text "## We begin in Egypt")
 (def parsed-haggadah-text  "We begin in Egypt")
@@ -64,7 +64,7 @@
                                  :content {:bracha {:content parsed-haggadah-text}}} "user1")]
      (doto driver
        (c/home->dashboard)
-       (h/click-on-haggadah id parsed-haggadah-text)
+       (h/click-on-haggadah parsed-haggadah-text)
        (e/refresh)
        (e/wait-has-text-everywhere parsed-haggadah-text))
      (let [haggadah-text (h/haggadah-content driver)]

@@ -3,8 +3,7 @@
              [etaoin.api :as e]
              [etaoin.keys :as k]
              [acceptance.core :as c :refer [driver]])
-  (:import com.google.firebase.cloud.FirestoreClient
-            ))
+  (:import com.google.firebase.cloud.FirestoreClient))
 
 (def default-message
   "Hello (Unknown). We're glad to see you.")

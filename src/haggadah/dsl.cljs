@@ -20,8 +20,8 @@
   [[k {:keys [title content]}]]
   (case k
     :bracha [:div
-             [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 title]
-             [:div.has-text-right.is-size-5 content]]
+             [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 {:data-testid :bracha-title} title]
+             [:div.has-text-right.is-size-5 {:data-testid :bracha-content }content]]
     :else [:div]))
 
 
