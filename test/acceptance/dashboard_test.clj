@@ -57,7 +57,7 @@
 (def new-haggadah-text "## We begin in Egypt")
 (def parsed-haggadah-text  "We begin in Egypt")
 
-#_(t/deftest refresh-page-test
+(t/deftest refresh-page-test
   (t/testing "When the current user refreshes the haggadah"
 
     (let [id (c/create-haggadah {:title new-haggadah-title

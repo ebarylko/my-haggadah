@@ -10,7 +10,7 @@
 (t/use-fixtures :each c/with-screenshot)
 
 (defn click-on-haggadah
-  [d id text]
+  [d text]
   (doto d
     (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-clicking-haggadah.png")
     (e/click-visible {:data-testid :haggadah-link} {:timeout 15})
