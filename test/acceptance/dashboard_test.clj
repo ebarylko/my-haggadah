@@ -84,8 +84,3 @@
 
 (def new-haggadah-text "## We begin in Egypt")
 
-(def link "http://localhost:5000/#/dashboard/I9X8c7CwD6HPcrJ3izv6")
-(println
- (clojure.string/split link #"dashboard/")
- )
-(+ 2 2 )
