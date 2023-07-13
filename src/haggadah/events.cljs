@@ -45,6 +45,15 @@
        (.then (fn [user]  (on-success (.-user user))))
        (.catch (fn [error]  (on-error error) )))))
  
+(re-frame/reg-fx
+ ::query!
+ (fn [{:keys [path on-success on-error order-by]}]
+ (-> (firestore/instance)
+     (fire/collection  (clojure.string/join "/" path))
+     (fire/query order-by)
+     (fire/getDocs)
+     (.then on-success)
+     (.catch on-error))))
 
 (re-frame/reg-fx
  ::fetch-collection!
@@ -65,9 +74,9 @@
 (re-frame/reg-event-fx
  ::fetch-haggadot
  (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
-   (println "Uid: " (:uid db))
    (if (:uid db)
-     {::fetch-collection! {:path ["users" (:uid db) "haggadot"]
+     {::query! {:path ["users" (:uid db) "haggadot"]
+                :order-by (fire/orderBy "createdAt" "desc")
                            :on-success (keyword->func on-success)
                            :on-error (keyword->func on-error)}}
      {})))
@@ -134,7 +143,7 @@
  (fn [{:keys [db]} [_ title]]
    (println "Title " title "haggadah " dsl/haggadah)
    {::add-haggadah! {:path ["users" (:uid db) "haggadot"]
-                     :haggadah (assoc dsl/haggadah :title title)
+                     :haggadah (assoc dsl/haggadah :title title :createdAt (js/Date.))
                     :on-success (keyword->func ::add-new-haggadah-id)
                      :on-error (keyword->func ::error)}}))
 
