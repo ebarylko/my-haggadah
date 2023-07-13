@@ -56,3 +56,21 @@
       (t/are [x y] (= x y)
         title actual-title
         bracha actual-bracha))))
+
+
+(def parsed-haggadah-text  "We begin in Egypt")
+
+(def new-haggadah-title "The best haggadah of the year")
+
+(t/deftest refresh-page-test
+  (t/testing "When the current user refreshes the haggadah"
+
+    (let [id (c/create-haggadah {:title new-haggadah-title
+                                 :content {:bracha {:content parsed-haggadah-text}}} "user1")]
+      (doto driver
+        (c/home->dashboard)
+        (h/click-on-haggadah parsed-haggadah-text)
+        (e/refresh)
+        (e/wait-has-text-everywhere parsed-haggadah-text))
+      (let [haggadah-text (h/haggadah-content driver)]
+        (t/is (= parsed-haggadah-text haggadah-text))))))
