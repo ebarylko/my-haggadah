@@ -3,7 +3,7 @@
              [etaoin.api :as e]
              [acceptance.core :as c :refer [driver]] 
              [etaoin.keys :as k]
-             [acceptance.view-haggadah-test :as h])
+             )
   (:import
    com.google.firebase.cloud.FirestoreClient
    com.google.cloud.firestore.Query$Direction
@@ -25,7 +25,7 @@
 
 (defn all-haggadot
   []
-  (let [haggadot (e/query-all driver {#_#_:tag :li :data-testid :haggadah-link})]
+  (let [haggadot (e/query-all driver {:data-testid :haggadah-link})]
     (map link-and-title haggadot)))
 
 (t/use-fixtures :once c/init-firebase)
@@ -81,6 +81,40 @@
         new-haggadah-title title
         true latest?))))
 
+(def haggadot
+  [{:content {:bracha  {:content "Amir's Haggadah" } }
+    :title "Third"}
+   {:content {:bracha  {:content "Amir's Haggadah" } }
+    :title "Second"}
+   {:content {:bracha  {:content "Amir's Haggadah" } }
+    :title "First"}])
+
+(def haggadah-1
+  {:content {:bracha  {:content "Amir's Haggadah" } } :title "Third"})
+
+(def haggadah-2
+  {:content {:bracha  {:content "Amir's Haggadah" } }
+   :title "Second"})
+
+(def haggadah-3
+  {:content {:bracha  {:content "Amir's Haggadah" } }
+   :title "First"})
+
+(defn haggadot-titles
+  "Pre: takes a collection of Haggadot
+  Post: returns the title of every Haggadot"
+  [haggadot]
+ (map (comp val first) haggadot))
+
+#_(t/deftest view-haggadot-ordered-test
+  (t/testing "When the current user has already made Haggadot and goes to their dashboard, the Haggadot should be displayed in order from most recent to least recent"
+    (c/create-haggadah haggadah-1 "user1")
+    (c/create-haggadah haggadah-2 "user1")
+    (c/create-haggadah haggadah-3 "user1")
+    (doto driver
+      (c/home->dashboard))
+    (let [titles (haggadot-titles (all-haggadot))]
+      (t/is (= ["First" "Second" "Third"] titles)))))
 
 (def new-haggadah-text "## We begin in Egypt")
 
