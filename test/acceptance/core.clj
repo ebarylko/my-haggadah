@@ -74,7 +74,7 @@
     (test)
     (finally
       (e/screenshot driver
-                    (format "screenshots/%s-%o.png" (last @test-names) (inst-ms (java.time.Instant/now)))))))
+                    (format "screenshots/%s.png" (last @test-names))))))
 
 (defn home->dashboard
   [d]
@@ -94,6 +94,6 @@
       (.collection "users")
       (.document user)
       (.collection "haggadot")
-      (.add  (w/stringify-keys haggadah))
+      (.add  (w/stringify-keys (assoc haggadah :createdAt (java.time.Instant/now))))
       (.get)
       (.getId)))

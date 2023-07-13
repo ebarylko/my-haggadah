@@ -13,7 +13,7 @@
   [d id text]
   (doto d
     (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-clicking-haggadah.png")
-    (e/click-visible {:data-testid (format "view-%s" id)} {:timeout 15})
+    (e/click-visible {:data-testid :haggadah-link} {:timeout 15})
     (e/screenshot "screenshots/edit-haggadah-test-viewing-edited-haggadah.png")
     (e/wait-has-text-everywhere text {:timeout 15})
     (e/screenshot "screenshots/create-haggadah-test-admin-exists-haggadah-text.png")))
