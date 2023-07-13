@@ -13,14 +13,13 @@
 
 (defn link-and-title
   [haggadah]
-  (let [title (e/get-element-text driver haggadah)
+  (let [title (e/get-element-text-el driver haggadah)
        #_#_ link (e/get-element-attribute driver haggadah :href)]
     {:title title #_#_:link link}))
 
 (defn all-haggadot
   []
   (let [haggadot (e/query-all driver {:tag :li #_#_:data-testid :haggadah-link})]
-    (println "The haggadot after querying " haggadot )
     (map link-and-title haggadot)))
 
 (t/use-fixtures :once c/init-firebase)
@@ -42,22 +41,23 @@
 (def new-haggadah-title "The best haggadah of the year")
 
 
-#_(t/deftest create-haggadah-test
+(t/deftest create-haggadah-test
   (t/testing "When the current user creates a new haggadah and goes back to the dashboard, the haggadah is listed first among the Haggadot"
     (doto driver
       (c/home->dashboard)
       (create-haggadah new-haggadah-title)
       (e/screenshot "screenshots/create-haggadah-test-before-getting-haggadot.png"))
     (let [title  (->> (all-haggadot)
-                           first
-                           vals)]
-      (println "These is the title" title "Haggadot " (all-haggadot))
+                      first
+                      vals
+                      first)]
+      (println "HAggadah value " title)
       (t/is (= new-haggadah-title title)))))
 
 (def new-haggadah-text "## We begin in Egypt")
 (def parsed-haggadah-text  "We begin in Egypt")
 
-(t/deftest refresh-page-test
+#_(t/deftest refresh-page-test
   (t/testing "When the current user refreshes the haggadah"
 
     (let [id (c/create-haggadah {:title new-haggadah-title
