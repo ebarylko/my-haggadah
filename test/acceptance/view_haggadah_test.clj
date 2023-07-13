@@ -5,7 +5,6 @@
              [acceptance.core :as c :refer [driver]]
              [etaoin.keys :as k]))
 
-
 (t/use-fixtures :once c/init-firebase)
 (t/use-fixtures :each c/with-screenshot)
 
