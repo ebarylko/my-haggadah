@@ -3,7 +3,11 @@
              [etaoin.api :as e]
              [acceptance.core :as c :refer [driver]] 
              [etaoin.keys :as k]
-             [acceptance.view-haggadah-test :as h]))
+             [acceptance.view-haggadah-test :as h])
+  (:import
+   com.google.firebase.cloud.FirestoreClient
+   com.google.cloud.firestore.Query$Direction
+   #_com.google.cloud.firestore.Query.Direction))
 
 (defn open-edit-haggadah
   [d id text]
@@ -14,9 +18,10 @@
 (defn link-and-title
   [haggadah]
   (let [title (e/get-element-text-el driver haggadah)
-        link (e/get-element-attr-el driver haggadah :href)]
-    (println "THis is the link " link)
-    {:title title :link link}))
+        link (e/get-element-attr-el driver haggadah :href)
+        id (second
+            (clojure.string/split link #"dashboard/") )]
+    {:title title :id id}))
 
 (defn all-haggadot
   []
@@ -41,6 +46,26 @@
 
 (def new-haggadah-title "The best haggadah of the year")
 
+(defn get-id
+  [doc]
+  (.getId doc))
+
+(defn latest-haggadah?
+  "Pre: takes a user and a Haggadah id
+  Post: returns true if the id of the latest Haggadah in firestore matches the id of the user's first Haggadah"
+  [user id]
+  (-> (FirestoreClient/getFirestore)
+      (.collection "users")
+      (.document user)
+      (.collection "haggadot")
+      (.orderBy "createdAt" Query$Direction/DESCENDING)
+      (.limit 1)
+      (.get)
+      (.get)
+      (.getDocuments)
+      (#(map get-id %))
+      first
+      (= id)))
 
 (t/deftest create-haggadah-test
   (t/testing "When the current user creates a new Haggadah and goes back to the dashboard, the Haggadah is listed first among the Haggadot and a new Haggadah with the same details is added to firestore"
@@ -48,15 +73,19 @@
       (c/home->dashboard)
       (create-haggadah new-haggadah-title)
       (e/screenshot "screenshots/create-haggadah-test-before-getting-haggadot.png"))
-    (let [title  (->> (all-haggadot)
+    (let [[title id]  (->> (all-haggadot)
                       first
-                      vals
-                      first)]
-      (t/is (= new-haggadah-title title)))))
+                      vals)
+          latest? (latest-haggadah? "user1" id )]
+      (t/are [x y] (= x y)
+        new-haggadah-title title
+        true latest?))))
 
 
 (def new-haggadah-text "## We begin in Egypt")
 
-
-
-
+(def link "http://localhost:5000/#/dashboard/I9X8c7CwD6HPcrJ3izv6")
+(println
+ (clojure.string/split link #"dashboard/")
+ )
+(+ 2 2 )
