@@ -139,14 +139,11 @@
         "Haggadot created"]
        (let [haggadot @(re-frame/subscribe [::subs/haggadot])]
          (when haggadot
-           [:ul
+           [:ul.haggadot 
             (for [{:keys [title id]} haggadot :when id] 
               ^{:key id}[:li.mb-2
                          [:a {:data-testid (str "view-" id)
-                              :href (href :haggadah-view {:id id})} title]
-                         [:a.is-small.ml-2 {:data-testid (str "edit-" id )
-                                            :href (href :haggadah-edit {:id id})}
-                          [:i.fas.fa-edit]]])]))] ]]]
+                              :href (href :haggadah-view {:id id})} title]])]))] ]]]
    [wave-bottom]])
 
 (def edit-explanation
