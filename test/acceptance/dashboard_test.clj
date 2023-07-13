@@ -13,9 +13,8 @@
 
 (defn link-and-title
   [haggadah]
-  (let [title (e/get-element-text-el driver haggadah)
-       #_#_ link (e/get-element-attribute driver haggadah :href)]
-    {:title title #_#_:link link}))
+  (let [title (e/get-element-text-el driver haggadah)]
+    {:title title}))
 
 (defn all-haggadot
   []

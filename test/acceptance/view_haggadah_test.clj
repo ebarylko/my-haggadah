@@ -44,6 +44,15 @@
 
 (def bracha "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
 
+(defn bracha-title
+  []
+  (e/get-element-text driver {:data-testid :bracha-title :fn/has-classes [:has-text-centered :has-text-weight-bold :is-size-3 :pb-2]}))
+
+(defn bracha-content
+  []
+  (e/get-element-text driver {:data-testid :bracha-content :fn/has-classes [:has-text-right :is-size-5]}))
+
+
 (t/deftest view-haggadah-with-bracha
   (t/testing "When the current user has a haggadah with a bracha in it and is at their dashboard, they should be able to view the haggadah and see it in a certain way"
     (c/create-haggadah  {:title title
@@ -51,8 +60,8 @@
     (doto driver
       (c/home->dashboard)
       (click-on-haggadah bracha))
-    (let [actual-title (e/get-element-text driver {:tag :div :data-testid :bracha-title})
-          actual-bracha  (e/get-element-text driver {:tag :div :data-testid :bracha-content})]
+    (let [actual-title (bracha-title)
+          actual-bracha  (bracha-content)]
       (t/are [x y] (= x y)
         title actual-title
         bracha actual-bracha))))
@@ -65,12 +74,12 @@
 (t/deftest refresh-page-test
   (t/testing "When the current user refreshes the haggadah"
 
-    (let [id (c/create-haggadah {:title new-haggadah-title
-                                 :content {:bracha {:content parsed-haggadah-text}}} "user1")]
+      (c/create-haggadah {:title new-haggadah-title
+                          :content {:bracha {:content parsed-haggadah-text}}} "user1")
       (doto driver
         (c/home->dashboard)
-        (h/click-on-haggadah parsed-haggadah-text)
+        (click-on-haggadah parsed-haggadah-text)
         (e/refresh)
         (e/wait-has-text-everywhere parsed-haggadah-text))
-      (let [haggadah-text (h/haggadah-content driver)]
-        (t/is (= parsed-haggadah-text haggadah-text))))))
+      (let [haggadah-text (haggadah-content driver)]
+        (t/is (= parsed-haggadah-text haggadah-text)))))
