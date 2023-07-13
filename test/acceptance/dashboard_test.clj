@@ -13,12 +13,14 @@
 
 (defn link-and-title
   [haggadah]
-  (let [title (e/get-element-text-el driver haggadah)]
-    {:title title}))
+  (let [title (e/get-element-text-el driver haggadah)
+        link (e/get-element-attr-el driver haggadah :href)]
+    (println "THis is the link " link)
+    {:title title :link link}))
 
 (defn all-haggadot
   []
-  (let [haggadot (e/query-all driver {:tag :li #_#_:data-testid :haggadah-link})]
+  (let [haggadot (e/query-all driver {#_#_:tag :li :data-testid :haggadah-link})]
     (map link-and-title haggadot)))
 
 (t/use-fixtures :once c/init-firebase)
@@ -41,7 +43,7 @@
 
 
 (t/deftest create-haggadah-test
-  (t/testing "When the current user creates a new haggadah and goes back to the dashboard, the haggadah is listed first among the Haggadot"
+  (t/testing "When the current user creates a new Haggadah and goes back to the dashboard, the Haggadah is listed first among the Haggadot and a new Haggadah with the same details is added to firestore"
     (doto driver
       (c/home->dashboard)
       (create-haggadah new-haggadah-title)

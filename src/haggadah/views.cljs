@@ -142,7 +142,7 @@
            [:ul.haggadot 
             (for [{:keys [title id]} haggadot :when id] 
               ^{:key id}[:li.mb-2
-                         [:a.haggadah-link {:data-testid :haggadah-link #_(str "view-" id)
+                         [:a.haggadah-link {:data-testid :haggadah-link 
                               :href (href :haggadah-view {:id id})} title]])]))] ]]]
    [wave-bottom]])
 

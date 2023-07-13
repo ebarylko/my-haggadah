@@ -40,7 +40,7 @@
     (let [haggadah-text (haggadah-content driver)]
       (t/is (= actual-haggadah-text haggadah-text))))))
 
-(def title "The new Haggadah")
+(def title "Wine")
 
 (def bracha "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
 
@@ -52,13 +52,21 @@
   []
   (e/get-element-text driver {:data-testid :bracha-content :fn/has-classes [:has-text-right :is-size-5]}))
 
+(defn create-haggadah
+  [d title]
+  (doto d
+    (e/click-visible {:data-testid :create-haggadah})
+    (e/wait-visible {:data-testid :haggadah-title})
+    (e/fill  {:data-testid :haggadah-title} k/home (k/with-shift k/end) k/delete)
+    (e/fill {:data-testid :haggadah-title} title)
+    (e/click-visible {:data-testid :add-haggadah})
+    (e/click-visible {:data-testid :return})))
 
 (t/deftest view-haggadah-with-bracha
   (t/testing "When the current user has a haggadah with a bracha in it and is at their dashboard, they should be able to view the haggadah and see it in a certain way"
-    (c/create-haggadah  {:title title
-                         :content {:bracha {:title title :content bracha }}} "user1")
     (doto driver
       (c/home->dashboard)
+      (create-haggadah title)
       (click-on-haggadah bracha))
     (let [actual-title (bracha-title)
           actual-bracha  (bracha-content)]
