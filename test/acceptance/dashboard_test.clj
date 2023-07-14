@@ -1,6 +1,7 @@
 (ns acceptance.dashboard-test
   (:require  [clojure.test :as t]
              [etaoin.api :as e]
+             [clojure.walk :as w]
              [acceptance.core :as c :refer [driver]] 
              [etaoin.keys :as k])
   (:import
@@ -83,24 +84,12 @@
         new-haggadah-title title
         true latest?))))
 
+
 (def haggadot
-  [{:content {:bracha  {:content "Amir's Haggadah" } }
-    :title "Third"}
-   {:content {:bracha  {:content "Amir's Haggadah" } }
-    :title "Second"}
-   {:content {:bracha  {:content "Amir's Haggadah" } }
-    :title "First"}])
+  [{:content {:bracha  {:content "Amir's Haggadah" } } :title "Third"}
+   {:content {:bracha  {:content "Amir's Haggadah" } } :title "Second"}
+   {:content {:bracha  {:content "Amir's Haggadah" } } :title "First"}])
 
-(def haggadah-1
-  {:content {:bracha  {:content "Amir's Haggadah" } } :title "Third"})
-
-(def haggadah-2
-  {:content {:bracha  {:content "Amir's Haggadah" } }
-   :title "Second"})
-
-(def haggadah-3
-  {:content {:bracha  {:content "Amir's Haggadah" } }
-   :title "First"})
 
 (defn haggadot-titles
   "Pre: takes a collection of Haggadot
@@ -108,11 +97,14 @@
   [haggadot]
  (map (comp val first) haggadot))
 
+(defn  create-haggadot
+  [haggadot user]
+  (doseq [haggadah haggadot]
+    (c/create-haggadah haggadah user)))
+
 (t/deftest view-haggadot-ordered-test
   (t/testing "When the current user has already made Haggadot and goes to their dashboard, the Haggadot should be displayed in order from most recent to least recent"
-    (c/create-haggadah haggadah-1 "user1")
-    (c/create-haggadah haggadah-2 "user1")
-    (c/create-haggadah haggadah-3 "user1")
+    (create-haggadot haggadot "user1")
     (doto driver
       (c/home->dashboard))
     (let [titles (haggadot-titles (all-haggadot))]
