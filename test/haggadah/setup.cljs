@@ -9,8 +9,6 @@
 
 (nodejs/enable-util-print!)
 
-(defonce db (admin-fire/getFirestore))
-
 (defonce app (.initializeApp admin #_(clj->js cfg/firebase)))
 (goog-define PROJECT_ID false)
 

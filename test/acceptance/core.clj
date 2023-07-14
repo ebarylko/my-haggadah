@@ -1,7 +1,7 @@
 (ns acceptance.core
   (:require [clojure.test :as t]
             [etaoin.api :as e]
-            [tupelo.misc :as tu]
+            [clj-http.client :as http]
             [environ.core :refer [env]]
             [clojure.walk :as w])
   (:import com.google.firebase.FirebaseApp
@@ -81,7 +81,7 @@
   "Takes a test and deletes what is in firestore after running the test"
   [test]
   (test)
-  (tu/shell-cmd "curl -v -X DELETE 'http://localhost:8080/emulator/v1/projects/my-haggadah/databases/(default)/documents'"))
+  (http/delete  "http://localhost:8080/emulator/v1/projects/my-haggadah/databases/(default)/documents"))
 
 (defn home->dashboard
   [d]
