@@ -110,5 +110,4 @@
     (let [titles (haggadot-titles (all-haggadot))]
       (t/is (= ["First" "Second" "Third"] titles)))))
 
-(def new-haggadah-text "## We begin in Egypt")
 
