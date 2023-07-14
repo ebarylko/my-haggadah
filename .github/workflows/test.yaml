@@ -81,6 +81,7 @@ jobs:
         run: |
             cd functions
             npm install
+            touch index.js
             npm run ci
             cd ..
 
