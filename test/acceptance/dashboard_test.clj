@@ -2,12 +2,23 @@
   (:require  [clojure.test :as t]
              [etaoin.api :as e]
              [acceptance.core :as c :refer [driver]] 
+             [tupelo.misc :as tu]
              [etaoin.keys :as k]
              )
   (:import
    com.google.firebase.cloud.FirestoreClient
-   com.google.cloud.firestore.Query$Direction
-   #_com.google.cloud.firestore.Query.Direction))
+   com.google.cloud.firestore.Query$Direction))
+
+
+(defn delete-fs-emulator-data
+  "Takes a test and deletes what is in firestore after running the test"
+  [test]
+  (test)
+  (tu/shell-cmd "curl -v -X DELETE 'http://localhost:8080/emulator/v1/projects/my-haggadah/databases/(default)/documents'"))
+
+(t/use-fixtures :once c/init-firebase)
+(t/use-fixtures :each c/with-screenshot)
+(t/use-fixtures :each delete-fs-emulator-data)
 
 (defn open-edit-haggadah
   [d id text]
@@ -28,8 +39,6 @@
   (let [haggadot (e/query-all driver {:data-testid :haggadah-link})]
     (map link-and-title haggadot)))
 
-(t/use-fixtures :once c/init-firebase)
-(t/use-fixtures :each c/with-screenshot)
 
 (def dashboard-message
   "Hello han@skywalker.com. Welcome. To make a new Haggadah, click the button to your right. To share and edit your existing Haggadah, look at your Haggadot below ")
@@ -106,7 +115,7 @@
   [haggadot]
  (map (comp val first) haggadot))
 
-#_(t/deftest view-haggadot-ordered-test
+(t/deftest view-haggadot-ordered-test
   (t/testing "When the current user has already made Haggadot and goes to their dashboard, the Haggadot should be displayed in order from most recent to least recent"
     (c/create-haggadah haggadah-1 "user1")
     (c/create-haggadah haggadah-2 "user1")
