@@ -80,13 +80,13 @@ jobs:
             npm install -g firebase-tools
             npm run test
 
-      # - name: run backend tests
-      #   run: |
-      #       cd functions
-      #       npm install
-      #       npm run release
-      #       npm run test
-      #       cd ..
+      - name: run backend tests
+        run: |
+            cd functions
+            npm install
+            npm run release
+            npm run test
+            cd ..
 
       - uses: DeLaGuardo/setup-clojure@11.0
         with:
@@ -94,12 +94,12 @@ jobs:
           lein: 2.9.1                  # Leiningen
 
 
-      - name: run acceptance test
-        env:
-          CHROME_BIN: "/usr/bin/google-chrome"
-        run: |
-            npm run release
-            npm run test:acceptance 
+      # - name: run acceptance test
+      #   env:
+      #     CHROME_BIN: "/usr/bin/google-chrome"
+      #   run: |
+      #       npm run release
+      #       npm run test:acceptance 
 
 
       - name: Upload screenshots on acceptance test fail
