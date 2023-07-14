@@ -88,6 +88,7 @@ jobs:
       - name: run frontend tests
         run: |
             npm install
+            npm run test:build
             npm run test
 
 
