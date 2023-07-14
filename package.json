@@ -10,7 +10,7 @@
       "karma:watch": "firebase emulators:exec  --project my-haggadah 'npx karma watch'",
 		"test:watch": "npx shadow-cljs watch ci ci-setup ",
 		"emulators": "firebase emulators:start --project my-haggadah --import=emulator_data --export-on-exit=emulator_data",
-		"acceptance": "cd test/acceptance && npm run acceptance:base && firebase emulators:exec --project my-haggadah 'lein test :only acceptance.dashboard-test '",
+		"acceptance": "cd test/acceptance && npm run acceptance:base && firebase emulators:exec --project my-haggadah 'lein test'",
 		"acceptance:base": "cp -r resources  test/acceptance && npx shadow-cljs release acceptance",
 		"act:pr": "act pull_request --artifact-server-path /tmp/artifacts "
 	},

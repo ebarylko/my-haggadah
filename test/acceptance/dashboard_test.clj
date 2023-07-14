@@ -2,23 +2,16 @@
   (:require  [clojure.test :as t]
              [etaoin.api :as e]
              [acceptance.core :as c :refer [driver]] 
-             [tupelo.misc :as tu]
-             [etaoin.keys :as k]
-             )
+             [etaoin.keys :as k])
   (:import
    com.google.firebase.cloud.FirestoreClient
    com.google.cloud.firestore.Query$Direction))
 
 
-(defn delete-fs-emulator-data
-  "Takes a test and deletes what is in firestore after running the test"
-  [test]
-  (test)
-  (tu/shell-cmd "curl -v -X DELETE 'http://localhost:8080/emulator/v1/projects/my-haggadah/databases/(default)/documents'"))
 
 (t/use-fixtures :once c/init-firebase)
 (t/use-fixtures :each c/with-screenshot)
-(t/use-fixtures :each delete-fs-emulator-data)
+(t/use-fixtures :each c/delete-fs-emulator-data)
 
 (defn open-edit-haggadah
   [d id text]

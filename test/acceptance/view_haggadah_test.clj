@@ -7,6 +7,7 @@
 
 (t/use-fixtures :once c/init-firebase)
 (t/use-fixtures :each c/with-screenshot)
+(t/use-fixtures :each c/delete-fs-emulator-data)
 
 (defn click-on-haggadah
   [d text]

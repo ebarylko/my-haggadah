@@ -1,6 +1,7 @@
 (ns acceptance.core
   (:require [clojure.test :as t]
             [etaoin.api :as e]
+            [tupelo.misc :as tu]
             [environ.core :refer [env]]
             [clojure.walk :as w])
   (:import com.google.firebase.FirebaseApp
@@ -75,6 +76,12 @@
     (finally
       (e/screenshot driver
                     (format "screenshots/%s.png" (last @test-names))))))
+
+(defn delete-fs-emulator-data
+  "Takes a test and deletes what is in firestore after running the test"
+  [test]
+  (test)
+  (tu/shell-cmd "curl -v -X DELETE 'http://localhost:8080/emulator/v1/projects/my-haggadah/databases/(default)/documents'"))
 
 (defn home->dashboard
   [d]
