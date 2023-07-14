@@ -81,8 +81,7 @@ jobs:
         run: |
             cd functions
             npm install
-            npm run release
-            npm run test
+            npm run ci
             cd ..
 
       - name: run frontend tests
