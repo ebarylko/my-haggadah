@@ -1,7 +1,6 @@
 (ns acceptance.dashboard-test
   (:require  [clojure.test :as t]
              [etaoin.api :as e]
-             [clojure.walk :as w]
              [acceptance.core :as c :refer [driver]] 
              [etaoin.keys :as k])
   (:import
@@ -50,6 +49,8 @@
 (def new-haggadah-title "The best haggadah of the year")
 
 (defn get-id
+  "Pre: takes a document
+  Post: returns the id of the document"
   [doc]
   (.getId doc))
 

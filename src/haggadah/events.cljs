@@ -130,31 +130,14 @@
      {:db (assoc db :name nil :uid nil :user :unregistered)})))
 
 
-(re-frame/reg-event-fx
- ::add-new-haggadah-id
- (fn [{:keys [db]} [_ haggadah]]
-   {:db (assoc db :haggadah-id (.-id haggadah))
-    :fx [[:dispatch [::push-state :haggadah-success]]]}))
-
-
 
 (re-frame/reg-event-fx
  ::add-haggadah
  (fn [{:keys [db]} [_ title]]
-   (println "Title " title "haggadah " dsl/haggadah)
    {::add-haggadah! {:path ["users" (:uid db) "haggadot"]
                      :haggadah (assoc dsl/haggadah :title title :createdAt (js/Date.))
-                    :on-success (keyword->func ::add-new-haggadah-id)
+                     :on-success (re-frame/dispatch [::push-state :haggadah-success])
                      :on-error (keyword->func ::error)}}))
-
-;; (re-frame/reg-event-fx
-;;  ::add-haggadah
-;;  (fn [{:keys [db]} [_ title]]
-;;    (println "Title " title "haggadah " dsl/haggadah)
-;;    {::add-haggadah! {:path ["users" (:uid db) "haggadot"]
-;;                      :haggadah (assoc dsl/haggadah :title title)
-;;                      :on-success (re-frame/dispatch [::push-state :haggadah-success])
-;;                      :on-error (keyword->func ::error)}}))
 
 (re-frame/reg-fx
  ::add-haggadah!
@@ -268,12 +251,6 @@
  (fn [db [_]]
    (let [active? (not (:dropdown db))]
      (assoc db :dropdown active?))))
-
-(re-frame/reg-event-db
- ::haggadah-option
- (fn [db [_]]
-   (let [active? (not (:haggadah-option db))]
-     (assoc db :haggadah-option active?))))
 
 (re-frame/reg-event-db
  ::active-menu

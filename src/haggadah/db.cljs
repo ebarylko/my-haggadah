@@ -1,5 +1,4 @@
-(ns haggadah.db
-  (:require [haggadah.dsl :as dsl]))
+(ns haggadah.db)
 
 (def default-db
   {:name "(Unknown)"
@@ -7,5 +6,4 @@
    :uid nil
    :haggadot nil
    :error "none"
-   :user :unloaded
-   :template dsl/haggadah})
+   :user :unloaded})
