@@ -18,8 +18,6 @@
   (fb-auth/createUserWithEmailAndPassword @auth email password))
 
 
-
-
 (defn init [firebase-instance on-auth-change]
   (reset! auth (fb-auth/getAuth firebase-instance))
   (when FIREBASE_AUTH_HOST
