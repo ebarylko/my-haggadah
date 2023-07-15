@@ -5,10 +5,10 @@
         "serve": "firebase emulators:start --only functions",
         "shell": "firebase functions:shell",
         "start": "npm run shell",
-        "release": "npx shadow-cljs compile func",
+        "release": "npx shadow-cljs compile func func-test",
         "deploy": "firebase deploy --only functions",
         "logs": "firebase functions:log",
-		    "ci": "firebase emulators:exec --project my-haggadah 'npm run release && npx shadow-cljs compile func-test'",
+		    "ci": "firebase emulators:exec --project my-haggadah 'npm run release'",
         "watch": "npx shadow-cljs watch func func-test"
     },
     "engines": {

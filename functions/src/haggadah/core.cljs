@@ -3,6 +3,7 @@
             ["firebase-admin" :as admin]
             ["firebase-admin/firestore" :as firestore]))
 
+
 (defonce app (.initializeApp admin))
 
 (def db (.getFirestore firestore app))
@@ -17,7 +18,6 @@
   [data ^js req]
   (when-not (.-auth req)
     (throw (js/Error. "User not authenticated")))
-  
   (-> db
       (.doc "/users/amir")
       (.set #js {"haggadah" data})
