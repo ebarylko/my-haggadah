@@ -2,9 +2,11 @@ name: Run tests
 
 on: [pull_request]
 
-env:
-  GCLOUD_PROJECT: "my-haggadah"
-  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MY_HAGGADAH}}
+environment: dev
+
+env: 
+  GCLOUD_PROJECT: ${{vars.GCLOUD_PROJECT}} 
+  GOOGLE_APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
 
 jobs:
   test:
@@ -89,7 +91,6 @@ jobs:
       - name: run frontend tests
         run: |
             npm install
-            npm run test:build
             npm run test
 
 
