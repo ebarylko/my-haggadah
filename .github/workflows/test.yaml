@@ -2,16 +2,15 @@ name: Run tests
 
 on: [pull_request]
 
-environment: dev
-
-env: 
-  GCLOUD_PROJECT: ${{vars.GCLOUD_PROJECT}} 
-  GOOGLE_APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
 
 jobs:
   test:
     name: Tests
     runs-on: ubuntu-latest
+    environment: dev
+    env: 
+      GCLOUD_PROJECT: ${{vars.GCLOUD_PROJECT}} 
+      GOOGLE_APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
