@@ -82,6 +82,7 @@ jobs:
             cd functions
             npm install
             touch index.js
+            export GOOGLE_APPLICATION_CREDENTIALS=""
             npm run ci
             cd ..
 
