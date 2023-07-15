@@ -100,12 +100,12 @@ jobs:
           lein: 2.9.1                  # Leiningen
 
 
-      # - name: run acceptance test
-      #   env:
-      #     CHROME_BIN: "/usr/bin/google-chrome"
-      #   run: |
-      #       npm run release
-      #       npm run test:acceptance 
+      - name: run acceptance test
+        env:
+          CHROME_BIN: "/usr/bin/google-chrome"
+        run: |
+            npm run release
+            npm run test:acceptance 
 
 
       - name: Upload screenshots on acceptance test fail
