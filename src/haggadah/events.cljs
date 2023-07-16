@@ -62,25 +62,6 @@
      (.catch on-error))))
 
 
-;; (re-frame/reg-fx
-;;  ::fetch-collection!
-;;  (fn [{:keys [path on-success on-error]}]
-;;    (-> (firestore/instance)
-;;        (fire/collection  (clojure.string/join "/" path))
-;;        (fire/getDocs)
-;;        (.then on-success)
-;;        (.catch on-error))))
-
-;; (re-frame/reg-fx
-;;  ::fetch-ordered-collection
-;;  (fn [{:keys [path on-success on-error order-by] :or {order-by identity}}]
-;;    (-> (firestore/instance)
-;;        (fire/collection  (clojure.string/join "/" path))
-;;        order-by
-;;        (fire/getDocs)
-;;        (.then on-success)
-;;        (.catch on-error))))
-
 (defn keyword->func
   [key]
   (cond
@@ -88,15 +69,6 @@
     (vector? key) #(re-frame/dispatch (conj key %))
     :else #(re-frame/dispatch [key %])))
 
-;; (re-frame/reg-event-fx
-;;  ::fetch-haggadot
-;;  (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
-;;    (if (:uid db)
-;;      {::query! {:path ["users" (:uid db) "haggadot"]
-;;                 :order-by (fire/orderBy "createdAt" "desc")
-;;                            :on-success (keyword->func on-success)
-;;                            :on-error (keyword->func on-error)}}
-;;      {})))
 
 (re-frame/reg-event-fx
  ::fetch-haggadot
