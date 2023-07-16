@@ -70,7 +70,9 @@ jobs:
       - name: Cache clojure dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.m2/repository
+          path: |
+            ~/.m2/repository
+            ~/.gitlibs
           # List all files containing dependencies:
           key: cljdeps-${{ hashFiles('project.clj') }}
 
