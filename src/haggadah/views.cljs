@@ -146,46 +146,11 @@
                               :href (href :haggadah-view {:id id})} title]])]))] ]]]
    [wave-bottom]])
 
-(def edit-explanation
-  "Source contains the Haggadah with markdown, while preview shows you how the Haggadah will appear after applying the markdown.
-To see changes in preview edit source and then click on preview.
- When you are satisfied with your changes please click the submit button below ")
 
-(defn haggadah-edit-panel
-  []
-  (let [text @(re-frame/subscribe [::subs/haggadah-text])
-        preview? @(re-frame/subscribe [::subs/src-preview])]
-    [:div.container
-     [:div.has-text-centered.box
-      edit-explanation]
-     [:div.tabs
-      [:ul
-       [:li {:class (if-not preview? "is-active" "") }
-        [:a {:on-click #(re-frame/dispatch [::events/set-preview false])
-             }"Source"]]
-       [:li {:class (if preview? "is-active" "")}
-        [:a {:on-click #(re-frame/dispatch [::events/set-preview true])
-             } "Preview"]]]]
-     [:div 
-      [:div {:class (when preview? "is-hidden")}
-       [:form.box
-        [:div.field
-         [:div
-          [:textarea.textarea {:placeholder "Text input" 
-                               :data-testid :preview
-                               :value text
-                               :on-change #(re-frame/dispatch [::events/edit-haggadah (-> %
-                                                                                          (.-target)
-                                                                                          (.-value))])}]]]]]
-       [:div {:class (when-not preview? "is-hidden")}
-        [:div.content {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:breaks true :mangle false :headerIds false})} :id "haggadah-text"}]]]
-     [:div
-      [:button.button {:on-click #(re-frame/dispatch [::events/modify-haggadah {:new-haggadah text :on-success [::events/push-state :edit-success] }])
-                       :data-testid :submit} "Submit changes"]]]))
 
 (defn form-content
   "Pre: takes an id for a form field
-  Post: returns the text of the field if it exists, ni otherwise"
+  Post: returns the text of the field if it exists, nil otherwise"
   [id]
   (-> (.getElementById js/document id)
       (.-value)))
@@ -201,14 +166,6 @@ To see changes in preview edit source and then click on preview.
     [:div [:a.button.is-focused.is-link {:data-testid :return :on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]]]])
 
 
-(defn haggadah-edit-success
-  [_]
-  [:div.container.has-text-centered
-   [:div.notification.is-success
-    "Your Haggadah has been successfully changed. Please click the button below to return to the dashboard and see it"]
-   [:a.button.is-focused.is-link {:data-testid :return-dashboard
-                                  :on-click #(re-frame/dispatch [::push-state :dashboard])}
-    "Return to dashboard"]])
 
 (defn haggadah-creation-panel
   []

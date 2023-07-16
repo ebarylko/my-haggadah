@@ -1,7 +1,6 @@
 (ns haggadah.events
   (:require
    [re-frame.core :as re-frame]
-   [cljsjs.marked]
    [haggadah.fb.firestore :as firestore]
    ["firebase/firestore" :as fire]
    [haggadah.db :as db]
