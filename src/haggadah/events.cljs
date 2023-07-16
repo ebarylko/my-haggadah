@@ -43,35 +43,43 @@
    (-> (auth/email-login email password)
        (.then (fn [user]  (on-success (.-user user))))
        (.catch (fn [error]  (on-error error) )))))
+
+
+(defn ordered-coll
+  "Pre: takes a path to a collection and a function which will order the collection
+  Posts: returns the collection or an error"
+  [path order-by]
+  (-> (firestore/instance)
+      (fire/collection  (clojure.string/join "/" path))
+      order-by
+      (fire/getDocs)))
  
 (re-frame/reg-fx
  ::query!
- (fn [{:keys [path on-success on-error order-by]}]
- (-> (firestore/instance)
-     (fire/collection  (clojure.string/join "/" path))
-     (fire/query order-by)
-     (fire/getDocs)
+ (fn [{:keys [path on-success on-error order-by] :or {order-by identity}}]
+   (-> (ordered-coll path order-by)
      (.then on-success)
      (.catch on-error))))
 
-(re-frame/reg-fx
- ::fetch-collection!
- (fn [{:keys [path on-success on-error]}]
-   (-> (firestore/instance)
-       (fire/collection  (clojure.string/join "/" path))
-       (fire/getDocs)
-       (.then on-success)
-       (.catch on-error))))
 
-(re-frame/reg-fx
- ::fetch-ordered-collection
- (fn [{:keys [path on-success on-error order-by] :or {order-by identity}}]
-   (-> (firestore/instance)
-       (fire/collection  (clojure.string/join "/" path))
-       order-by
-       (fire/getDocs)
-       (.then on-success)
-       (.catch on-error))))
+;; (re-frame/reg-fx
+;;  ::fetch-collection!
+;;  (fn [{:keys [path on-success on-error]}]
+;;    (-> (firestore/instance)
+;;        (fire/collection  (clojure.string/join "/" path))
+;;        (fire/getDocs)
+;;        (.then on-success)
+;;        (.catch on-error))))
+
+;; (re-frame/reg-fx
+;;  ::fetch-ordered-collection
+;;  (fn [{:keys [path on-success on-error order-by] :or {order-by identity}}]
+;;    (-> (firestore/instance)
+;;        (fire/collection  (clojure.string/join "/" path))
+;;        order-by
+;;        (fire/getDocs)
+;;        (.then on-success)
+;;        (.catch on-error))))
 
 (defn keyword->func
   [key]
@@ -94,7 +102,7 @@
  ::fetch-haggadot
  (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
    (if (:uid db)
-     {::fetch-ordered-collection {:path ["users" (:uid db) "haggadot"]
+     {::query! {:path ["users" (:uid db) "haggadot"]
                 :order-by #(fire/query % (fire/orderBy "createdAt" "desc"))
                 :on-success (keyword->func on-success)
                 :on-error (keyword->func on-error)}}
