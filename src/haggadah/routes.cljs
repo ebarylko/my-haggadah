@@ -34,22 +34,12 @@
              :link-text "haggadah"
              :controllers [{:start (fn []
                                     (println "Before the haggadah is fetched")
-                                     (re-frame/dispatch (:haggadah-view events/route-events)))}]}]
-    ["/:id/edit" {:name :haggadah-edit
-             :view views/haggadah-edit-panel
-             :link-text "haggadah"
-             :controllers [{:start (fn []
-                                     (println "Before the haggadah is fetched")
-                                     (re-frame/dispatch (:haggadah-edit events/route-events)))}]}]
-    ]
+                                     (re-frame/dispatch (:haggadah-view events/route-events)))}]}]]
    ["/haggadah-creation"
     ["" {:name :haggadah-creation
          :view views/haggadah-creation-panel}]
     ["/success" {:name :haggadah-success
-                 :view views/haggadah-success-panel}]
-    ["/edit-success" {:name :edit-success
-                      :view views/haggadah-edit-success}]]
-   ])
+                 :view views/haggadah-success-panel}]]])
 
 
 (defn on-navigate [new-match]
@@ -102,10 +92,8 @@
                :about views/about-panel
                :dashboard views/dashboard-panel
                :haggadah-view views/haggadah-view-panel
-               :haggadah-edit views/haggadah-edit-panel
                :haggadah-creation views/haggadah-creation-panel
                :haggadah-success views/haggadah-success-panel
-               :edit-success views/haggadah-edit-success
                views/home-panel)]
     [:div.main-container.is-flex.is-flex-direction-column
      [views/top-menu {:router router :current-route current-route}]

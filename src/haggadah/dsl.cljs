@@ -1,5 +1,4 @@
-(ns haggadah.dsl
-  (:require [clojure.walk :as w]))
+(ns haggadah.dsl)
 
 
 (defn create-haggadah
@@ -25,18 +24,12 @@
     :else [:div]))
 
 
-#_(defn parse-haggadah
-  "Pre: takes a Haggadah
-  Post: returns the same Haggadah represented in hiccup"
-  [content]
-  (w/walk key->hiccup #(conj [] %) #_#(into [] %) content))
-
 (defn parse-haggadah
   "Pre: takes a Haggadah
   Post: returns the same Haggadah represented in hiccup"
   [content]
   (->> content
-       ((partial map haggadah->hiccup))
+       (map haggadah->hiccup)
        first))
 
 

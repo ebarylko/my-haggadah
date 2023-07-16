@@ -175,7 +175,7 @@
       [:div.columns.is-centered
        [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
         [:form.box.mt-4 
-         [:h1.pb-4 "Please make a title and select the haggadah template"]
+         [:h1.pb-4 "Please enter a title and select the haggadah template"]
          [:div.field
           [:div 
            [:input#haggadah-title.input {:data-testid :haggadah-title :placeholder "The title of your Haggadah" }]]]
