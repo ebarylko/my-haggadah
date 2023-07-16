@@ -7,10 +7,9 @@ jobs:
   test:
     name: Tests
     runs-on: ubuntu-latest
-    environment: dev
+    environment: Test
     env: 
       GCLOUD_PROJECT: ${{vars.GCLOUD_PROJECT}} 
-      GOOGLE_APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -83,14 +82,12 @@ jobs:
             cd functions
             npm install
             touch index.js
-            export GOOGLE_APPLICATION_CREDENTIALS=""
             npm run ci
             cd ..
 
       - name: run frontend tests
         run: |
             npm install
-            export GOOGLE_APPLICATION_CREDENTIALS=""
             npm run test
 
 
