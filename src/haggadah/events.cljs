@@ -63,6 +63,16 @@
        (.then on-success)
        (.catch on-error))))
 
+#_(re-frame/reg-fx
+ ::fetch-ordered-collection
+ (fn [{:keys [path on-success on-error order-by] :or {order-by identity}}]
+   (-> (firestore/instance)
+       (fire/collection  (clojure.string/join "/" path))
+       order-by
+       (fire/getDocs)
+       (.then on-success)
+       (.catch on-error))))
+
 (defn keyword->func
   [key]
   (cond
