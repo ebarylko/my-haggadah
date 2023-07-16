@@ -63,7 +63,7 @@
        (.then on-success)
        (.catch on-error))))
 
-#_(re-frame/reg-fx
+(re-frame/reg-fx
  ::fetch-ordered-collection
  (fn [{:keys [path on-success on-error order-by] :or {order-by identity}}]
    (-> (firestore/instance)
@@ -80,16 +80,25 @@
     (vector? key) #(re-frame/dispatch (conj key %))
     :else #(re-frame/dispatch [key %])))
 
+;; (re-frame/reg-event-fx
+;;  ::fetch-haggadot
+;;  (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
+;;    (if (:uid db)
+;;      {::query! {:path ["users" (:uid db) "haggadot"]
+;;                 :order-by (fire/orderBy "createdAt" "desc")
+;;                            :on-success (keyword->func on-success)
+;;                            :on-error (keyword->func on-error)}}
+;;      {})))
+
 (re-frame/reg-event-fx
  ::fetch-haggadot
  (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
    (if (:uid db)
-     {::query! {:path ["users" (:uid db) "haggadot"]
-                :order-by (fire/orderBy "createdAt" "desc")
-                           :on-success (keyword->func on-success)
-                           :on-error (keyword->func on-error)}}
+     {::fetch-ordered-collection {:path ["users" (:uid db) "haggadot"]
+                :order-by #(fire/query % (fire/orderBy "createdAt" "desc"))
+                :on-success (keyword->func on-success)
+                :on-error (keyword->func on-error)}}
      {})))
-
 
 (re-frame/reg-event-fx
  ::fetch-haggadah
