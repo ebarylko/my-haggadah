@@ -34,7 +34,6 @@
            [:div.has-text-right.is-size-5 {:data-testid :bracha-content} content]]
     :else [:div]))
 
-
 (defn parse-haggadah
   "Pre: takes a Haggadah
   Post: returns the same Haggadah represented in hiccup"
