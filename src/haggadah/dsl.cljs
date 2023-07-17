@@ -15,12 +15,23 @@
 (defonce haggadah
   (create-haggadah "Wine" bracha))
 
+(defn create-haggadah-with-song
+  "Pre: takes a song and its title
+  Post: returns a Haggadah with song and title passed within"
+  [title song]
+  {:content 
+   {:bracha {:title title :content song}}})
+  
+
 (defn haggadah->hiccup
   [[k {:keys [title content]}]]
   (case k
     :bracha [:div
              [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 {:data-testid :bracha-title} title]
              [:div.has-text-right.is-size-5 {:data-testid :bracha-content }content]]
+    :song [:div
+           [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 {:data-testid :bracha-title} title]
+           [:div.has-text-right.is-size-5 {:data-testid :bracha-content} content]]
     :else [:div]))
 
 
