@@ -11,8 +11,8 @@
 
 (def haggadah-as-hiccup
   [:div
-   [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 {:data-testid :bracha-title} title]
-   [:div.has-text-right.is-size-5 {:data-testid :bracha-content } song]])
+   [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2  title]
+   [:div.has-text-right.is-size-5 song]])
 
 (t/deftest haggadah-with-song-test
   (t/testing "When the user creates a Haggadah with a song in it and parses it using the dsl, the correct hiccup representation of the Haggadah will be returned"
