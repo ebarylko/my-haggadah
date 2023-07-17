@@ -1,15 +1,15 @@
 name: Run tests
 
-on: [push, pull_request]
+on: [pull_request]
 
-env:
-  GCLOUD_PROJECT: "my-haggadah"
-  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MY_HAGGADAH}}
 
 jobs:
   test:
     name: Tests
     runs-on: ubuntu-latest
+    environment: Test
+    env: 
+      GCLOUD_PROJECT: ${{vars.GCLOUD_PROJECT}} 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -30,9 +30,9 @@ jobs:
 
       - name: install chrome
         run: |
-          wget --no-verbose -O /tmp/chrome.deb https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_114.0.5735.106-1_amd64.deb
-          sudo apt update
-          sudo apt install -y -f /tmp/chrome.deb
+          wget --no-verbose -O /tmp/chrome.deb https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_114.0.5735.198-1_amd64.deb
+          sudo apt-get update
+          sudo apt-get install -y -f /tmp/chrome.deb
           rm /tmp/chrome.deb
 
 
@@ -66,27 +66,30 @@ jobs:
           java-version: '11'
           cache: 'maven'
 
-
       - name: Cache clojure dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.m2/repository
+          path: |
+            ~/.m2/repository
           # List all files containing dependencies:
           key: cljdeps-${{ hashFiles('project.clj') }}
+
+      - name: install firebase tools
+        run: npm install -g firebase-tools
+
+
+      - name: run backend tests
+        run: |
+            cd functions
+            npm install
+            npm run ci
+            cd ..
 
       - name: run frontend tests
         run: |
             npm install
-            npm install -g firebase-tools
             npm run test
 
-      # - name: run backend tests
-      #   run: |
-      #       cd functions
-      #       npm install
-      #       npm run release
-      #       npm run test
-      #       cd ..
 
       - uses: DeLaGuardo/setup-clojure@11.0
         with:
@@ -99,7 +102,8 @@ jobs:
           CHROME_BIN: "/usr/bin/google-chrome"
         run: |
             npm run release
-            npm run test:acceptance 
+            ls -l ~/.m2/repository
+            npm run acceptance 
 
 
       - name: Upload screenshots on acceptance test fail

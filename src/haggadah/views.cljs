@@ -139,56 +139,18 @@
         "Haggadot created"]
        (let [haggadot @(re-frame/subscribe [::subs/haggadot])]
          (when haggadot
-           [:ul
+           [:ul.haggadot 
             (for [{:keys [title id]} haggadot :when id] 
               ^{:key id}[:li.mb-2
-                         [:a {:data-testid (str "view-" id)
-                              :href (href :haggadah-view {:id id})} title]
-                         [:a.is-small.ml-2 {:data-testid (str "edit-" id )
-                                            :href (href :haggadah-edit {:id id})}
-                          [:i.fas.fa-edit]]])]))] ]]]
+                         [:a.haggadah-link {:data-testid :haggadah-link 
+                              :href (href :haggadah-view {:id id})} title]])]))] ]]]
    [wave-bottom]])
 
-(def edit-explanation
-  "Source contains the Haggadah with markdown, while preview shows you how the Haggadah will appear after applying the markdown.
-To see changes in preview edit source and then click on preview.
- When you are satisfied with your changes please click the submit button below ")
 
-(defn haggadah-edit-panel
-  []
-  (let [text @(re-frame/subscribe [::subs/haggadah-text])
-        preview? @(re-frame/subscribe [::subs/src-preview])]
-    [:div.container
-     [:div.has-text-centered.box
-      edit-explanation]
-     [:div.tabs
-      [:ul
-       [:li {:class (if-not preview? "is-active" "") }
-        [:a {:on-click #(re-frame/dispatch [::events/set-preview false])
-             }"Source"]]
-       [:li {:class (if preview? "is-active" "")}
-        [:a {:on-click #(re-frame/dispatch [::events/set-preview true])
-             } "Preview"]]]]
-     [:div 
-      [:div {:class (when preview? "is-hidden")}
-       [:form.box
-        [:div.field
-         [:div
-          [:textarea.textarea {:placeholder "Text input" 
-                               :data-testid :preview
-                               :value text
-                               :on-change #(re-frame/dispatch [::events/edit-haggadah (-> %
-                                                                                          (.-target)
-                                                                                          (.-value))])}]]]]]
-       [:div {:class (when-not preview? "is-hidden")}
-        [:div.content {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:breaks true :mangle false :headerIds false})} :id "haggadah-text"}]]]
-     [:div
-      [:button.button {:on-click #(re-frame/dispatch [::events/modify-haggadah {:new-haggadah text :on-success [::events/push-state :edit-success] }])
-                       :data-testid :submit} "Submit changes"]]]))
 
 (defn form-content
   "Pre: takes an id for a form field
-  Post: returns the text of the field if it exists, ni otherwise"
+  Post: returns the text of the field if it exists, nil otherwise"
   [id]
   (-> (.getElementById js/document id)
       (.-value)))
@@ -204,43 +166,45 @@ To see changes in preview edit source and then click on preview.
     [:div [:a.button.is-focused.is-link {:data-testid :return :on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]]]])
 
 
-(defn haggadah-edit-success
-  [_]
-  [:div.container.has-text-centered
-   [:div.notification.is-success
-    "Your Haggadah has been successfully changed. Please click the button below to return to the dashboard and see it"]
-   [:a.button.is-focused.is-link {:data-testid :return-dashboard
-                                  :on-click #(re-frame/dispatch [::push-state :dashboard])}
-    "Return to dashboard"]])
 
 (defn haggadah-creation-panel
   []
-  (let [text (atom "## The best possible Haggadah")]
+  (let [haggadah (atom nil)]
     [:div.pt-4.page 
      [:div.hero.is-fullheight
       [:div.columns.is-centered
        [:div.column.is-5-tablet.is-4-desktop.is-3-widescreen
         [:form.box.mt-4 
-         [:h1.pb-4 "Please fill in the details of your Haggadah below"]
+         [:h1.pb-4 "Please enter a title and select the haggadah template"]
          [:div.field
           [:div 
            [:input#haggadah-title.input {:data-testid :haggadah-title :placeholder "The title of your Haggadah" }]]]
-         [:div {:class "field"}
-          [:div
-           [:textarea#haggadah-text.textarea {:data-testid :haggadah-text :type "text", :placeholder "The content of your Haggadah" :on-change #(reset! text (-> % .-target .-value))}]]]
+         [:div.field
+          (let [dropdown? @(re-frame/subscribe [::subs/dropdown])
+                expand (when dropdown? "is-active")]
+           [:div.dropdown {:class expand}
+            [:div {:class "dropdown-trigger"}
+             [:button.button {:readonly true
+                              :aria-haspopup "true", :aria-controls "dropdown-menu"}
+              [:span "Base Haggadah"]
+              [:span {:class "icon is-small"}
+               [:i {:class "fas fa-angle-down", :aria-hidden "true"}]]]]
+            [:div {:class "dropdown-menu", :id "dropdown-menu", :role "menu"}
+             [:div {:class "dropdown-content"}
+              [:a.dropdown-item.is-active "Base Haggadah" ]]]])]
          [:div.field.is-grouped.is-grouped-right 
           [:a.button.mr-3 "Cancel"]
           [:a.button {:class (styles/submit-button):data-testid :add-haggadah :on-click #(re-frame/dispatch [::events/add-haggadah
                                                                                         (form-content "haggadah-title")
-                                                                                        (form-content "haggadah-text") %])
+                                                                                         %])
                               :id "submit"} "Create"]]]]]]]))
 
 (defn haggadah-view-panel
   []
-  [:div.hero.is-medium {:class (styles/haggadah-view)}
+  [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
-      [:div.hero-body
-       [:div.container.content {:dangerouslySetInnerHTML #js{:__html (js/marked.parse text #js{:mangle false :headerIds false})} :data-testid :haggadah-text}]])])
+      [:section.container.is-flex
+       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} text ]])])
 
 (defn about-panel
   []

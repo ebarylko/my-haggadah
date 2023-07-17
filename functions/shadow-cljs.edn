@@ -4,15 +4,13 @@
 
  :source-paths ["src" "test"]
 
- :dependencies [[cljsjs/marked "0.3.5-1"]
-                [cider/cider-nrepl "0.28.4"]
+ :dependencies [[cider/cider-nrepl "0.28.4"]
                 [cider/piggieback "0.5.3"]]
 
  :builds {:func {:target :node-library
                  :compiler-options {:infer-externs :auto}
                  :output-to "index.js"
                  :exports-var haggadah.core/exports}
-
           :func-test {:target :node-test
                       :output-to "out/node-tests.js"
                       :autorun   true}}}

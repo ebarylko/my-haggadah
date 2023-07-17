@@ -3,8 +3,7 @@
              [etaoin.api :as e]
              [etaoin.keys :as k]
              [acceptance.core :as c :refer [driver]])
-  (:import com.google.firebase.cloud.FirestoreClient
-            ))
+  (:import com.google.firebase.cloud.FirestoreClient))
 
 (def default-message
   "Hello (Unknown). We're glad to see you.")
@@ -14,6 +13,8 @@
 
 (t/use-fixtures :once c/init-firebase)
 (t/use-fixtures :each c/with-screenshot)
+(t/use-fixtures :each c/delete-fs-emulator-data)
+
 
 (t/deftest message-test
   (t/testing "When the admin user exists"

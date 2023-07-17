@@ -46,3 +46,8 @@
  ::active-menu?
  (fn [db _]
    (:active-menu? db)))
+
+(re-frame/reg-sub
+ ::dropdown
+ (fn [db _]
+   (:dropdown db)))

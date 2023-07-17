@@ -1,10 +1,10 @@
 (ns haggadah.events
   (:require
    [re-frame.core :as re-frame]
-   [cljsjs.marked]
    [haggadah.fb.firestore :as firestore]
    ["firebase/firestore" :as fire]
    [haggadah.db :as db]
+   [haggadah.dsl :as dsl]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
    [haggadah.fb.auth :as auth]
    [haggadah.fb.functions :as func]))
@@ -43,16 +43,24 @@
    (-> (auth/email-login email password)
        (.then (fn [user]  (on-success (.-user user))))
        (.catch (fn [error]  (on-error error) )))))
- 
 
+
+(defn ordered-coll
+  "Pre: takes a path to a collection and a function which will order the collection
+  Posts: returns the collection or an error"
+  [path order-by]
+  (-> (firestore/instance)
+      (fire/collection  (clojure.string/join "/" path))
+      order-by
+      (fire/getDocs)))
+ 
 (re-frame/reg-fx
- ::fetch-collection!
- (fn [{:keys [path on-success on-error]}]
-   (-> (firestore/instance)
-       (fire/collection  (clojure.string/join "/" path))
-       (fire/getDocs)
-       (.then on-success)
-       (.catch on-error))))
+ ::query!
+ (fn [{:keys [path on-success on-error order-by] :or {order-by identity}}]
+   (-> (ordered-coll path order-by)
+     (.then on-success)
+     (.catch on-error))))
+
 
 (defn keyword->func
   [key]
@@ -61,16 +69,16 @@
     (vector? key) #(re-frame/dispatch (conj key %))
     :else #(re-frame/dispatch [key %])))
 
+
 (re-frame/reg-event-fx
  ::fetch-haggadot
  (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
-   (println "Uid: " (:uid db))
    (if (:uid db)
-     {::fetch-collection! {:path ["users" (:uid db) "haggadot"]
-                           :on-success (keyword->func on-success)
-                           :on-error (keyword->func on-error)}}
+     {::query! {:path ["users" (:uid db) "haggadot"]
+                :order-by #(fire/query % (fire/orderBy "createdAt" "desc"))
+                :on-success (keyword->func on-success)
+                :on-error (keyword->func on-error)}}
      {})))
-
 
 (re-frame/reg-event-fx
  ::fetch-haggadah
@@ -121,17 +129,13 @@
 
 
 
-
 (re-frame/reg-event-fx
  ::add-haggadah
- (fn [{:keys [db]} [_ title content]]
-   (println "Content " content "Title " title)
+ (fn [{:keys [db]} [_ title]]
    {::add-haggadah! {:path ["users" (:uid db) "haggadot"]
-                     :haggadah {:title title
-                                :content content}
-                    :on-success (re-frame/dispatch [::push-state :haggadah-success])
+                     :haggadah (assoc dsl/haggadah :title title :createdAt (js/Date.))
+                     :on-success (re-frame/dispatch [::push-state :haggadah-success])
                      :on-error (keyword->func ::error)}}))
-
 
 (re-frame/reg-fx
  ::add-haggadah!
@@ -174,7 +178,8 @@
           (-> snap
               (. data)
               (js->clj :keywordize-keys true)
-              (:content)))))
+              (:content)
+              dsl/parse-haggadah))))
 
 (re-frame/reg-event-db
  ::edit-haggadah
@@ -237,6 +242,13 @@
                  (map #(.data %))
                  (map #(js->clj % :keywordize-keys true))
                  (map #(assoc %2 :id %1) ids))))))
+
+
+(re-frame/reg-event-db
+ ::set-dropdown
+ (fn [db [_]]
+   (let [active? (not (:dropdown db))]
+     (assoc db :dropdown active?))))
 
 (re-frame/reg-event-db
  ::active-menu

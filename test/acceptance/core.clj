@@ -1,6 +1,7 @@
 (ns acceptance.core
   (:require [clojure.test :as t]
             [etaoin.api :as e]
+            [clj-http.client :as http]
             [environ.core :refer [env]]
             [clojure.walk :as w])
   (:import com.google.firebase.FirebaseApp
@@ -74,7 +75,13 @@
     (test)
     (finally
       (e/screenshot driver
-                    (format "screenshots/%s-%o.png" (last @test-names) (inst-ms (java.time.Instant/now)))))))
+                    (format "screenshots/%s.png" (last @test-names))))))
+
+(defn delete-fs-emulator-data
+  "Takes a test and deletes what is in firestore after running the test"
+  [test]
+  (test)
+  (http/delete  "http://localhost:8080/emulator/v1/projects/my-haggadah/databases/(default)/documents"))
 
 (defn home->dashboard
   [d]
@@ -94,6 +101,6 @@
       (.collection "users")
       (.document user)
       (.collection "haggadot")
-      (.add  (w/stringify-keys haggadah))
+      (.add  (w/stringify-keys (assoc haggadah :createdAt (java.time.Instant/now))))
       (.get)
       (.getId)))

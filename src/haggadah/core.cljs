@@ -18,11 +18,11 @@
   (when config/debug?
     (println "dev mode")))
 
-(defonce root (createRoot (.getElementById js/document "app")))
 
 (defn ^:dev/after-load mount-root []
   (re-frame/clear-subscription-cache!)
-  (.render root (r/as-element [routes/router-component {:router routes/router}])))
+  (let [root (createRoot (.getElementById js/document "app"))]
+    (.render root (r/as-element [routes/router-component {:router routes/router}]))))
 
 
 (defn fb-init [config]
