@@ -101,6 +101,7 @@ jobs:
           CHROME_BIN: "/usr/bin/google-chrome"
         run: |
             npm run release
+            ls -l ~/.m2/repository
             npm run acceptance 
 
 
