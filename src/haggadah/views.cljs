@@ -212,14 +212,23 @@
       [:td "דָּם"]]
      [:tr  
       [:td "Ranas"]
-      [:td "צְפַרְדֵּעַ"]]]]])
+      [:td "צְפַרְדֵּעַ"]]
+     [:tr  
+      [:td "Piojos"]
+      [:td "כִּנִּים"]]
+     [:tr  
+      [:td "Bestias"]
+      [:td "עָרוֹב"]]
+     [:tr  
+      [:td "Peste"]
+      [:td "דֶּבֶר"]]]]])
 
 (defn haggadah-view-panel
   []
   [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:section.container.is-flex
-       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text}table #_text ]])])
+       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} text ]])])
 
 (defn about-panel
   []
