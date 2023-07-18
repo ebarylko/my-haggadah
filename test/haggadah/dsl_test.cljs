@@ -24,7 +24,6 @@
           actual-haggadah haggadah-as-hiccup]
       (t/is (= actual-haggadah hiccup-rep)))))
 
-
 (def haggadah-with-table
   [:div.pt-3
    [:div.has-text-centered.pb-4.is-size-5 "Las Diez Plagas"]
@@ -39,7 +38,7 @@
      [:tr  
       [:td "Piojos"]
       [:td "כִּנִּים"]]
-     [:tr  
+     [:tr
       [:td "Bestias"]
       [:td "עָרוֹב"]]
      [:tr  

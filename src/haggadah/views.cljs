@@ -213,7 +213,7 @@
   [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:section.container.is-flex
-       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} haggadah-with-subsection #_text ]])])
+       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} text ]])])
 
 (defn about-panel
   []
