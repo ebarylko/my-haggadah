@@ -203,9 +203,10 @@
 
 
 (def haggadah-with-subsection
-  [:div ds-test/subsection-title
-   ds-test/haggadah-as-hiccup
-   ds-test/haggadah-with-table])
+  [:div
+   [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 ds-test/subsection-title]
+    ds-test/haggadah-as-hiccup
+    ds-test/haggadah-with-table])
 
 (defn haggadah-view-panel
   []

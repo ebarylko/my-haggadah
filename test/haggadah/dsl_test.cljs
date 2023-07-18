@@ -10,8 +10,8 @@
 
 
 (def haggadah-as-hiccup
-  [:div
-   [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2  title]
+  [:div.pt-3
+   [:div.has-text-centered.has-text-weight-bold.is-size-4.pb-2  title]
    [:div.has-text-right.is-size-5 song]])
 
 (dsl/create-haggadah-with-song title song)
@@ -25,23 +25,8 @@
       (t/is (= actual-haggadah hiccup-rep)))))
 
 
-
-(def table
-  [:div
-   [:div.has-text-centered.pb-4.is-size-5 "TITLE"]
-   [:table.is-bordered.is-flex.is-justify-content-center.table
-    [:tdead]
-    [:tbody
-     [:tr
-      [:td "Sangre"]
-      [:td "דָּם"]]
-     [:tr  
-      [:td "Ranas"]
-      [:td "צְפַרְדֵּעַ"]]]]])
-
-
 (def haggadah-with-table
-  [:div
+  [:div.pt-3
    [:div.has-text-centered.pb-4.is-size-5 "Las Diez Plagas"]
    [:table.is-bordered.is-flex.is-justify-content-center.table
     [:tbody
@@ -79,7 +64,8 @@
 (def subsection-title "Subsection")
 
 (def haggadah-with-subsection
-  [:div subsection-title
+  [:div
+   [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 subsection-title]
    haggadah-as-hiccup
    haggadah-with-table])
 
@@ -92,5 +78,4 @@
   (t/testing "When the user creates a Haggadah with a subsection and the Haggadah is parsed, the correct hiccup representation of the Haggadah is returned"
     (let [haggadah (dsl/create-haggadah-with-subsection subsection-title subsection-content)
           hiccup-rep (dsl/parse-haggadah (:content haggadah))]
-      (t/is (= haggadah-with-subsection hiccup-rep)))
-    ))
+      (t/is (= haggadah-with-subsection hiccup-rep)))))

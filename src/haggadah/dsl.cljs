@@ -47,7 +47,7 @@
   "Pre: takes a title and content for a bracha
   Post: returns a hiccup representation of the bracha"
   [title content]
-  [:div
+  [:div.pt-3
    [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 {:data-testid :bracha-title} title]
    [:div.has-text-right.is-size-5 {:data-testid :bracha-content} content]])
 
@@ -55,7 +55,7 @@
   "Pre: takes a title and content for a song
   Post: returns a hiccup representation of the song"
   [title content]
-  [:div
+  [:div.pt-3
    [:div.has-text-centered.has-text-weight-bold.is-size-4.pb-2 title]
    [:div.has-text-right.is-size-5 content]])
 
@@ -75,12 +75,11 @@
   "Pre: takes a title and the content for a table
   Post: returns the hiccup representation of the table"
   [title table]
-  [:div
+  [:div.pt-3
    [:div.has-text-centered.pb-4.is-size-5 title]
    [:table.is-bordered.is-flex.is-justify-content-center.table
     (into [:tbody] (map ->row table))]])
 
-{:bracha {} :song {}}
 
 (def table-content
   [["Sangre" "דָּם"]
@@ -92,11 +91,11 @@
 (declare haggadah->hiccup)
 
 (defn render-subsec
-  "Pre: takes a aubsection title and content
+  "Pre: takes a subsection title and content
   Post: returns the hiccup representation of the subsection"
   [title content]
-  (into [:div
-         [:div.has-text-weight-bold.is-size-3 title]]
+  (into [:div 
+         [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 title]]
         (map haggadah->hiccup content)))
 
 (defn haggadah->hiccup

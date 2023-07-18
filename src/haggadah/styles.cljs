@@ -109,4 +109,6 @@
    :width :100%
    :padding "20px 0px"})
 
-
+(defclass haggadah-item
+  []
+  {:padding-top :1.5rem})
