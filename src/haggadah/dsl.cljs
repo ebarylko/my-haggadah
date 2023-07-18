@@ -15,6 +15,7 @@
 (defonce haggadah
   (create-haggadah "Wine" bracha))
 
+
 (defn create-haggadah-with-song
   "Pre: takes a song and its title
   Post: returns a Haggadah with song and title passed within"
@@ -28,6 +29,13 @@
   [title table]
   {:content
    {:table {:title title :content table }}})
+
+(defn create-haggadah-with-subsection
+  "Pre: takes a subsection title and content
+  Post: returns a Haggadah with a subsection within"
+  [title content]
+  {:content
+   {:sucsection {:title title :content content}}})
 
 (defn render-bracha
   "Pre: takes a title and content for a bracha
@@ -66,12 +74,56 @@
    [:table.is-bordered.is-flex.is-justify-content-center.table
     (into [:tbody] (map ->row table))]])
 
+{:bracha {} :song {}}
+
+(def table-content
+  [["Sangre" "דָּם"]
+   ["Ranas" "צְפַרְדֵּעַ"]
+   ["Piojos"  "כִּנִּים"]
+   ["Bestias"  "עָרוֹב"]
+   ["Peste" "דֶּבֶר"]])
+
+(def bracha-con (:content haggadah))
+(def song
+  (:content
+   (create-haggadah-with-song "kljlkjl" "hiello ehte")))
+
+(def coll
+  [bracha-con song])
+
+
+(concat {:hi 2} {:whi 3})
+(conj {} bracha-con song)
+(conj {} {:hi 2} {:whi 3})
+
+(defn make-subsec-content
+  "Pre: takes a collection of items to have for the subsection
+Post: returns a subsection with the collection of items within"
+  [coll]
+(apply conj {} coll))
+
+(make-subsec-content coll)
+
+(defn render-subsection
+  "Pre: takes a title and content for a subsection
+  Post: returns the hiccup representation of the subsection"
+  [title content]
+  [:div title
+   (map haggadah->hiccup content)])
+
+(into {:song {}} (:content haggadah))
+
+(render-subsection "hlkjhj"
+(:content haggadah)
+                   )
+
 (defn haggadah->hiccup
   [[k {:keys [title content]}]]
   (case k
     :bracha (render-bracha title content)
     :song (render-song title content)
     :table (render-table title content)
+    :subsection (render-subsection title content)
     :else [:div]))
 
 (defn parse-haggadah
