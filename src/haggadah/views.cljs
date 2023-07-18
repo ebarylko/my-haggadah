@@ -199,6 +199,21 @@
                                                                                          %])
                               :id "submit"} "Create"]]]]]]]))
 
+
+
+(def table
+  [:div
+   [:div.has-text-centered.pb-4.has-text-weight-bold.is-size-5 "Las Diez Plagas"]
+   [:table.is-bordered.is-flex.is-justify-content-center.table
+    [:thead]
+    [:tbody
+     [:tr
+      [:td "Sangre"]
+      [:th "דָּם"]]
+     [:tr  
+      [:td "Ranas"]
+      [:th "צְפַרְדֵּעַ"]]]]])
+
 (defn haggadah-view-panel
   []
   [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
