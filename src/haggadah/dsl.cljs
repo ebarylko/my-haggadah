@@ -23,7 +23,7 @@
    {:song {:title title :content song}}})
   
 (defn create-haggadah-with-table
-  "Pre: takes a table
+  "Pre: takes the title of a table and its content
   Post: returns a Haggadah with a table within"
   [title table]
   {:content

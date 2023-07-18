@@ -68,7 +68,7 @@
 (def table-title "Las Diez Plagas")
 
 (t/deftest haggadah-with-table-test
-  (t/testing "When the user creates a Haggadah with a table in it and the Haggadah is parsed, the correct hiccup representation of the Haggadah will be returned"
+  (t/testing "When the user creates a Haggadah with a table in it and the Haggadah is parsed, the correct hiccup representation of the Haggadah is returned"
     (let [haggadah (dsl/create-haggadah-with-table table-title table-content)
           hiccup-rep (dsl/parse-haggadah (:content haggadah))]
       (t/is (= haggadah-with-table hiccup-rep)))))
