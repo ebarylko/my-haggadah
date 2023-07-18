@@ -22,6 +22,12 @@
   {:content 
    {:song {:title title :content song}}})
   
+(defn create-haggadah-with-table
+  "Pre: takes the title of a table and its content
+  Post: returns a Haggadah with a table within"
+  [title table]
+  {:content
+   {:table {:title title :content table }}})
 
 (defn render-bracha
   "Pre: takes a title and content for a bracha
@@ -39,11 +45,33 @@
    [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 title]
    [:div.has-text-right.is-size-5 content]])
 
+(defn ->cell
+  "Pre: takes a cell from a table
+  Post: returns the hiccup representation of the cell"
+  [cell]
+  [:td cell])
+
+(defn ->row
+  "Pre: takes a row from a table
+  Post: returns the hiccup representation of the row"
+  [row]
+  (into [:tr] (map ->cell row)))
+
+(defn render-table
+  "Pre: takes a title and the content for a table
+  Post: returns the hiccup representation of the table"
+  [title table]
+  [:div
+   [:div.has-text-centered.pb-4.is-size-5 title]
+   [:table.is-bordered.is-flex.is-justify-content-center.table
+    (into [:tbody] (map ->row table))]])
+
 (defn haggadah->hiccup
   [[k {:keys [title content]}]]
   (case k
     :bracha (render-bracha title content)
     :song (render-song title content)
+    :table (render-table title content)
     :else [:div]))
 
 (defn parse-haggadah
