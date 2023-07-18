@@ -201,6 +201,7 @@
 
 
 
+
 (defn haggadah-view-panel
   []
   [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
