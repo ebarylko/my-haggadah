@@ -3,7 +3,6 @@
    [re-frame.core :as re-frame]
    [haggadah.styles :as styles]
    [haggadah.subs :as subs]
-   [haggadah.dsl-test :as ds-test]
    [reitit.frontend.easy :as rfe]
    [haggadah.events :as events]
    [goog.string.format]))
@@ -202,11 +201,6 @@
 
 
 
-(def haggadah-with-subsection
-  [:div
-   [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 ds-test/subsection-title]
-    ds-test/haggadah-as-hiccup
-    ds-test/haggadah-with-table])
 
 (defn haggadah-view-panel
   []

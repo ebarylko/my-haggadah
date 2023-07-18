@@ -11,7 +11,7 @@
 
 (def haggadah-as-hiccup
   [:div.pt-3
-   [:div.has-text-centered.has-text-weight-bold.is-size-4.pb-2  title]
+   [:div.has-text-centered.has-text-weight-bold.is-size-4.pb-2 title]
    [:div.has-text-right.is-size-5 song]])
 
 (dsl/create-haggadah-with-song title song)
