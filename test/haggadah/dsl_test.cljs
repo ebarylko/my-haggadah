@@ -27,14 +27,14 @@
   [:div
    [:div.has-text-centered.pb-4.is-size-5 "TITLE"]
    [:table.is-bordered.is-flex.is-justify-content-center.table
-    [:thead]
+    [:tdead]
     [:tbody
      [:tr
       [:td "Sangre"]
-      [:th "דָּם"]]
+      [:td "דָּם"]]
      [:tr  
       [:td "Ranas"]
-      [:th "צְפַרְדֵּעַ"]]]]])
+      [:td "צְפַרְדֵּעַ"]]]]])
 
 
 (def haggadah-with-table
@@ -44,19 +44,19 @@
     [:tbody
      [:tr
       [:td "Sangre"]
-      [:th "דָּם"]]
+      [:td "דָּם"]]
      [:tr  
       [:td "Ranas"]
-      [:th "צְפַרְדֵּעַ"]]
+      [:td "צְפַרְדֵּעַ"]]
      [:tr  
       [:td "Piojos"]
-      [:th "כִּנִּים"]]
+      [:td "כִּנִּים"]]
      [:tr  
       [:td "Bestias"]
-      [:th "עָרוֹב"]]
+      [:td "עָרוֹב"]]
      [:tr  
       [:td "Peste"]
-      [:th "דֶּבֶר"]]]]])
+      [:td "דֶּבֶר"]]]]])
 
 (def table-content
   [["Sangre" "דָּם"]

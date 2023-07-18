@@ -209,17 +209,17 @@
     [:tbody
      [:tr
       [:td "Sangre"]
-      [:th "דָּם"]]
+      [:td "דָּם"]]
      [:tr  
       [:td "Ranas"]
-      [:th "צְפַרְדֵּעַ"]]]]])
+      [:td "צְפַרְדֵּעַ"]]]]])
 
 (defn haggadah-view-panel
   []
   [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:section.container.is-flex
-       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} text ]])])
+       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text}table #_text ]])])
 
 (defn about-panel
   []

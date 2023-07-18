@@ -45,13 +45,6 @@
    [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 title]
    [:div.has-text-right.is-size-5 content]])
 
-{:1 ["cont" "more" "cont"]}
-
-[["1" "2" "3" "4"]
- ["1" "2" "3" "4"]]
-(mapcat str [1 2 3])
-
-
 (defn ->cell
   "Pre: takes a cell from a table
   Post: returns the hiccup representation of the cell"
