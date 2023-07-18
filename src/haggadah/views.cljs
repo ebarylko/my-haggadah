@@ -3,6 +3,7 @@
    [re-frame.core :as re-frame]
    [haggadah.styles :as styles]
    [haggadah.subs :as subs]
+   [haggadah.dsl-test :as ds-test]
    [reitit.frontend.easy :as rfe]
    [haggadah.events :as events]
    [goog.string.format]))
@@ -201,12 +202,17 @@
 
 
 
+(def haggadah-with-subsection
+  [:div ds-test/subsection-title
+   ds-test/haggadah-as-hiccup
+   ds-test/haggadah-with-table])
+
 (defn haggadah-view-panel
   []
   [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:section.container.is-flex
-       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} text ]])])
+       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} haggadah-with-subsection #_text ]])])
 
 (defn about-panel
   []

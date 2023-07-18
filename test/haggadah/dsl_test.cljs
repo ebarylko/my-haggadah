@@ -14,6 +14,9 @@
    [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2  title]
    [:div.has-text-right.is-size-5 song]])
 
+(dsl/create-haggadah-with-song title song)
+
+
 (t/deftest haggadah-with-song-test
   (t/testing "When the user creates a Haggadah with a song in it and parses it using the dsl, the correct hiccup representation of the Haggadah will be returned"
     (let [haggadah (dsl/create-haggadah-with-song title song)
@@ -73,15 +76,19 @@
           hiccup-rep (dsl/parse-haggadah (:content haggadah))]
       (t/is (= haggadah-with-table hiccup-rep)))))
 
-(def subsec-title "Subsection")
+(def subsection-title "Subsection")
 
 (def haggadah-with-subsection
-  [:div subsec-title
+  [:div subsection-title
    haggadah-as-hiccup
    haggadah-with-table])
 
+(def subsection-content
+  [{:song {:title title :content song}}
+   {:table {:title table-title :content table-content}}])
 
-#_(t/deftest haggadah-with-subsection-test
+
+(t/deftest haggadah-with-subsection-test
   (t/testing "When the user creates a Haggadah with a subsection and the Haggadah is parsed, the correct hiccup representation of the Haggadah is returned"
     (let [haggadah (dsl/create-haggadah-with-subsection subsection-title subsection-content)
           hiccup-rep (dsl/parse-haggadah (:content haggadah))]

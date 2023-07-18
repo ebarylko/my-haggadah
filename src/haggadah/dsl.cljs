@@ -30,12 +30,18 @@
   {:content
    {:table {:title title :content table }}})
 
+(defn make-subsection
+  "Pre: takes a collection of items to include in the subsection
+  Post: returns a subsection with the collection of items within"
+  [coll]
+  (apply conj {} coll))
+
 (defn create-haggadah-with-subsection
   "Pre: takes a subsection title and content
   Post: returns a Haggadah with a subsection within"
   [title content]
   {:content
-   {:sucsection {:title title :content content}}})
+   {:subsection {:title title :content (make-subsection content)}}})
 
 (defn render-bracha
   "Pre: takes a title and content for a bracha
@@ -50,7 +56,7 @@
   Post: returns a hiccup representation of the song"
   [title content]
   [:div
-   [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 title]
+   [:div.has-text-centered.has-text-weight-bold.is-size-4.pb-2 title]
    [:div.has-text-right.is-size-5 content]])
 
 (defn ->cell
@@ -83,39 +89,15 @@
    ["Bestias"  "עָרוֹב"]
    ["Peste" "דֶּבֶר"]])
 
-(def bracha-con (:content haggadah))
-(def song
-  (:content
-   (create-haggadah-with-song "kljlkjl" "hiello ehte")))
+(declare haggadah->hiccup)
 
-(def coll
-  [bracha-con song])
-
-
-(concat {:hi 2} {:whi 3})
-(conj {} bracha-con song)
-(conj {} {:hi 2} {:whi 3})
-
-(defn make-subsec-content
-  "Pre: takes a collection of items to have for the subsection
-Post: returns a subsection with the collection of items within"
-  [coll]
-(apply conj {} coll))
-
-(make-subsec-content coll)
-
-(defn render-subsection
-  "Pre: takes a title and content for a subsection
+(defn render-subsec
+  "Pre: takes a aubsection title and content
   Post: returns the hiccup representation of the subsection"
   [title content]
-  [:div title
-   (map haggadah->hiccup content)])
-
-(into {:song {}} (:content haggadah))
-
-(render-subsection "hlkjhj"
-(:content haggadah)
-                   )
+  (into [:div
+         [:div.has-text-weight-bold.is-size-3 title]]
+        (map haggadah->hiccup content)))
 
 (defn haggadah->hiccup
   [[k {:keys [title content]}]]
@@ -123,8 +105,9 @@ Post: returns a subsection with the collection of items within"
     :bracha (render-bracha title content)
     :song (render-song title content)
     :table (render-table title content)
-    :subsection (render-subsection title content)
+    :subsection (render-subsec title content)
     :else [:div]))
+
 
 (defn parse-haggadah
   "Pre: takes a Haggadah
