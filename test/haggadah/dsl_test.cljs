@@ -78,3 +78,16 @@
     (let [haggadah (dsl/create-haggadah-with-subsection subsection-title subsection-content)
           hiccup-rep (dsl/parse-haggadah (:content haggadah))]
       (t/is (= haggadah-with-subsection hiccup-rep)))))
+
+
+
+#_(t/deftest haggadah-with-section-test
+  (t/testing "When the user creates a Haggadah with a section and the Haggadah is parsed, the correct hiccup representation of the Haggadah is returned"
+    (let [
+          section-title "Magid"
+          section-content
+          haggadah (dsl/create-haggadah-with-section section-title section-content)
+          hiccup-rep (dsl/parse-haggadah (:content haggadah))]
+      (t/is (= haggadah-with-section hiccup-rep)))
+
+    ))
