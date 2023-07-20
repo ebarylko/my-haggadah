@@ -24,47 +24,60 @@
       (t/is (= expected (dsl/render-haggadah bracha))))))
 
 
-#_(t/deftest render-song-test
+(t/deftest render-song-test
   (t/testing "When rendering the song, returns the title and content"
     (let [song (dsl/song "Ki lo nae" "כִּי לוֹ נָאֶה, כִּי לוֹ יָאֶה. אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו")
-          expected (dsl/render-haggadah song)]
-      (t/is (= expected-bracha hiccup-rep)))))
+          expected [:div.song
+                    [:div.title "Ki lo nae" ]
+                    [:div.text "כִּי לוֹ נָאֶה, כִּי לוֹ יָאֶה. אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו"]]]
+      (t/is (= expected (dsl/render-haggadah song))))))
 
-(def haggadah-with-table
-  [:div.pt-3
-   [:div.has-text-centered.pb-4.is-size-5 "Las Diez Plagas"]
-   [:table.is-bordered.is-flex.is-justify-content-center.table
-    [:tbody
-     [:tr
-      [:td "Sangre"]
-      [:td "דָּם"]]
-     [:tr  
-      [:td "Ranas"]
-      [:td "צְפַרְדֵּעַ"]]
-     [:tr  
-      [:td "Piojos"]
-      [:td "כִּנִּים"]]
-     [:tr
-      [:td "Bestias"]
-      [:td "עָרוֹב"]]
-     [:tr  
-      [:td "Peste"]
-      [:td "דֶּבֶר"]]]]])
+;; (def haggadah-with-table
+;;   [:div.pt-3
+;;    [:div.has-text-centered.pb-4.is-size-5 "Las Diez Plagas"]
+;;    [:table.is-bordered.is-flex.is-justify-content-center.table
+;;     [:tbody
+;;      [:tr
+;;       [:td "Sangre"]
+;;       [:td "דָּם"]]
+;;      [:tr  
+;;       [:td "Ranas"]
+;;       [:td "צְפַרְדֵּעַ"]]
+;;      [:tr  
+;;       [:td "Piojos"]
+;;       [:td "כִּנִּים"]]
+;;      [:tr
+;;       [:td "Bestias"]
+;;       [:td "עָרוֹב"]]
+;;      [:tr  
+;;       [:td "Peste"]
+;;       [:td "דֶּבֶר"]]]]])
 
-(def table-content
-  [["Sangre" "דָּם"]
-   ["Ranas" "צְפַרְדֵּעַ"]
-   ["Piojos"  "כִּנִּים"]
-   ["Bestias"  "עָרוֹב"]
-   ["Peste" "דֶּבֶר"]])
+;; (def table-content
+;;   [["Sangre" "דָּם"]
+;;    ["Ranas" "צְפַרְדֵּעַ"]
+;;    ["Piojos"  "כִּנִּים"]
+;;    ["Bestias"  "עָרוֹב"]
+;;    ["Peste" "דֶּבֶר"]])
 
-(def table-title "Las Diez Plagas")
+;; (def table-title "Las Diez Plagas")
 
-#_(t/deftest haggadah-with-table-test
-  (t/testing "When the user creates a Haggadah with a table in it and the Haggadah is parsed, the correct hiccup representation of the Haggadah is returned"
-    (let [haggadah (dsl/create-haggadah-with-table table-title table-content)
-          hiccup-rep (dsl/parse-haggadah (:content haggadah))]
-      (t/is (= haggadah-with-table hiccup-rep)))))
+#_(t/deftest render-table-test
+  (t/testing "When rendering the table, each row and the content within is returned"
+    (let [table (dsl/table "Las Diez Plagas" 
+                             (dsl/row ["Sangre" "דָּם"])
+                             (dsl/row ["Ranas" "צְפַרְדֵּעַ"]))
+          expected [:div.table
+                    [:div.title "Las Diez Plagas"]
+                    [:table.is-justify-content-center.table
+                     [:tbody
+                      [:tr
+                       [:td "Sangre"]
+                       [:td "דָּם"]]
+                      [:tr  
+                       [:td "Ranas"]
+                       [:td "צְפַרְדֵּעַ"]]]]]]
+      (t/is (= expected (dsl/render-haggadah table))))))
 
 ;; (def subsection-title "Subsection")
 

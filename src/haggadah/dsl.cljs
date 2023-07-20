@@ -8,6 +8,19 @@
   [title text]
   {:type :song :title title :text text})
 
+(defn cell
+  [content]
+  [:td content])
+
+(defn row
+  [row]
+  (apply merge [:tr] (map cell row)))
+
+(defn table
+  [title & rows]
+  {:type :table :title title :rows rows})
+
+
 (defn create-haggadah
   "Pre: takes a bracha B
   Post: returns a Haggadah with bracha B"
@@ -91,9 +104,6 @@
 
 
 
-(defn table
-  [title & rows]
-  )
 
 ;; (dsl/hagaddah
 ;;  "The best Hagadda"
@@ -127,8 +137,21 @@
 
 (defmethod render-haggadah :bracha [{:keys [title text]}]
   [:div.bracha
-   [:div.title  title]
-   [:div.text  text]])
+   [:div.title title]
+   [:div.text text]])
+
+(defmethod render-haggadah :song [{:keys [title text]}]
+  [:div.song
+   [:div.title title]
+   [:div.text text]])
+
+
+(defmethod render-haggadah :table [{:keys [title rows]}]
+  [:div.table.is-bordered
+   [:div.title title]
+   [:table.table.table-content
+    (apply merge [:tbody] rows)]])
+
 
 (defn haggadah->hiccup
   [{:keys [type]}

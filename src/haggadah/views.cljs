@@ -232,14 +232,18 @@
   table
   song-2])
 
+(def table2
+  (dsl/table "Las Diez Plagas" 
+             (dsl/row ["Sangre" "דָּם"])
+             (dsl/row ["Ranas" "צְפַרְדֵּעַ"])))
+
 
 (defn haggadah-view-panel
   []
   [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:section.container.is-flex
-       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} (->> ( dsl/bracha "Hello" "baruj ata adonai" )
-                                                                   dsl/render-haggadah) #_text ]])])
+       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} (dsl/render-haggadah table2  )#_text ]])])
 
 (defn about-panel
   []

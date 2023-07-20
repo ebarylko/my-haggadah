@@ -41,7 +41,11 @@
             :font-weight :normal
             :text-align :center}]
   [:.text {:text-align :right
-           :font-size :1.25rem}])
+           :font-size :1.25rem}]
+  [:.table-content
+   {:border-width :1px
+    :display :flex
+    :justify-content :center}])
 
 (defclass header
   []
