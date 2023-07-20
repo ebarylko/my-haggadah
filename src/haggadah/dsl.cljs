@@ -4,6 +4,9 @@
   [title text]
   {:type :bracha :title title :text text})
 
+(defn song
+  [title text]
+  {:type :song :title title :text text})
 
 (defn create-haggadah
   "Pre: takes a bracha B
@@ -124,8 +127,8 @@
 
 (defmethod render-haggadah :bracha [{:keys [title text]}]
   [:div.bracha
-   [:div.title {:data-testid :bracha-title} title]
-   [:div.text {:data-testid :bracha-content} text]])
+   [:div.title  title]
+   [:div.text  text]])
 
 (defn haggadah->hiccup
   [{:keys [type]}

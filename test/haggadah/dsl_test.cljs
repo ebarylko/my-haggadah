@@ -6,7 +6,8 @@
 
 (def song
   " כִּי לוֹ נָאֶה, כִּי לוֹ יָאֶה.
-  אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו יֹאמְרוּ לוֹ: לְךָ וּלְךָ, לְךָ כִּי לְךָ, לְךָ אַף לְךָ, לְךָ ה' הַמַּמְלָכָה, כִּי לוֹ נָאֵה, כִּי לוֹ יָאֶה. ")
+  אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו יֹאמְרוּ לוֹ: לְךָ וּלְךָ, לְךָ כִּי לְךָ, לְךָ אַף לְךָ, לְךָ ה' הַמַּמְלָכָה, כִּי לוֹ נָאֵה, כִּי לוֹ יָאֶה. "
+  )
 
 
 (def expected-bracha
@@ -18,15 +19,15 @@
   (t/testing "When rendering a bracha, returns the title and the text"
     (let [bracha (dsl/bracha "Wine" "Baruj hata")
           expected [:div.bracha
-                    [:div.title {:data-testid :bracha-title} "Wine"]
-                    [:div.text {:data-testid :bracha-content} "Baruj hata"]]]
+                    [:div.title  "Wine"]
+                    [:div.text  "Baruj hata"]]]
       (t/is (= expected (dsl/render-haggadah bracha))))))
 
 
 #_(t/deftest render-song-test
   (t/testing "When rendering the song, returns the title and content"
-    (let [bracha (dsl/bracha title song)
-          hiccup-rep (dsl/render-haggadah bracha)]
+    (let [song (dsl/song "Ki lo nae" "כִּי לוֹ נָאֶה, כִּי לוֹ יָאֶה. אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו")
+          expected (dsl/render-haggadah song)]
       (t/is (= expected-bracha hiccup-rep)))))
 
 (def haggadah-with-table
