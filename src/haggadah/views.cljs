@@ -199,7 +199,37 @@
                                                                                          %])
                               :id "submit"} "Create"]]]]]]]))
 
+(def table
+   [:div
+    [:div.has-text-centered.is-size-3.pb-2 ""]
+    [:div.pt-3
+     [:div.has-text-centered.pb-4.is-size-5 "The four questions"]
+     [:table.is-bordered.is-flex.is-justify-content-center.table
+      [:tbody
+       [:tr
+        [:td "Ma nishtaná halaila azé micol aleilot?"]
+        [:td "מַה נִּשְׁתַּנָּה הַלַּיְלָה הַזֶּה מִכָּל הַלֵּילוֹת"]]]]]])
 
+(def song
+  [:div
+   [:div.has-text-centered.is-size-3.pb-2 ""]
+   [:div.pt-3
+    [:div.has-text-centered.is-size-5.pb-3 "Ha Lachma Anya"]
+    [:div.has-text-right.is-size-5 "הָא לַחְמָא עַנְיָא דִּי אֲכָלוּ אַבְהָתָנָא בְאַרְעָא דְמִצְרָיִם. כָּל דִכְפִין יֵיתֵי וְיֵיכֹל, כָּל דִצְרִיךְ יֵיתֵי וְיִפְסַח. הָשַּׁתָּא הָכָא, לְשָׁנָה הַבָּאָה בְּאַרְעָא דְיִשְׂרָאֵל. הָשַּׁתָּא עַבְדֵי, לְשָׁנָה הַבָּאָה בְּנֵי חוֹרִין"]]])
+
+(def song-2
+  [:div
+   [:div.has-text-centered.is-size-3.pb-2 ""]
+   [:div.pt-3
+    [:div.has-text-centered.is-size-5.pb-3 "We Were slaves in Egypt"]
+    [:div.has-text-right.is-size-5 "עֲבָדִים הָיִינוּ לְפַרְעֹה בְּמִצְרָיִם, וַיּוֹצִיאֵנוּ ה' אֱלֹהֵינוּ מִשָּׁם בְּיָד חֲזָקָה וּבִזְרֹעַ נְטוּיָה."]]])
+
+(def section
+ [:div
+  [:div.has-text-centered.has-text-weight-bold.is-size-4 "Magid"]
+  song
+  table
+  song-2])
 
 
 (defn haggadah-view-panel
@@ -207,7 +237,7 @@
   [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:section.container.is-flex
-       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} text ]])])
+       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} section #_text ]])])
 
 (defn about-panel
   []

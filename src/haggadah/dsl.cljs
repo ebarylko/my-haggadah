@@ -43,6 +43,20 @@
   {:content
    {:subsection {:title title :content (make-subsection content)}}})
 
+(defn make-section
+  "Pre: takes the content for a section
+  Post: returns the content joined together in a single map"
+  [content]
+  (reduce conj {} content))
+
+
+(defn create-haggadah-with-section
+  "Pre: takes a section title and content
+  Post: returns a Haggadah with a section within"
+  [title content]
+  {:content
+   {:section {:title title :subsections (make-section content)}}})
+
 (defn render-bracha
   "Pre: takes a title and content for a bracha
   Post: returns a hiccup representation of the bracha"
@@ -98,13 +112,22 @@
          [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 title]]
         (map haggadah->hiccup content)))
 
+(defn render-section
+  "Pre: takes the title of a section and its subsections
+  Post: returns the hiccup representation of the section"
+  [title subsections]
+  (into [:div
+         [:div.has-text-centered.has-text-weight-bold.is-size-4.pb-2 title]]
+        (map haggadah->hiccup subsections)))
+
 (defn haggadah->hiccup
-  [[k {:keys [title content]}]]
+  [[k {:keys [title content subsections]}]]
   (case k
     :bracha (render-bracha title content)
     :song (render-song title content)
     :table (render-table title content)
     :subsection (render-subsec title content)
+    :section (render-section title subsections)
     :else [:div]))
 
 

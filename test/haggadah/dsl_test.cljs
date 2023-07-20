@@ -80,12 +80,26 @@
       (t/is (= haggadah-with-subsection hiccup-rep)))))
 
 
+(def haggadah-with-section
+  )
+
+(def ma-nishtana-content
+  [["Ma nishtaná halaila azé micol aleilot?" "?מַה נִּשְׁתַּנָּה הַלַּיְלָה הַזֶּה מִכָּל הַלֵּילוֹת"]
+   ["Shevejol haleilot anu ojlim jametz umatzá, halaila azé culó matzá" "שֶׁבְּכָל הַלֵּילוֹת אָנוּ אוֹכְלִין חָמֵץ וּמַצָּה, הַלַּיְלָה הַזֶּה - כּוּלוֹ מַצָּה"]
+   ["Shevejol haleilot anu shear ierakot, halaila azé maror" "שֶׁבְּכָל הַלֵּילוֹת אָנוּ אוֹכְלִין שְׁאָר יְרָקוֹת - הַלַּיְלָה הַזֶּה מָרוֹר"]])
 
 #_(t/deftest haggadah-with-section-test
   (t/testing "When the user creates a Haggadah with a section and the Haggadah is parsed, the correct hiccup representation of the Haggadah is returned"
-    (let [
-          section-title "Magid"
-          section-content
+    (let [section-title "Magid"
+          first-song-title "Ha Lachma Anya" 
+          first-song-content "הָא לַחְמָא עַנְיָא דִּי אֲכָלוּ אַבְהָתָנָא בְאַרְעָא דְמִצְרָיִם. כָּל דִכְפִין יֵיתֵי וְיֵיכֹל, כָּל דִצְרִיךְ יֵיתֵי וְיִפְסַח. הָשַּׁתָּא הָכָא, לְשָׁנָה הַבָּאָה בְּאַרְעָא דְיִשְׂרָאֵל. הָשַּׁתָּא עַבְדֵי, לְשָׁנָה הַבָּאָה בְּנֵי חוֹרִין"
+          table-title "The Four Questions" 
+          table-content ma-nishtana-content
+          second-song-title "We Were Slaves in Egypt"
+          second-song-content "עֲבָדִים הָיִינוּ לְפַרְעֹה בְּמִצְרָיִם, וַיּוֹצִיאֵנוּ ה' אֱלֹהֵינוּ מִשָּׁם בְּיָד חֲזָקָה וּבִזְרֹעַ נְטוּיָה."
+          section-content [{:subsection {:title "" :content {:song {:title song-title :content song-content}}}}
+                           {:subsection {:title "" :content {:table {:title table-title :content table-content}}}}
+                           {:subsection {:title "" :content {:song {:title second-song-title :content second-song-content}}}}]
           haggadah (dsl/create-haggadah-with-section section-title section-content)
           hiccup-rep (dsl/parse-haggadah (:content haggadah))]
       (t/is (= haggadah-with-section hiccup-rep)))
