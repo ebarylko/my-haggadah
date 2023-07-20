@@ -20,6 +20,9 @@
   [title & rows]
   {:type :table :title title :rows rows})
 
+(defn subsection
+  [title & content]
+  {:type :subsection :title title :content content})
 
 (defn create-haggadah
   "Pre: takes a bracha B
@@ -145,12 +148,16 @@
    [:div.title title]
    [:div.text text]])
 
-
 (defmethod render-haggadah :table [{:keys [title rows]}]
   [:div.table.is-bordered
    [:div.title title]
    [:table.table.table-content
     (apply merge [:tbody] rows)]])
+
+(defmethod render-haggadah :subsection [{:keys [title content]}]
+  (apply merge
+   [:div.subsection [:div.title title]]
+   (map render-haggadah content)))
 
 
 (defn haggadah->hiccup

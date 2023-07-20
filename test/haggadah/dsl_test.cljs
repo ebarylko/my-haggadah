@@ -71,12 +71,8 @@
                     [:div.title "Las Diez Plagas"]
                     [:table.table.table-content
                      [:tbody
-                      [:tr
-                       [:td "Sangre"]
-                       [:td "דָּם"]]
-                      [:tr  
-                       [:td "Ranas"]
-                       [:td "צְפַרְדֵּעַ"]]]]]]
+                      [:tr [:td "Sangre"] [:td "דָּם"]]
+                      [:tr [:td "Ranas"] [:td "צְפַרְדֵּעַ"]]]]]]
       (t/is (= expected (dsl/render-haggadah table))))))
 
 ;; (def subsection-title "Subsection")
@@ -92,11 +88,20 @@
 ;;    {:table {:title table-title :content table-content}}])
 
 
-#_(t/deftest haggadah-with-subsection-test
-  (t/testing "When the user creates a Haggadah with a subsection and the Haggadah is parsed, the correct hiccup representation of the Haggadah is returned"
-    (let [haggadah (dsl/create-haggadah-with-subsection subsection-title subsection-content)
-          hiccup-rep (dsl/parse-haggadah (:content haggadah))]
-      (t/is (= haggadah-with-subsection hiccup-rep)))))
+#_(t/deftest render-subsection-test
+  (t/testing "When a section is rendered the title and subsections within are shown"
+    (let [subsection (dsl/subsection "Subsection"
+                                     (dsl/song "Song title" "Song content")
+                                     (dsl/bracha "Bracha title" "Bracha content"))
+          expected [:div.subsection
+                    [:div.title title]
+                    [:div.song
+                     [:div.title "Song title" ]
+                     [:div.text "Song content"]]
+                    [:div.bracha
+                     [:div.title "Bracha"]
+                     [:div.text "Bracha content"]]]]
+      (t/is (= expected subsection)))))
 
 
 (def ma-nishtana-content
