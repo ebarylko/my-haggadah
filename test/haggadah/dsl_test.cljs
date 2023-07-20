@@ -62,14 +62,14 @@
 
 ;; (def table-title "Las Diez Plagas")
 
-#_(t/deftest render-table-test
+(t/deftest render-table-test
   (t/testing "When rendering the table, each row and the content within is returned"
     (let [table (dsl/table "Las Diez Plagas" 
-                             (dsl/row ["Sangre" "דָּם"])
-                             (dsl/row ["Ranas" "צְפַרְדֵּעַ"]))
-          expected [:div.table
+                           (dsl/row ["Sangre" "דָּם"])
+                           (dsl/row ["Ranas" "צְפַרְדֵּעַ"]))
+          expected [:div.table.is-bordered
                     [:div.title "Las Diez Plagas"]
-                    [:table.is-justify-content-center.table
+                    [:table.table.table-content
                      [:tbody
                       [:tr
                        [:td "Sangre"]
