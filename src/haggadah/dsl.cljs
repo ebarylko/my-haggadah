@@ -140,17 +140,17 @@
 
 (defmethod render-haggadah :bracha [{:keys [title text]}]
   [:div.bracha
-   [:div.title title]
+   [:div.secondary-title title]
    [:div.text text]])
 
 (defmethod render-haggadah :song [{:keys [title text]}]
   [:div.song
-   [:div.title title]
+   [:div.secondary-title title]
    [:div.text text]])
 
 (defmethod render-haggadah :table [{:keys [title rows]}]
   [:div.table.is-bordered
-   [:div.title title]
+   [:div.secondary-title title]
    [:table.table.table-content
     (apply merge [:tbody] rows)]])
 
