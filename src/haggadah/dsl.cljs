@@ -1,69 +1,26 @@
 (ns haggadah.dsl)
 
+(defn bracha
+  [title text]
+  {:type :bracha :title title :text text})
+
 
 (defn create-haggadah
   "Pre: takes a bracha B
   Post: returns a Haggadah with bracha B"
-  [title bracha]
-  {:content 
-   {:bracha {:title title :content bracha }}})
-
-;; Bracha tiene contenido y un titulo por ahora
-
-(def bracha "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
-
-(defonce haggadah
-  (create-haggadah "Wine" bracha))
-
-
-(defn create-haggadah-with-song
-  "Pre: takes a song and its title
-  Post: returns a Haggadah with song and title passed within"
-  [title song]
-  {:content 
-   {:song {:title title :content song}}})
-  
-(defn create-haggadah-with-table
-  "Pre: takes the title of a table and its content
-  Post: returns a Haggadah with a table within"
-  [title table]
-  {:content
-   {:table {:title title :content table }}})
-
-(defn make-subsection
-  "Pre: takes a collection of items to include in the subsection
-  Post: returns a subsection with the collection of items within"
-  [coll]
-  (apply conj {} coll))
-
-(defn create-haggadah-with-subsection
-  "Pre: takes a subsection title and content
-  Post: returns a Haggadah with a subsection within"
   [title content]
-  {:content
-   {:subsection {:title title :content (make-subsection content)}}})
+  {:content content :title title})
 
-(defn make-section
-  "Pre: takes the content for a section
-  Post: returns the content joined together in a single map"
-  [content]
-  (reduce conj {} content))
-
-
-(defn create-haggadah-with-section
-  "Pre: takes a section title and content
-  Post: returns a Haggadah with a section within"
-  [title content]
-  {:content
-   {:section {:title title :subsections (make-section content)}}})
+(def default-haggadah
+  (create-haggadah "Default-haggadah" (bracha "Wine" "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")))
 
 (defn render-bracha
   "Pre: takes a title and content for a bracha
   Post: returns a hiccup representation of the bracha"
   [title content]
-  [:div.pt-3
-   [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 {:data-testid :bracha-title} title]
-   [:div.has-text-right.is-size-5 {:data-testid :bracha-content} content]])
+  [:div.bracha
+   [:div.title.has-text-centered.has-text-weight-bold.is-size-3.pb-2 {:data-testid :bracha-title} title]
+   [:div.content.has-text-right.is-size-5 {:data-testid :bracha-content} content]])
 
 (defn render-song
   "Pre: takes a title and content for a song
@@ -120,8 +77,59 @@
          [:div.has-text-centered.has-text-weight-bold.is-size-4.pb-2 title]]
         (map haggadah->hiccup subsections)))
 
+(defn haggadaah
+  [title & content]
+  {:type :haggadah :title title :content content})
+
+(defn section
+  [title & content]
+  {:type :section :title title :content content})
+
+
+
+
+(defn table
+  [title & rows]
+  )
+
+;; (dsl/hagaddah
+;;  "The best Hagadda"
+;;  (dsl/section
+;;   "Introduction"
+;;   (dsl/song ...)
+;;   (dsl/bracha ...)
+;;   (dsl/table "Ten Commandments"
+;;              (dsl/row "dam" "blood" "dam")))
+;;  (dsl/section
+;;   "Birkat"
+;;   (dsl/brachaa ...)
+;;   (dsl/text ....)))
+
+
+(defn render-content
+  "Pre: takes a Haggadah
+  Post: returns the hiccup representation of the Haggadah"
+  [{:keys [content]}]
+  (->> content
+       (map haggadah->hiccup)
+       first))
+
+(defmulti render-haggadah :type)
+
+(defmethod render-haggadah :haggadah [{:keys [title content]}]
+  [:div.haggadah
+   [:div.title title]
+   [:div.content
+    (map render-content content)]])
+
+(defmethod render-haggadah :bracha [{:keys [title text]}]
+  [:div.bracha
+   [:div.title {:data-testid :bracha-title} title]
+   [:div.text {:data-testid :bracha-content} text]])
+
 (defn haggadah->hiccup
-  [[k {:keys [title content subsections]}]]
+  [{:keys [type]}
+   [k {:keys [title content subsections]}]]
   (case k
     :bracha (render-bracha title content)
     :song (render-song title content)
@@ -129,14 +137,4 @@
     :subsection (render-subsec title content)
     :section (render-section title subsections)
     :else [:div]))
-
-
-(defn parse-haggadah
-  "Pre: takes a Haggadah
-  Post: returns the same Haggadah represented in hiccup"
-  [content]
-  (->> content
-       (map haggadah->hiccup)
-       first))
-
 

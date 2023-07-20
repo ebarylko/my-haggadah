@@ -37,7 +37,11 @@
   [:form {:background form-background}]
   [:.page {:background page-background
            :width :100%}]
-  )
+  [:.title {:font-size :2rem
+            :font-weight :normal
+            :text-align :center}]
+  [:.text {:text-align :right
+           :font-size :1.25rem}])
 
 (defclass header
   []

@@ -133,7 +133,7 @@
  ::add-haggadah
  (fn [{:keys [db]} [_ title]]
    {::add-haggadah! {:path ["users" (:uid db) "haggadot"]
-                     :haggadah (assoc dsl/haggadah :title title :createdAt (js/Date.))
+                     :haggadah (assoc dsl/default-haggadah :title title :createdAt (js/Date.))
                      :on-success (re-frame/dispatch [::push-state :haggadah-success])
                      :on-error (keyword->func ::error)}}))
 
@@ -179,7 +179,7 @@
               (. data)
               (js->clj :keywordize-keys true)
               (:content)
-              dsl/parse-haggadah))))
+              dsl/render-haggadah))))
 
 (re-frame/reg-event-db
  ::edit-haggadah

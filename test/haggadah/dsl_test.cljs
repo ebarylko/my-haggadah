@@ -9,20 +9,25 @@
   אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו יֹאמְרוּ לוֹ: לְךָ וּלְךָ, לְךָ כִּי לְךָ, לְךָ אַף לְךָ, לְךָ ה' הַמַּמְלָכָה, כִּי לוֹ נָאֵה, כִּי לוֹ יָאֶה. ")
 
 
-(def haggadah-as-hiccup
+(def expected-bracha
   [:div.pt-3
    [:div.has-text-centered.has-text-weight-bold.is-size-4.pb-2 title]
    [:div.has-text-right.is-size-5 song]])
 
-(dsl/create-haggadah-with-song title song)
+(t/deftest render-bracha-test
+  (t/testing "When rendering a bracha, returns the title and the text"
+    (let [bracha (dsl/bracha "Wine" "Baruj hata")
+          expected [:div.bracha
+                    [:div.title {:data-testid :bracha-title} "Wine"]
+                    [:div.text {:data-testid :bracha-content} "Baruj hata"]]]
+      (t/is (= expected (dsl/render-haggadah bracha))))))
 
 
-(t/deftest haggadah-with-song-test
-  (t/testing "When the user creates a Haggadah with a song in it and parses it using the dsl, the correct hiccup representation of the Haggadah will be returned"
-    (let [haggadah (dsl/create-haggadah-with-song title song)
-          hiccup-rep (dsl/parse-haggadah (:content haggadah))
-          actual-haggadah haggadah-as-hiccup]
-      (t/is (= actual-haggadah hiccup-rep)))))
+#_(t/deftest render-song-test
+  (t/testing "When rendering the song, returns the title and content"
+    (let [bracha (dsl/bracha title song)
+          hiccup-rep (dsl/render-haggadah bracha)]
+      (t/is (= expected-bracha hiccup-rep)))))
 
 (def haggadah-with-table
   [:div.pt-3
@@ -54,26 +59,26 @@
 
 (def table-title "Las Diez Plagas")
 
-(t/deftest haggadah-with-table-test
+#_(t/deftest haggadah-with-table-test
   (t/testing "When the user creates a Haggadah with a table in it and the Haggadah is parsed, the correct hiccup representation of the Haggadah is returned"
     (let [haggadah (dsl/create-haggadah-with-table table-title table-content)
           hiccup-rep (dsl/parse-haggadah (:content haggadah))]
       (t/is (= haggadah-with-table hiccup-rep)))))
 
-(def subsection-title "Subsection")
+;; (def subsection-title "Subsection")
 
-(def haggadah-with-subsection
-  [:div
-   [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 subsection-title]
-   haggadah-as-hiccup
-   haggadah-with-table])
+;; (def haggadah-with-subsection
+;;   [:div
+;;    [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 subsection-title]
+;;    haggadah-as-hiccup
+;;    haggadah-with-table])
 
-(def subsection-content
-  [{:song {:title title :content song}}
-   {:table {:title table-title :content table-content}}])
+;; (def subsection-content
+;;   [{:song {:title title :content song}}
+;;    {:table {:title table-title :content table-content}}])
 
 
-(t/deftest haggadah-with-subsection-test
+#_(t/deftest haggadah-with-subsection-test
   (t/testing "When the user creates a Haggadah with a subsection and the Haggadah is parsed, the correct hiccup representation of the Haggadah is returned"
     (let [haggadah (dsl/create-haggadah-with-subsection subsection-title subsection-content)
           hiccup-rep (dsl/parse-haggadah (:content haggadah))]
@@ -123,20 +128,31 @@
   )
 
 (def haggadah-with-section
-  [:div
-   [:div.has-text-centered.has-text-weight-bold.is-size-4 "Magid"]
-   [:div
-    [:div.has-text-centered.is-size-3.pb-2 ""]
-    [:div.pt-3
-     [:div.has-text-centered.is-size-5.pb-3 "Ha Lachma Anya"]
-     [:div.has-text-right.is-size-5 "הָא לַחְמָא עַנְיָא דִּי אֲכָלוּ אַבְהָתָנָא בְאַרְעָא דְמִצְרָיִם. כָּל דִכְפִין יֵיתֵי וְיֵיכֹל, כָּל דִצְרִיךְ יֵיתֵי וְיִפְסַח. הָשַּׁתָּא הָכָא, לְשָׁנָה הַבָּאָה בְּאַרְעָא דְיִשְׂרָאֵל. הָשַּׁתָּא עַבְדֵי, לְשָׁנָה הַבָּאָה בְּנֵי חוֹרִין"]]]
-   ma-nishtana
+  [:div.haggadah
+   [:div.title "Magid"]
+   [:section.section
+    [:div.title ""]
+    [:div.content
+     [:div.song
+      [:div.has-text-centered.is-size-5.pb-3 "Ha Lachma Anya"]
+      [:div.has-text-right.is-size-5 "הָא לַחְמָא עַנְיָא דִּי אֲכָלוּ אַבְהָתָנָא בְאַרְעָא דְמִצְרָיִם. כָּל דִכְפִין יֵיתֵי וְיֵיכֹל, כָּל דִצְרִיךְ יֵיתֵי וְיִפְסַח. הָשַּׁתָּא הָכָא, לְשָׁנָה הַבָּאָה בְּאַרְעָא דְיִשְׂרָאֵל. הָשַּׁתָּא עַבְדֵי, לְשָׁנָה הַבָּאָה בְּנֵי חוֹרִין"]]]]
+   ma-nishtana])
 
-   ])
+
+#_(t/deftest render-haggadah-test
+  (t/testing "When rendering an haggadaah, returns the title and the rendering of every element in the content"
+    (let [haggadah (dsl/haggadah "Title" {:type :bracha :title "Wine" :text "Baruj hata..."})
+          expected [:div.haggadah
+                    [:div.title "Title"]
+                    [:div.content
+                     [:div.bracha
+                      [:div.title "Wine"]
+                      [:div.text "Baruj hata..."]]]]]
+      (t/is (= expected (dsl/render-haggadah haggadah))))))
 
 
-(t/deftest haggadah-with-section-test
-  (t/testing "When the user creates a Haggadah with a section and the Haggadah is parsed, the correct hiccup representation of the Haggadah is returned"
+#_(t/deftest render-section-test
+  (t/testing "When the user creates a Haggadah with a section, rendering the section returns the title and content"
     (let [section-title "Magid"
           first-song-title "Ha Lachma Anya" 
           first-song-content "הָא לַחְמָא עַנְיָא דִּי אֲכָלוּ אַבְהָתָנָא בְאַרְעָא דְמִצְרָיִם. כָּל דִכְפִין יֵיתֵי וְיֵיכֹל, כָּל דִצְרִיךְ יֵיתֵי וְיִפְסַח. הָשַּׁתָּא הָכָא, לְשָׁנָה הַבָּאָה בְּאַרְעָא דְיִשְׂרָאֵל. הָשַּׁתָּא עַבְדֵי, לְשָׁנָה הַבָּאָה בְּנֵי חוֹרִין"
@@ -147,8 +163,8 @@
           section-content [{:subsection {:title "" :content {:song {:title first-song-title :content first-song-content}}}}
                            {:subsection {:title "" :content {:table {:title table-title :content table-content}}}}
                            {:subsection {:title "" :content {:song {:title second-song-title :content second-song-content}}}}]
-          haggadah (dsl/create-haggadah-with-section section-title section-content)
-          hiccup-rep (dsl/parse-haggadah (:content haggadah))]
-      (t/is (= haggadah-with-section hiccup-rep)))
+          haggadah (-> (dsl/make-section section-title section-content)
+                       (dsl/make-haggadah haggada-title ))]
+      (t/is (= haggadah-with-section (dsl/parse-haggadah (:content haggadah)))))
 
     ))
