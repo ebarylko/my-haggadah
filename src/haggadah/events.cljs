@@ -84,7 +84,7 @@
  ::fetch-haggadah
  (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
    (let [id (get-in db [:current-route :path-params :id])]
-     (println "The id is " id)
+     (println "The id is " id "UId " (:uid db))
      (when (:uid db)
        {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
                      :on-success (keyword->func on-success)
@@ -140,6 +140,7 @@
 (re-frame/reg-fx
  ::add-haggadah!
  (fn [{:keys [path haggadah on-success on-error]}]
+   (println "Here is the path to add a haggadah" path)
    (-> (firestore/instance)
        (fire/collection (clojure.string/join "/" path))
        (fire/addDoc (clj->js haggadah))
@@ -174,11 +175,14 @@
 (re-frame/reg-event-db
  ::set-haggadah
  (fn [db [_ snap]]
+   (println "the haggadah " (-> snap
+                                (. data)
+                                (js->clj :keywordize-keys true)
+                                dsl/render-haggadah))
    (assoc db :haggadah-text
           (-> snap
               (. data)
               (js->clj :keywordize-keys true)
-              (:content)
               dsl/render-haggadah))))
 
 (re-frame/reg-event-db

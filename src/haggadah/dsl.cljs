@@ -20,14 +20,14 @@
   [title & rows]
   {:type :table :title title :rows rows})
 
-(defn create-haggadah
-  "Pre: takes a bracha B
-  Post: returns a Haggadah with bracha B"
-  [title content]
-  {:content content :title title})
+(defn haggadah
+  "Pre: takes a title and conotent for a Haggadah
+  Post: returns a model of Haggadah with the same content and title"
+  [title & content]
+  {:type :haggadah :content content :title title})
 
 (def default-haggadah
-  (create-haggadah "Default-haggadah" (bracha "Wine" "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")))
+  (haggadah "Default-haggadah" (bracha "Wine" "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")))
 
 (defn render-bracha
   "Pre: takes a title and content for a bracha
@@ -126,7 +126,11 @@
        (map haggadah->hiccup)
        first))
 
-(defmulti render-haggadah :type)
+(defmulti render-haggadah (comp keyword :type ))
+
+(defmethod render-haggadah :default [args]
+  [:div
+   [:div "What did you pass me? " (keyword? (:type args) )]])
 
 (defmethod render-haggadah :haggadah [{:keys [title content]}]
   [:div.haggadah
