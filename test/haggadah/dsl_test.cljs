@@ -5,7 +5,7 @@
 (def bracha (dsl/bracha "Wine" "Baruj hata"))
 (def expected-bracha
   [:div.bracha
-   [:div.secondary-title  "Wine"]
+   [:div.title  "Wine"]
    [:div.text  "Baruj hata"]])
 
 (t/deftest render-bracha-test
@@ -17,7 +17,7 @@
   (t/testing "When rendering the song, returns the title and content"
     (let [song (dsl/song "Ki lo nae" "כִּי לוֹ נָאֶה, כִּי לוֹ יָאֶה. אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו")
           expected [:div.song
-                    [:div.secondary-title "Ki lo nae" ]
+                    [:div.title "Ki lo nae" ]
                     [:div.text "כִּי לוֹ נָאֶה, כִּי לוֹ יָאֶה. אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו"]]]
       (t/is (= expected (dsl/render-haggadah song))))))
 
@@ -27,7 +27,7 @@
                            (dsl/row ["Sangre" "דָּם"])
                            (dsl/row ["Ranas" "צְפַרְדֵּעַ"]))
           expected [:div.table.is-bordered
-                    [:div.secondary-title "Las Diez Plagas"]
+                    [:div.title "Las Diez Plagas"]
                     [:table.table.table-content
                      [:tbody
                       [:tr [:td "Sangre"] [:td "דָּם"]]
@@ -87,16 +87,6 @@
    ma-nishtana])
 
 
-#_(t/deftest render-haggadah-test
-  (t/testing "When rendering an haggadaah the title and subsections are returned"
-    (let [haggadah (dsl/haggadah "Title" {:type :bracha :title "Wine" :text "Baruj hata..."})
-          expected [:div.haggadah
-                    [:div.title "Title"]
-                    [:div.content
-                     [:div.bracha
-                      [:div.title "Wine"]
-                      [:div.text "Baruj hata..."]]]]]
-      (t/is (= expected (dsl/render-haggadah haggadah))))))
 
 (def expected-section
   [:div.section

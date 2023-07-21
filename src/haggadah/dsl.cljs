@@ -20,7 +20,6 @@
   [title & rows]
   {:type :table :title title :rows rows})
 
-
 (defn create-haggadah
   "Pre: takes a bracha B
   Post: returns a Haggadah with bracha B"
@@ -137,23 +136,23 @@
 
 (defmethod render-haggadah :bracha [{:keys [title text]}]
   [:div.bracha
-   [:div.secondary-title title]
+   [:div.title title]
    [:div.text text]])
 
 (defmethod render-haggadah :song [{:keys [title text]}]
   [:div.song
-   [:div.secondary-title title]
+   [:div.title title]
    [:div.text text]])
 
 (defmethod render-haggadah :table [{:keys [title rows]}]
   [:div.table.is-bordered
-   [:div.secondary-title title]
+   [:div.title title]
    [:table.table.table-content
-    (apply merge [:tbody] rows)]])
+    (apply conj [:tbody] rows)]])
 
 
 (defmethod render-haggadah :section [{:keys [title content]}]
-  (apply merge
+  (apply conj
    [:div.section
     [:div.title title]]
     (map render-haggadah content)))

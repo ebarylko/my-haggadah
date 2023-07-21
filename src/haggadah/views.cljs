@@ -237,10 +237,6 @@
              (dsl/row ["Sangre" "דָּם"])
              (dsl/row ["Ranas" "צְפַרְדֵּעַ"])))
 
-(def subsection
-  (dsl/subsection "Subsection"
-                  (dsl/song "Song title" "Song content")
-                  (dsl/bracha "Bracha title" "Bracha content")))
 
 
 (defn haggadah-view-panel
@@ -248,7 +244,7 @@
   [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:section.container.is-flex
-       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} (dsl/render-haggadah subsection )#_text ]])])
+       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} text ]])])
 
 (defn about-panel
   []

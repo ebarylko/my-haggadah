@@ -39,10 +39,8 @@
            :width :100%}]
   [:.title {:font-size :2rem
             :font-weight :normal
-            :text-align :center}]
-  [:.secondary-title {:font-size :1.7rem
-                      :font-weight :normal
-                      :text-align :center}]
+            :text-align :center}
+   [:.title {:font-size :1.7rem}]]
   [:.text {:text-align :right
            :font-size :1.25rem}]
   [:.table-content
