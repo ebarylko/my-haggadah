@@ -159,6 +159,11 @@
    [:div.subsection [:div.title title]]
    (map render-haggadah content)))
 
+(defmethod render-haggadah :section [{:keys [title content]}]
+  (apply merge
+   [:div.section
+    [:div.title title]]
+    (map render-haggadah content)))
 
 (defn haggadah->hiccup
   [{:keys [type]}
