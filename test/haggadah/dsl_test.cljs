@@ -2,13 +2,15 @@
   (:require [haggadah.dsl :as dsl]
             [cljs.test :as t :include-macros true]))
 
+(def bracha (dsl/bracha "Wine" "Baruj hata"))
+(def expected-bracha
+  [:div.bracha
+   [:div.secondary-title  "Wine"]
+   [:div.text  "Baruj hata"]])
+
 (t/deftest render-bracha-test
   (t/testing "When rendering a bracha, returns the title and the text"
-    (let [bracha (dsl/bracha "Wine" "Baruj hata")
-          expected [:div.bracha
-                    [:div.secondary-title  "Wine"]
-                    [:div.text  "Baruj hata"]]]
-      (t/is (= expected (dsl/render-haggadah bracha))))))
+    (t/is (= expected-bracha (dsl/render-haggadah bracha)))))
 
 
 (t/deftest render-song-test
@@ -31,21 +33,6 @@
                       [:tr [:td "Sangre"] [:td "דָּם"]]
                       [:tr [:td "Ranas"] [:td "צְפַרְדֵּעַ"]]]]]]
       (t/is (= expected (dsl/render-haggadah table))))))
-
-(t/deftest render-subsection-test
-  (t/testing "When a subsection is rendered the title and content within are returned"
-    (let [subsection (dsl/subsection "Subsection"
-                                     (dsl/song "Song title" "Song content")
-                                     (dsl/bracha "Bracha title" "Bracha content"))
-          expected [:div.subsection
-                    [:div.title "Subsection"]
-                    [:div.song
-                     [:div.secondary-title "Song title" ]
-                     [:div.text "Song content"]]
-                    [:div.bracha
-                     [:div.secondary-title "Bracha title"]
-                     [:div.text "Bracha content"]]]]
-      (t/is (= expected (dsl/render-haggadah subsection))))))
 
 
 (def ma-nishtana-content
@@ -114,22 +101,11 @@
 (def expected-section
   [:div.section
    [:div.title "Magid"]
-   [:div.song
-    [:div.secondary-title "Ki lo nae" ]
-    [:div.text "כִּי לוֹ נָאֶה, כִּי לוֹ יָאֶה. אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו"]] 
-  ])
-  
+   expected-bracha])
 
-#_(t/deftest render-section-test
+
+(def section (dsl/section "Magid" bracha))
+
+(t/deftest render-section-test
     (t/testing "When rendering a section the title and subsections are returned"
-      (let [section (dsl/section "Magid"
-                                 (dsl/subsection ""  (dsl/song "Ha Lachma Anya" "הָא לַחְמָא עַנְיָא דִּי אֲכָלוּ אַבְהָתָנָא בְאַרְעָא דְמִצְרָיִם"))
-                                 (dsl/subsection (dsl/song "We Were Slaves in Egypt" "עֲבָדִים הָיִינוּ לְפַרְעֹה בְּמִצְרָיִם, וַיּוֹצִיאֵנוּ ה' אֱלֹהֵינוּ מִשָּׁם בְּיָד חֲזָקָה וּבִזְרֹעַ נְטוּיָה.")))
-            expected 
-
-            ]
-
-        
-        (t/is (= haggadah-with-section (dsl/parse-haggadah (:content haggadah)))))
-
-      ))
+      (t/is (= expected-section (dsl/render-haggadah section)))))

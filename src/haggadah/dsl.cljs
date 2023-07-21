@@ -20,9 +20,6 @@
   [title & rows]
   {:type :table :title title :rows rows})
 
-(defn subsection
-  [title & content]
-  {:type :subsection :title title :content content})
 
 (defn create-haggadah
   "Pre: takes a bracha B
@@ -154,10 +151,6 @@
    [:table.table.table-content
     (apply merge [:tbody] rows)]])
 
-(defmethod render-haggadah :subsection [{:keys [title content]}]
-  (apply merge
-   [:div.subsection [:div.title title]]
-   (map render-haggadah content)))
 
 (defmethod render-haggadah :section [{:keys [title content]}]
   (apply merge
