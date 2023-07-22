@@ -175,10 +175,7 @@
 (re-frame/reg-event-db
  ::set-haggadah
  (fn [db [_ snap]]
-   (println "the haggadah " (-> snap
-                                (. data)
-                                (js->clj :keywordize-keys true)
-                                dsl/render-haggadah))
+   (.log js/console "\n\nthe Haggadah " (. snap data))
    (assoc db :haggadah-text
           (-> snap
               (. data)

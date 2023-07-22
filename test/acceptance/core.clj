@@ -97,6 +97,7 @@
   "Pre: takes a haggadah and a user
   Post: returns the id of the haggadah created"
   [haggadah user]
+  (println "this is the Haggadah "  (w/stringify-keys (assoc haggadah :createdAt (java.time.Instant/now))))
   (-> (FirestoreClient/getFirestore)
       (.collection "users")
       (.document user)
@@ -104,3 +105,14 @@
       (.add  (w/stringify-keys (assoc haggadah :createdAt (java.time.Instant/now))))
       (.get)
       (.getId)))
+
+(defn haggadah
+  [user id]
+  (-> (FirestoreClient/getFirestore)
+      (.collection "users")
+      (.document user)
+      (.collection "haggadot")
+      (.document id)
+      (.get)
+      (.get)
+      (.getData)))

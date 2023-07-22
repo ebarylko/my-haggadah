@@ -52,13 +52,16 @@
 (defmulti render-haggadah (comp keyword :type ))
 
 (defmethod render-haggadah :default [args]
+  (.log js/console args)
   [:div
-   [:div "What did you pass me? " (keyword? (:type args) )]])
+   [:div "What did you pass me? " (:type args)
+    "Original args " args]])
 
 (defmethod render-haggadah :haggadah [{:keys [title content]}]
   [:div.haggadah
-   [:div.title title]
-   (apply conj [:div.content] (map render-haggadah content))])
+   [:div.title title
+   (apply conj [:div.content] (map render-haggadah content))]]
+  )
 
 (defmethod render-haggadah :bracha [{:keys [title text]}]
   [:div.bracha

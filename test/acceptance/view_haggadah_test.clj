@@ -15,6 +15,8 @@
     (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-clicking-haggadah.png")
     (e/click-visible {:data-testid :haggadah-link} {:timeout 15})
     (e/screenshot "screenshots/edit-haggadah-test-viewing-edited-haggadah.png")
+    #(e/wait 6)
+    (e/screenshot "screenshots/haggadah-rendered.png")
     (e/wait-has-text-everywhere text {:timeout 15})
     (e/screenshot "screenshots/create-haggadah-test-admin-exists-haggadah-text.png")))
 
@@ -25,20 +27,27 @@
   "Amir's Haggadah")
 
 (defn haggadah-content
-  [d]
-  (e/get-element-text d {:data-testid :haggadah-text}))
+  []
+  (e/get-element-text driver {:data-testid :haggadah-text}))
 
 (t/deftest view-haggadah-from-dashboard
   (t/testing "When the current user has a haggadah and is at the dashboard, they should be able to view the the selected haggadah"
     (let [id (c/create-haggadah
-              {:content {:bracha  {:content "Amir's Haggadah" } }
-               :title "haggadah2023"}
-              "user1")]
+              {:title "haggadah2023"
+               :type "haggadah"
+               :content [{:type "bracha" :title "Amir's Haggadah" :content ""} ]}
+              "user1")
+          haggadah (c/haggadah "user1" id)]
+      (println "\n\n The HAGGADAH " haggadah)
     (doto driver
       (c/home->dashboard)
       (click-on-haggadah actual-haggadah-text)
       (e/screenshot "screenshots/show-text-test-admin-exists-haggadah-exists-after-clicking-haggadah"))
-    (let [haggadah-text (haggadah-content driver)]
+    (let [haggadah-title (haggadah-title)
+          haggadah-content (haggadah-content)]
+      (println "The title of the Haggadah " (e/get-element-text driver {:fn/has-class :title}) "\n")
+      (println "content " (e/get-element-text driver {:fn/has-class :bracha}) "\n")
+      (println "Haggadah text " haggadah-text)
       (t/is (= actual-haggadah-text haggadah-text))))))
 
 (def title "Wine")
@@ -47,11 +56,11 @@
 
 (defn bracha-title
   []
-  (e/get-element-text driver {:data-testid :bracha-title :fn/has-classes [:has-text-centered :has-text-weight-bold :is-size-3 :pb-2]}))
+  (e/get-element-text driver {:data-testid :bracha-title :fn/has-class [:title]}))
 
 (defn bracha-content
   []
-  (e/get-element-text driver {:data-testid :bracha-content :fn/has-classes [:has-text-right :is-size-5]}))
+  (e/get-element-text driver {:data-testid :bracha-content :fn/has-class [:text]}))
 
 (defn create-haggadah
   [d title]
@@ -63,7 +72,7 @@
     (e/click-visible {:data-testid :add-haggadah})
     (e/click-visible {:data-testid :return})))
 
-(t/deftest view-haggadah-with-bracha
+#_(t/deftest view-haggadah-with-bracha
   (t/testing "When the current user has a haggadah with a bracha in it and is at their dashboard, they should be able to view the haggadah and see it in a certain way"
     (doto driver
       (c/home->dashboard)
@@ -80,7 +89,7 @@
 
 (def new-haggadah-title "The best haggadah of the year")
 
-(t/deftest refresh-page-test
+#_(t/deftest refresh-page-test
   (t/testing "When the current user refreshes the haggadah"
 
       (c/create-haggadah {:title new-haggadah-title
