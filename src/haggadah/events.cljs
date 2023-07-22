@@ -84,7 +84,6 @@
  ::fetch-haggadah
  (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
    (let [id (get-in db [:current-route :path-params :id])]
-     (println "The id is " id "UId " (:uid db))
      (when (:uid db)
        {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
                      :on-success (keyword->func on-success)

@@ -12,13 +12,8 @@
 (defn click-on-haggadah
   [d text]
   (doto d
-    (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-clicking-haggadah.png")
     (e/click-visible {:data-testid :haggadah-link} {:timeout 15})
-    (e/screenshot "screenshots/edit-haggadah-test-viewing-edited-haggadah.png")
-    #(e/wait 6)
-    (e/screenshot "screenshots/haggadah-rendered.png")
-    (e/wait-has-text-everywhere text {:timeout 15})
-    (e/screenshot "screenshots/create-haggadah-test-admin-exists-haggadah-text.png")))
+    (e/wait-has-text-everywhere text {:timeout 15})))
 
 (def expected-haggadah-title
   "haggadah2023")
@@ -32,26 +27,25 @@
 
 (defn haggadah-content
   []
-  (e/get-element-text driver {:data-testid :haggadah-text}))
+  (e/get-element-text driver {:fn/has-class :content}))
 
 (t/deftest view-haggadah-from-dashboard
   (t/testing "When the current user has a haggadah and is at the dashboard, they should be able to view the the selected haggadah"
     (let [id (c/create-haggadah
               {:title "haggadah2023"
                :type "haggadah"
-               :content [{:type "bracha" :title "Amir's Haggadah" :content ""} ]}
-              "user1")
-          haggadah (c/haggadah "user1" id)]
-    (doto driver
-      (c/home->dashboard)
-      (click-on-haggadah actual-haggadah-text))
-    (let [haggadah-title (haggadah-title)
-          haggadah-content (e/get-element-text driver {:fn/has-class :content})
-          expected-title "haggadah2023"
-          expected-content "Amir's Haggadah"]
-      (t/are [x y] (= x y)
-        expected-title haggadah-title
-        expected-content haggadah-content)))))
+               :content [{:type "bracha" :title "Amir's Haggadah" :text ""} ]}
+              "user1")]
+      (doto driver
+        (c/home->dashboard)
+        (click-on-haggadah actual-haggadah-text))
+      (let [haggadah-title (haggadah-title)
+            haggadah-content (haggadah-content)
+            expected-title "haggadah2023"
+            expected-content "Amir's Haggadah"]
+        (t/are [x y] (= x y)
+          expected-title haggadah-title
+          expected-content haggadah-content)))))
 
 (def title "Wine")
 
@@ -59,11 +53,11 @@
 
 (defn bracha-title
   []
-  (e/get-element-text driver {:data-testid :bracha-title :fn/has-class [:title]}))
+  (e/get-element-text driver {:css "div.bracha>div.title" }))
 
 (defn bracha-content
   []
-  (e/get-element-text driver {:data-testid :bracha-content :fn/has-class [:text]}))
+  (e/get-element-text driver {:css "div.bracha>div.text"}))
 
 (defn create-haggadah
   [d title]
@@ -75,7 +69,7 @@
     (e/click-visible {:data-testid :add-haggadah})
     (e/click-visible {:data-testid :return})))
 
-#_(t/deftest view-haggadah-with-bracha
+(t/deftest view-haggadah-with-bracha
   (t/testing "When the current user has a haggadah with a bracha in it and is at their dashboard, they should be able to view the haggadah and see it in a certain way"
     (doto driver
       (c/home->dashboard)
@@ -88,19 +82,24 @@
         bracha actual-bracha))))
 
 
-(def parsed-haggadah-text  "We begin in Egypt")
 
-(def new-haggadah-title "The best haggadah of the year")
+(def expected-haggadah-title "The best haggadah of the year")
 
-#_(t/deftest refresh-page-test
+(t/deftest refresh-page-test
   (t/testing "When the current user refreshes the haggadah"
-
-      (c/create-haggadah {:title new-haggadah-title
-                          :content {:bracha {:content parsed-haggadah-text}}} "user1")
-      (doto driver
-        (c/home->dashboard)
-        (click-on-haggadah parsed-haggadah-text)
-        (e/refresh)
-        (e/wait-has-text-everywhere parsed-haggadah-text))
-      (let [haggadah-text (haggadah-content driver)]
-        (t/is (= parsed-haggadah-text haggadah-text)))))
+    (c/create-haggadah {:title expected-haggadah-title
+                        :type "haggadah"
+                        :content [{:type "bracha" :text bracha :title title}]}
+                       "user1")
+    (doto driver
+      (c/home->dashboard)
+      (click-on-haggadah bracha)
+      (e/refresh)
+      (e/wait-has-text-everywhere bracha))
+    (let [haggadah-title (haggadah-title)
+          bracha-title (bracha-title)
+          bracha-content (bracha-content)]
+      (t/are [x y] (= x y)
+        expected-haggadah-title haggadah-title
+        bracha bracha-content
+        title bracha-title))))

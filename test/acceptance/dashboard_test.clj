@@ -7,8 +7,6 @@
    com.google.firebase.cloud.FirestoreClient
    com.google.cloud.firestore.Query$Direction))
 
-
-
 (t/use-fixtures :once c/init-firebase)
 (t/use-fixtures :each c/with-screenshot)
 (t/use-fixtures :each c/delete-fs-emulator-data)
@@ -85,12 +83,10 @@
         new-haggadah-title title
         true latest?))))
 
-
 (def haggadot
   [{:content {:bracha  {:content "Amir's Haggadah" } } :title "Third"}
    {:content {:bracha  {:content "Amir's Haggadah" } } :title "Second"}
    {:content {:bracha  {:content "Amir's Haggadah" } } :title "First"}])
-
 
 (defn haggadot-titles
   "Pre: takes a collection of Haggadot

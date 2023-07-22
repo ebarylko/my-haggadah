@@ -89,15 +89,13 @@
     (e/go "http://localhost:5000/")
     (e/click-visible {:data-testid :login})
     (e/click-visible {:data-testid :submit})
-    (e/wait-visible {:data-testid :create-haggadah})
-    (e/screenshot  "screenshots/create-haggadah-test-admin-exists-before-clicking-create.png")))
+    (e/wait-visible {:data-testid :create-haggadah})))
 
 
 (defn create-haggadah
   "Pre: takes a haggadah and a user
   Post: returns the id of the haggadah created"
   [haggadah user]
-  (println "this is the Haggadah "  (w/stringify-keys (assoc haggadah :createdAt (java.time.Instant/now))))
   (-> (FirestoreClient/getFirestore)
       (.collection "users")
       (.document user)
