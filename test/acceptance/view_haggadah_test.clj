@@ -20,11 +20,15 @@
     (e/wait-has-text-everywhere text {:timeout 15})
     (e/screenshot "screenshots/create-haggadah-test-admin-exists-haggadah-text.png")))
 
-(def haggadah-title
+(def expected-haggadah-title
   "haggadah2023")
 
 (def actual-haggadah-text
   "Amir's Haggadah")
+
+(defn haggadah-title
+  []
+  (e/get-element-text driver {:fn/has-class :title}))
 
 (defn haggadah-content
   []
@@ -38,17 +42,16 @@
                :content [{:type "bracha" :title "Amir's Haggadah" :content ""} ]}
               "user1")
           haggadah (c/haggadah "user1" id)]
-      (println "\n\n The HAGGADAH " haggadah)
     (doto driver
       (c/home->dashboard)
-      (click-on-haggadah actual-haggadah-text)
-      (e/screenshot "screenshots/show-text-test-admin-exists-haggadah-exists-after-clicking-haggadah"))
+      (click-on-haggadah actual-haggadah-text))
     (let [haggadah-title (haggadah-title)
-          haggadah-content (haggadah-content)]
-      (println "The title of the Haggadah " (e/get-element-text driver {:fn/has-class :title}) "\n")
-      (println "content " (e/get-element-text driver {:fn/has-class :bracha}) "\n")
-      (println "Haggadah text " haggadah-text)
-      (t/is (= actual-haggadah-text haggadah-text))))))
+          haggadah-content (e/get-element-text driver {:fn/has-class :content})
+          expected-title "haggadah2023"
+          expected-content "Amir's Haggadah"]
+      (t/are [x y] (= x y)
+        expected-title haggadah-title
+        expected-content haggadah-content)))))
 
 (def title "Wine")
 

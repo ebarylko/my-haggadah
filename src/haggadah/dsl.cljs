@@ -59,9 +59,9 @@
 
 (defmethod render-haggadah :haggadah [{:keys [title content]}]
   [:div.haggadah
-   [:div.title title
-   (apply conj [:div.content] (map render-haggadah content))]]
-  )
+   [:div.title title]
+   [:div.title
+    (apply conj [:div.content] (map render-haggadah content))]])
 
 (defmethod render-haggadah :bracha [{:keys [title text]}]
   [:div.bracha
