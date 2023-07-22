@@ -8,8 +8,7 @@
    com.google.cloud.firestore.Query$Direction))
 
 (t/use-fixtures :once c/init-firebase)
-(t/use-fixtures :each c/with-screenshot)
-(t/use-fixtures :each c/delete-fs-emulator-data)
+(t/use-fixtures :each c/with-screenshot c/delete-fs-emulator-data)
 
 (defn open-edit-haggadah
   [d id text]
