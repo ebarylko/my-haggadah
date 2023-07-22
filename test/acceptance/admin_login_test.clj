@@ -1,7 +1,6 @@
 (ns acceptance.admin-login-test
   (:require  [clojure.test :as t]
              [etaoin.api :as e]
-             [etaoin.keys :as k]
              [acceptance.core :as c :refer [driver]])
   (:import com.google.firebase.cloud.FirestoreClient))
 
