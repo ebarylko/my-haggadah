@@ -40,7 +40,7 @@
     (e/click-visible {:data-testid :create-haggadah})
     (e/wait-visible {:data-testid :haggadah-title})
     (e/fill  {:data-testid :haggadah-title} k/home (k/with-shift k/end) k/delete)
-    (e/fill {:data-testid :haggadah-title} title)
+    (e/fill-human {:data-testid :haggadah-title} title {:mistake-prob 0})
     (e/click-visible {:data-testid :add-haggadah})
     (e/click-visible {:data-testid :return})))
 
@@ -73,11 +73,11 @@
   (t/testing "When the current user creates a new Haggadah and goes back to the dashboard, the Haggadah is listed first among the Haggadot and a new Haggadah with the same details is added to firestore"
     (doto driver
       (c/home->dashboard)
-      (create-haggadah new-haggadah-title)
-      (e/screenshot "screenshots/create-haggadah-test-before-getting-haggadot.png"))
+      (create-haggadah new-haggadah-title))
+    (e/wait 5)
     (let [[title id]  (->> (all-haggadot)
-                      first
-                      vals)
+                           first
+                           vals)
           latest? (latest-haggadah? "user1" id )]
       (t/are [x y] (= x y)
         new-haggadah-title title

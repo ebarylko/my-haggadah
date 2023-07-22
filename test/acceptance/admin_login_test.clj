@@ -22,7 +22,6 @@
       (c/home->dashboard)
       (e/wait-has-text-everywhere admin-login-message))
     (let [actual (e/get-element-text driver {:data-testid :user})]
-      (e/screenshot driver "screenshots/message-test-when-the-admin-exists.png")
       (t/is (= admin-login-message actual)))))
 
 

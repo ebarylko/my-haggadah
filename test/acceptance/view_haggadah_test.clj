@@ -81,8 +81,6 @@
         title actual-title
         bracha actual-bracha))))
 
-
-
 (def expected-haggadah-title "The best haggadah of the year")
 
 (t/deftest refresh-page-test
