@@ -103,8 +103,9 @@
     (create-haggadot haggadot "user1")
     (doto driver
       (c/home->dashboard)
-      #(e/wait 9))
-    (let [titles (haggadot-titles (all-haggadot))]
+      #_#(e/wait 9))
+    (let [_ (e/wait 9)
+          titles (haggadot-titles (all-haggadot))]
       (t/is (= ["First" "Second" "Third"] titles)))))
 
 
