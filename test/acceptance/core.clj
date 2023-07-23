@@ -105,6 +105,8 @@
       (.getId)))
 
 (defn haggadah
+  "Pre: takes a user and an id for a Haggadah
+  Post: returns the Haggadah which contains this id in firestore"
   [user id]
   (-> (FirestoreClient/getFirestore)
       (.collection "users")
