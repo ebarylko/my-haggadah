@@ -3,6 +3,7 @@
    [re-frame.core :as re-frame]
    [haggadah.styles :as styles]
    [haggadah.subs :as subs]
+   [haggadah.dsl :as dsl]
    [reitit.frontend.easy :as rfe]
    [haggadah.events :as events]
    [goog.string.format]))
@@ -198,9 +199,6 @@
                                                                                         (form-content "haggadah-title")
                                                                                          %])
                               :id "submit"} "Create"]]]]]]]))
-
-
-
 
 (defn haggadah-view-panel
   []

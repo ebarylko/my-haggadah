@@ -6,40 +6,45 @@
              [etaoin.keys :as k]))
 
 (t/use-fixtures :once c/init-firebase)
-(t/use-fixtures :each c/with-screenshot)
-(t/use-fixtures :each c/delete-fs-emulator-data)
+(t/use-fixtures :each c/with-screenshot c/delete-fs-emulator-data)
 
 (defn click-on-haggadah
   [d text]
   (doto d
-    (e/screenshot "screenshots/create-haggadah-test-admin-exists-before-clicking-haggadah.png")
     (e/click-visible {:data-testid :haggadah-link} {:timeout 15})
-    (e/screenshot "screenshots/edit-haggadah-test-viewing-edited-haggadah.png")
-    (e/wait-has-text-everywhere text {:timeout 15})
-    (e/screenshot "screenshots/create-haggadah-test-admin-exists-haggadah-text.png")))
+    (e/wait-has-text-everywhere text {:timeout 15})))
 
-(def haggadah-title
+(def expected-haggadah-title
   "haggadah2023")
 
 (def actual-haggadah-text
   "Amir's Haggadah")
 
+(defn haggadah-title
+  []
+  (e/get-element-text driver {:fn/has-class :title}))
+
 (defn haggadah-content
-  [d]
-  (e/get-element-text d {:data-testid :haggadah-text}))
+  []
+  (e/get-element-text driver {:fn/has-class :content}))
 
 (t/deftest view-haggadah-from-dashboard
   (t/testing "When the current user has a haggadah and is at the dashboard, they should be able to view the the selected haggadah"
-    (let [id (c/create-haggadah
-              {:content {:bracha  {:content "Amir's Haggadah" } }
-               :title "haggadah2023"}
+    (let [id (c/fs-store-haggadah
+              {:title "haggadah2023"
+               :type "haggadah"
+               :content [{:type "bracha" :title "Amir's Haggadah" :text ""} ]}
               "user1")]
-    (doto driver
-      (c/home->dashboard)
-      (click-on-haggadah actual-haggadah-text)
-      (e/screenshot "screenshots/show-text-test-admin-exists-haggadah-exists-after-clicking-haggadah"))
-    (let [haggadah-text (haggadah-content driver)]
-      (t/is (= actual-haggadah-text haggadah-text))))))
+      (doto driver
+        (c/home->dashboard)
+        (click-on-haggadah actual-haggadah-text))
+      (let [haggadah-title (haggadah-title)
+            haggadah-content (haggadah-content)
+            expected-title "haggadah2023"
+            expected-content "Amir's Haggadah"]
+        (t/are [x y] (= x y)
+          expected-title haggadah-title
+          expected-content haggadah-content)))))
 
 (def title "Wine")
 
@@ -47,11 +52,11 @@
 
 (defn bracha-title
   []
-  (e/get-element-text driver {:data-testid :bracha-title :fn/has-classes [:has-text-centered :has-text-weight-bold :is-size-3 :pb-2]}))
+  (e/get-element-text driver {:css "div.bracha>div.title" }))
 
 (defn bracha-content
   []
-  (e/get-element-text driver {:data-testid :bracha-content :fn/has-classes [:has-text-right :is-size-5]}))
+  (e/get-element-text driver {:css "div.bracha>div.text"}))
 
 (defn create-haggadah
   [d title]
@@ -75,20 +80,22 @@
         title actual-title
         bracha actual-bracha))))
 
-
-(def parsed-haggadah-text  "We begin in Egypt")
-
-(def new-haggadah-title "The best haggadah of the year")
-
 (t/deftest refresh-page-test
   (t/testing "When the current user refreshes the haggadah"
-
-      (c/create-haggadah {:title new-haggadah-title
-                          :content {:bracha {:content parsed-haggadah-text}}} "user1")
-      (doto driver
-        (c/home->dashboard)
-        (click-on-haggadah parsed-haggadah-text)
-        (e/refresh)
-        (e/wait-has-text-everywhere parsed-haggadah-text))
-      (let [haggadah-text (haggadah-content driver)]
-        (t/is (= parsed-haggadah-text haggadah-text)))))
+    (c/fs-store-haggadah {:title "The best haggadah of the year"
+                        :type "haggadah"
+                        :content [{:type "bracha" :text bracha :title title}]}
+                       "user1")
+    (doto driver
+      (c/home->dashboard)
+      (click-on-haggadah bracha)
+      (e/refresh)
+      (e/wait-has-text-everywhere bracha))
+    (let [haggadah-title (haggadah-title)
+          bracha-title (bracha-title)
+          bracha-content (bracha-content)
+          expected-haggadah-title "The best haggadah of the year"]
+      (t/are [x y] (= x y)
+        expected-haggadah-title haggadah-title
+        bracha bracha-content
+        title bracha-title))))

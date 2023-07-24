@@ -7,11 +7,8 @@
    com.google.firebase.cloud.FirestoreClient
    com.google.cloud.firestore.Query$Direction))
 
-
-
 (t/use-fixtures :once c/init-firebase)
-(t/use-fixtures :each c/with-screenshot)
-(t/use-fixtures :each c/delete-fs-emulator-data)
+(t/use-fixtures :each c/with-screenshot c/delete-fs-emulator-data)
 
 (defn open-edit-haggadah
   [d id text]
@@ -42,7 +39,7 @@
     (e/click-visible {:data-testid :create-haggadah})
     (e/wait-visible {:data-testid :haggadah-title})
     (e/fill  {:data-testid :haggadah-title} k/home (k/with-shift k/end) k/delete)
-    (e/fill {:data-testid :haggadah-title} title)
+    (e/fill-human {:data-testid :haggadah-title} title {:mistake-prob 0})
     (e/click-visible {:data-testid :add-haggadah})
     (e/click-visible {:data-testid :return})))
 
@@ -71,26 +68,28 @@
       first
       (= id)))
 
+(defn wait-for-haggadot
+  []
+  (e/wait-visible driver {:fn/has-class :haggadot}))
+
 (t/deftest create-haggadah-test
   (t/testing "When the current user creates a new Haggadah and goes back to the dashboard, the Haggadah is listed first among the Haggadot and a new Haggadah with the same details is added to firestore"
     (doto driver
       (c/home->dashboard)
-      (create-haggadah new-haggadah-title)
-      (e/screenshot "screenshots/create-haggadah-test-before-getting-haggadot.png"))
+      (create-haggadah new-haggadah-title))
+    (wait-for-haggadot)
     (let [[title id]  (->> (all-haggadot)
-                      first
-                      vals)
+                           first
+                           vals)
           latest? (latest-haggadah? "user1" id )]
       (t/are [x y] (= x y)
         new-haggadah-title title
         true latest?))))
 
-
 (def haggadot
   [{:content {:bracha  {:content "Amir's Haggadah" } } :title "Third"}
    {:content {:bracha  {:content "Amir's Haggadah" } } :title "Second"}
    {:content {:bracha  {:content "Amir's Haggadah" } } :title "First"}])
-
 
 (defn haggadot-titles
   "Pre: takes a collection of Haggadot
@@ -101,13 +100,13 @@
 (defn  create-haggadot
   [haggadot user]
   (doseq [haggadah haggadot]
-    (c/create-haggadah haggadah user)))
+    (c/fs-store-haggadah haggadah user)))
 
 (t/deftest view-haggadot-ordered-test
   (t/testing "When the current user has already made Haggadot and goes to their dashboard, the Haggadot should be displayed in order from most recent to least recent"
     (create-haggadot haggadot "user1")
-    (doto driver
-      (c/home->dashboard))
+    (c/home->dashboard driver)
+    (wait-for-haggadot)
     (let [titles (haggadot-titles (all-haggadot))]
       (t/is (= ["First" "Second" "Third"] titles)))))
 

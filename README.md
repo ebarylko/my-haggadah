@@ -8,18 +8,28 @@
 
 ## PR format
 
- ### Summary
- A description of what was done in this branch
- 
-### Changes
+```markdown
+## Summary
+
+A description of what was done in this branch
+
+## Changes
+
 List the file changed, and note the changes applied to the file. Do this for all files edited. An example:
 
-karma.conf.js
+### `karma.conf.js`
 
-*added configuration to run tests using karma
-*Added targets so that tests are run in a headless browser
+* Added configuration to run tests using karma
+* Added targets so that tests are run in a headless browser
+
+### some/other/file
+
+* The first thing I changed
+* The second thing I changed
+```
 
 ## Changing workflows
+
 If a workflow is changed, run `act pulll_request` to see if the change to the workflow works correctly. 
 
 The container will be run without access to the local cache, leading to longer completion times. 
@@ -27,18 +37,43 @@ The container will be run without access to the local cache, leading to longer c
 For quicker completion times, commit changes and push to remote, which will run the github actions with the local cache.
 
 ## Runnning firebase emulators
-run `firebase emulators:start`
+
+Run `firebase emulators:start`
 
 ## Deploying firebase
 run `firebase deploy`. If you only want to test specific aspect of deployment, such as hosting or functions, run `firebase deploy --only "specific aspect"`.
 
-## Running acceptance tests
-run `npm run test:acceptance`
+## Testing
+
+### Unit tests
+
+To run the tests once:
+
+`npm run test`
+
+To run the test continuously (watching for changes), need to do a few steps:
+
+* Run `firebase emulators:exec | grep FIREBASE > .env.test `
+* Edit `.env.test` to remove not needed variables and add `EXPORT`, it should look like this (may change based on your `firebase.json`):
+  ```bash
+  export FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099
+  export FIREBASE_CONFIG='{"projectId":"my-haggadah",...}'
+  export FIREBASE_EMULATOR_HUB=127.0.0.1:4400
+  export FIREBASE_FIRESTORE_EMULATOR_ADDRESS=127.0.0.1:8080
+  ```
+* Run `npm run karma:setup` to run the `ci-setup.js` script that populates _Firestore_ with a user.
+* Run in another terminal (or tmux window) `npm run karma:watch`
+
+### Acceptance tests
+
+Run `npm run acceptance`.
 
 ## Running firebase emulators with previous emulator state data
-run `npm run emulators`
+
+Run `npm run emulators`
 
 ## Naming branches
+
 Name the branch as the feature you are working on in the branch
 
 ## Veryiying tests with firebase emulator

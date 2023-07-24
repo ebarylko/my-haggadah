@@ -2,79 +2,43 @@
   (:require [haggadah.dsl :as dsl]
             [cljs.test :as t :include-macros true]))
 
-(def title "Ki lo nae")
+(def bracha (dsl/bracha "Wine" "Baruj hata"))
+(def expected-bracha
+  [:div.bracha
+   [:div.title  "Wine"]
+   [:div.text  "Baruj hata"]])
 
-(def song
-  " כִּי לוֹ נָאֶה, כִּי לוֹ יָאֶה.
-  אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו יֹאמְרוּ לוֹ: לְךָ וּלְךָ, לְךָ כִּי לְךָ, לְךָ אַף לְךָ, לְךָ ה' הַמַּמְלָכָה, כִּי לוֹ נָאֵה, כִּי לוֹ יָאֶה. ")
-
-
-(def haggadah-as-hiccup
-  [:div.pt-3
-   [:div.has-text-centered.has-text-weight-bold.is-size-4.pb-2 title]
-   [:div.has-text-right.is-size-5 song]])
-
-(dsl/create-haggadah-with-song title song)
+(t/deftest render-bracha-test
+  (t/testing "When rendering a bracha, returns the title and the text"
+    (t/is (= expected-bracha (dsl/render-haggadah bracha)))))
 
 
-(t/deftest haggadah-with-song-test
-  (t/testing "When the user creates a Haggadah with a song in it and parses it using the dsl, the correct hiccup representation of the Haggadah will be returned"
-    (let [haggadah (dsl/create-haggadah-with-song title song)
-          hiccup-rep (dsl/parse-haggadah (:content haggadah))
-          actual-haggadah haggadah-as-hiccup]
-      (t/is (= actual-haggadah hiccup-rep)))))
+(t/deftest render-song-test
+  (t/testing "When rendering the song, returns the title and content"
+    (let [song (dsl/song "Ki lo nae" "כִּי לוֹ נָאֶה, כִּי לוֹ יָאֶה. אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו")
+          expected [:div.song
+                    [:div.title "Ki lo nae" ]
+                    [:div.text "כִּי לוֹ נָאֶה, כִּי לוֹ יָאֶה. אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו"]]]
+      (t/is (= expected (dsl/render-haggadah song))))))
 
-(def haggadah-with-table
-  [:div.pt-3
-   [:div.has-text-centered.pb-4.is-size-5 "Las Diez Plagas"]
-   [:table.is-bordered.is-flex.is-justify-content-center.table
-    [:tbody
-     [:tr
-      [:td "Sangre"]
-      [:td "דָּם"]]
-     [:tr  
-      [:td "Ranas"]
-      [:td "צְפַרְדֵּעַ"]]
-     [:tr  
-      [:td "Piojos"]
-      [:td "כִּנִּים"]]
-     [:tr
-      [:td "Bestias"]
-      [:td "עָרוֹב"]]
-     [:tr  
-      [:td "Peste"]
-      [:td "דֶּבֶר"]]]]])
-
-(def table-content
-  [["Sangre" "דָּם"]
-   ["Ranas" "צְפַרְדֵּעַ"]
-   ["Piojos"  "כִּנִּים"]
-   ["Bestias"  "עָרוֹב"]
-   ["Peste" "דֶּבֶר"]])
-
-(def table-title "Las Diez Plagas")
-
-(t/deftest haggadah-with-table-test
-  (t/testing "When the user creates a Haggadah with a table in it and the Haggadah is parsed, the correct hiccup representation of the Haggadah is returned"
-    (let [haggadah (dsl/create-haggadah-with-table table-title table-content)
-          hiccup-rep (dsl/parse-haggadah (:content haggadah))]
-      (t/is (= haggadah-with-table hiccup-rep)))))
-
-(def subsection-title "Subsection")
-
-(def haggadah-with-subsection
-  [:div
-   [:div.has-text-centered.has-text-weight-bold.is-size-3.pb-2 subsection-title]
-   haggadah-as-hiccup
-   haggadah-with-table])
-
-(def subsection-content
-  [{:song {:title title :content song}}
-   {:table {:title table-title :content table-content}}])
+(t/deftest render-table-test
+  (t/testing "When rendering the table, each row and the content within is returned"
+    (let [table (dsl/table "Las Diez Plagas" 
+                           (dsl/row ["Sangre" "דָּם"])
+                           (dsl/row ["Ranas" "צְפַרְדֵּעַ"]))
+          expected [:div.table.is-bordered
+                    [:div.title "Las Diez Plagas"]
+                    [:table.table.table-content
+                     [:tbody
+                      [:tr [:td "Sangre"] [:td "דָּם"]]
+                      [:tr [:td "Ranas"] [:td "צְפַרְדֵּעַ"]]]]]]
+      (t/is (= expected (dsl/render-haggadah table))))))
 
 
-(t/deftest haggadah-with-subsection-test
-  (t/testing "When the user creates a Haggadah with a subsection and the Haggadah is parsed, the correct hiccup representation of the Haggadah is returned"
-    (let [haggadah (dsl/create-haggadah-with-subsection subsection-title subsection-content)
-          hiccup-rep (dsl/parse-haggadah (:content haggadah))]
-      (t/is (= haggadah-with-subsection hiccup-rep)))))
+(t/deftest render-section-test
+    (t/testing "When rendering a section the title and content are returned"
+      (let [section (dsl/section "Magid" bracha)
+            expected-section [:div.section
+                              [:div.title "Magid"]
+                              expected-bracha]]
+       (t/is (= expected-section (dsl/render-haggadah section))))))

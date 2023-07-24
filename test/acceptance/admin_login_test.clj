@@ -1,7 +1,6 @@
 (ns acceptance.admin-login-test
   (:require  [clojure.test :as t]
              [etaoin.api :as e]
-             [etaoin.keys :as k]
              [acceptance.core :as c :refer [driver]])
   (:import com.google.firebase.cloud.FirestoreClient))
 
@@ -12,8 +11,7 @@
   "Hello han@skywalker.com. Welcome. To make a new Haggadah, click the button to your right. To share and edit your existing Haggadah, look at your Haggadot below")
 
 (t/use-fixtures :once c/init-firebase)
-(t/use-fixtures :each c/with-screenshot)
-(t/use-fixtures :each c/delete-fs-emulator-data)
+(t/use-fixtures :each c/with-screenshot c/delete-fs-emulator-data)
 
 
 (t/deftest message-test
@@ -22,7 +20,6 @@
       (c/home->dashboard)
       (e/wait-has-text-everywhere admin-login-message))
     (let [actual (e/get-element-text driver {:data-testid :user})]
-      (e/screenshot driver "screenshots/message-test-when-the-admin-exists.png")
       (t/is (= admin-login-message actual)))))
 
 

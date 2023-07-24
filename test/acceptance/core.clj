@@ -89,11 +89,10 @@
     (e/go "http://localhost:5000/")
     (e/click-visible {:data-testid :login})
     (e/click-visible {:data-testid :submit})
-    (e/wait-visible {:data-testid :create-haggadah})
-    (e/screenshot  "screenshots/create-haggadah-test-admin-exists-before-clicking-create.png")))
+    (e/wait-visible {:data-testid :create-haggadah})))
 
 
-(defn create-haggadah
+(defn fs-store-haggadah
   "Pre: takes a haggadah and a user
   Post: returns the id of the haggadah created"
   [haggadah user]
@@ -104,3 +103,16 @@
       (.add  (w/stringify-keys (assoc haggadah :createdAt (java.time.Instant/now))))
       (.get)
       (.getId)))
+
+(defn haggadah
+  "Pre: takes a user and an id for a Haggadah
+  Post: returns the Haggadah which contains this id in firestore"
+  [user id]
+  (-> (FirestoreClient/getFirestore)
+      (.collection "users")
+      (.document user)
+      (.collection "haggadot")
+      (.document id)
+      (.get)
+      (.get)
+      (.getData)))
