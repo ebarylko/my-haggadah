@@ -30,7 +30,7 @@
 
 (t/deftest view-haggadah-from-dashboard
   (t/testing "When the current user has a haggadah and is at the dashboard, they should be able to view the the selected haggadah"
-    (let [id (c/create-haggadah
+    (let [id (c/fs-store-haggadah
               {:title "haggadah2023"
                :type "haggadah"
                :content [{:type "bracha" :title "Amir's Haggadah" :text ""} ]}
@@ -80,11 +80,9 @@
         title actual-title
         bracha actual-bracha))))
 
-(def expected-haggadah-title "The best haggadah of the year")
-
 (t/deftest refresh-page-test
   (t/testing "When the current user refreshes the haggadah"
-    (c/create-haggadah {:title expected-haggadah-title
+    (c/fs-store-haggadah {:title "The best haggadah of the year"
                         :type "haggadah"
                         :content [{:type "bracha" :text bracha :title title}]}
                        "user1")
@@ -95,7 +93,8 @@
       (e/wait-has-text-everywhere bracha))
     (let [haggadah-title (haggadah-title)
           bracha-title (bracha-title)
-          bracha-content (bracha-content)]
+          bracha-content (bracha-content)
+          expected-haggadah-title "The best haggadah of the year"]
       (t/are [x y] (= x y)
         expected-haggadah-title haggadah-title
         bracha bracha-content

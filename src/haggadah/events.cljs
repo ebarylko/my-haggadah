@@ -30,9 +30,7 @@
 (re-frame/reg-fx
  ::call-func!
  (fn [{:keys [fn-url text on-success on-error]}]
-   (println "This is for the url and text" fn-url "---" text)
    (let [f (func/callable-from-url fn-url)]
-     (println "This is the function" f)
      (-> (f text)
          (.then on-success)
          (.catch on-error)))))
@@ -180,35 +178,9 @@
               dsl/render-haggadah))))
 
 (re-frame/reg-event-db
- ::edit-haggadah
- (fn [db [_ new-content]]
-     (assoc db :haggadah-text new-content)))
-
-
-(re-frame/reg-event-fx
- ::modify-haggadah
- (fn [{:keys [db]} [_ {:keys [new-haggadah on-success on-error] :or {on-error :error}}]]
-   (println "The haggadah " new-haggadah)
-   (let [id (get-in db [:current-route :path-params :id])]
-     {::update-doc {:path ["users" (db :uid) "haggadot" id]
-                    :content #js{:content new-haggadah}
-                    :on-success (keyword->func on-success)
-                    :on-error (keyword->func on-error)}})))
-
-(re-frame/reg-event-db
  ::set-preview
  (fn [db [_ preview?]]
    (assoc db :preview preview?)))
-
-(re-frame/reg-fx
- ::update-doc
- (fn [{:keys [path content on-success on-error] :or {on-error ::error }}]
-   (println "Here's the update path" path "Here's the content " content)
-   (-> (firestore/instance)
-       (fire/doc (clojure.string/join "/" path))
-       (fire/updateDoc content)
-       (.then on-success)
-       (.catch on-error))))
 
 (re-frame/reg-event-fx
  ::push-state

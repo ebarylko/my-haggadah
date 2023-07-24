@@ -92,7 +92,7 @@
     (e/wait-visible {:data-testid :create-haggadah})))
 
 
-(defn create-haggadah
+(defn fs-store-haggadah
   "Pre: takes a haggadah and a user
   Post: returns the id of the haggadah created"
   [haggadah user]

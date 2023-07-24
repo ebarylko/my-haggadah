@@ -33,7 +33,6 @@
              :view views/haggadah-view-panel
              :link-text "haggadah"
              :controllers [{:start (fn []
-                                    (println "Before the haggadah is fetched")
                                      (re-frame/dispatch (:haggadah-view events/route-events)))}]}]]
    ["/haggadah-creation"
     ["" {:name :haggadah-creation
