@@ -139,7 +139,6 @@
 (re-frame/reg-fx
  ::add-haggadah!
  (fn [{:keys [path haggadah on-success on-error]}]
-   (println "Here is the path to add a haggadah" path)
    (-> (firestore/instance)
        (fire/collection (clojure.string/join "/" path))
        (fire/addDoc (clj->js haggadah))
@@ -174,7 +173,6 @@
 (re-frame/reg-event-db
  ::set-haggadah
  (fn [db [_ snap]]
-   (.log js/console "\n\nthe Haggadah " (. snap data))
    (assoc db :haggadah-text
           (-> snap
               (. data)

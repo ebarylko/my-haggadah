@@ -68,12 +68,16 @@
       first
       (= id)))
 
+(defn wait-for-haggadot
+  []
+  (e/wait-visible driver {:fn/has-class :haggadot}))
+
 (t/deftest create-haggadah-test
   (t/testing "When the current user creates a new Haggadah and goes back to the dashboard, the Haggadah is listed first among the Haggadot and a new Haggadah with the same details is added to firestore"
     (doto driver
       (c/home->dashboard)
       (create-haggadah new-haggadah-title))
-    (e/wait 5)
+    (wait-for-haggadot)
     (let [[title id]  (->> (all-haggadot)
                            first
                            vals)
@@ -102,8 +106,7 @@
   (t/testing "When the current user has already made Haggadot and goes to their dashboard, the Haggadot should be displayed in order from most recent to least recent"
     (create-haggadot haggadot "user1")
     (doto driver
-      (c/home->dashboard)
-      #_#(e/wait 9))
+      (c/home->dashboard))
     (let [_ (e/wait 9)
           titles (haggadot-titles (all-haggadot))]
       (t/is (= ["First" "Second" "Third"] titles)))))
