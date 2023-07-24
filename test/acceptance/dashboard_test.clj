@@ -105,10 +105,9 @@
 (t/deftest view-haggadot-ordered-test
   (t/testing "When the current user has already made Haggadot and goes to their dashboard, the Haggadot should be displayed in order from most recent to least recent"
     (create-haggadot haggadot "user1")
-    (doto driver
-      (c/home->dashboard))
-    (let [_ (e/wait 9)
-          titles (haggadot-titles (all-haggadot))]
+    (c/home->dashboard driver)
+    (wait-for-haggadot)
+    (let [titles (haggadot-titles (all-haggadot))]
       (t/is (= ["First" "Second" "Third"] titles)))))
 
 
