@@ -34,12 +34,6 @@
                       [:tr [:td "Ranas"] [:td "צְפַרְדֵּעַ"]]]]]]
       (t/is (= expected (dsl/render-haggadah table))))))
 
-;; (def expected-section
-;;   [:div.section
-;;    [:div.title "Magid"]
-;;    expected-bracha])
-
-;; (def section (dsl/section "Magid" bracha))
 
 (t/deftest render-section-test
     (t/testing "When rendering a section the title and content are returned"
