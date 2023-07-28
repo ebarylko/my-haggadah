@@ -26,7 +26,6 @@
    (assoc driver-config :path-browser (System/getenv "CHROME_BINARY"))))
 
 (defn- build-firebase-options []
-  (println "The operating system "(System/getenv "CHROME_BINARY"))
   (-> (new FirebaseOptions$Builder)
       (.setCredentials (EmulatorCredentials.))
       (.setProjectId project-id)
