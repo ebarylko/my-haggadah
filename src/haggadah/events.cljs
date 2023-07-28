@@ -182,16 +182,6 @@
                 :on-success #(re-frame/dispatch [::push-state :haggadah-success])
                 :on-error (keyword->func ::error)}}))
 
-(re-frame/reg-fx
- ::add-haggadah!
- (fn [{:keys [path haggadah on-success on-error]}]
-   (-> (firestore/instance)
-       (fire/collection (clojure.string/join "/" path))
-       (fire/addDoc (clj->js haggadah))
-       (.then on-success)
-       (.catch on-error))))
-
-
 (re-frame/reg-event-fx
  ::login
  interceptors

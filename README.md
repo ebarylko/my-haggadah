@@ -36,6 +36,10 @@ The container will be run without access to the local cache, leading to longer c
 
 For quicker completion times, commit changes and push to remote, which will run the github actions with the local cache.
 
+### google-chrome-stable version used in workflow
+-
+-The version used for google chrome is hardcoded. When there is an update to the latest version of chromedriver, you will need to change the version of google chrome so it matches the major version of chromedriver.
+
 ## Runnning firebase emulators
 
 Run `firebase emulators:start`
