@@ -21,12 +21,12 @@
           "--disable-extensions"
           "--start-maximized"]})
 
-(def driver (e/chrome-headless
-             (case (System/getProperty "os.name")
-               "linux" driver-config
-               (assoc driver-config :path-browser "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"))))
+(def driver
+  (e/chrome-headless
+   (assoc driver-config :path-browser (System/getenv "CHROME_BINARY"))))
 
 (defn- build-firebase-options []
+  (println "The operating system "(System/getenv "CHROME_BINARY"))
   (-> (new FirebaseOptions$Builder)
       (.setCredentials (EmulatorCredentials.))
       (.setProjectId project-id)
