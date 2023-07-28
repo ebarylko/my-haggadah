@@ -14,12 +14,17 @@
 
 (def project-id (env :gcloud-project))
 
+(def driver-config
+  {:args ["no-sandbox"
+          "--disable-dev-shm-usage"
+          "--disable-gpu"
+          "--disable-extensions"
+          "--start-maximized"]})
+
 (def driver (e/chrome-headless
-             {:args ["no-sandbox"
-                     "--disable-dev-shm-usage"
-                     "--disable-gpu"
-                     "--disable-extensions"
-                     "--start-maximized"]}))
+             (case (System/getProperty "os.name")
+               "linux" driver-config
+               :else (conj driver-config :path-browser "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"))))
 
 (defn- build-firebase-options []
   (-> (new FirebaseOptions$Builder)
