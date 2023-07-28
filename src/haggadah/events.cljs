@@ -91,10 +91,12 @@
 (re-frame/reg-event-fx
  ::fetch-sedarim
  (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
-   {::query! {:path ["users" (:uid db) "seders"]
-              :order-by #(fire/query % (fire/orderBy "createdAt" "desc"))
-              :on-success (keyword->func on-success)
-              :on-error (keyword->func on-error)}}))
+   (if (:uid db)
+    {::query! {:path ["users" (:uid db) "seders"]
+               :order-by #(fire/query % (fire/orderBy "createdAt" "desc"))
+               :on-success (keyword->func on-success)
+               :on-error (keyword->func on-error)}}
+    {})))
 
 (re-frame/reg-event-fx
  ::signout
@@ -135,15 +137,23 @@
         :fx fx})
      {:db (assoc db :name nil :uid nil :user :unregistered)})))
 
+(re-frame/reg-fx
+ ::add-doc!
+ (fn [{:keys [document-path content on-success on-error] :or {on-error ::error }}]
+   (-> (firestore/instance)
+       (fire/collection (clojure.string/join "/" document-path))
+       (fire/addDoc (clj->js content))
+       (.then on-success)
+       (.catch on-error))))
 
 
 (re-frame/reg-event-fx
  ::add-haggadah
  (fn [{:keys [db]} [_ title]]
-   {::add-haggadah! {:path ["users" (:uid db) "haggadot"]
-                     :haggadah (assoc dsl/default-haggadah :title title :createdAt (js/Date.))
-                     :on-success (re-frame/dispatch [::push-state :haggadah-success])
-                     :on-error (keyword->func ::error)}}))
+   {::add-doc! {:document-path ["users" (:uid db) "haggadot"]
+                :content (assoc dsl/default-haggadah :title title :createdAt (js/Date.))
+                :on-success #(re-frame/dispatch [::push-state :haggadah-success])
+                :on-error (keyword->func ::error)}}))
 
 (re-frame/reg-fx
  ::add-haggadah!
