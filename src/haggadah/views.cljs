@@ -144,7 +144,9 @@
             (for [{:keys [title id]} haggadot :when id] 
               ^{:key id}[:li.mb-2
                          [:a.haggadah-link {:data-testid :haggadah-link 
-                              :href (href :haggadah-view {:id id})} title]])]))] ]]]
+                                            :href (href :haggadah-view {:id id})} title]
+                         [:a.button.is-small {:data-testid :create-seder
+                                              :on-click #(re-frame/dispatch [::events/create-seder-modal id])} "Create Seder"]])]))] ]]]
    [wave-bottom]])
 
 

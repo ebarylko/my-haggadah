@@ -98,6 +98,11 @@
                :on-error (keyword->func on-error)}}
     {})))
 
+(re-frame/reg-event-db
+ ::create-seder-modal
+ (fn [db [_ id]]
+   (assoc db :seder-modal id)))
+
 (re-frame/reg-event-fx
  ::signout
  (fn [_ [_]]
