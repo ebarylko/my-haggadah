@@ -24,7 +24,7 @@
 (def driver (e/chrome-headless
              (case (System/getProperty "os.name")
                "linux" driver-config
-               :else (conj driver-config :path-browser "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"))))
+               (assoc driver-config :path-browser "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"))))
 
 (defn- build-firebase-options []
   (-> (new FirebaseOptions$Builder)
