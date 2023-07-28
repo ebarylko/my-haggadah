@@ -103,7 +103,7 @@
 
 
 (def route-events
-  {:dashboard [[::fetch-haggadot {:on-success ::set-haggadot}]]
+  {:dashboard [[::fetch-haggadot {:on-success [::set-collection :haggadot ]}]]
    :haggadah-view [[::fetch-haggadah {:on-success ::set-haggadah }]]
    :haggadah-edit [[::fetch-haggadah {:on-success ::set-haggadah }]]})
 
@@ -203,6 +203,17 @@
   Post: triggers an event which stores the user info "
   [user]
   (re-frame/dispatch [::store-user-info user]))
+
+(re-frame/reg-event-db
+ ::set-collection
+ (fn [db [_ field snap]]
+   (let [docs (->> snap (.-docs) js->clj)
+         ids (map #(.-id %) docs)]
+     (assoc db field
+            (->> docs
+                 (map #(.data %))
+                 (map #(js->clj % :keywordize-keys true))
+                 (map #(assoc %2 :id %1) ids))))))
 
 (re-frame/reg-event-db
  ::set-haggadot
