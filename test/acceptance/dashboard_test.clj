@@ -121,4 +121,61 @@
     (let [titles (haggadot-titles (all-haggadot))]
       (t/is (= ["First" "Second" "Third"] titles)))))
 
+(defn haggadah-path
+  "Pre: takes a user and a Seder id
+  Post: returns the location of the Haggadah used for the Seder"
+  [user id]
+  (-> (FirestoreClient/getFirestore)
+      (.collection "users")
+      (.document user)
+      (.collection "seders")
+      (.document id)
+      (.get)
+      (.get)
+      (.getString "haggadah-path")))
 
+(defn wait-for-sedarim
+  []
+  (wait-for-collection :sedarim))
+
+(defn create-seder
+  "Pre: takes a title for the Seder
+  Post: returns the id of the Seder created"
+  [title]
+  (doto driver
+    (e/click-visible {:data-testid :create-seder})
+    (e/wait-visible {:id :seder-title})
+    (e/fill  {:id :seder-title} k/home (k/with-shift k/end) k/delete)
+    (e/fill-human {:id :seder-title} title {:mistake-prob 0})
+    (e/click {:data-testid :submit})))
+
+(defn id-and-title
+  "Pre: takes a Seder
+  Post: returns the id and title of the seder in a map"
+  [seder]
+  (let [title (e/get-element-text-el driver seder)
+        id (e/get-element-attr-el driver seder :data-testid)]
+    {:title title :id id}))
+
+(defn all-sedarim
+  "Pre: takes nothing
+  Post: returns the ids and titles of every Seder on the dashboard"
+  []
+  (let [sedarim (e/query-all driver {:fn/has-class :seder-link})]
+    (map id-and-title sedarim)))
+
+(t/deftest create-seder-test
+  (t/testing "When the current user has a Haggadah and creates a Seder which uses that Haggadah, a new Seder with the same Haggadah will appear in the user's collection of Sedarim in firestore"
+    (let [id (c/fs-store-haggadah {:title "Haggadah 1"
+                                   :type "haggadah"
+                                   :content [{:type "bracha" :title "hello" :text "bracha"}]}
+                                  "user1" )]
+      (c/home->dashboard driver)
+      (create-seder "The first Seder")
+      (wait-for-sedarim)
+      (let [expected-haggadah-path (format "users/user1/haggadot/%s" id)
+            [_ seder-id] (->> (all-sedarim)
+                              first
+                              vals)
+            haggadah-path (haggadah-path "user1" seder-id)]
+        (t/is (= expected-haggadah-path haggadah-path))))))
