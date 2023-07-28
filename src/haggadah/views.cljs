@@ -177,8 +177,7 @@
       [:div.pl-6.buttons.is-right
        [:a.button.is-smalll.is-pulled-right.mt-2 {:data-testid :create-haggadah
                                                   :on-click
-                                                  (dispatch ::push-state :haggadah-creation)
-                                                  #_#(re-frame/dispatch [::push-state :haggadah-creation])}   "Create Haggadah"]]
+                                                  (dispatch ::push-state :haggadah-creation)}   "Create Haggadah"]]
       [:div
        [seder-popup]
        [:h1.is-size-3
@@ -190,8 +189,7 @@
                          [:a.haggadah-link {:data-testid :haggadah-link 
                                             :href (href :haggadah-view {:id id})} title]
                          [:a.button.is-small {:data-testid :create-seder
-                                              :on-click #(re-frame/dispatch [::events/create-seder-modal id])} "Create Seder"]])])
-         [:h1.is-size-3.pt-3
+                                              :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]])]) [:h1.is-size-3.pt-3
           "Sedarim"]
          (when sedarim
            [:ul.sedarim 
