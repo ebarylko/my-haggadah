@@ -103,25 +103,27 @@
 
 
 (def route-events
-  {:dashboard [::fetch-haggadot {:on-success ::set-haggadot}]
-   :haggadah-view [::fetch-haggadah {:on-success ::set-haggadah }]
-   :haggadah-edit [::fetch-haggadah {:on-success ::set-haggadah }]})
+  {:dashboard [[::fetch-haggadot {:on-success ::set-haggadot}]]
+   :haggadah-view [[::fetch-haggadah {:on-success ::set-haggadah }]]
+   :haggadah-edit [[::fetch-haggadah {:on-success ::set-haggadah }]]})
 
-(re-frame/reg-event-db
- ::do-nothing
- (fn [db [_]]
-   db))
+
+(defn setup-events
+  "Pre: takes a collection of events
+  Post: returns a collection of events waiting to be dispatched"
+  [events]
+  (mapv (fn [event] [:dispatch event]) events))
 
 (re-frame/reg-event-fx
  ::store-user-info
  (fn [{:keys [db]}[_ user]]
    (if user 
      (let [route (get-in db [:current-route :data :name])
-           fx (get route-events route [])
-           user-db (:db db)]
+           fx (->> (get route-events route [])
+                setup-events)]
        {:db (-> db
                 (assoc :name (.-email user)  :uid (.-uid user) :user :registered))
-        :fx [[:dispatch fx]]})
+        :fx fx})
      {:db (assoc db :name nil :uid nil :user :unregistered)})))
 
 
