@@ -43,6 +43,7 @@
   [event & args]
   #(re-frame/dispatch (apply conj [] event args)))
 
+
 (defn top-menu [{:keys [router current-route]}]
   [:div {:class (styles/menu)}
    [:nav {:class "navbar", :role "navigation", :aria-label "main navigation"}
@@ -55,9 +56,9 @@
     (let [active-menu? @(re-frame/subscribe [::subs/active-menu?])
           active-menu (when active-menu? "is-active")]
      [:div#menu.navbar-menu {:class active-menu}
-      [:a.navbar-item {:class active-menu :on-click (dispatch ::push-state :home) #_(re-frame/dispatch [::push-state :home])} "Home"]
-      [:a.navbar-item {:class active-menu :on-click (dispatch ::push-state :about) #_(re-frame/dispatch [::push-state :about])} "About"]
-      [:a.navbar-item {:class active-menu :on-click #(re-frame/dispatch [::events/signout])} "Sign out"]]
+      [:a.navbar-item {:class active-menu :on-click (dispatch ::push-state :home) } "Home"]
+      [:a.navbar-item {:class active-menu :on-click (dispatch ::push-state :about) } "About"]
+      [:a.navbar-item {:class active-menu :on-click (dispatch ::events/signout)} "Sign out"]]
      )
     ]])
 
@@ -113,7 +114,9 @@
         [:div {:class "control"}
          [:button.is-small.button {:class (styles/cancel-button)}  "Cancel"]]
         [:div {:class "control"}
-         [:a.button.is-small {:class (styles/submit-button) :on-click  #(re-frame/dispatch [::events/login]) :data-testid :submit} "Submit"]]]
+         [:a.button.is-small {:class (styles/submit-button) :on-click (dispatch ::events/login)
+                             #_ #(re-frame/dispatch [::events/login]) :data-testid :submit} "Submit"]]]
+
        ]]]]])
 
 (defn wave-bottom
