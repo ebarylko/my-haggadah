@@ -103,6 +103,28 @@
  (fn [db [_ id]]
    (assoc db :seder-modal id)))
 
+(re-frame/reg-event-db
+ ::hide-seder-modal
+ (fn [db [_]]
+   (dissoc db :seder-modal)))
+
+(re-frame/reg-event-fx
+ ::seder-success
+ (fn [{:keys [db]} [_ seder]]
+   {:db db
+    :fx [[:dispatch [::fetch-sedarim {:on-success [::set-collection :sedarim]}]]
+         [:dispatch [::hide-seder-modal]]]}))
+
+
+(re-frame/reg-event-fx
+ ::create-seder
+ (fn [{:keys [db]} [_ haggadah-id title]]
+   {::add-doc! {:document-path ["users" (:uid db) "seders"]
+                :content {:haggadah-path (clojure.string/join "/" ["users" (:uid db) "haggadot" haggadah-id])
+                          :title title
+                          :createdAt (js/Date.)}
+                :on-success #(re-frame/dispatch [::seder-success %])}}))
+
 (re-frame/reg-event-fx
  ::signout
  (fn [_ [_]]

@@ -56,3 +56,8 @@
  ::sedarim
  (fn [db _]
    (:sedarim db)))
+
+(re-frame/reg-sub
+ ::seder-modal
+ (fn [db _]
+   (:seder-modal db)))
