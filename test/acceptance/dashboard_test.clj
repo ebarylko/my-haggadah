@@ -87,9 +87,9 @@
         true latest?))))
 
 (def haggadot
-  [{:content {:bracha  {:content "Amir's Haggadah" } } :title "Third"}
-   {:content {:bracha  {:content "Amir's Haggadah" } } :title "Second"}
-   {:content {:bracha  {:content "Amir's Haggadah" } } :title "First"}])
+  [{:type "haggadah" :content [{:type "bracha" :title "Amir's Haggadah"}] :title "Third"}
+   {:type "haggadah" :content [{:type "bracha" :title "Amir's Haggadah"}] :title "Second"}
+   {:type "haggadah" :content [{:type "bracha" :title "Amir's Haggadah"}] :title "First"}])
 
 (defn haggadot-titles
   "Pre: takes a collection of Haggadot

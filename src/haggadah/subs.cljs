@@ -51,3 +51,8 @@
  ::dropdown
  (fn [db _]
    (:dropdown db)))
+
+(re-frame/reg-sub
+ ::sedarim
+ (fn [db _]
+   (:sedarim db)))

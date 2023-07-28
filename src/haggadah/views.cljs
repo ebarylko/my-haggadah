@@ -138,7 +138,8 @@
       [:div
        [:h1.is-size-3
         "Haggadot created"]
-       (let [haggadot @(re-frame/subscribe [::subs/haggadot])]
+       (let [haggadot @(re-frame/subscribe [::subs/haggadot])
+             sedarim @(re-frame/subscribe [::subs/sedarim])]
          (when haggadot
            [:ul.haggadot 
             (for [{:keys [title id]} haggadot :when id] 
@@ -146,8 +147,17 @@
                          [:a.haggadah-link {:data-testid :haggadah-link 
                                             :href (href :haggadah-view {:id id})} title]
                          [:a.button.is-small {:data-testid :create-seder
-                                              :on-click #(re-frame/dispatch [::events/create-seder-modal id])} "Create Seder"]])]))] ]]]
-   [wave-bottom]])
+                                              :on-click #(re-frame/dispatch [::events/create-seder-modal id])} "Create Seder"]])])
+         #_#_[:h1.is-size-3.pt-3
+          "Sedarim"]
+         (when sedarim
+           [:ul.sedarim 
+            (for [{:keys [title id]} sedarim :when id] 
+              ^{:key id}[:li.mb-2
+                         [:a.seder-link.mr-2 {:data-testid id} title]
+                         [:a.button.is-small "Activate Seder"]])]
+         ))]]]
+   [wave-bottom]]])
 
 
 
@@ -187,7 +197,7 @@
                 expand (when dropdown? "is-active")]
            [:div.dropdown {:class expand}
             [:div {:class "dropdown-trigger"}
-             [:button.button {:readonly true
+             [:button.button {:readOnly true
                               :aria-haspopup "true", :aria-controls "dropdown-menu"}
               [:span "Base Haggadah"]
               [:span {:class "icon is-small"}
