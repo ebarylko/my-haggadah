@@ -153,11 +153,10 @@
         [:input#seder-title.input {:type "email" :defaultValue "The title of your Seder"}]]
        [:div.field.is-grouped.is-grouped-left 
         [:div.control 
-         [:a.button.is-small.button  {:on-click (dispatch ::events/hide-seder-modal) #_#(re-frame/dispatch [::events/hide-seder-modal])} "Cancel"]]
+         [:a.button.is-small.button  {:on-click (dispatch ::events/hide-seder-modal)} "Cancel"]]
         [:div.control 
          [:a.button.is-small {:class (styles/submit-button)
                               :on-click (dispatch ::events/create-seder id (form-content "seder-title"))
-                              #_(re-frame/dispatch [::events/create-seder id (form-content "seder-title")])
                               :data-testid :submit} "Create"]]]]]
      [:button.modal-close.is-large]]))
 
