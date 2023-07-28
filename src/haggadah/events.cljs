@@ -89,6 +89,14 @@
 
 
 (re-frame/reg-event-fx
+ ::fetch-sedarim
+ (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
+   {::query! {:path ["users" (:uid db) "seders"]
+              :order-by #(fire/query % (fire/orderBy "createdAt" "desc"))
+              :on-success (keyword->func on-success)
+              :on-error (keyword->func on-error)}}))
+
+(re-frame/reg-event-fx
  ::signout
  (fn [_ [_]]
    {::signout! {:on-success #(re-frame/dispatch [::push-state :home %])
@@ -103,7 +111,8 @@
 
 
 (def route-events
-  {:dashboard [[::fetch-haggadot {:on-success [::set-collection :haggadot ]}]]
+  {:dashboard [[::fetch-haggadot {:on-success [::set-collection :haggadot ]}]
+               [::fetch-sedarim {:on-success [::set-collection :sedarim]}]]
    :haggadah-view [[::fetch-haggadah {:on-success ::set-haggadah }]]
    :haggadah-edit [[::fetch-haggadah {:on-success ::set-haggadah }]]})
 
