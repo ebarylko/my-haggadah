@@ -37,6 +37,12 @@
          [:g {:transform "translate(-4.000000, 76.000000)", :fill "#FFFFFF", :fill-rule "nonzero"}
           [:path {:d "M0.457,34.035 C57.086,53.198 98.208,65.809 123.822,71.865 C181.454,85.495 234.295,90.29 272.033,93.459 C311.355,96.759 396.635,95.801 461.025,91.663 C486.76,90.01 518.727,86.372 556.926,80.752 C595.747,74.596 622.372,70.008 636.799,66.991 C663.913,61.324 712.501,49.503 727.605,46.128 C780.47,34.317 818.839,22.532 856.324,15.904 C922.689,4.169 955.676,2.522 1011.185,0.432 C1060.705,1.477 1097.39,3.129 1121.236,5.387 C1161.703,9.219 1208.621,17.821 1235.4,22.304 C1285.855,30.748 1354.351,47.432 1440.886,72.354 L1441.191,104.352 L1.121,104.031 L0.457,34.035 Z"}]]]]])
 
+(defn dispatch
+  "Pre: takkes an event and args for the event
+  Post: returns a function which dispatches the event with the args passed"
+  [event & args]
+  #(re-frame/dispatch (apply conj [] event args)))
+
 (defn top-menu [{:keys [router current-route]}]
   [:div {:class (styles/menu)}
    [:nav {:class "navbar", :role "navigation", :aria-label "main navigation"}
@@ -49,8 +55,8 @@
     (let [active-menu? @(re-frame/subscribe [::subs/active-menu?])
           active-menu (when active-menu? "is-active")]
      [:div#menu.navbar-menu {:class active-menu}
-      [:a.navbar-item {:class active-menu :on-click  #(re-frame/dispatch [::push-state :home])} "Home"]
-      [:a.navbar-item {:class active-menu :on-click  #(re-frame/dispatch [::push-state :about])} "About"]
+      [:a.navbar-item {:class active-menu :on-click (dispatch ::push-state :home) #_(re-frame/dispatch [::push-state :home])} "Home"]
+      [:a.navbar-item {:class active-menu :on-click (dispatch ::push-state :about) #_(re-frame/dispatch [::push-state :about])} "About"]
       [:a.navbar-item {:class active-menu :on-click #(re-frame/dispatch [::events/signout])} "Sign out"]]
      )
     ]])
@@ -231,7 +237,7 @@
               [:a.dropdown-item.is-active "Base Haggadah" ]]]])]
          [:div.field.is-grouped.is-grouped-right 
           [:a.button.mr-3 "Cancel"]
-          [:a.button {:class (styles/submit-button):data-testid :add-haggadah :on-click #(re-frame/dispatch [::events/add-haggadah
+          [:a.button {:class (styles/submit-button) :data-testid :add-haggadah :on-click #(re-frame/dispatch [::events/add-haggadah
                                                                                         (form-content "haggadah-title")
                                                                                          %])
                               :id "submit"} "Create"]]]]]]]))
