@@ -68,9 +68,20 @@
       first
       (= id)))
 
+(def coll-type
+  {:sedarim {:fn/has-class :sedarim}
+   :haggadot {:fn/has-class :haggadot}})
+
+(defn wait-for-collection
+  "Pre: takes a collection type
+  Post: waits until a collection of the same type is found on the page"
+  [coll]
+  (e/wait-visible driver (coll coll-type)))
+
 (defn wait-for-haggadot
   []
-  (e/wait-visible driver {:fn/has-class :haggadot}))
+  (wait-for-collection :haggadot))
+
 
 (t/deftest create-haggadah-test
   (t/testing "When the current user creates a new Haggadah and goes back to the dashboard, the Haggadah is listed first among the Haggadot and a new Haggadah with the same details is added to firestore"
