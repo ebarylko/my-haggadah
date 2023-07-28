@@ -156,7 +156,8 @@
          [:a.button.is-small.button  {:on-click (dispatch ::events/hide-seder-modal)} "Cancel"]]
         [:div.control 
          [:a.button.is-small {:class (styles/submit-button)
-                              :on-click (dispatch ::events/create-seder id (form-content "seder-title"))
+                              :on-click #_(dispatch ::events/create-seder id (form-content "seder-title"))
+                              #(re-frame/dispatch [::events/create-seder id (form-content "seder-title")])
                               :data-testid :submit} "Create"]]]]]
      [:button.modal-close.is-large]]))
 
@@ -175,7 +176,9 @@
           (str "Hello " @name ". Welcome. To make a new Haggadah, click the button to your right. To share and edit your existing Haggadah, look at your Haggadot below ")]])
       [:div.pl-6.buttons.is-right
        [:a.button.is-smalll.is-pulled-right.mt-2 {:data-testid :create-haggadah
-                                                        :on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create Haggadah"]]
+                                                  :on-click
+                                                  (dispatch ::push-state :haggadah-creation)
+                                                  #_#(re-frame/dispatch [::push-state :haggadah-creation])}   "Create Haggadah"]]
       [:div
        [seder-popup]
        [:h1.is-size-3
