@@ -30,7 +30,7 @@ List the file changed, and note the changes applied to the file. Do this for all
 
 ## Changing workflows
 
-If a workflow is changed, run `act pulll_request` to see if the change to the workflow works correctly. 
+If a workflow is changed, run `act pull_request` to see if the change to the workflow works correctly. 
 
 The container will be run without access to the local cache, leading to longer completion times. 
 
