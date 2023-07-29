@@ -41,7 +41,7 @@
   "Pre: takkes an event and args for the event
   Post: returns a function which dispatches the event with the args passed"
   [event & args]
-  #(re-frame/dispatch (apply conj [] event args)))
+  (fn [_] (re-frame/dispatch (apply conj [] event args))))
 
 
 (defn top-menu [{:keys [router current-route]}]
@@ -211,7 +211,8 @@
    [:div.container.has-text-centered.pt-3
     [:div.pb-5
      "Your Haggadah is ready. Please click the button below to return to the dashboard and see it"]
-    [:div [:a.button.is-focused.is-link {:data-testid :return :on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]]]])
+    [:div [:a.button.is-focused.is-link {:data-testid :return
+                                         :on-click (dispatch ::push-state :dashboard)} "Return to dashboard"]]]])
 
 
 
@@ -242,9 +243,9 @@
               [:a.dropdown-item.is-active "Base Haggadah" ]]]])]
          [:div.field.is-grouped.is-grouped-right 
           [:a.button.mr-3 "Cancel"]
-          [:a.button {:class (styles/submit-button) :data-testid :add-haggadah :on-click #(re-frame/dispatch [::events/add-haggadah
-                                                                                        (form-content "haggadah-title")
-                                                                                         %])
+          [:a.button {:class (styles/submit-button)
+                      :data-testid :add-haggadah
+                      :on-click #(re-frame/dispatch [::events/add-haggadah (form-content "haggadah-title") %])
                               :id "submit"} "Create"]]]]]]]))
 
 (defn haggadah-view-panel
