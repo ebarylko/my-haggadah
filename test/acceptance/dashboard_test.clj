@@ -165,7 +165,7 @@
     (map id-and-title sedarim)))
 
 (t/deftest create-seder-test
-  (t/testing "When the current user has a Haggadah and creates a Seder which uses that Haggadah, a new Seder with the same Haggadah will appear in the user's collection of Sedarim in firestore"
+  (t/testing "When the current user has a Haggadah and creates a Seder which uses that Haggadah, a new Seder with the same Haggadah will appear in the user's collection of Sedarim"
     (let [id (c/fs-store-haggadah {:title "Haggadah 1"
                                    :type "haggadah"
                                    :content [{:type "bracha" :title "hello" :text "bracha"}]}
