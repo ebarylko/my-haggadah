@@ -89,6 +89,43 @@
 
 
 (re-frame/reg-event-fx
+ ::fetch-sedarim
+ (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
+   (if (:uid db)
+    {::query! {:path ["users" (:uid db) "seders"]
+               :order-by #(fire/query % (fire/orderBy "createdAt" "desc"))
+               :on-success (keyword->func on-success)
+               :on-error (keyword->func on-error)}}
+    {})))
+
+(re-frame/reg-event-db
+ ::create-seder-modal
+ (fn [db [_ id]]
+   (assoc db :seder-modal id)))
+
+(re-frame/reg-event-db
+ ::hide-seder-modal
+ (fn [db [_]]
+   (dissoc db :seder-modal)))
+
+(re-frame/reg-event-fx
+ ::seder-success
+ (fn [{:keys [db]} [_ seder]]
+   {:db db
+    :fx [[:dispatch [::fetch-sedarim {:on-success [::set-collection :sedarim]}]]
+         [:dispatch [::hide-seder-modal]]]}))
+
+
+(re-frame/reg-event-fx
+ ::create-seder
+ (fn [{:keys [db]} [_ haggadah-id title]]
+   {::add-doc! {:document-path ["users" (:uid db) "seders"]
+                :content {:haggadah-path (clojure.string/join "/" ["users" (:uid db) "haggadot" haggadah-id])
+                          :title title
+                          :createdAt (js/Date.)}
+                :on-success #(re-frame/dispatch [::seder-success %])}}))
+
+(re-frame/reg-event-fx
  ::signout
  (fn [_ [_]]
    {::signout! {:on-success #(re-frame/dispatch [::push-state :home %])
@@ -103,46 +140,47 @@
 
 
 (def route-events
-  {:dashboard [::fetch-haggadot {:on-success ::set-haggadot}]
-   :haggadah-view [::fetch-haggadah {:on-success ::set-haggadah }]
-   :haggadah-edit [::fetch-haggadah {:on-success ::set-haggadah }]})
+  {:dashboard [[::fetch-haggadot {:on-success [::set-collection :haggadot ]}]
+               [::fetch-sedarim {:on-success [::set-collection :sedarim]}]]
+   :haggadah-view [[::fetch-haggadah {:on-success ::set-haggadah }]]
+   :haggadah-edit [[::fetch-haggadah {:on-success ::set-haggadah }]]})
 
-(re-frame/reg-event-db
- ::do-nothing
- (fn [db [_]]
-   db))
+
+(defn setup-events
+  "Pre: takes a collection of events
+  Post: returns a collection of events waiting to be dispatched"
+  [events]
+  (mapv (fn [event] [:dispatch event]) events))
 
 (re-frame/reg-event-fx
  ::store-user-info
  (fn [{:keys [db]}[_ user]]
    (if user 
      (let [route (get-in db [:current-route :data :name])
-           fx (get route-events route [])
-           user-db (:db db)]
+           fx (->> (get route-events route [])
+                setup-events)]
        {:db (-> db
                 (assoc :name (.-email user)  :uid (.-uid user) :user :registered))
-        :fx [[:dispatch fx]]})
+        :fx fx})
      {:db (assoc db :name nil :uid nil :user :unregistered)})))
 
+(re-frame/reg-fx
+ ::add-doc!
+ (fn [{:keys [document-path content on-success on-error] :or {on-error ::error }}]
+   (-> (firestore/instance)
+       (fire/collection (clojure.string/join "/" document-path))
+       (fire/addDoc (clj->js content))
+       (.then on-success)
+       (.catch on-error))))
 
 
 (re-frame/reg-event-fx
  ::add-haggadah
  (fn [{:keys [db]} [_ title]]
-   {::add-haggadah! {:path ["users" (:uid db) "haggadot"]
-                     :haggadah (assoc dsl/default-haggadah :title title :createdAt (js/Date.))
-                     :on-success (re-frame/dispatch [::push-state :haggadah-success])
-                     :on-error (keyword->func ::error)}}))
-
-(re-frame/reg-fx
- ::add-haggadah!
- (fn [{:keys [path haggadah on-success on-error]}]
-   (-> (firestore/instance)
-       (fire/collection (clojure.string/join "/" path))
-       (fire/addDoc (clj->js haggadah))
-       (.then on-success)
-       (.catch on-error))))
-
+   {::add-doc! {:document-path ["users" (:uid db) "haggadot"]
+                :content (assoc dsl/default-haggadah :title title :createdAt (js/Date.))
+                :on-success #(re-frame/dispatch [::push-state :haggadah-success])
+                :on-error (keyword->func ::error)}}))
 
 (re-frame/reg-event-fx
  ::login
@@ -201,6 +239,17 @@
   Post: triggers an event which stores the user info "
   [user]
   (re-frame/dispatch [::store-user-info user]))
+
+(re-frame/reg-event-db
+ ::set-collection
+ (fn [db [_ field snap]]
+   (let [docs (->> snap (.-docs) js->clj)
+         ids (map #(.-id %) docs)]
+     (assoc db field
+            (->> docs
+                 (map #(.data %))
+                 (map #(js->clj % :keywordize-keys true))
+                 (map #(assoc %2 :id %1) ids))))))
 
 (re-frame/reg-event-db
  ::set-haggadot

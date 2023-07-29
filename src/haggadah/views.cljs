@@ -37,6 +37,13 @@
          [:g {:transform "translate(-4.000000, 76.000000)", :fill "#FFFFFF", :fill-rule "nonzero"}
           [:path {:d "M0.457,34.035 C57.086,53.198 98.208,65.809 123.822,71.865 C181.454,85.495 234.295,90.29 272.033,93.459 C311.355,96.759 396.635,95.801 461.025,91.663 C486.76,90.01 518.727,86.372 556.926,80.752 C595.747,74.596 622.372,70.008 636.799,66.991 C663.913,61.324 712.501,49.503 727.605,46.128 C780.47,34.317 818.839,22.532 856.324,15.904 C922.689,4.169 955.676,2.522 1011.185,0.432 C1060.705,1.477 1097.39,3.129 1121.236,5.387 C1161.703,9.219 1208.621,17.821 1235.4,22.304 C1285.855,30.748 1354.351,47.432 1440.886,72.354 L1441.191,104.352 L1.121,104.031 L0.457,34.035 Z"}]]]]])
 
+(defn dispatch
+  "Pre: takkes an event and args for the event
+  Post: returns a function which dispatches the event with the args passed"
+  [event & args]
+  (fn [_] (re-frame/dispatch (apply conj [] event args))))
+
+
 (defn top-menu [{:keys [router current-route]}]
   [:div {:class (styles/menu)}
    [:nav {:class "navbar", :role "navigation", :aria-label "main navigation"}
@@ -49,9 +56,9 @@
     (let [active-menu? @(re-frame/subscribe [::subs/active-menu?])
           active-menu (when active-menu? "is-active")]
      [:div#menu.navbar-menu {:class active-menu}
-      [:a.navbar-item {:class active-menu :on-click  #(re-frame/dispatch [::push-state :home])} "Home"]
-      [:a.navbar-item {:class active-menu :on-click  #(re-frame/dispatch [::push-state :about])} "About"]
-      [:a.navbar-item {:class active-menu :on-click #(re-frame/dispatch [::events/signout])} "Sign out"]]
+      [:a.navbar-item {:class active-menu :on-click (dispatch ::push-state :home) } "Home"]
+      [:a.navbar-item {:class active-menu :on-click (dispatch ::push-state :about) } "About"]
+      [:a.navbar-item {:class active-menu :on-click (dispatch ::events/signout)} "Sign out"]]
      )
     ]])
 
@@ -107,7 +114,10 @@
         [:div {:class "control"}
          [:button.is-small.button {:class (styles/cancel-button)}  "Cancel"]]
         [:div {:class "control"}
-         [:a.button.is-small {:class (styles/submit-button) :on-click  #(re-frame/dispatch [::events/login]) :data-testid :submit} "Submit"]]]
+         [:a.button.is-small {:class (styles/submit-button)
+                              :on-click (dispatch ::events/login)
+                              :data-testid :submit} "Submit"]]]
+
        ]]]]])
 
 (defn wave-bottom
@@ -122,11 +132,41 @@
          [:g {:transform "translate(-4.000000, 76.000000)", :fill "#FFFFFF", :fill-rule "nonzero"}
           [:path {:d "M0.457,34.035 C57.086,53.198 98.208,65.809 123.822,71.865 C181.454,85.495 234.295,90.29 272.033,93.459 C311.355,96.759 396.635,95.801 461.025,91.663 C486.76,90.01 518.727,86.372 556.926,80.752 C595.747,74.596 622.372,70.008 636.799,66.991 C663.913,61.324 712.501,49.503 727.605,46.128 C780.47,34.317 818.839,22.532 856.324,15.904 C922.689,4.169 955.676,2.522 1011.185,0.432 C1060.705,1.477 1097.39,3.129 1121.236,5.387 C1161.703,9.219 1208.621,17.821 1235.4,22.304 C1285.855,30.748 1354.351,47.432 1440.886,72.354 L1441.191,104.352 L1.121,104.031 L0.457,34.035 Z"}]]]]])
 
+(defn form-content
+  "Pre: takes an id for a form field
+  Post: returns the text of the field if it exists, nil otherwise"
+  [id]
+  (-> (.getElementById js/document id)
+      (.-value)))
+
+(defn seder-popup
+  []
+  (let [id @(re-frame/subscribe [::subs/seder-modal])
+        active (when id "is-active")]
+    [:div.modal {:class active}
+     [:div.modal-background]
+     [:div.modal-content [:form.box
+                          [:div.text-centered.pb-2
+                           "Please enter the title of the Seder"]
+                          [:div.field
+                           [:input#seder-title.input {:type "email" :defaultValue "The title of your Seder"}]]
+                          [:div.field.is-grouped.is-grouped-left 
+                           [:div.control 
+                            [:a.button.is-small.button  {:on-click (dispatch ::events/hide-seder-modal)} "Cancel"]]
+                           [:div.control 
+                            [:a.button.is-small {:class (styles/submit-button)
+                                                 :on-click #(re-frame/dispatch [::events/create-seder id (form-content "seder-title")])
+                                                 :data-testid :submit} "Create"]]]]]
+     [:button.modal-close.is-large]]))
+
+
 (defn dashboard-panel
   []
   [:div.page 
    [:div.container.is-large.hero.is-flex
     [:div.hero-body.pt-6
+     (let [haggadot @(re-frame/subscribe [::subs/haggadot])
+           sedarim @(re-frame/subscribe [::subs/sedarim])]
      [:div.pt-24.column
       (let [name (re-frame/subscribe [::subs/name])]
         [:div
@@ -134,27 +174,32 @@
           (str "Hello " @name ". Welcome. To make a new Haggadah, click the button to your right. To share and edit your existing Haggadah, look at your Haggadot below ")]])
       [:div.pl-6.buttons.is-right
        [:a.button.is-smalll.is-pulled-right.mt-2 {:data-testid :create-haggadah
-                                                        :on-click #(re-frame/dispatch [::push-state :haggadah-creation])}   "Create Haggadah"]]
+                                                  :on-click
+                                                  (dispatch ::push-state :haggadah-creation)}   "Create Haggadah"]]
       [:div
+       [seder-popup]
        [:h1.is-size-3
         "Haggadot created"]
-       (let [haggadot @(re-frame/subscribe [::subs/haggadot])]
          (when haggadot
            [:ul.haggadot 
             (for [{:keys [title id]} haggadot :when id] 
               ^{:key id}[:li.mb-2
                          [:a.haggadah-link {:data-testid :haggadah-link 
-                              :href (href :haggadah-view {:id id})} title]])]))] ]]]
+                                            :href (href :haggadah-view {:id id})} title]
+                         [:a.button.is-small {:data-testid :create-seder
+                                              :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]])]) [:h1.is-size-3.pt-3
+          "Sedarim"]
+         (when sedarim
+           [:ul.sedarim 
+            (for [{:keys [title id]} sedarim :when id] 
+              ^{:key id}[:li.mb-2
+                         [:a.seder-link.mr-2 {:data-testid id} title]
+                         [:a.button.is-small "Activate Seder"]])]
+         )]])]]
    [wave-bottom]])
 
 
 
-(defn form-content
-  "Pre: takes an id for a form field
-  Post: returns the text of the field if it exists, nil otherwise"
-  [id]
-  (-> (.getElementById js/document id)
-      (.-value)))
 
 
 
@@ -164,7 +209,8 @@
    [:div.container.has-text-centered.pt-3
     [:div.pb-5
      "Your Haggadah is ready. Please click the button below to return to the dashboard and see it"]
-    [:div [:a.button.is-focused.is-link {:data-testid :return :on-click #(re-frame/dispatch [::push-state :dashboard])} "Return to dashboard"]]]])
+    [:div [:a.button.is-focused.is-link {:data-testid :return
+                                         :on-click (dispatch ::push-state :dashboard)} "Return to dashboard"]]]])
 
 
 
@@ -185,7 +231,7 @@
                 expand (when dropdown? "is-active")]
            [:div.dropdown {:class expand}
             [:div {:class "dropdown-trigger"}
-             [:button.button {:readonly true
+             [:button.button {:readOnly true
                               :aria-haspopup "true", :aria-controls "dropdown-menu"}
               [:span "Base Haggadah"]
               [:span {:class "icon is-small"}
@@ -195,9 +241,9 @@
               [:a.dropdown-item.is-active "Base Haggadah" ]]]])]
          [:div.field.is-grouped.is-grouped-right 
           [:a.button.mr-3 "Cancel"]
-          [:a.button {:class (styles/submit-button):data-testid :add-haggadah :on-click #(re-frame/dispatch [::events/add-haggadah
-                                                                                        (form-content "haggadah-title")
-                                                                                         %])
+          [:a.button {:class (styles/submit-button)
+                      :data-testid :add-haggadah
+                      :on-click #(re-frame/dispatch [::events/add-haggadah (form-content "haggadah-title") %])
                               :id "submit"} "Create"]]]]]]]))
 
 (defn haggadah-view-panel

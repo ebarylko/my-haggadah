@@ -10,7 +10,11 @@
    [haggadah.events :as events]))
 
 
-
+(re-frame/reg-event-fx
+ ::run-events
+ (fn [{:keys [db]} [_ events]]
+   {:db db
+    :fx (events/setup-events events)}))
 
 (def routes
   [
@@ -28,12 +32,11 @@
     ["" {:name :dashboard
          :view views/dashboard-panel
          :link-text  "Submit"
-        :controllers [{:start (fn [_] (re-frame/dispatch (:dashboard events/route-events)))}]}]
+        :controllers [{:start (fn [_] (re-frame/dispatch [::run-events (:dashboard events/route-events)]))}]}]
     ["/:id" {:name :haggadah-view
              :view views/haggadah-view-panel
              :link-text "haggadah"
-             :controllers [{:start (fn []
-                                     (re-frame/dispatch (:haggadah-view events/route-events)))}]}]]
+             :controllers [{:start (fn [] (re-frame/dispatch [::run-events (:haggadah-view events/route-events)]))}]}]]
    ["/haggadah-creation"
     ["" {:name :haggadah-creation
          :view views/haggadah-creation-panel}]

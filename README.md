@@ -30,11 +30,15 @@ List the file changed, and note the changes applied to the file. Do this for all
 
 ## Changing workflows
 
-If a workflow is changed, run `act pulll_request` to see if the change to the workflow works correctly. 
+If a workflow is changed, run `act pull_request` to see if the change to the workflow works correctly. 
 
 The container will be run without access to the local cache, leading to longer completion times. 
 
 For quicker completion times, commit changes and push to remote, which will run the github actions with the local cache.
+
+### google-chrome-stable version used in workflow
+-
+-The version used for google chrome is hardcoded. When there is an update to the latest version of chromedriver, you will need to change the version of google chrome so it matches the major version of chromedriver.
 
 ## Runnning firebase emulators
 
