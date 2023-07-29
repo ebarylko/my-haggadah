@@ -16,7 +16,6 @@
    {:db db
     :fx (events/setup-events events)}))
 
-
 (def routes
   [
    ["/" {:name      :home
