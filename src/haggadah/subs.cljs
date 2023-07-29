@@ -61,3 +61,8 @@
  ::seder-modal
  (fn [db _]
    (:seder-modal db)))
+
+(re-frame/reg-sub
+ ::seder-id
+ (fn [db _]
+   (:seder-id db)))
