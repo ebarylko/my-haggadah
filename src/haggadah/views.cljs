@@ -145,20 +145,18 @@
         active (when id "is-active")]
     [:div.modal {:class active}
      [:div.modal-background]
-     [:div.modal-content
-      [:form.box
-       [:div.text-centered.pb-2
-        "Please enter the title of the Seder"]
-       [:div.field
-        [:input#seder-title.input {:type "email" :defaultValue "The title of your Seder"}]]
-       [:div.field.is-grouped.is-grouped-left 
-        [:div.control 
-         [:a.button.is-small.button  {:on-click (dispatch ::events/hide-seder-modal)} "Cancel"]]
-        [:div.control 
-         [:a.button.is-small {:class (styles/submit-button)
-                              :on-click #_(dispatch ::events/create-seder id (form-content "seder-title"))
-                              #(re-frame/dispatch [::events/create-seder id (form-content "seder-title")])
-                              :data-testid :submit} "Create"]]]]]
+     [:div.modal-content [:form.box
+                          [:div.text-centered.pb-2
+                           "Please enter the title of the Seder"]
+                          [:div.field
+                           [:input#seder-title.input {:type "email" :defaultValue "The title of your Seder"}]]
+                          [:div.field.is-grouped.is-grouped-left 
+                           [:div.control 
+                            [:a.button.is-small.button  {:on-click (dispatch ::events/hide-seder-modal)} "Cancel"]]
+                           [:div.control 
+                            [:a.button.is-small {:class (styles/submit-button)
+                                                 :on-click #(re-frame/dispatch [::events/create-seder id (form-content "seder-title")])
+                                                 :data-testid :submit} "Create"]]]]]
      [:button.modal-close.is-large]]))
 
 
