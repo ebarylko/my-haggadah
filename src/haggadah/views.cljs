@@ -166,30 +166,30 @@
   Post: returns the absolute url of the link"
   [id]
   (-> (.getElementById js/document id)
-      (.getAttribute :href)))
+      (.-href)))
 
 (defn seder-link-popup
   []
   (let [#_#_#_#_id @(re-frame/subscribe [::subs/seder-activation])
         active (when id "is-active")
-        uid @(re-frame/subscribe [::subs/uid])
         seder-id @(re-frame/subscribe [::subs/seder-id])
-        #_#_#_#_seder-link @(re-frame/subscribe [::subs/seder-link])
-        active-link (when seder-link "is-active")
-        ]
+        seder-link @(re-frame/subscribe [::subs/seder-link])
+        active-link (when-not seder-link "is-hidden")]
+    (println (-> js/window.location.host
+                 #_#_(.location)
+                 (.hostname)))
+    (println (href :login))
     [:div.modal.is-active #_{:class active}
      [:div.modal-background]
      [:div.modal-content [:div.box
-                          [:a {:on-click #(re-frame/dispatch [::events/show-link (link-content "share-seder")])}
-                           "Please click this sentence to generate the link for your seder"]
-                          [:div.text-centered.pb-2
-                           "Please use the link below to share your seder"]
-                          [:div.share-seder
-                           [:a#share-seder {:id "share-seder" :href (href :login)}
-                            "Seder"
-                            
-                            ]
-                           (href :view-seder {:uid uid :seder-id seder-id})]
+                          [:div
+                           [:a {:on-click #(re-frame/dispatch [::events/show-link (link-content "share-seder")])}
+                            "Please click this to generate the link for your seder"]]
+                          [:a#share-seder {:class active-link
+                                           :id "share-seder"
+                                           :href (href :login)}
+                           seder-link]
+                          
                           [:div.field.is-grouped.is-grouped-left 
                            [:div.control 
                             [:a.button.is-small.button  {:on-click (dispatch ::events/hide-seder-modal)} "Cancel"]]]]] [:button.modal-close.is-large]]))

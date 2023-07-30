@@ -125,6 +125,12 @@
                           :createdAt (js/Date.)}
                 :on-success #(re-frame/dispatch [::seder-success %])}}))
 
+(re-frame/reg-event-db
+ ::show-link
+ (fn [db [_ link]]
+   (println "here is the link " link)
+   (assoc db :seder-link link)))
+
 (re-frame/reg-event-fx
  ::signout
  (fn [_ [_]]
