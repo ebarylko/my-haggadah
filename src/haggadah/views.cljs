@@ -159,7 +159,10 @@
                                                  :data-testid :submit} "Create"]]]]]
      [:button.modal-close.is-large]]))
 
-(href :view-seder)
+(href :view-seder {:seder-id 1} )
+(href :haggadah-view #_{:id 1})
+(href :hi)
+(href :dashboard)
 
 (defn link-content
   "Pre: takes the id of a link
@@ -167,6 +170,8 @@
   [id]
   (-> (.getElementById js/document id)
       (.-href)))
+
+(href :view-seder {:seder-id 1})
 
 (defn seder-link-popup
   []
