@@ -182,11 +182,18 @@
 (re-frame/reg-fx
  ::add-doc!
  (fn [{:keys [document-path content on-success on-error] :or {on-error ::error }}]
-   (-> (firestore/instance)
-       (fire/collection (clojure.string/join "/" document-path))
-       (fire/addDoc (clj->js content))
-       (.then on-success)
-       (.catch on-error))))
+   (let [doc (-> (firestore/instance)
+                 (fire/collection (clojure.string/join "/" document-path))
+                 (fire/addDoc (clj->js content)))
+         id #(-> doc
+                 (.then (.-id %))
+                 (.catch))]
+     (println "This is the id " id "The doc ")
+     (-> doc #_(fire/updateDoc doc (clj->js {:id id}))
+      (.then on-success)
+      (.catch on-error)
+      )
+     )))
 
 
 (re-frame/reg-event-fx
