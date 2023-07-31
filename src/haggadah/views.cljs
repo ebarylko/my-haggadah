@@ -177,10 +177,7 @@
         seder-link @(re-frame/subscribe [::subs/seder-link])
         active-link (when-not seder-link "is-hidden")
         host js/window.location.host]
-    (println (-> js/window.location.host
-                 #_#_(.location)
-                 (.hostname)))
-    [:div.modal.is-active #_{:class active}
+    [:div.modal  {:class active}
      [:div.modal-background]
      [:div.modal-content [:div.box
                           [:div
@@ -188,11 +185,11 @@
                             "Please click this to generate the link for your seder"]]
                           [:a#share-seder {:class active-link
                                            :id "share-seder"
-                                           :href (href :seder-view seder-id)}
+                                           :href (href :seder-view {:seder-id seder-id })}
                            seder-link]
                           [:div.field.is-grouped.is-grouped-left 
                            [:div.control 
-                            [:a.button.is-small.button  {:on-click (dispatch ::events/hide-seder-modal)} "Cancel"]]]]] [:button.modal-close.is-large]]))
+                            [:a.button.is-small.button  {:on-click (dispatch ::events/hide-link-modal)} "Cancel"]]]]] [:button.modal-close.is-large]]))
 
 (defn seder-view-panel
   []

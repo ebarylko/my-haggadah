@@ -133,7 +133,12 @@
 (re-frame/reg-event-db
  ::show-link
  (fn [db [_ id]]
-   (assoc db :seder-id id)))
+   (assoc db :seder-link id)))
+
+(re-frame/reg-event-db
+ ::hide-link-modal
+ (fn [db [_]]
+   (dissoc db :seder-id)))
 
 (re-frame/reg-event-fx
  ::signout
