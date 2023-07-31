@@ -159,10 +159,6 @@
                                                  :data-testid :submit} "Create"]]]]]
      [:button.modal-close.is-large]]))
 
-(href :view-seder {:seder-id 1} )
-(href :haggadah-view #_{:id 1})
-(href :hi)
-(href :dashboard)
 
 (defn link-content
   "Pre: takes the id of a link
@@ -171,33 +167,36 @@
   (-> (.getElementById js/document id)
       (.-href)))
 
-(href :view-seder {:seder-id 1})
+(href :seder-view {:seder-id 1})
+(href :haggadah-success)
 
 (defn seder-link-popup
   []
-  (let [#_#_#_#_id @(re-frame/subscribe [::subs/seder-activation])
-        active (when id "is-active")
-        seder-id @(re-frame/subscribe [::subs/seder-id])
+  (let [seder-id @(re-frame/subscribe [::subs/seder-id])
+        active (when seder-id "is-active")
         seder-link @(re-frame/subscribe [::subs/seder-link])
-        active-link (when-not seder-link "is-hidden")]
+        active-link (when-not seder-link "is-hidden")
+        host js/window.location.host]
     (println (-> js/window.location.host
                  #_#_(.location)
                  (.hostname)))
-    (println (href :login))
     [:div.modal.is-active #_{:class active}
      [:div.modal-background]
      [:div.modal-content [:div.box
                           [:div
-                           [:a {:on-click #(re-frame/dispatch [::events/show-link (link-content "share-seder")])}
+                           [:a {:on-click #(re-frame/dispatch [::events/show-link (str host "/" seder-id)])}
                             "Please click this to generate the link for your seder"]]
                           [:a#share-seder {:class active-link
                                            :id "share-seder"
-                                           :href (href :login)}
+                                           :href (href :seder-view seder-id)}
                            seder-link]
-                          
                           [:div.field.is-grouped.is-grouped-left 
                            [:div.control 
                             [:a.button.is-small.button  {:on-click (dispatch ::events/hide-seder-modal)} "Cancel"]]]]] [:button.modal-close.is-large]]))
+
+(defn seder-view-panel
+  []
+  [:div "herllo therer3"])
 
 (defn dashboard-panel
   []
@@ -233,7 +232,7 @@
             (for [{:keys [title id]} sedarim :when id] 
               ^{:key id}[:li.mb-2
                          [:a.seder-link.mr-2 {:data-testid id} title]
-                         [:a.button.is-small "Activate Seder"]
+                         [:a.button.is-small {:on-click (dispatch ::events/link-modal id)}"Activate Seder"]
                         [seder-link-popup] ])]
          )]])]]
    [wave-bottom]])

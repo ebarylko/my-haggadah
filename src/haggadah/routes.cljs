@@ -18,36 +18,35 @@
 
 (def routes
   [
+   ["/seder"
+    ["/:seder-id" {:name  :seder-view
+                   :view views/seder-view-panel}]]
    ["/" {:name      :home
-        :view      views/home-panel
-        :link-text "Home"}]
+         :view      views/home-panel
+         :link-text "Home"}]
 
    ["/login" {:name      :login
-             :view      views/login-panel
-             :link-text "Log in"}]
+              :view      views/login-panel
+              :link-text "Log in"}]
    ["/about" {:name :about
-             :view views/about-panel
-             :link-text "about" }]
+              :view views/about-panel
+              :link-text "about" }]
    ["/dashboard"
     ["" {:name :dashboard
          :view views/dashboard-panel
          :link-text  "Submit"
-        :controllers [{:start (fn [_] (re-frame/dispatch [::run-events (:dashboard events/route-events)]))}]}]
+         :controllers [{:start (fn [_] (re-frame/dispatch [::run-events (:dashboard events/route-events)]))}]}]
     ["/:id" {:name :haggadah-view
              :view views/haggadah-view-panel
              :link-text "haggadah"
              :controllers [{:start (fn [] (re-frame/dispatch [::run-events (:haggadah-view events/route-events)]))}]}]]
+   
    ["/haggadah-creation"
     ["" {:name :haggadah-creation
          :view views/haggadah-creation-panel}]
     ["/success" {:name :haggadah-success
                  :view views/haggadah-success-panel}]]
-   ["/seder"
-    [""
-     {:name  :seder-view
-      :view views/home-panel}]]
-   ["/hi" {:name :hi
-           :view views/haggadah-view-panel}]])
+   ])
 
 
 (defn on-navigate [new-match]

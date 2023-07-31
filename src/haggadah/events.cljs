@@ -126,10 +126,14 @@
                 :on-success #(re-frame/dispatch [::seder-success %])}}))
 
 (re-frame/reg-event-db
+ ::link-modal
+ (fn [db [_ id]]
+   (assoc db :seder-id id)))
+
+(re-frame/reg-event-db
  ::show-link
- (fn [db [_ link]]
-   (println "here is the link " link)
-   (assoc db :seder-link link)))
+ (fn [db [_ id]]
+   (assoc db :seder-id id)))
 
 (re-frame/reg-event-fx
  ::signout
