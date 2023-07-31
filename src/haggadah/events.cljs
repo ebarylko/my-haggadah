@@ -214,6 +214,16 @@
        (.then (keyword->func on-success))
        (.catch (keyword->func on-error)))))
 
+
+(re-frame/reg-event-fx
+ ::fetch-seder
+ (fn [[db] [_ {:keys [seder-id on-success on-error] :or {on-error ::error }} ]]
+   (-> (firestore/instance)
+       (fire/collectionGroup "seders")
+       (fire/where  "id" "==" seder-id)
+       (.then (keyword->func on-success))
+       (.catch (keyword->func on-error)))))
+
 (re-frame/reg-event-db
  ::error
  (fn [db [_ error]]
