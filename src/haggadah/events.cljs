@@ -84,7 +84,7 @@
  (fn [{:keys [db]} [_ {:keys [on-success on-error] :or {on-error :error}}]]
    (let [id (get-in db [:current-route :path-params :id])]
      (when (:uid db)
-       {::fetch-doc {:path ["users" (:uid db) "haggadot" id]
+       {::fetch-doc {:path (clojure.string/join "/" ["users" (:uid db) "haggadot" id] )
                      :on-success (keyword->func on-success)
                      :on-error (keyword->func on-error)}}))))
 
@@ -214,7 +214,7 @@
  (fn [{:keys [path on-success on-error] :or {on-error ::error }}]
    (println "Here's the path" path)
    (-> (firestore/instance)
-       (fire/doc (clojure.string/join "/" path))
+       (fire/doc path)
        (fire/getDoc)
        (.then (keyword->func on-success))
        (.catch (keyword->func on-error)))))
@@ -225,9 +225,18 @@
  (fn [[db] [_ {:keys [seder-id on-success on-error] :or {on-error ::error }} ]]
    (-> (firestore/instance)
        (fire/collectionGroup "seders")
-       (fire/where (.documentId firebase.firestore.FieldPath) "==" seder-id)
+       (fire/where "id" "==" seder-id)
        (.then (keyword->func on-success))
        (.catch (keyword->func on-error)))))
+
+(re-frame/reg-event-db
+ ::set-seder
+ (fn [db [_ snap]]
+   (assoc db :seder
+          (-> snap
+              (. data)
+              (js->clj :keywordize-keys true)
+              dsl/render-haggadah))))
 
 (re-frame/reg-event-db
  ::error
