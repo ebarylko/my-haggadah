@@ -4,6 +4,7 @@
    [haggadah.fb.firestore :as firestore]
    ["firebase/firestore" :as fire]
    [haggadah.db :as db]
+   [firebase.firestore :as firebase-firestore]
    [haggadah.dsl :as dsl]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
    [haggadah.fb.auth :as auth]
@@ -184,16 +185,13 @@
  (fn [{:keys [document-path content on-success on-error] :or {on-error ::error }}]
    (let [doc (-> (firestore/instance)
                  (fire/collection (clojure.string/join "/" document-path))
-                 (fire/addDoc (clj->js content)))
-         id #(-> doc
-                 (.then (.-id %))
-                 (.catch))]
-     (println "This is the id " id "The doc ")
-     (-> doc #_(fire/updateDoc doc (clj->js {:id id}))
-      (.then on-success)
-      (.catch on-error)
-      )
-     )))
+                 (fire/addDoc (clj->js content))
+                 (.then (fn [doc]
+                          (let [id (.-id doc)
+                                path (.-path doc)]
+                            (-> (fire/updateDoc doc (clj->js {:id id}))
+                                (.then on-success)
+                                (.catch on-error))))))])))
 
 
 (re-frame/reg-event-fx
@@ -227,7 +225,7 @@
  (fn [[db] [_ {:keys [seder-id on-success on-error] :or {on-error ::error }} ]]
    (-> (firestore/instance)
        (fire/collectionGroup "seders")
-       (fire/where  "id" "==" seder-id)
+       (fire/where (.documentId firebase.firestore.FieldPath) "==" seder-id)
        (.then (keyword->func on-success))
        (.catch (keyword->func on-error)))))
 
