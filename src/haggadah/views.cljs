@@ -167,9 +167,6 @@
   (-> (.getElementById js/document id)
       (.-href)))
 
-(href :seder-view {:seder-id 1})
-(href :haggadah-success)
-
 (defn seder-link-popup
   []
   (let [seder-id @(re-frame/subscribe [::subs/seder-id])
