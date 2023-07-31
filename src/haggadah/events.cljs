@@ -138,7 +138,7 @@
 (re-frame/reg-event-db
  ::hide-link-modal
  (fn [db [_]]
-   (dissoc db :seder-id)))
+   (dissoc db :seder-id :seder-link)))
 
 (re-frame/reg-event-fx
  ::signout

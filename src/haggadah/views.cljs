@@ -175,13 +175,12 @@
   (let [seder-id @(re-frame/subscribe [::subs/seder-id])
         active (when seder-id "is-active")
         seder-link @(re-frame/subscribe [::subs/seder-link])
-        active-link (when-not seder-link "is-hidden")
-        host js/window.location.host]
+        active-link (when-not seder-link "is-hidden")]
     [:div.modal  {:class active}
      [:div.modal-background]
      [:div.modal-content [:div.box
                           [:div
-                           [:a {:on-click #(re-frame/dispatch [::events/show-link (str host "/" seder-id)])}
+                           [:a {:on-click #(re-frame/dispatch [::events/show-link (link-content "share-seder")])}
                             "Please click this to generate the link for your seder"]]
                           [:a#share-seder {:class active-link
                                            :id "share-seder"
