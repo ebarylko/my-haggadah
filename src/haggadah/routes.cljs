@@ -20,7 +20,13 @@
   [
    ["/seder"
     ["/:seder-id" {:name  :seder-view
-                   :view views/seder-view-panel}]]
+                   :view views/seder-view-panel
+                   :controllers [{:parameters {:path [:seder-id]}
+                                  :start (fn [params]
+                                           (let [seder-id (-> params :path :seder-id)]
+                                             (re-frame/dispatch [::events/fetch-seder {:on-success ::events/set-seder
+                                                                                       :seder-id seder-id}])))}
+                                 ]}]]
    ["/" {:name      :home
          :view      views/home-panel
          :link-text "Home"}]
