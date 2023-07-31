@@ -193,10 +193,7 @@
 (defn seder-view-panel
   []
   [:div
-   [:div "Welcome to the seder"]
-
-   ]
-  )
+   [:div "Welcome to the seder"]])
 
 (defn dashboard-panel
   []

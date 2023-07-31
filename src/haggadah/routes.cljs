@@ -101,7 +101,7 @@
                :haggadah-view views/haggadah-view-panel
                :haggadah-creation views/haggadah-creation-panel
                :haggadah-success views/haggadah-success-panel
-               #_#_:seder-view views/seder-view-panel
+               seder-view views/seder-view-panel
                views/home-panel)]
     [:div.main-container.is-flex.is-flex-direction-column
      [views/top-menu {:router router :current-route current-route}]
