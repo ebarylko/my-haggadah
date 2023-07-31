@@ -179,3 +179,27 @@
                               vals)
             haggadah-path (haggadah-path "user1" seder-id)]
         (t/is (= expected-haggadah-path haggadah-path))))))
+
+#_(t/deftest view-seder-test
+  (t/testing "When the current user has a Seder and copies the link to view the Seder and pastes it in the window, they should then see a welcome message and the Haggadah below"
+    (let [id (c/fs-store-haggadah {:title "Haggadah 1"
+                                   :type "haggadah"
+                                   :content [{:type "bracha" :title "hello" :text "bracha"}]}
+                                  "user1")]
+      (fs-store-seder "Seder title" id)
+      (c/home->dashboard driver)
+      (wait-for-sedarim)
+      (dashboard->first-seder)
+      (generate-seder-link)
+      (seder-link->seder)
+      (wait-for-seder)
+      (let [seder-title (seder-title)
+            haggadah-title (haggadah-title)
+            haggadah-content (haggadah-content)]
+        (t/are [x y] (= x y)
+          "Seder title" seder-title
+          "Haggadah 1" haggadah-title
+          "hello bracha" haggadah-content))
+       )
+     )
+    ))
