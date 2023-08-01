@@ -193,14 +193,23 @@
                                                :haggadah-path (clojure.string/join ["users" user "haggadot" id])}
                                               :createdAt (java.time.Instant/now))))
               (.get)
-              (.getId))]
-    (-> (FirestoreClient/getFirestore)
-                 (.collection "users")
-                 (.document user)
-                 (.collection "seders")
-                 (.document id)
-                 (.update {"id" id})
-                 (.get))))
+              (.getId))
+        update (-> (FirestoreClient/getFirestore)
+                   (.collection "users")
+                   (.document user)
+                   (.collection "seders")
+                   (.document id)
+                   (.update {"id" id})
+                   (.get))
+        seder-id (-> (FirestoreClient/getFirestore)
+                     (.collection "users")
+                     (.document user)
+                     (.collection "seders")
+                     (.document id)
+                     (.get)
+                     (.get)
+                     (.get "id"))]
+    [id seder-id]))
 
 
 (defn dashboard->first-seder
@@ -236,14 +245,14 @@
                                    :type "haggadah"
                                    :content [{:type "bracha" :title "hello" :text "bracha"}]}
                                   "user1")
-          changes (fs-store-seder "Seder title" "user1" id)]
-      ;; (println "The changes " changes)
-      ;; (c/home->dashboard driver)
-      ;; (wait-for-sedarim)
-      ;; (dashboard->first-seder)
-      ;; (gen-seder-link)
-      ;; (seder-link->seder)
-      ;; (wait-for-seder)
+          doc (fs-store-seder "Seder title" "user1" id)]
+      (println "The id of the seder " doc)
+      (c/home->dashboard driver)
+      (wait-for-sedarim)
+      (dashboard->first-seder)
+      (gen-seder-link)
+      (seder-link->seder)
+      (wait-for-seder)
       (let [#_#_#_#_#_#_seder-title (seder-title)
             haggadah-title (haggadah-title)
             haggadah-content (haggadah-content)]
