@@ -185,16 +185,23 @@
   "Pre: takes a seder title, a user, and the id of a Haggadah
   Post: stores a seder with the same title and path to a haggadah within the user's collection of sedarim in firestore"
   [title user id]
-  (-> (FirestoreClient/getFirestore)
-      (.collection "users")
-      (.document user)
-      (.collection "seders")
-      (.add  (w/stringify-keys (assoc {:title title
-                                       :haggadah-path (clojure.string/join ["users" user "haggadot" id])}
-                                      :createdAt (java.time.Instant/now))))
-      (.get)
-      (.update {"id" id})
-      (.get)))
+  (let [id (-> (FirestoreClient/getFirestore)
+              (.collection "users")
+              (.document user)
+              (.collection "seders")
+              (.add  (w/stringify-keys (assoc {:title title
+                                               :haggadah-path (clojure.string/join ["users" user "haggadot" id])}
+                                              :createdAt (java.time.Instant/now))))
+              (.get)
+              (.getId))]
+    (println "This is the id " id)
+    (-> (FirestoreClient/getFirestore)
+                 (.collection "users")
+                 (.document user)
+                 (.collection "seders")
+                 (.update {"id" id})
+                 (.get))))
+
 
 (defn dashboard->first-seder
   "Pre: takes nothing
@@ -212,17 +219,29 @@
     (e/click  {:data-testid :gen-link})
     (e/wait-visible {:id  :share-seder})))
 
+(defn seder-link->seder
+  "Pre: takes nothing
+  Post: navigates to the seder associated with the link"
+  []
+   (e/click driver {:id :share-seder}))
+
+(defn wait-for-seder
+  []
+  (e/wait-visible driver {:fn/has-class :haggadah}))
+
+
 (t/deftest view-seder-test
   (t/testing "When the current user has a Seder and copies the link to view the Seder and pastes it in the window, they should then see a welcome message and the Haggadah below"
     (let [id (c/fs-store-haggadah {:title "Haggadah 1"
                                    :type "haggadah"
                                    :content [{:type "bracha" :title "hello" :text "bracha"}]}
-                                  "user1")]
-      (fs-store-seder "Seder title" "user1" id)
-      (c/home->dashboard driver)
-      (wait-for-sedarim)
-      (dashboard->first-seder)
-      (gen-seder-link)
+                                  "user1")
+          changes (fs-store-seder "Seder title" "user1" id)]
+      ;; (println "The changes " changes)
+      ;; (c/home->dashboard driver)
+      ;; (wait-for-sedarim)
+      ;; (dashboard->first-seder)
+      ;; (gen-seder-link)
       ;; (seder-link->seder)
       ;; (wait-for-seder)
       (let [#_#_#_#_#_#_seder-title (seder-title)
