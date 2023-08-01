@@ -193,16 +193,24 @@
                                        :haggadah-path (clojure.string/join ["users" user "haggadot" id])}
                                       :createdAt (java.time.Instant/now))))
       (.get)
-      (.update "id" id)
+      (.update {"id" id})
       (.get)))
 
 (defn dashboard->first-seder
   "Pre: takes nothing
   Post: navigates to the first seder on the dashboard"
   []
-  (e/click driver {:data-testid :activate-seder})
-  (e/wait-visible {:data-testid :gen-link}))
+  (doto driver
+   (e/click {:data-testid :activate-seder})
+   (e/wait-visible {:data-testid :gen-link})))
 
+(defn gen-seder-link
+  "Pre: takes nothing
+  Post: clicks on the sentence which will generate the link for the seder"
+  []
+  (doto driver
+    (e/click  {:data-testid :gen-link})
+    (e/wait-visible {:id  :share-seder})))
 
 (t/deftest view-seder-test
   (t/testing "When the current user has a Seder and copies the link to view the Seder and pastes it in the window, they should then see a welcome message and the Haggadah below"
@@ -211,10 +219,10 @@
                                    :content [{:type "bracha" :title "hello" :text "bracha"}]}
                                   "user1")]
       (fs-store-seder "Seder title" "user1" id)
-      ;; (c/home->dashboard driver)
-      ;; (wait-for-sedarim)
-      ;; (dashboard->first-seder)
-      ;; (generate-seder-link)
+      (c/home->dashboard driver)
+      (wait-for-sedarim)
+      (dashboard->first-seder)
+      (gen-seder-link)
       ;; (seder-link->seder)
       ;; (wait-for-seder)
       (let [#_#_#_#_#_#_seder-title (seder-title)
