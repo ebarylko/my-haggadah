@@ -189,8 +189,12 @@
 
 (defn seder-view-panel
   []
-  [:div
-   [:div "Welcome to the seder"]])
+  (let [{:keys [title haggadah]} @(re-frame/subscribe [::subs/seder])]
+   [:div
+    [:div "Welcome to the seder"]
+    [:div title]
+    [:div haggadah]])
+  )
 
 (defn dashboard-panel
   []

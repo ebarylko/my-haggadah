@@ -24,7 +24,7 @@
                    :controllers [{:parameters {:path [:seder-id]}
                                   :start (fn [params]
                                            (let [seder-id (-> params :path :seder-id)]
-                                             (re-frame/dispatch [::events/fetch-seder {:on-success ::events/set-seder
+                                             (re-frame/dispatch [::events/fetch-seder {:on-success ::events/haggadah-from-seder
                                                                                        :seder-id seder-id}])))}
                                  ]}]]
    ["/" {:name      :home

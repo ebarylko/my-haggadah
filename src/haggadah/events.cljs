@@ -43,7 +43,6 @@
        (.then (fn [user]  (on-success (.-user user))))
        (.catch (fn [error]  (on-error error) )))))
 
-
 (defn ordered-coll
   "Pre: takes a path to a collection and a function which will order the collection
   Posts: returns the collection or an error"
@@ -52,7 +51,7 @@
       (fire/collection  (clojure.string/join "/" path))
       order-by
       (fire/getDocs)))
- 
+
 (re-frame/reg-fx
  ::query!
  (fn [{:keys [path on-success on-error order-by] :or {order-by identity}}]
@@ -219,24 +218,41 @@
        (.then (keyword->func on-success))
        (.catch (keyword->func on-error)))))
 
+(re-frame/reg-fx
+ ::fetch-seder!
+ (fn [{:keys [seder-id on-success on-error]}]
+   (-> (firestore/instance)
+       (fire/collectionGroup "seders")
+       (fire/query (fire/where "id" "==" seder-id))
+       (fire/getDocs)
+       (.then #(js/console.log "The success " ) #_(keyword->func on-success))
+       (.catch #(println "The error " ) #_(keyword->func on-error))
+       )))
+
 
 (re-frame/reg-event-fx
  ::fetch-seder
- (fn [[db] [_ {:keys [seder-id on-success on-error] :or {on-error ::error }} ]]
-   (-> (firestore/instance)
-       (fire/collectionGroup "seders")
-       (fire/where "id" "==" seder-id)
-       (.then (keyword->func on-success))
-       (.catch (keyword->func on-error)))))
+ (fn [{:keys [seder-id on-success on-error] :or {on-error ::error}}]
+   {::fetch-seder! {:seder-id seder-id :on-success on-success :on-error on-error}}))
+
 
 (re-frame/reg-event-db
  ::set-seder
+ (fn [[db] [_ seder-title haggadah-snap]]
+   (let [haggadah (-> haggadah-snap
+                      (. data)
+                      (js->clj :keywordize-keys true)
+                      dsl/render-haggadah)]
+     (assoc db :seder {:title seder-title :haggadah haggadah}))))
+
+(re-frame/reg-event-fx
+ ::haggadah-from-seder
  (fn [db [_ snap]]
-   (assoc db :seder
-          (-> snap
-              (. data)
-              (js->clj :keywordize-keys true)
-              dsl/render-haggadah))))
+   (let [{:keys [haggadah-path title]} (-> snap
+                                           (. data)
+                                           (js->clj :keywordize-keys true))]
+     {::fetch-doc {:path haggadah-path
+                   :on-success [::set-seder title]}})))
 
 (re-frame/reg-event-db
  ::error
