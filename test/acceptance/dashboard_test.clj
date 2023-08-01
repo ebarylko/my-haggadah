@@ -252,8 +252,10 @@
       (dashboard->first-seder)
       (gen-seder-link)
       (seder-link->seder)
+      (e/wait 9)
       (wait-for-seder)
-      (let [#_#_#_#_#_#_seder-title (seder-title)
+      (let [
+            #_#_#_#_#_#_seder-title (seder-title)
             haggadah-title (haggadah-title)
             haggadah-content (haggadah-content)]
         (t/are [x y] (= x y)

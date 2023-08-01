@@ -186,8 +186,7 @@
                  (fire/collection (clojure.string/join "/" document-path))
                  (fire/addDoc (clj->js content))
                  (.then (fn [doc]
-                          (let [id (.-id doc)
-                                path (.-path doc)]
+                          (let [id (.-id doc)]
                             (-> (fire/updateDoc doc (clj->js {:id id}))
                                 (.then on-success)
                                 (.catch on-error))))))])))
@@ -221,6 +220,7 @@
 (re-frame/reg-fx
  ::fetch-seder!
  (fn [{:keys [seder-id on-success on-error]}]
+   (js/console.log "The id "seder-id)
    (-> (firestore/instance)
        (fire/collectionGroup "seders")
        (fire/query (fire/where "id" "==" seder-id))
@@ -252,7 +252,8 @@
                                             (.-docs)
                                             js->clj
                                             (map #(.data %))
-                                            (map #(js->clj % :keywordize-keys true)))]
+                                            (map #(js->clj % :keywordize-keys true))
+                                            first)]
      {::fetch-doc {:path haggadah-path
                    :on-success [::set-seder title]}})))
 
