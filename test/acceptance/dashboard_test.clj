@@ -194,11 +194,11 @@
                                               :createdAt (java.time.Instant/now))))
               (.get)
               (.getId))]
-    (println "This is the id " id)
     (-> (FirestoreClient/getFirestore)
                  (.collection "users")
                  (.document user)
                  (.collection "seders")
+                 (.document id)
                  (.update {"id" id})
                  (.get))))
 
