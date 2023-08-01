@@ -190,11 +190,11 @@
 (defn seder-view-panel
   []
   (let [{:keys [title haggadah]} @(re-frame/subscribe [::subs/seder])]
-   [:div
-    [:div "Welcome to the seder"]
-    [:div title]
-    [:div haggadah]])
-  )
+    [:div.page.is-flex.is-flex-grow-1 {:class (styles/seder-view)}
+     [:section.container.is-flex
+      [:div.box.is-flex-grow-1 {:data-testid :seder}
+       [:div.title title]
+       [:div haggadah]]]]))
 
 (defn dashboard-panel
   []

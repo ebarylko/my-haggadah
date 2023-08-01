@@ -225,20 +225,20 @@
        (fire/collectionGroup "seders")
        (fire/query (fire/where "id" "==" seder-id))
        (fire/getDocs)
-       (.then #(js/console.log "The success " ) #_(keyword->func on-success))
-       (.catch #(println "The error " ) #_(keyword->func on-error))
+       (.then (keyword->func on-success))
+       (.catch (keyword->func on-error))
        )))
 
 
 (re-frame/reg-event-fx
  ::fetch-seder
- (fn [{:keys [seder-id on-success on-error] :or {on-error ::error}}]
+ (fn [db [_ {:keys [seder-id on-success on-error] :or {on-error ::error}} ]]
    {::fetch-seder! {:seder-id seder-id :on-success on-success :on-error on-error}}))
 
 
 (re-frame/reg-event-db
  ::set-seder
- (fn [[db] [_ seder-title haggadah-snap]]
+ (fn [db [_ seder-title haggadah-snap]]
    (let [haggadah (-> haggadah-snap
                       (. data)
                       (js->clj :keywordize-keys true)
@@ -248,9 +248,11 @@
 (re-frame/reg-event-fx
  ::haggadah-from-seder
  (fn [db [_ snap]]
-   (let [{:keys [haggadah-path title]} (-> snap
-                                           (. data)
-                                           (js->clj :keywordize-keys true))]
+   (let [{:keys [haggadah-path title]} (->> snap
+                                            (.-docs)
+                                            js->clj
+                                            (map #(.data %))
+                                            (map #(js->clj % :keywordize-keys true)))]
      {::fetch-doc {:path haggadah-path
                    :on-success [::set-seder title]}})))
 
