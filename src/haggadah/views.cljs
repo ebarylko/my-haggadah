@@ -177,7 +177,8 @@
      [:div.modal-background]
      [:div.modal-content [:div.box
                           [:div
-                           [:a {:on-click #(re-frame/dispatch [::events/show-link (link-content "share-seder")])}
+                           [:a {:on-click #(re-frame/dispatch [::events/show-link (link-content "share-seder")])
+                                :data-testid :gen-link}
                             "Please click this to generate the link for your seder"]]
                           [:a#share-seder {:class active-link
                                            :id "share-seder"
@@ -230,7 +231,8 @@
             (for [{:keys [title id]} sedarim :when id] 
               ^{:key id}[:li.mb-2
                          [:a.seder-link.mr-2 {:data-testid id} title]
-                         [:a.button.is-small {:on-click (dispatch ::events/link-modal id)}"Activate Seder"]
+                         [:a.button.is-small {:on-click (dispatch ::events/link-modal id)
+                                              :data-testid :activate-seder} "Activate Seder"]
                         [seder-link-popup] ])]
          )]])]]
    [wave-bottom]])
