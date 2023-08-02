@@ -200,16 +200,7 @@
                    (.collection "seders")
                    (.document id)
                    (.update {"id" id})
-                   (.get))
-        seder-id (-> (FirestoreClient/getFirestore)
-                     (.collection "users")
-                     (.document user)
-                     (.collection "seders")
-                     (.document id)
-                     (.get)
-                     (.get)
-                     (.get "id"))]
-    [id seder-id]))
+                   (.get))]))
 
 
 (defn dashboard->first-seder
@@ -250,31 +241,34 @@
   []
   (e/get-element-text driver {:css "div.haggadah>div.title"}))
 
-(t/deftest view-seder-test
+
+(defn bracha-title
+  []
+  (e/get-element-text driver {:css "div.bracha>div.title" }))
+
+(defn bracha-content
+  []
+  (e/get-element-text driver {:css "div.bracha>div.text"}))
+
+(t/deftest view-seder-from-link-test
   (t/testing "When the current user has a Seder and copies the link to view the Seder and pastes it in the window, they should then see a welcome message and the Haggadah below"
     (let [id (c/fs-store-haggadah {:title "Haggadah 1"
                                    :type "haggadah"
                                    :content [{:type "bracha" :title "hello" :text "bracha"}]}
                                   "user1")
           doc (fs-store-seder "Seder title" "user1" id)]
-      (println "The id of the seder " doc)
       (c/home->dashboard driver)
       (wait-for-sedarim)
       (dashboard->first-seder)
       (gen-seder-link)
       (seder-link->seder)
       (wait-for-seder)
-      (let [
-            #_#_seder-title (seder-title)
+      (let [seder-title (seder-title)
             haggadah-title (haggadah-title)
-            #_#_haggadah-content (haggadah-content)]
+            bracha-title (bracha-title)
+            bracha-text (bracha-content)]
         (t/are [x y] (= x y)
-          1 2
-          haggadah-title"hi"
-          ;; "Seder title" seder-title
-          ;; "Haggadah 1" haggadah-title
-          ;; "hello bracha" haggadah-content
-          ))
-      )
-    )
-  )
+          "Haggadah 1" haggadah-title
+          "Seder title" seder-title
+          "hello" bracha-title
+          "bracha" bracha-text)))))
