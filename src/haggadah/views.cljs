@@ -194,8 +194,6 @@
     [:div.page.is-flex.is-flex-grow-1 {:class (styles/seder-view)}
      [:section.container.is-flex
       [:div.box.is-flex-grow-1 {:data-testid :seder}
-       [:div "This is the title " title]
-       [:div "This is the haggadah " haggadah]
        [:div.title title]
        [:div haggadah]]]]))
 

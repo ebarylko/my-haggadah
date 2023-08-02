@@ -233,12 +233,14 @@
 (re-frame/reg-event-fx
  ::fetch-seder
  (fn [db [_ {:keys [seder-id on-success on-error] :or {on-error ::error}} ]]
+   (js/console.log "FEtching the seder")
    {::fetch-seder! {:seder-id seder-id :on-success on-success :on-error on-error}}))
 
 
 (re-frame/reg-event-db
  ::set-seder
  (fn [db [_ seder-title haggadah-snap]]
+   (js/console.log "This is the haggadah " haggadah-snap)
    (let [haggadah (-> haggadah-snap
                       (. data)
                       (js->clj :keywordize-keys true)

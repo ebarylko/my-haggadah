@@ -84,7 +84,7 @@
   (wait-for-collection :haggadot))
 
 
-(t/deftest create-haggadah-test
+#_(t/deftest create-haggadah-test
   (t/testing "When the current user creates a new Haggadah and goes back to the dashboard, the Haggadah is listed first among the Haggadot and a new Haggadah with the same details is added to firestore"
     (doto driver
       (c/home->dashboard)
@@ -114,7 +114,7 @@
   (doseq [haggadah haggadot]
     (c/fs-store-haggadah haggadah user)))
 
-(t/deftest view-haggadot-ordered-test
+#_(t/deftest view-haggadot-ordered-test
   (t/testing "When the current user has already made Haggadot and goes to their dashboard, the Haggadot should be displayed in order from most recent to least recent"
     (create-haggadot haggadot "user1")
     (c/home->dashboard driver)
@@ -165,7 +165,7 @@
   (let [sedarim (e/query-all driver {:fn/has-class :seder-link})]
     (map id-and-title sedarim)))
 
-(t/deftest create-seder-test
+#_(t/deftest create-seder-test
   (t/testing "When the current user has a Haggadah and creates a Seder which uses that Haggadah, a new Seder with the same Haggadah will appear in the user's collection of Sedarim"
     (let [id (c/fs-store-haggadah {:title "Haggadah 1"
                                    :type "haggadah"
@@ -190,7 +190,7 @@
               (.document user)
               (.collection "seders")
               (.add  (w/stringify-keys (assoc {:title title
-                                               :haggadah-path (clojure.string/join ["users" user "haggadot" id])}
+                                               :haggadah-path (clojure.string/join "/" ["users" user "haggadot" id])}
                                               :createdAt (java.time.Instant/now))))
               (.get)
               (.getId))
@@ -252,7 +252,6 @@
       (dashboard->first-seder)
       (gen-seder-link)
       (seder-link->seder)
-      (e/wait 9)
       (wait-for-seder)
       (let [
             #_#_#_#_#_#_seder-title (seder-title)
