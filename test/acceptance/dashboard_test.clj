@@ -238,6 +238,17 @@
   []
   (e/wait-visible driver {:fn/has-class :haggadah}))
 
+(defn seder-title
+  "Pre: takes nothing
+  Post: returns the title of the Seder on the page"
+  []
+  (e/get-element-text driver {:data-testid :seder-title}))
+
+(defn haggadah-title
+  "Pre: takes nothing
+  Post: returns the title of the Haggadah on the page"
+  []
+  (e/get-element-text driver {:css "div.haggadah>div.title"}))
 
 (t/deftest view-seder-test
   (t/testing "When the current user has a Seder and copies the link to view the Seder and pastes it in the window, they should then see a welcome message and the Haggadah below"
@@ -254,11 +265,12 @@
       (seder-link->seder)
       (wait-for-seder)
       (let [
-            #_#_#_#_#_#_seder-title (seder-title)
+            #_#_seder-title (seder-title)
             haggadah-title (haggadah-title)
-            haggadah-content (haggadah-content)]
+            #_#_haggadah-content (haggadah-content)]
         (t/are [x y] (= x y)
           1 2
+          haggadah-title"hi"
           ;; "Seder title" seder-title
           ;; "Haggadah 1" haggadah-title
           ;; "hello bracha" haggadah-content
