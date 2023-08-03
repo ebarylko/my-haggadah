@@ -33,7 +33,6 @@
   (let [haggadot (e/query-all driver {:data-testid :haggadah-link})]
     (map link-and-title haggadot)))
 
-
 (def dashboard-message
   "Hello han@skywalker.com. Welcome. To make a new Haggadah, click the button to your right. To share and edit your existing Haggadah, look at your Haggadot below ")
 

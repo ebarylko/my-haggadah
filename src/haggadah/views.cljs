@@ -197,50 +197,56 @@
        [:div.title {:data-testid :seder-title} title ]
        [:div haggadah]]]]))
 
+(defn render-sedarim
+  "Pre: takes a collection of sedarim
+  Post: returns a collection of pairs, the first item being the seder title and the second item being a button which activates the seder when clicked"
+  [sedarim]
+[:ul.sedarim
+ (for [{:keys [title id]} sedarim :when id]
+   ^{:key id}[:li.mb-2
+              [:a.seder-link.mr-2 {:data-testid id} title]
+              [:a.button.is-small {:on-click (dispatch ::events/link-modal id)
+                                   :data-testid :activate-seder} "Activate Seder"]
+              [seder-link-popup] ])])
+
+(defn render-haggadot
+  "Pree: takes a collection of haggadot
+  Post: returns a collection of pairs, the first item being the Haggadah title and the second item being a button which creates a seder with the Haggadah when clicked"
+  [haggadot]
+  [:ul.haggadot 
+   (for [{:keys [title id]} haggadot :when id] 
+     ^{:key id}[:li.mb-2
+                [:a.haggadah-link {:data-testid :haggadah-link 
+                                   :href (href :haggadah-view {:id id})} title]
+                [:a.button.is-small {:data-testid :create-seder
+                                     :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]])])
+
 (defn dashboard-panel
   []
   [:div.page 
    [:div.container.is-large.hero.is-flex
     [:div.hero-body.pt-6
      (let [haggadot @(re-frame/subscribe [::subs/haggadot])
-           sedarim @(re-frame/subscribe [::subs/sedarim])]
-     [:div.pt-24.column
-      (let [name (re-frame/subscribe [::subs/name])]
+           sedarim @(re-frame/subscribe [::subs/sedarim])
+           name (re-frame/subscribe [::subs/name])]
+       [:div.pt-24.column
         [:div
          [:h1.text-center.is-size-4 {:data-testid :user}
-          (str "Hello " @name ". Welcome. To make a new Haggadah, click the button to your right. To share and edit your existing Haggadah, look at your Haggadot below ")]])
-      [:div.pl-6.buttons.is-right
-       [:a.button.is-smalll.is-pulled-right.mt-2 {:data-testid :create-haggadah
-                                                  :on-click
-                                                  (dispatch ::push-state :haggadah-creation)}   "Create Haggadah"]]
-      [:div
-       [seder-popup]
-       [:h1.is-size-3
-        "Haggadot created"]
+          (str "Hello " @name ". Welcome. To make a new Haggadah, click the button to your right. To share and edit your existing Haggadah, look at your Haggadot below ")]]
+        [:div.pl-6.buttons.is-right
+         [:a.button.is-smalll.is-pulled-right.mt-2 {:data-testid :create-haggadah
+                                                    :on-click
+                                                    (dispatch ::push-state :haggadah-creation)}   "Create Haggadah"]]
+        [:div
+         [seder-popup]
+         [:h1.is-size-3
+          "Haggadot created"]
          (when haggadot
-           [:ul.haggadot 
-            (for [{:keys [title id]} haggadot :when id] 
-              ^{:key id}[:li.mb-2
-                         [:a.haggadah-link {:data-testid :haggadah-link 
-                                            :href (href :haggadah-view {:id id})} title]
-                         [:a.button.is-small {:data-testid :create-seder
-                                              :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]])]) [:h1.is-size-3.pt-3
-          "Sedarim"]
+           (render-haggadot haggadot))
+         [:h1.is-size-3.pt-3 "Sedarim"]
          (when sedarim
-           [:ul.sedarim 
-            (for [{:keys [title id]} sedarim :when id] 
-              ^{:key id}[:li.mb-2
-                         [:a.seder-link.mr-2 {:data-testid id} title]
-                         [:a.button.is-small {:on-click (dispatch ::events/link-modal id)
-                                              :data-testid :activate-seder} "Activate Seder"]
-                        [seder-link-popup] ])]
-         )]])]]
+           (render-sedarim sedarim))]])]]
    [wave-bottom]])
-
-
-
-
-
 
 (defn haggadah-success-panel
   [_]
