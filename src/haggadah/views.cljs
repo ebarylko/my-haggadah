@@ -257,8 +257,6 @@
     [:div [:a.button.is-focused.is-link {:data-testid :return
                                          :on-click (dispatch ::push-state :dashboard)} "Return to dashboard"]]]])
 
-
-
 (defn haggadah-creation-panel
   []
   (let [haggadah (atom nil)]
@@ -289,7 +287,7 @@
           [:a.button {:class (styles/submit-button)
                       :data-testid :add-haggadah
                       :on-click #(re-frame/dispatch [::events/add-haggadah (form-content "haggadah-title") %])
-                              :id "submit"} "Create"]]]]]]]))
+                      :id "submit"} "Create"]]]]]]]))
 
 (defn haggadah-view-panel
   []
