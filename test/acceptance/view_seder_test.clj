@@ -4,14 +4,8 @@
             [acceptance.core :as c :refer [driver]]
             [acceptance.dashboard-actions :as d]))
 
-
-(defn dashboard->first-seder
-  "Pre: takes nothing
-  Post: navigates to the first seder on the dashboard"
-  []
-  (doto driver
-    (e/click {:data-testid :activate-seder})
-    (e/wait-visible {:data-testid :gen-link})))
+(t/use-fixtures :once c/init-firebase)
+(t/use-fixtures :each c/with-screenshot c/delete-fs-emulator-data)
 
 (defn gen-seder-link
   "Pre: takes nothing
@@ -63,7 +57,7 @@
           doc (c/fs-store-seder "Seder title" "user1" id)]
       (c/home->dashboard driver)
       (d/wait-for-sedarim)
-      (dashboard->first-seder)
+      (d/dashboard->first-seder)
       (gen-seder-link)
       (seder-link->seder)
       (wait-for-seder)

@@ -2,6 +2,7 @@
   (:require  [clojure.test :as t]
              [clojure.walk :as w]
              [etaoin.api :as e]
+             [acceptance.dashboard-actions :as d]
              [acceptance.core :as c :refer [driver]] 
              [etaoin.keys :as k])
   (:import
@@ -26,6 +27,8 @@
     {:title title :id id}))
 
 (defn all-haggadot
+  "Pre: takes nothing
+  Post: returns a collection of every Haggadah on the page with its title and id"
   []
   (let [haggadot (e/query-all driver {:data-testid :haggadah-link})]
     (map link-and-title haggadot)))
@@ -69,27 +72,12 @@
       first
       (= id)))
 
-(def coll-type
-  {:sedarim {:fn/has-class :sedarim}
-   :haggadot {:fn/has-class :haggadot}})
-
-(defn wait-for-collection
-  "Pre: takes a collection type
-  Post: waits until a collection of the same type is found on the page"
-  [coll]
-  (e/wait-visible driver (coll coll-type)))
-
-(defn wait-for-haggadot
-  []
-  (wait-for-collection :haggadot))
-
-
 (t/deftest create-haggadah-test
   (t/testing "When the current user creates a new Haggadah and goes back to the dashboard, the Haggadah is listed first among the Haggadot and a new Haggadah with the same details is added to firestore"
     (doto driver
       (c/home->dashboard)
       (create-haggadah new-haggadah-title))
-    (wait-for-haggadot)
+    (d/wait-for-haggadot)
     (let [[title id]  (->> (all-haggadot)
                            first
                            vals)
@@ -118,7 +106,7 @@
   (t/testing "When the current user has already made Haggadot and goes to their dashboard, the Haggadot should be displayed in order from most recent to least recent"
     (create-haggadot haggadot "user1")
     (c/home->dashboard driver)
-    (wait-for-haggadot)
+    (d/wait-for-haggadot)
     (let [titles (haggadot-titles (all-haggadot))]
       (t/is (= ["First" "Second" "Third"] titles)))))
 
@@ -134,10 +122,6 @@
       (.get)
       (.get)
       (.getString "haggadah-path")))
-
-(defn wait-for-sedarim
-  []
-  (wait-for-collection :sedarim))
 
 (defn create-seder
   "Pre: takes a title for the Seder
@@ -173,7 +157,7 @@
                                   "user1" )]
       (c/home->dashboard driver)
       (create-seder "The first Seder")
-      (wait-for-sedarim)
+      (d/wait-for-sedarim)
       (let [expected-haggadah-path (format "users/user1/haggadot/%s" id)
             [_ seder-id] (->> (all-sedarim)
                               first

@@ -16,3 +16,15 @@
 (defn wait-for-sedarim
   []
   (wait-for-collection :sedarim))
+
+(defn wait-for-haggadot
+  []
+  (wait-for-collection :haggadot))
+
+(defn dashboard->first-seder
+  "Pre: takes nothing
+  Post: navigates to the first seder on the dashboard"
+  []
+  (doto driver
+    (e/click {:data-testid :activate-seder})
+    (e/wait-visible {:data-testid :gen-link})))
