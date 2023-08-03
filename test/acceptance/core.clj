@@ -111,7 +111,7 @@
 
 (defn fs-store-seder
   "Pre: takes a seder title, a user, and the id of a Haggadah
-  Post: stores a seder with the same title and path to a haggadah within the user's collection of sedarim in firestore"
+  Post: returns the id of the seder created"
   [title user id]
   (let [id (-> (FirestoreClient/getFirestore)
                (.collection "users")
