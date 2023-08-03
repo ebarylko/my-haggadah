@@ -203,8 +203,9 @@
 (re-frame/reg-event-fx
  ::login
  interceptors
- (fn [_ [_]]
-   {::email-login! {:email "han@skywalker.com" :password "123456789" :on-success #(re-frame/dispatch [::push-state :dashboard]) :on-error #(re-frame/dispatch [::error %])}}))
+ (fn [_ [_ email pwd]]
+   (println "HEre is the login")
+   {::email-login! {:email email :password pwd :on-success #(re-frame/dispatch [::push-state :dashboard]) :on-error #(re-frame/dispatch [::error %])}}))
 
 
 (re-frame/reg-fx
