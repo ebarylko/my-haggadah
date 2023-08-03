@@ -76,7 +76,7 @@
   (t/testing "When the current user creates a new Haggadah and goes back to the dashboard, the Haggadah is listed first among the Haggadot and a new Haggadah with the same details is added to firestore"
     (doto driver
       (c/home->dashboard)
-      (create-haggadah new-haggadah-title))
+      (d/create-haggadah new-haggadah-title))
     (d/wait-for-haggadot)
     (let [[title id]  (->> (all-haggadot)
                            first

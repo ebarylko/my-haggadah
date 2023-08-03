@@ -1,6 +1,7 @@
 (ns acceptance.dashboard-actions
   (:require [etaoin.api :as e]
-            [acceptance.core :as c :refer [driver]]))
+            [acceptance.core :as c :refer [driver]]
+            [etaoin.keys :as k]))
 
 
 (def coll-type
@@ -28,3 +29,14 @@
   (doto driver
     (e/click {:data-testid :activate-seder})
     (e/wait-visible {:data-testid :gen-link})))
+
+
+(defn create-haggadah
+  [d title]
+  (doto d
+    (e/click-visible {:data-testid :create-haggadah})
+    (e/wait-visible {:data-testid :haggadah-title})
+    (e/fill  {:data-testid :haggadah-title} k/home (k/with-shift k/end) k/delete)
+    (e/fill-human {:data-testid :haggadah-title} title {:mistake-prob 0})
+    (e/click-visible {:data-testid :add-haggadah})
+    (e/click-visible {:data-testid :return})))

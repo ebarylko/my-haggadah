@@ -1,6 +1,7 @@
 (ns acceptance.view-haggadah-test
   (:require  [clojure.test :as t]
              [etaoin.api :as e]
+             [acceptance.dashboard-actions :as d]
              [acceptance.haggadah-actions :as h]
              [environ.core :refer [env]]
              [acceptance.core :as c :refer [driver]]
@@ -61,7 +62,7 @@
   (t/testing "When the current user has a haggadah with a bracha in it and is at their dashboard, they should be able to view the haggadah and see it in a certain way"
     (doto driver
       (c/home->dashboard)
-      (create-haggadah title)
+      (d/create-haggadah title)
       (click-on-haggadah bracha))
     (let [actual-title (h/bracha-title)
           actual-bracha  (h/bracha-content)]
@@ -81,8 +82,8 @@
       (e/refresh)
       (e/wait-has-text-everywhere bracha))
     (let [haggadah-title (h/haggadah-title)
-          bracha-title (bracha-title)
-          bracha-content (bracha-content)
+          bracha-title (h/bracha-title)
+          bracha-content (h/bracha-content)
           expected-haggadah-title "The best haggadah of the year"]
       (t/are [x y] (= x y)
         expected-haggadah-title haggadah-title
