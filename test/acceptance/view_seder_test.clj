@@ -8,14 +8,6 @@
 (t/use-fixtures :once c/init-firebase)
 (t/use-fixtures :each c/with-screenshot c/delete-fs-emulator-data)
 
-(defn gen-seder-link
-  "Pre: takes nothing
-  Post: clicks on the sentence which will generate the link for the seder"
-  []
-  (doto driver
-    (e/click  {:data-testid :gen-link})
-    (e/wait-visible {:id  :share-seder})))
-
 (defn seder-link->seder
   "Pre: takes nothing
   Post: navigates to the seder associated with the link"

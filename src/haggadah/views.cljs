@@ -173,7 +173,7 @@
         active (when seder-id "is-active")
         seder-link @(re-frame/subscribe [::subs/seder-link])
         active-link (when-not seder-link "is-hidden")]
-    [:div.modal  {:class active}
+    [:div.modal {:class active}
      [:div.modal-background]
      [:div.modal-content [:div.box
                           [:div
@@ -181,7 +181,6 @@
                                 :data-testid :gen-link}
                             "Please click this to generate the link for your seder"]]
                           [:a#share-seder {:class active-link
-                                           :id "share-seder"
                                            :href (href :seder-view {:seder-id seder-id })}
                            seder-link]
                           [:div.field.is-grouped.is-grouped-left 

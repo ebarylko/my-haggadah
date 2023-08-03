@@ -220,14 +220,12 @@
 (re-frame/reg-fx
  ::fetch-seder!
  (fn [{:keys [seder-id on-success on-error]}]
-   (js/console.log "The id "seder-id)
    (-> (firestore/instance)
        (fire/collectionGroup "seders")
        (fire/query (fire/where "id" "==" seder-id))
        (fire/getDocs)
        (.then (keyword->func on-success))
-       (.catch (keyword->func on-error))
-       )))
+       (.catch (keyword->func on-error)))))
 
 
 (re-frame/reg-event-fx
