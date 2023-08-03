@@ -120,7 +120,6 @@
         [:div {:class "control"}
          [:a.button.is-small {:class (styles/submit-button)
                               :on-click #(re-frame/dispatch [::events/login (form-content "email") (form-content "password")])
-                              #_(dispatch ::events/login)
                               :data-testid :submit} "Submit"]]]
 
        ]]]]])
