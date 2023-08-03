@@ -1,6 +1,7 @@
 (ns acceptance.view-seder-test
   (:require [etaoin.api :as e]
             [clojure.test :as t]
+            [acceptance.haggadah-actions :as h]
             [acceptance.core :as c :refer [driver]]
             [acceptance.dashboard-actions :as d]))
 
@@ -21,28 +22,11 @@
   []
   (e/click driver {:id :share-seder}))
 
-
 (defn seder-title
   "Pre: takes nothing
   Post: returns the title of the Seder on the page"
   []
   (e/get-element-text driver {:data-testid :seder-title}))
-
-(defn haggadah-title
-  "Pre: takes nothing
-  Post: returns the title of the Haggadah on the page"
-  []
-  (e/get-element-text driver {:css "div.haggadah>div.title"}))
-
-
-(defn bracha-title
-  []
-  (e/get-element-text driver {:css "div.bracha>div.title" }))
-
-(defn bracha-content
-  []
-  (e/get-element-text driver {:css "div.bracha>div.text"}))
-
 
 (defn wait-for-seder
   []
@@ -62,9 +46,9 @@
       (seder-link->seder)
       (wait-for-seder)
       (let [seder-title (seder-title)
-            haggadah-title (haggadah-title)
-            bracha-title (bracha-title)
-            bracha-text (bracha-content)]
+            haggadah-title (h/haggadah-title)
+            bracha-title (h/bracha-title)
+            bracha-text (h/bracha-content)]
         (t/are [x y] (= x y)
           "Haggadah 1" haggadah-title
           "Seder title" seder-title
