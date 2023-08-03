@@ -45,8 +45,8 @@
    (routes/init-routes!)
    (core/firebase-init!)
    (rf/dispatch-sync [::events/initialize-db])
-   (rf/dispatch [::events/login])
-   (rf-test/wait-for [::events/fetch-haggadot] 
+   (rf/dispatch [::events/login "han@skywalker.com" "123456789"])
+   (rf-test/wait-for [::events/fetch-haggadot]
     (let [user (rf/subscribe [::subs/user])
           name (rf/subscribe [::subs/name])]
       (t/are [x y] (= x y)
