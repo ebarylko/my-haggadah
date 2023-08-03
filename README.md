@@ -70,6 +70,9 @@ To run the test continuously (watching for changes), need to do a few steps:
 
 ### Acceptance tests
 
+
+If on mac, run `export CHROME_BINARY="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"` to set the path to the chrome binary
+
 Run `npm run acceptance`.
 
 ## Running firebase emulators with previous emulator state data

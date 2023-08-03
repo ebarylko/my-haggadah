@@ -118,3 +118,8 @@
    :width :100%
    :padding "20px 0px"})
 
+(defclass seder-view
+  []
+  {:background page-background
+   :width :100%
+   :padding "20px 0px"})

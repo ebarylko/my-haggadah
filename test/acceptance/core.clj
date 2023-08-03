@@ -108,6 +108,29 @@
       (.get)
       (.getId)))
 
+
+(defn fs-store-seder
+  "Pre: takes a seder title, a user, and the id of a Haggadah
+  Post: returns the id of the seder created"
+  [title user id]
+  (let [id (-> (FirestoreClient/getFirestore)
+               (.collection "users")
+               (.document user)
+               (.collection "seders")
+               (.add  (w/stringify-keys (assoc {:title title
+                                                :haggadah-path (clojure.string/join "/" ["users" user "haggadot" id])}
+                                               :createdAt (java.time.Instant/now))))
+               (.get)
+               (.getId))
+        update (-> (FirestoreClient/getFirestore)
+                   (.collection "users")
+                   (.document user)
+                   (.collection "seders")
+                   (.document id)
+                   (.update {"id" id})
+                   (.get))]
+    id))
+
 (defn haggadah
   "Pre: takes a user and an id for a Haggadah
   Post: returns the Haggadah which contains this id in firestore"

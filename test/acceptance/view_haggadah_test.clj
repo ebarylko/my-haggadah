@@ -1,6 +1,8 @@
 (ns acceptance.view-haggadah-test
   (:require  [clojure.test :as t]
              [etaoin.api :as e]
+             [acceptance.dashboard-actions :as d]
+             [acceptance.haggadah-actions :as h]
              [environ.core :refer [env]]
              [acceptance.core :as c :refer [driver]]
              [etaoin.keys :as k]))
@@ -20,10 +22,6 @@
 (def actual-haggadah-text
   "Amir's Haggadah")
 
-(defn haggadah-title
-  []
-  (e/get-element-text driver {:fn/has-class :title}))
-
 (defn haggadah-content
   []
   (e/get-element-text driver {:fn/has-class :content}))
@@ -38,7 +36,7 @@
       (doto driver
         (c/home->dashboard)
         (click-on-haggadah actual-haggadah-text))
-      (let [haggadah-title (haggadah-title)
+      (let [haggadah-title (h/haggadah-title)
             haggadah-content (haggadah-content)
             expected-title "haggadah2023"
             expected-content "Amir's Haggadah"]
@@ -50,32 +48,14 @@
 
 (def bracha "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
 
-(defn bracha-title
-  []
-  (e/get-element-text driver {:css "div.bracha>div.title" }))
-
-(defn bracha-content
-  []
-  (e/get-element-text driver {:css "div.bracha>div.text"}))
-
-(defn create-haggadah
-  [d title]
-  (doto d
-    (e/click-visible {:data-testid :create-haggadah})
-    (e/wait-visible {:data-testid :haggadah-title})
-    (e/fill  {:data-testid :haggadah-title} k/home (k/with-shift k/end) k/delete)
-    (e/fill {:data-testid :haggadah-title} title)
-    (e/click-visible {:data-testid :add-haggadah})
-    (e/click-visible {:data-testid :return})))
-
 (t/deftest view-haggadah-with-bracha
   (t/testing "When the current user has a haggadah with a bracha in it and is at their dashboard, they should be able to view the haggadah and see it in a certain way"
     (doto driver
       (c/home->dashboard)
-      (create-haggadah title)
+      (d/create-haggadah title)
       (click-on-haggadah bracha))
-    (let [actual-title (bracha-title)
-          actual-bracha  (bracha-content)]
+    (let [actual-title (h/bracha-title)
+          actual-bracha  (h/bracha-content)]
       (t/are [x y] (= x y)
         title actual-title
         bracha actual-bracha))))
@@ -91,9 +71,9 @@
       (click-on-haggadah bracha)
       (e/refresh)
       (e/wait-has-text-everywhere bracha))
-    (let [haggadah-title (haggadah-title)
-          bracha-title (bracha-title)
-          bracha-content (bracha-content)
+    (let [haggadah-title (h/haggadah-title)
+          bracha-title (h/bracha-title)
+          bracha-content (h/bracha-content)
           expected-haggadah-title "The best haggadah of the year"]
       (t/are [x y] (= x y)
         expected-haggadah-title haggadah-title

@@ -160,48 +160,92 @@
      [:button.modal-close.is-large]]))
 
 
+(defn link-content
+  "Pre: takes the id of a link
+  Post: returns the absolute url of the link"
+  [id]
+  (-> (.getElementById js/document id)
+      (.-href)))
+
+(defn seder-link-popup
+  []
+  (let [seder-id @(re-frame/subscribe [::subs/seder-id])
+        active (when seder-id "is-active")
+        seder-link @(re-frame/subscribe [::subs/seder-link])
+        active-link (when-not seder-link "is-hidden")]
+    [:div.modal {:class active}
+     [:div.modal-background]
+     [:div.modal-content [:div.box
+                          [:div
+                           [:a {:on-click #(re-frame/dispatch [::events/show-link (link-content "share-seder")])
+                                :data-testid :gen-link}
+                            "Please click this to generate the link for your seder"]]
+                          [:a#share-seder {:class active-link
+                                           :href (href :seder-view {:seder-id seder-id })}
+                           seder-link]
+                          [:div.field.is-grouped.is-grouped-left 
+                           [:div.control 
+                            [:a.button.is-small.button  {:on-click (dispatch ::events/hide-link-modal)} "Cancel"]]]]] [:button.modal-close.is-large]]))
+
+(defn seder-view-panel
+  []
+  (let [{:keys [title haggadah]} @(re-frame/subscribe [::subs/seder])]
+    [:div.page.is-flex.is-flex-grow-1 {:class (styles/seder-view)}
+     [:section.container.is-flex
+      [:div.box.is-flex-grow-1 
+       [:div.title {:data-testid :seder-title} title ]
+       [:div haggadah]]]]))
+
+(defn render-sedarim
+  "Pre: takes a collection of sedarim
+  Post: returns a collection of pairs, the first item being the seder title and the second item being a button which activates the seder when clicked"
+  [sedarim]
+[:ul.sedarim
+ (for [{:keys [title id]} sedarim :when id]
+   ^{:key id}[:li.mb-2
+              [:a.seder-link.mr-2 {:data-testid id} title]
+              [:a.button.is-small {:on-click (dispatch ::events/link-modal id)
+                                   :data-testid :activate-seder} "Activate Seder"]
+              [seder-link-popup] ])])
+
+(defn render-haggadot
+  "Pree: takes a collection of haggadot
+  Post: returns a collection of pairs, the first item being the Haggadah title and the second item being a button which creates a seder with the Haggadah when clicked"
+  [haggadot]
+  [:ul.haggadot 
+   (for [{:keys [title id]} haggadot :when id] 
+     ^{:key id}[:li.mb-2
+                [:a.haggadah-link {:data-testid :haggadah-link 
+                                   :href (href :haggadah-view {:id id})} title]
+                [:a.button.is-small {:data-testid :create-seder
+                                     :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]])])
+
 (defn dashboard-panel
   []
   [:div.page 
    [:div.container.is-large.hero.is-flex
     [:div.hero-body.pt-6
      (let [haggadot @(re-frame/subscribe [::subs/haggadot])
-           sedarim @(re-frame/subscribe [::subs/sedarim])]
-     [:div.pt-24.column
-      (let [name (re-frame/subscribe [::subs/name])]
+           sedarim @(re-frame/subscribe [::subs/sedarim])
+           name (re-frame/subscribe [::subs/name])]
+       [:div.pt-24.column
         [:div
          [:h1.text-center.is-size-4 {:data-testid :user}
-          (str "Hello " @name ". Welcome. To make a new Haggadah, click the button to your right. To share and edit your existing Haggadah, look at your Haggadot below ")]])
-      [:div.pl-6.buttons.is-right
-       [:a.button.is-smalll.is-pulled-right.mt-2 {:data-testid :create-haggadah
-                                                  :on-click
-                                                  (dispatch ::push-state :haggadah-creation)}   "Create Haggadah"]]
-      [:div
-       [seder-popup]
-       [:h1.is-size-3
-        "Haggadot created"]
+          (str "Hello " @name ". Welcome. To make a new Haggadah, click the button to your right. To share and edit your existing Haggadah, look at your Haggadot below ")]]
+        [:div.pl-6.buttons.is-right
+         [:a.button.is-smalll.is-pulled-right.mt-2 {:data-testid :create-haggadah
+                                                    :on-click
+                                                    (dispatch ::push-state :haggadah-creation)}   "Create Haggadah"]]
+        [:div
+         [seder-popup]
+         [:h1.is-size-3
+          "Haggadot created"]
          (when haggadot
-           [:ul.haggadot 
-            (for [{:keys [title id]} haggadot :when id] 
-              ^{:key id}[:li.mb-2
-                         [:a.haggadah-link {:data-testid :haggadah-link 
-                                            :href (href :haggadah-view {:id id})} title]
-                         [:a.button.is-small {:data-testid :create-seder
-                                              :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]])]) [:h1.is-size-3.pt-3
-          "Sedarim"]
+           (render-haggadot haggadot))
+         [:h1.is-size-3.pt-3 "Sedarim"]
          (when sedarim
-           [:ul.sedarim 
-            (for [{:keys [title id]} sedarim :when id] 
-              ^{:key id}[:li.mb-2
-                         [:a.seder-link.mr-2 {:data-testid id} title]
-                         [:a.button.is-small "Activate Seder"]])]
-         )]])]]
+           (render-sedarim sedarim))]])]]
    [wave-bottom]])
-
-
-
-
-
 
 (defn haggadah-success-panel
   [_]
@@ -211,8 +255,6 @@
      "Your Haggadah is ready. Please click the button below to return to the dashboard and see it"]
     [:div [:a.button.is-focused.is-link {:data-testid :return
                                          :on-click (dispatch ::push-state :dashboard)} "Return to dashboard"]]]])
-
-
 
 (defn haggadah-creation-panel
   []
@@ -244,7 +286,7 @@
           [:a.button {:class (styles/submit-button)
                       :data-testid :add-haggadah
                       :on-click #(re-frame/dispatch [::events/add-haggadah (form-content "haggadah-title") %])
-                              :id "submit"} "Create"]]]]]]]))
+                      :id "submit"} "Create"]]]]]]]))
 
 (defn haggadah-view-panel
   []

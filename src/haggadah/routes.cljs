@@ -18,30 +18,41 @@
 
 (def routes
   [
+   ["/seder"
+    ["/:seder-id" {:name  :seder-view
+                   :view views/seder-view-panel
+                   :controllers [{:parameters {:path [:seder-id]}
+                                  :start (fn [params]
+                                           (let [seder-id (-> params :path :seder-id)]
+                                             (re-frame/dispatch [::events/fetch-seder {:on-success ::events/haggadah-from-seder
+                                                                                       :seder-id seder-id}])))}
+                                 ]}]]
    ["/" {:name      :home
-        :view      views/home-panel
-        :link-text "Home"}]
+         :view      views/home-panel
+         :link-text "Home"}]
 
    ["/login" {:name      :login
-             :view      views/login-panel
-             :link-text "Log in"}]
+              :view      views/login-panel
+              :link-text "Log in"}]
    ["/about" {:name :about
-             :view views/about-panel
-             :link-text "about" }]
+              :view views/about-panel
+              :link-text "about" }]
    ["/dashboard"
     ["" {:name :dashboard
          :view views/dashboard-panel
          :link-text  "Submit"
-        :controllers [{:start (fn [_] (re-frame/dispatch [::run-events (:dashboard events/route-events)]))}]}]
+         :controllers [{:start (fn [_] (re-frame/dispatch [::run-events (:dashboard events/route-events)]))}]}]
     ["/:id" {:name :haggadah-view
              :view views/haggadah-view-panel
              :link-text "haggadah"
              :controllers [{:start (fn [] (re-frame/dispatch [::run-events (:haggadah-view events/route-events)]))}]}]]
+   
    ["/haggadah-creation"
     ["" {:name :haggadah-creation
          :view views/haggadah-creation-panel}]
     ["/success" {:name :haggadah-success
-                 :view views/haggadah-success-panel}]]])
+                 :view views/haggadah-success-panel}]]
+   ])
 
 
 (defn on-navigate [new-match]
@@ -96,6 +107,7 @@
                :haggadah-view views/haggadah-view-panel
                :haggadah-creation views/haggadah-creation-panel
                :haggadah-success views/haggadah-success-panel
+               :seder-view views/seder-view-panel
                views/home-panel)]
     [:div.main-container.is-flex.is-flex-direction-column
      [views/top-menu {:router router :current-route current-route}]
