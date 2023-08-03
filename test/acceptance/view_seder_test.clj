@@ -38,11 +38,11 @@
                                    :type "haggadah"
                                    :content [{:type "bracha" :title "hello" :text "bracha"}]}
                                   "user1")
-          doc (c/fs-store-seder "Seder title" "user1" id)]
+          seder-id (c/fs-store-seder "Seder title" "user1" id)]
       (c/home->dashboard driver)
       (d/wait-for-sedarim)
       (d/dashboard->first-seder)
-      (gen-seder-link)
+      (d/gen-seder-link)
       (seder-link->seder)
       (wait-for-seder)
       (let [seder-title (seder-title)

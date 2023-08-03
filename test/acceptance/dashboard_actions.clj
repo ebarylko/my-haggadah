@@ -40,3 +40,12 @@
     (e/fill-human {:data-testid :haggadah-title} title {:mistake-prob 0})
     (e/click-visible {:data-testid :add-haggadah})
     (e/click-visible {:data-testid :return})))
+
+
+(defn gen-seder-link
+  "Pre: takes nothing
+  Post: clicks on the sentence which will generate the link for the seder"
+  []
+  (doto driver
+    (e/click  {:data-testid :gen-link})
+    (e/wait-visible {:id  :share-seder})))

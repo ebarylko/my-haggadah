@@ -48,16 +48,6 @@
 
 (def bracha "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
 
-(defn create-haggadah
-  [d title]
-  (doto d
-    (e/click-visible {:data-testid :create-haggadah})
-    (e/wait-visible {:data-testid :haggadah-title})
-    (e/fill  {:data-testid :haggadah-title} k/home (k/with-shift k/end) k/delete)
-    (e/fill {:data-testid :haggadah-title} title)
-    (e/click-visible {:data-testid :add-haggadah})
-    (e/click-visible {:data-testid :return})))
-
 (t/deftest view-haggadah-with-bracha
   (t/testing "When the current user has a haggadah with a bracha in it and is at their dashboard, they should be able to view the haggadah and see it in a certain way"
     (doto driver

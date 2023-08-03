@@ -37,16 +37,6 @@
 (def dashboard-message
   "Hello han@skywalker.com. Welcome. To make a new Haggadah, click the button to your right. To share and edit your existing Haggadah, look at your Haggadot below ")
 
-(defn create-haggadah
-  [d title]
-  (doto d
-    (e/click-visible {:data-testid :create-haggadah})
-    (e/wait-visible {:data-testid :haggadah-title})
-    (e/fill  {:data-testid :haggadah-title} k/home (k/with-shift k/end) k/delete)
-    (e/fill-human {:data-testid :haggadah-title} title {:mistake-prob 0})
-    (e/click-visible {:data-testid :add-haggadah})
-    (e/click-visible {:data-testid :return})))
-
 (def new-haggadah-title "The best haggadah of the year")
 
 (defn get-id
@@ -165,7 +155,24 @@
             haggadah-path (haggadah-path "user1" seder-id)]
         (t/is (= expected-haggadah-path haggadah-path))))))
 
+(defn seder-link
+  "Pre: takes nothing
+  Post: returns the link of the Seder on the page"
+  []
+  (e/get-element-text driver {:id :share-seder}))
 
-
-
+(t/deftest gen-seder-link-test
+  (t/testing "When the current user has a Seder and generates the link for sharing the Seder, the link will point to the aforementioned Seder"
+    (let [id (c/fs-store-haggadah {:title "Haggadah 1"
+                                   :type "haggadah"
+                                   :content [{:type "bracha" :title "hello" :text "bracha"}]}
+                                  "user1" )
+          seder-id (c/fs-store-seder "Haggadah 1" "user1" id)]
+      (c/home->dashboard driver)
+      (d/wait-for-sedarim)
+      (d/dashboard->first-seder)
+      (d/gen-seder-link)
+      (let [seder-link (seder-link)
+            expected-link (format "http://localhost:5000/#/seder/%s" seder-id)]
+        (t/is (= expected-link seder-link))))))
 

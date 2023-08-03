@@ -128,8 +128,8 @@
                    (.collection "seders")
                    (.document id)
                    (.update {"id" id})
-                   (.get)
-                   )]))
+                   (.get))]
+    id))
 
 (defn haggadah
   "Pre: takes a user and an id for a Haggadah
