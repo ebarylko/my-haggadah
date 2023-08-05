@@ -26,18 +26,25 @@
 
 (def user-not-found "auth/user-not-found")
 
-#_(t/deftest unregistered-user-login
+(def incorrect-password "auth/wrong-password")
+
+(t/deftest unregistered-user-login
   (rf-test/run-test-async
    (core/firebase-init!)
    (rf/dispatch-sync [::events/initialize-db])
-   (println "Before logging in")
-   (rf/dispatch-sync [::events/login])
-   (println "After logging in")
+   (rf/dispatch-sync [::events/login "jan@weir.com" "123456789"])
    (rf-test/wait-for [::events/error]
-                     (println "Found the error")
                      (let [{:keys [code]} @(rf/subscribe [::subs/error])]
                        (t/is (= user-not-found code))))))
 
+(t/deftest incorrect-pwd-login
+  (rf-test/run-test-async
+   (core/firebase-init!)
+   (rf/dispatch-sync [::events/initialize-db])
+   (rf/dispatch-sync [::events/login "han@skywalker.com" "12345678"])
+   (rf-test/wait-for [::events/error]
+                     (let [{:keys [code]} @(rf/subscribe [::subs/error])]
+                       (t/is (= incorrect-password code))))))
 
 
 (t/deftest registered-user-login
@@ -45,8 +52,8 @@
    (routes/init-routes!)
    (core/firebase-init!)
    (rf/dispatch-sync [::events/initialize-db])
-   (rf/dispatch [::events/login])
-   (rf-test/wait-for [::events/fetch-haggadot] 
+   (rf/dispatch [::events/login "han@skywalker.com" "123456789"])
+   (rf-test/wait-for [::events/fetch-haggadot]
     (let [user (rf/subscribe [::subs/user])
           name (rf/subscribe [::subs/name])]
       (t/are [x y] (= x y)

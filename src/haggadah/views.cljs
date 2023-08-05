@@ -38,7 +38,7 @@
           [:path {:d "M0.457,34.035 C57.086,53.198 98.208,65.809 123.822,71.865 C181.454,85.495 234.295,90.29 272.033,93.459 C311.355,96.759 396.635,95.801 461.025,91.663 C486.76,90.01 518.727,86.372 556.926,80.752 C595.747,74.596 622.372,70.008 636.799,66.991 C663.913,61.324 712.501,49.503 727.605,46.128 C780.47,34.317 818.839,22.532 856.324,15.904 C922.689,4.169 955.676,2.522 1011.185,0.432 C1060.705,1.477 1097.39,3.129 1121.236,5.387 C1161.703,9.219 1208.621,17.821 1235.4,22.304 C1285.855,30.748 1354.351,47.432 1440.886,72.354 L1441.191,104.352 L1.121,104.031 L0.457,34.035 Z"}]]]]])
 
 (defn dispatch
-  "Pre: takkes an event and args for the event
+  "Pre: takes an event and args for the event
   Post: returns a function which dispatches the event with the args passed"
   [event & args]
   (fn [_] (re-frame/dispatch (apply conj [] event args))))
@@ -87,8 +87,12 @@
       [:a.button.is-focused {:href (href :login) :data-testid :login} "Log in"]
       [:a.button  "Register"]]]]])
 
-
-
+(defn form-content
+  "Pre: takes an id for a form field
+  Post: returns the text of the field if it exists, nil otherwise"
+  [id]
+  (-> (.getElementById js/document id)
+      (.-value)))
 
 (defn login-panel []
   [:div.is-dark {:class (styles/login-page)}
@@ -101,13 +105,13 @@
        [:div {:class "field"}
         [:label "Email"]
         [:div {:class "control has-icons-left has-icons-right"}
-         [:input {:class "input", :type "email", :placeholder "Email input", :defaultValue "han@skywalker.com"}]
+         [:input#email {:class "input", :type "email", :placeholder "Email input", :defaultValue "han@skywalker.com"}]
          [:span {:class "icon is-small is-left"}
           [:i {:class "fas fa-envelope"}]]]]
        [:div.field
         [:label  "Password"]
         [:div {:class "control has-icons-left has-icons-right"}
-         [:input {:class "input", :type "text", :placeholder "Text input", :defaultValue "123456789"}]
+         [:input#password {:class "input", :type "text", :placeholder "Text input", :defaultValue "123456789"}]
          [:span {:class "icon is-small is-left"}
           [:i {:class "fas fa-key"}]]]]
        [:div.field.is-grouped.is-grouped-right 
@@ -115,7 +119,7 @@
          [:button.is-small.button {:class (styles/cancel-button)}  "Cancel"]]
         [:div {:class "control"}
          [:a.button.is-small {:class (styles/submit-button)
-                              :on-click (dispatch ::events/login)
+                              :on-click #(re-frame/dispatch [::events/login (form-content "email") (form-content "password")])
                               :data-testid :submit} "Submit"]]]
 
        ]]]]])
@@ -132,12 +136,6 @@
          [:g {:transform "translate(-4.000000, 76.000000)", :fill "#FFFFFF", :fill-rule "nonzero"}
           [:path {:d "M0.457,34.035 C57.086,53.198 98.208,65.809 123.822,71.865 C181.454,85.495 234.295,90.29 272.033,93.459 C311.355,96.759 396.635,95.801 461.025,91.663 C486.76,90.01 518.727,86.372 556.926,80.752 C595.747,74.596 622.372,70.008 636.799,66.991 C663.913,61.324 712.501,49.503 727.605,46.128 C780.47,34.317 818.839,22.532 856.324,15.904 C922.689,4.169 955.676,2.522 1011.185,0.432 C1060.705,1.477 1097.39,3.129 1121.236,5.387 C1161.703,9.219 1208.621,17.821 1235.4,22.304 C1285.855,30.748 1354.351,47.432 1440.886,72.354 L1441.191,104.352 L1.121,104.031 L0.457,34.035 Z"}]]]]])
 
-(defn form-content
-  "Pre: takes an id for a form field
-  Post: returns the text of the field if it exists, nil otherwise"
-  [id]
-  (-> (.getElementById js/document id)
-      (.-value)))
 
 (defn seder-popup
   []
