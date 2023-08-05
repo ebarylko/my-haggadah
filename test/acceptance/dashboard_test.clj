@@ -174,4 +174,3 @@
       (let [seder-link (seder-link)
             expected-link (format "http://localhost:5000/#/seder/%s" seder-id)]
         (t/is (= expected-link seder-link))))))
-
