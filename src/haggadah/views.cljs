@@ -281,7 +281,7 @@
              [:div {:class "dropdown-content"}
               [:a.dropdown-item.is-active "Base Haggadah" ]]]])]
          [:div.field.is-grouped.is-grouped-right 
-          [:a.button.mr-3 "Cancel"]
+          [:a.button.mr-3 {:on-click (dispatch ::push-state :dashboard)} "Cancel"]
           [:a.button {:class (styles/submit-button)
                       :data-testid :add-haggadah
                       :on-click #(re-frame/dispatch [::events/add-haggadah (form-content "haggadah-title") %])
