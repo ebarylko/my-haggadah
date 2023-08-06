@@ -116,7 +116,7 @@
           [:i {:class "fas fa-key"}]]]]
        [:div.field.is-grouped.is-grouped-right 
         [:div {:class "control"}
-         [:button.is-small.button {:on-click (dispatch ::push-state :home)
+         [:a.is-small.button {:on-click (dispatch ::push-state :home)
                                    :class (styles/cancel-button)
                                    :data-testid :cancel}
           "Cancel"]]
