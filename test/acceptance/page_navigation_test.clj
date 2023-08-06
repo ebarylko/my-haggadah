@@ -27,11 +27,7 @@
   "Pre: takes nothing
   Post: clicks on the cancel button on the page"
   []
-  (println "The button exists " (e/exists? driver {:data-testid :cancel}))
-  (let [button (e/query driver {:data-testid :cancel})]
-    (e/js-execute driver "arguments[0].click()" (e/el->ref button))
-  #_(e/click-visible driver {:data-testid :cancel})
-  (e/wait 6)))
+  (e/click-visible driver {:data-testid :cancel}))
 
 (defn wait-for-home-page
   "Pre: takes nothing
@@ -48,13 +44,13 @@
   Post: returns the current page the user is on"
   []
   (cond
-    (at-home-page?) :home-page)
-  :else :invalid-page)
+    (at-home-page?) :home-page
+    :else :invalid-page))
 
 (t/deftest click-cancel-button-test
   (t/testing "When the user goes to the login page and clicks the cancel button, they should return to the home page"
     (home->login)
     (click-on-cancel-button)
-    #_(wait-for-home-page)
+    (wait-for-home-page)
     (let [current-page (current-page)]
       (t/is (= :home-page current-page)))))
