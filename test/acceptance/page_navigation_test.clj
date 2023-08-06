@@ -1,18 +1,10 @@
 (ns acceptance.page-navigation-test
   (:require  [clojure.test :as t]
              [etaoin.api :as e]
-             [acceptance.core :as c :refer [driver]]
-             ))
-
+             [acceptance.core :as c :refer [driver]]))
 
 (t/use-fixtures :once c/init-firebase)
 (t/use-fixtures :each c/with-screenshot c/delete-fs-emulator-data)
-
-(defn ->home
-  "Pre: takes nothing
-  Post: takes you to the home page"
-  []
-  (e/go driver "http://localhost:5000/"))
 
 (defn home->login
   "Pre: takes nothing
@@ -36,6 +28,8 @@
   (e/wait-visible driver {:data-testid :login}))
 
 (defn at-home-page?
+  "Pre: takes nothing
+  Post: returns true if the user is at the home page. False otherwise"
   []
   (e/exists? driver {:data-testid :login}))
 
