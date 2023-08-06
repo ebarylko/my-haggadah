@@ -116,14 +116,17 @@
           [:i {:class "fas fa-key"}]]]]
        [:div.field.is-grouped.is-grouped-right 
         [:div {:class "control"}
-         [:button.is-small.button {:on-click (dispatch ::push-state :home)
-                                   :class (styles/cancel-button)}  "Cancel"]]
+         [:a.is-small.button {:on-click (dispatch ::push-state :home)
+                                   :class (styles/cancel-button)
+                                   :data-testid :cancel}
+          "Cancel"]]
         [:div {:class "control"}
          [:a.button.is-small {:class (styles/submit-button)
                               :on-click #(re-frame/dispatch [::events/login (form-content "email") (form-content "password")])
                               :data-testid :submit} "Submit"]]]
 
        ]]]]])
+
 
 (defn wave-bottom
   []
