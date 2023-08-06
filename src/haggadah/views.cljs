@@ -214,40 +214,21 @@
   "Pree: takes a collection of haggadot
   Post: returns a collection of pairs, the first item being the Haggadah title and the second item being a button which creates a seder with the Haggadah when clicked"
   [haggadot]
-  [:ul.haggadot 
-   (for [{:keys [title id]} haggadot :when id] 
+   [:table.table.is-narrow.is-bordered.haggadot.is-striped
+    [:thead
+     [:tr
+      [:th "Haggadah title"]
+      [:th "Actions"]]]
+    [:tbody 
+   (for [{:keys [title id]} haggadot :when id]
      ^{:key id}
-
-     [:li.mb-2
-      [:table.table 
-
        [:tr
         [:td
          [:a.haggadah-link {:data-testid :haggadah-link
-                            :href (href :haggadah-view {:id id})} title]
-         ]
+                            :href (href :haggadah-view {:id id})} title]]
         [:td
          [:a.button.is-small {:data-testid :create-seder
-                              :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]
-         ]
-        ]
-       ]
-      ]
-
-     #_[:li.mb-2
-
-      [:div.columns.is-vcentered.is-variable.is-1
-       [:div.column
-        [:a.haggadah-link {:data-testid :haggadah-link
-                                      :href (href :haggadah-view {:id id})} title]
-        ]
-       [:div.column
-        [:a.button.is-small {:data-testid :create-seder
-                                        :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]
-        ]
-       ]
-      ]
-     )])
+                              :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]]])]])
 
 (defn dashboard-panel
   []
