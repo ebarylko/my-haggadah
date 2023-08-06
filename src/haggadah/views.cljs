@@ -219,6 +219,22 @@
      ^{:key id}
 
      [:li.mb-2
+      [:table.table 
+
+       [:tr
+        [:td
+         [:a.haggadah-link {:data-testid :haggadah-link
+                            :href (href :haggadah-view {:id id})} title]
+         ]
+        [:td
+         [:a.button.is-small {:data-testid :create-seder
+                              :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]
+         ]
+        ]
+       ]
+      ]
+
+     #_[:li.mb-2
 
       [:div.columns.is-vcentered.is-variable.is-1
        [:div.column
@@ -235,21 +251,13 @@
 
 (defn dashboard-panel
   []
-  [:div.page 
+  [:div.page {:class (styles/dashboard)}
    [:div.container.is-large.hero.is-flex
     [:div.hero-body.pt-6
      (let [haggadot @(re-frame/subscribe [::subs/haggadot])
            sedarim @(re-frame/subscribe [::subs/sedarim])
            name (re-frame/subscribe [::subs/name])]
        [:div.pt-24.column
-        [:div]
-        [:nav.level
-         [:div.level-left
-          [:div.level-item
-           "hello thhere"]
-          [:a.button.level-item.control "create seder"]
-          ]
-         ]
         [:div
          [:h1.text-center.is-size-4 {:data-testid :user}
           (str "Hello " @name ". Welcome. To make a new Haggadah, click the button to your right. To share and edit your existing Haggadah, look at your Haggadot below ")]]

@@ -68,7 +68,7 @@
 
 (defclass dashboard
   []
-  {:width :100%})
+  [:.table {:background-color :transparent}])
 
 (defclass menu
   []
