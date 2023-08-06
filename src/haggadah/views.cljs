@@ -219,12 +219,15 @@
      ^{:key id}
 
      [:li.mb-2
-      [:nav.level
-       [:div.level-left
-        [:a.haggadah-link.level-item {:data-testid :haggadah-link
-                           :href (href :haggadah-view {:id id})} title]
-        [:a.button.is-small.level-item {:data-testid :create-seder
-                             :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]
+
+      [:div.columns.is-vcentered.is-variable.is-1
+       [:div.column
+        [:a.haggadah-link {:data-testid :haggadah-link
+                                      :href (href :haggadah-view {:id id})} title]
+        ]
+       [:div.column
+        [:a.button.is-small {:data-testid :create-seder
+                                        :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]
         ]
        ]
       ]
