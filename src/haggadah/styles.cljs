@@ -68,7 +68,9 @@
 
 (defclass dashboard
   []
-  [:.table {:background-color :transparent}])
+  [:.table {:background-color :transparent}]
+  [:td {:word-wrap :anywhere
+        :vertical-align :bottom}])
 
 (defclass menu
   []
