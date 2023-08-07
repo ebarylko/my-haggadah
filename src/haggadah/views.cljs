@@ -202,13 +202,19 @@
   "Pre: takes a collection of sedarim
   Post: returns a collection of pairs, the first item being the seder title and the second item being a button which activates the seder when clicked"
   [sedarim]
-[:ul.sedarim
- (for [{:keys [title id]} sedarim :when id]
-   ^{:key id}[:li.mb-2
-              [:a.seder-link.mr-2 {:data-testid id} title]
-              [:a.button.is-small {:on-click (dispatch ::events/link-modal id)
-                                   :data-testid :activate-seder} "Activate Seder"]
-              [seder-link-popup] ])])
+  [:table.table.sedarim.is-narrow.is-bordered.is-striped
+   [:thead
+    [:tr
+     [:th "Seder title"]
+     [:th "Actions"]]]
+   [:tbody
+    (for [{:keys [title id]} sedarim :when id]
+      ^{:key id}
+      [:tr
+       [:td [:a.seder-link.mr-2 {:data-testid id} title]]
+       [:td [:a.button.is-small {:on-click (dispatch ::events/link-modal id)
+                                 :data-testid :activate-seder} "Activate Seder"]]
+       [seder-link-popup]])]])
 
 (defn render-haggadot
   "Pree: takes a collection of haggadot
