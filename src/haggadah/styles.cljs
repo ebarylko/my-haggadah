@@ -66,11 +66,6 @@
   (at-media {:max-width :768px}
             [:img {:width :70%}]))
 
-(defclass dashboard
-  []
-  [:table
-   [:td {:height :50px
-         :vertical-align :middle}]])
 
 (defclass dashboard-table
   []

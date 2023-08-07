@@ -148,7 +148,6 @@
       (create-seder "The first Seder")
       (d/wait-for-sedarim)
       (let [expected-haggadah-path (format "users/user1/haggadot/%s" id)
-            _ (e/screenshot driver "screenshots/seder-test-seder-created.png")
             [_ seder-id] (->> (all-sedarim)
                               first
                               vals)
