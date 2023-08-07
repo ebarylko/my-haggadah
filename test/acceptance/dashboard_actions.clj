@@ -5,7 +5,7 @@
 
 
 (def coll-type
-  {:sedarim {:fn/has-class :sedarim}
+  {:sedarim {:fn/has-class :seder-link}
    :haggadot {:fn/has-class :haggadot}})
 
 (defn wait-for-collection

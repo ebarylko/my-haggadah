@@ -202,29 +202,43 @@
   "Pre: takes a collection of sedarim
   Post: returns a collection of pairs, the first item being the seder title and the second item being a button which activates the seder when clicked"
   [sedarim]
-[:ul.sedarim
- (for [{:keys [title id]} sedarim :when id]
-   ^{:key id}[:li.mb-2
-              [:a.seder-link.mr-2 {:data-testid id} title]
-              [:a.button.is-small {:on-click (dispatch ::events/link-modal id)
-                                   :data-testid :activate-seder} "Activate Seder"]
-              [seder-link-popup] ])])
+  [:table.table.sedarim.is-narrow.is-bordered.is-striped {:class (styles/dashboard-table)}
+   [:thead
+    [:tr
+     [:th "Seder title"]
+     [:th "Actions"]]]
+   [:tbody
+    (for [{:keys [title id]} sedarim :when id]
+      ^{:key id}
+      [:tr
+       [:td [:a.seder-link.mr-2 {:data-testid id} title]]
+       [:td [:a.button.is-small {:on-click (dispatch ::events/link-modal id)
+                                 :data-testid :activate-seder} "Activate Seder"]]
+       [seder-link-popup]])]])
 
 (defn render-haggadot
   "Pree: takes a collection of haggadot
   Post: returns a collection of pairs, the first item being the Haggadah title and the second item being a button which creates a seder with the Haggadah when clicked"
   [haggadot]
-  [:ul.haggadot 
-   (for [{:keys [title id]} haggadot :when id] 
-     ^{:key id}[:li.mb-2
-                [:a.haggadah-link {:data-testid :haggadah-link 
-                                   :href (href :haggadah-view {:id id})} title]
-                [:a.button.is-small {:data-testid :create-seder
-                                     :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]])])
+   [:table.table.is-narrow.is-bordered.haggadot.is-striped {:class (styles/dashboard-table)}
+    [:thead
+     [:tr
+      [:th "Haggadah title"]
+      [:th "Actions"]]]
+    [:tbody 
+   (for [{:keys [title id]} haggadot :when id]
+     ^{:key id}
+       [:tr
+        [:td
+         [:a.haggadah-link {:data-testid :haggadah-link
+                            :href (href :haggadah-view {:id id})} title]]
+        [:td
+         [:a.button.is-small {:data-testid :create-seder
+                              :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]]])]])
 
 (defn dashboard-panel
   []
-  [:div.page 
+  [:div.page
    [:div.container.is-large.hero.is-flex
     [:div.hero-body.pt-6
      (let [haggadot @(re-frame/subscribe [::subs/haggadot])
