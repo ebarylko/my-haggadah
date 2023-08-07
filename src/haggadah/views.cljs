@@ -238,7 +238,7 @@
 
 (defn dashboard-panel
   []
-  [:div.page #_{:class (styles/dashboard)}
+  [:div.page
    [:div.container.is-large.hero.is-flex
     [:div.hero-body.pt-6
      (let [haggadot @(re-frame/subscribe [::subs/haggadot])

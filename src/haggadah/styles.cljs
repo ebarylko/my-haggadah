@@ -70,9 +70,7 @@
   []
   [:table
    [:td {:height :50px
-         :vertical-align :middle}]]
-  )
-
+         :vertical-align :middle}]])
 
 (defclass dashboard-table
   []
