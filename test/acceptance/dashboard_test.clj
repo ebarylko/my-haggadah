@@ -103,7 +103,6 @@
   "Pre: takes a user and a Seder id
   Post: returns the location of the Haggadah used for the Seder"
   [user id]
-  (println "This is the id " id) 
   (-> (FirestoreClient/getFirestore)
       (.collection "users")
       (.document user)
@@ -128,10 +127,8 @@
   "Pre: takes a Seder
   Post: returns the id and title of the seder in a map"
   [seder]
-  (println "Here is the seder " seder)
   (let [title (e/get-element-text-el driver seder)
         id (e/get-element-attr-el driver seder :data-testid)]
-    (println "Here is the title " title  " id " id)
     {:title title :id id}))
 
 (defn all-sedarim
@@ -139,7 +136,6 @@
   Post: returns the ids and titles of every Seder on the dashboard"
   []
   (let [sedarim (e/query-all driver {:fn/has-class :seder-link})]
-    (println "The sedarim " sedarim)
     (map id-and-title sedarim)))
 
 (t/deftest create-seder-test
