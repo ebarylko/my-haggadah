@@ -42,3 +42,4 @@
                               [:div.title "Magid"]
                               expected-bracha]]
        (t/is (= expected-section (dsl/render-haggadah section))))))
+
