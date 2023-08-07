@@ -56,3 +56,17 @@
                               expected-bracha]]
        (t/is (= expected-section (dsl/render-haggadah section))))))
 
+(defn has-all-content?
+  "Pre: takes an entire Haggadah
+  Post: returns true if the Haggadah has all the content"
+  [haggadah]
+  (let [full-haggadah? (every-pred has-every-section? has-every-bracha? has-every-song?)]
+    (full-haggadah? haggadah)))
+
+{:title section :brachas coll :songs }
+
+(t/deftest render-full-haggadah-test
+  (t/testing "When rendering an entire haggadah, every section is present and contains the content associated with that section"
+    (let [haggadah dsl/full-haggadah]
+      (t/is (has-all-content? haggadah)))))
+

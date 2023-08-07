@@ -1,4 +1,5 @@
-(ns haggadah.dsl)
+(ns haggadah.dsl
+  (:require [haggadah.dsl :as dsl]))
 
 (defn bracha
   [title hebrew-text english-text]
@@ -33,6 +34,9 @@
 (defonce default-haggadah
   (haggadah "Default-haggadah" (bracha "Wine" "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן"
                                        "Blessed are You, Lord our God, King of the universe, who creates the fruit of the vine.")))
+
+(def full-haggadah
+  (haggadah "Full Haggadah" (section )))
 
 (defn ->cell
   "Pre: takes a cell from a table
