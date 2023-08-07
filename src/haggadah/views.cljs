@@ -202,7 +202,7 @@
   "Pre: takes a collection of sedarim
   Post: returns a collection of pairs, the first item being the seder title and the second item being a button which activates the seder when clicked"
   [sedarim]
-  [:table.table.sedarim.is-narrow.is-bordered.is-striped
+  [:table.table.sedarim.is-narrow.is-bordered.is-striped {:class (styles/dashboard-table)}
    [:thead
     [:tr
      [:th "Seder title"]
@@ -220,7 +220,7 @@
   "Pree: takes a collection of haggadot
   Post: returns a collection of pairs, the first item being the Haggadah title and the second item being a button which creates a seder with the Haggadah when clicked"
   [haggadot]
-   [:table.table.is-narrow.is-bordered.haggadot.is-striped
+   [:table.table.is-narrow.is-bordered.haggadot.is-striped {:class (styles/dashboard-table)}
     [:thead
      [:tr
       [:th "Haggadah title"]
@@ -238,7 +238,7 @@
 
 (defn dashboard-panel
   []
-  [:div.page {:class (styles/dashboard)}
+  [:div.page #_{:class (styles/dashboard)}
    [:div.container.is-large.hero.is-flex
     [:div.hero-body.pt-6
      (let [haggadot @(re-frame/subscribe [::subs/haggadot])

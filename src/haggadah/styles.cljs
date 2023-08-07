@@ -73,6 +73,12 @@
          :vertical-align :middle}]]
   )
 
+
+(defclass dashboard-table
+  []
+  [:td {:height :50px
+         :vertical-align :middle}])
+
 (defclass menu
   []
   {:background atomic-tangerine}

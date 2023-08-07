@@ -103,6 +103,7 @@
   "Pre: takes a user and a Seder id
   Post: returns the location of the Haggadah used for the Seder"
   [user id]
+  (println "This is the id " id) 
   (-> (FirestoreClient/getFirestore)
       (.collection "users")
       (.document user)
