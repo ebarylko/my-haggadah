@@ -24,6 +24,10 @@
   [title & rows]
   {:type :table :title title :rows rows})
 
+(defn general-content
+  [title hebrew-text english-text]
+  {:type :general :title title :hebrew hebrew-text :english english-text})
+
 (defn haggadah
   "Pre: takes a title and content for a Haggadah
   Post: returns a model of Haggadah with the same content and title"
@@ -62,7 +66,12 @@
                                      (bracha "" kadesh-bracha-heb-3)
                                      (bracha "" kadesh-bracha-heb-4)
                                      (bracha "" kadesh-bracha-heb-5)
-                                     (bracha "" kadesh-bracha-heb-6))))
+                                     (bracha "" kadesh-bracha-heb-6))
+            (section "Urchatz"
+                     (song "And Wash" "נוטלים את הידים ואין מברכים עַל נְטִילַת יָדַיִּם" ))
+            (section "Karpas"
+
+                     )))
 
 (defn ->cell
   "Pre: takes a cell from a table
@@ -104,6 +113,12 @@
   [:div.instruction
    [:div.instr.hebrew.pb-3 hebrew]
    [:div.instr.english english]])
+
+(defmethod render-haggadah :general [{:keys [title english hebrew]}]
+  [:div.general
+   [:div.title title]
+   [:div.hebrew hebrew]
+   [:div.english english]])
 
 (defmethod render-haggadah :song [{:keys [title hebrew english]}]
   [:div.song
