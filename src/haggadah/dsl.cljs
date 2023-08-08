@@ -8,6 +8,10 @@
   [title hebrew-text english-text]
   {:type :song :title title :hebrew hebrew-text :english english-text})
 
+(defn instruction
+  [hebrew-text english-text]
+  {:type :instruction :english english-text :hebrew hebrew-text})
+
 (defn cell
   [content]
   [:td content])
@@ -68,6 +72,11 @@
    [:div.title title]
    [:div.text.hebrew.pb-3 hebrew]
    [:div.english-text english]])
+
+(defmethod render-haggadah :instruction [{:keys [hebrew english]}]
+  [:div.instruction
+   [:div.hebrew-instr hebrew]
+   [:div.english-instr english]])
 
 (defmethod render-haggadah :song [{:keys [title hebrew english]}]
   [:div.song
