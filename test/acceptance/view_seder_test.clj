@@ -28,7 +28,7 @@
   (t/testing "When the current user has a Seder and copies the link to view the Seder and pastes it in the window, they should then see a welcome message and the Haggadah below"
     (let [id (c/fs-store-haggadah {:title "Haggadah 1"
                                    :type "haggadah"
-                                   :content [{:type "bracha" :title "hello" :text "bracha"}]}
+                                   :content [{:type "bracha" :title "hello" :english "bracha" :hebrew "text"}]}
                                   "user1")
           seder-id (c/fs-store-seder "Seder title" "user1" id)]
       (c/home->dashboard driver)
@@ -40,9 +40,11 @@
       (let [seder-title (seder-title)
             haggadah-title (h/haggadah-title)
             bracha-title (h/bracha-title)
-            bracha-text (h/bracha-content)]
+            hebrew-bracha (h/bracha-hebrew-content)
+            english-bracha (h/bracha-english-content)]
         (t/are [x y] (= x y)
           "Haggadah 1" haggadah-title
           "Seder title" seder-title
           "hello" bracha-title
-          "bracha" bracha-text)))))
+          "bracha" english-bracha
+          "text" hebrew-bracha)))))
