@@ -53,6 +53,13 @@
 
 (def kadesh-bracha-heb-6 "בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁהֶחֱיָנוּ וְקִיְּמָנוּ וְהִגִּיעָנוּ לַזְּמַן הַזֶּה.")
 
+(def karpas-content-eng "Take from the greens less than a kazayit - so that you will not need to say the blessing after eating it; dip it into the salt water; say the blessing 'who creates the fruit of the earth;' and have in mind that this blessing will also be for the bitter herbs.  Eat without reclining.")
+
+(def karpas-content-heb "לוקח מן הכרפס פחות מכזית – כדי שלא יתחייב בברכה אחרונה – טובל במי מלח, מברך בורא פרי האדמה, ומכווין לפטור בברכה גם את המרור. אוכל בלא הסבה.")
+
+(defn haggadaah
+  [title & content]
+  {:type :haggadah :title title :content content})
 
 (defn section
   [hebrew-title english-title & content]
@@ -70,11 +77,8 @@
             (section "Urchatz"
                      (song "And Wash" "נוטלים את הידים ואין מברכים עַל נְטִילַת יָדַיִּם" ))
             (section "Karpas"
-                     (general-content "" "לוקח מן הכרפס פחות מכזית – כדי שלא יתחייב בברכה אחרונה – טובל במי מלח, מברך בורא פרי האדמה, ומכווין לפטור בברכה גם את המרור. אוכל בלא הסבה."
-                                      "Take from the greens less than a kazayit - so that you will not need to say the blessing after eating it; dip it into the salt water; say the blessing 'who creates the fruit of the earth;' and have in mind that this blessing will also be for the bitter herbs.  Eat without reclining."
-                                      )
-
-                     )))
+                     (general-content "" karpas-content-heb karpas-content-eng)
+                     (bracha "" "בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא פְּרִי הָאֲדָמָה."))))
 
 (defn ->cell
   "Pre: takes a cell from a table
