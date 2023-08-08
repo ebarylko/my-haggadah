@@ -16,7 +16,8 @@
 
 (t/deftest render-song-test
   (t/testing "When rendering the song, returns the title and content"
-    (let [song (dsl/song "Ki lo nae" "כִּי לוֹ נָאֶה, כִּי לוֹ יָאֶה. אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו"
+    (let [song (dsl/song "Ki lo nae"
+                         "כִּי לוֹ נָאֶה, כִּי לוֹ יָאֶה. אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו"
                          "Since for Him it is pleasant, for Him it is suited." )
           expected [:div.song
                     [:div.title "Ki lo nae" ]
