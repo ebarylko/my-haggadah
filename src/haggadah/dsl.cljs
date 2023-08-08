@@ -71,18 +71,18 @@
   [:div.bracha
    [:div.title title]
    [:div.text.hebrew.pb-3 hebrew]
-   [:div.english-text english]])
+   [:div.english.text english]])
 
 (defmethod render-haggadah :instruction [{:keys [hebrew english]}]
   [:div.instruction
-   [:div.hebrew-instr.pb-3 hebrew]
-   [:div.english-instr english]])
+   [:div.instr.hebrew.pb-3 hebrew]
+   [:div.instr.english english]])
 
 (defmethod render-haggadah :song [{:keys [title hebrew english]}]
   [:div.song
    [:div.title title]
    [:div.text.hebrew.pb-3 hebrew]
-   [:div.english-text english]])
+   [:div.english.text english]])
 
 (defmethod render-haggadah :table [{:keys [title rows]}]
   [:div.table.is-bordered

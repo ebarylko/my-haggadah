@@ -36,10 +36,7 @@
   [:nav.navbar {:background-color :transparent}]
   [:form {:background form-background}]
   [:.english {:text-align :left}]
-  [:.english-instr {:text-align :left
-                    :font-size :1rem}]
-  [:.hebrew-instr {:text-align :right
-                    :font-size :1rem}]
+  [:.instr {:font-size :1rem}]
   [:.english-text {:text-align :left
               :font-size :1.25rem}]
   [:.page {:background page-background
@@ -49,7 +46,8 @@
             :text-align :center}
    [:.title {:font-size :1.7rem}]]
   [:.hebrew {:text-align :right}]
-  [:.text {:text-align :right
+  [:.text {:font-size :1rem}]
+  #_[:.text {:text-align :right
            :font-size :1.25rem}]
   [:.table-content
    {:border-width :1px

@@ -7,7 +7,7 @@
   [:div.bracha
    [:div.title  "Wine"]
    [:div.text.hebrew.pb-3 "סַבְרִי מָרָנָן"]
-   [:div.english-text  "Baruj hata"]])
+   [:div.english.text #_english-text  "Baruj hata"]])
 
 (t/deftest render-bracha-test
   (t/testing "When rendering a bracha, returns the title and the text"
@@ -22,15 +22,15 @@
           expected [:div.song
                     [:div.title "Ki lo nae" ]
                     [:div.text.hebrew.pb-3 "כִּי לוֹ נָאֶה, כִּי לוֹ יָאֶה. אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו"]
-                    [:div.english-text "Since for Him it is pleasant, for Him it is suited."]]]
+                    [:div.english.text "Since for Him it is pleasant, for Him it is suited."]]]
       (t/is (= expected (dsl/render-haggadah song))))))
 
 (t/deftest render-instruction-test
   (t/testing "When rendering an instruction, returns the content in English and in Hebrew"
     (let [instruction (dsl/instruction "Hebrew" "English")
           expected [:div.instruction
-                    [:div.hebrew-instr.pb-3 "Hebrew"]
-                    [:div.english-instr "English"]]]
+                    [:div.instr.hebrew.pb-3 "Hebrew"]
+                    [:div.instr.english "English"]]]
       (t/is (= expected (dsl/render-haggadah instruction))))))
 
 (t/deftest render-table-test
