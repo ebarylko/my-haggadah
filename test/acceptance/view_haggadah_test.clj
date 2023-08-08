@@ -63,22 +63,24 @@
         hebrew-bracha actual-hebrew-bracha
         english-bracha actual-english-bracha))))
 
-#_(t/deftest refresh-page-test
+(t/deftest refresh-page-test
   (t/testing "When the current user refreshes the haggadah"
     (c/fs-store-haggadah {:title "The best haggadah of the year"
-                        :type "haggadah"
-                        :content [{:type "bracha" :text bracha :title title}]}
-                       "user1")
+                          :type "haggadah"
+                          :content [{:type "bracha" :hebrew hebrew-bracha :english english-bracha :title title}]}
+                         "user1")
     (doto driver
       (c/home->dashboard)
-      (click-on-haggadah bracha)
+      (click-on-haggadah hebrew-bracha)
       (e/refresh)
-      (e/wait-has-text-everywhere bracha))
+      (e/wait-has-text-everywhere hebrew-bracha))
     (let [haggadah-title (h/haggadah-title)
           bracha-title (h/bracha-title)
-          bracha-content (h/bracha-content)
+          actual-hebrew-bracha (h/bracha-hebrew-content)
+          actual-english-bracha (h/bracha-english-content)
           expected-haggadah-title "The best haggadah of the year"]
       (t/are [x y] (= x y)
         expected-haggadah-title haggadah-title
-        bracha bracha-content
+        english-bracha actual-english-bracha
+        hebrew-bracha actual-hebrew-bracha
         title bracha-title))))
