@@ -46,7 +46,8 @@
             :text-align :center}
    [:.title {:font-size :1.7rem}]]
   [:.hebrew {:text-align :right}]
-  [:.text {:font-size :1rem}]
+  [:.instr.hebrew {:padding-top :1rem}]
+  [:.text {:font-size :1.25rem}]
   [:.table-content
    {:border-width :1px
     :display :flex
