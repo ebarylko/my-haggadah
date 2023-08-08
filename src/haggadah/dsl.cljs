@@ -5,8 +5,8 @@
   {:type :bracha :title title :hebrew hebrew-text :english english-text})
 
 (defn song
-  [title text]
-  {:type :song :title title :text text})
+  [title hebrew-text english-text]
+  {:type :song :title title :hebrew hebrew-text :english english-text})
 
 (defn cell
   [content]
@@ -69,10 +69,11 @@
    [:div.text.hebrew.pb-3 hebrew]
    [:div.english-text english]])
 
-(defmethod render-haggadah :song [{:keys [title text]}]
+(defmethod render-haggadah :song [{:keys [title hebrew english]}]
   [:div.song
    [:div.title title]
-   [:div.text text]])
+   [:div.text.hebrew.pb-3 hebrew]
+   [:div.english-text english]])
 
 (defmethod render-haggadah :table [{:keys [title rows]}]
   [:div.table.is-bordered
