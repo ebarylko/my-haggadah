@@ -29,7 +29,7 @@
   (t/testing "When rendering an instruction, returns the content in English and in Hebrew"
     (let [instruction (dsl/instruction "Hebrew" "English")
           expected [:div.instruction
-                    [:div.hebrew-instr "Hebrew"]
+                    [:div.hebrew-instr.pb-3 "Hebrew"]
                     [:div.english-instr "English"]]]
       (t/is (= expected (dsl/render-haggadah instruction))))))
 

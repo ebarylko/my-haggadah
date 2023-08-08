@@ -309,7 +309,13 @@
   [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:section.container.is-flex
-       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} text ]])])
+       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} (dsl/render-haggadah
+                                                               (dsl/haggadah "Haggadah title"
+                                                                (dsl/instruction "בליל רִאשון אומרים:"
+                                                                                 "On the first night we say:" )
+                                                                (dsl/song "" "וּבְכֵן וַיְהִי בַּחֲצִי הַלַּיְלָה." "English")
+                                                                )
+                                                               )#_text ]])])
 
 (defn about-panel
   []

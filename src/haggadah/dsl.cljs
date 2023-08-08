@@ -75,7 +75,7 @@
 
 (defmethod render-haggadah :instruction [{:keys [hebrew english]}]
   [:div.instruction
-   [:div.hebrew-instr hebrew]
+   [:div.hebrew-instr.pb-3 hebrew]
    [:div.english-instr english]])
 
 (defmethod render-haggadah :song [{:keys [title hebrew english]}]
