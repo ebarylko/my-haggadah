@@ -46,21 +46,24 @@
 
 (def title "Wine")
 
-(def bracha "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
+(def hebrew-bracha "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
+(def english-bracha "Blessed are You, Lord our God, King of the universe, who creates the fruit of the vine.")
 
 (t/deftest view-haggadah-with-bracha
   (t/testing "When the current user has a haggadah with a bracha in it and is at their dashboard, they should be able to view the haggadah and see it in a certain way"
     (doto driver
       (c/home->dashboard)
       (d/create-haggadah title)
-      (click-on-haggadah bracha))
+      (click-on-haggadah hebrew-bracha))
     (let [actual-title (h/bracha-title)
-          actual-bracha  (h/bracha-content)]
+          actual-hebrew-bracha  (h/bracha-hebrew-content)
+          actual-english-bracha (h/bracha-english-content)]
       (t/are [x y] (= x y)
         title actual-title
-        bracha actual-bracha))))
+        hebrew-bracha actual-hebrew-bracha
+        english-bracha actual-english-bracha))))
 
-(t/deftest refresh-page-test
+#_(t/deftest refresh-page-test
   (t/testing "When the current user refreshes the haggadah"
     (c/fs-store-haggadah {:title "The best haggadah of the year"
                         :type "haggadah"

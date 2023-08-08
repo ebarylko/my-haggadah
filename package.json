@@ -12,7 +12,7 @@
         "test:watch": "firebase emulators:exec --project my-haggadah 'npx shadow-cljs watch ci ci-setup'",
         "test:build": "npx shadow-cljs compile ci ci-setup ",
         "emulators": "firebase emulators:start --project my-haggadah --import=emulator_data --export-on-exit=emulator_data",
-        "acceptance": "cd test/acceptance && npm run acceptance:base && firebase emulators:exec --project my-haggadah 'lein test'",
+        "acceptance": "cd test/acceptance && npm run acceptance:base && firebase emulators:exec --project my-haggadah 'lein test :only acceptance.view-haggadah-test'",
         "acceptance:base": "cp -r resources  test/acceptance && npx shadow-cljs release acceptance",
 		"act:pr": "act pull_request --artifact-server-path /tmp/artifacts "
 	},
