@@ -70,6 +70,9 @@
             (section "Urchatz"
                      (song "And Wash" "נוטלים את הידים ואין מברכים עַל נְטִילַת יָדַיִּם" ))
             (section "Karpas"
+                     (general-content "" "לוקח מן הכרפס פחות מכזית – כדי שלא יתחייב בברכה אחרונה – טובל במי מלח, מברך בורא פרי האדמה, ומכווין לפטור בברכה גם את המרור. אוכל בלא הסבה."
+                                      "Take from the greens less than a kazayit - so that you will not need to say the blessing after eating it; dip it into the salt water; say the blessing 'who creates the fruit of the earth;' and have in mind that this blessing will also be for the bitter herbs.  Eat without reclining."
+                                      )
 
                      )))
 
@@ -117,8 +120,8 @@
 (defmethod render-haggadah :general [{:keys [title english hebrew]}]
   [:div.general
    [:div.title title]
-   [:div.hebrew hebrew]
-   [:div.english english]])
+   [:div.text.pb-3 hebrew]
+   [:div.text english]])
 
 (defmethod render-haggadah :song [{:keys [title hebrew english]}]
   [:div.song
