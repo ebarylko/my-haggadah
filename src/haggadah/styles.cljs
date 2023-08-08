@@ -35,6 +35,8 @@
           :background-color    :white}]
   [:nav.navbar {:background-color :transparent}]
   [:form {:background form-background}]
+  [:.english-text {:text-align :left
+              :font-size :1.25rem}]
   [:.page {:background page-background
            :width :100%}]
   [:.title {:font-size :2rem

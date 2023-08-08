@@ -14,9 +14,14 @@
   []
   (e/get-element-text driver {:css "div.bracha>div.title" }))
 
-(defn bracha-content
+(defn bracha-hebrew-content
   []
-  (e/get-element-text driver {:css "div.bracha>div.text"}))
+  (e/get-element-text driver {:css "div.bracha>div.hebrew"}))
+
+
+(defn bracha-english-content
+  []
+  (e/get-element-text driver {:css "div.bracha>div.english-text"}))
 
 
 (defn wait-for-seder

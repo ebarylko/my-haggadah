@@ -2,11 +2,12 @@
   (:require [haggadah.dsl :as dsl]
             [cljs.test :as t :include-macros true]))
 
-(def bracha (dsl/bracha "Wine" "Baruj hata"))
+(def bracha (dsl/bracha "Wine" "סַבְרִי מָרָנָן" "Baruj hata"))
 (def expected-bracha
   [:div.bracha
    [:div.title  "Wine"]
-   [:div.text  "Baruj hata"]])
+   [:div.text.hebrew.pb-3 "סַבְרִי מָרָנָן"]
+   [:div.english-text  "Baruj hata"]])
 
 (t/deftest render-bracha-test
   (t/testing "When rendering a bracha, returns the title and the text"
