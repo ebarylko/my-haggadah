@@ -31,7 +31,7 @@
           expected [:div.instruction
                     [:div.hebrew-instr "Hebrew"]
                     [:div.english-instr "English"]]]
-      (t/is (= expected instruction)))))
+      (t/is (= expected (dsl/render-haggadah instruction))))))
 
 (t/deftest render-table-test
   (t/testing "When rendering the table, each row and the content within is returned"
