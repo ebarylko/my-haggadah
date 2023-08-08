@@ -1,8 +1,8 @@
 (ns haggadah.dsl)
 
 (defn bracha
-  [title text]
-  {:type :bracha :title title :text text})
+  [title hebrew-text english-text]
+  {:type :bracha :title title :hebrew hebrew-text :english english-text})
 
 (defn song
   [title text]
@@ -27,7 +27,8 @@
   {:type :haggadah :content content :title title})
 
 (defonce default-haggadah
-  (haggadah "Default-haggadah" (bracha "Wine" "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")))
+  (haggadah "Default-haggadah" (bracha "Wine" "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן"
+                                       "Blessed are You, Lord our God, King of the universe, who creates the fruit of the vine.")))
 
 (defn ->cell
   "Pre: takes a cell from a table
@@ -52,7 +53,6 @@
 (defmulti render-haggadah (comp keyword :type ))
 
 (defmethod render-haggadah :default [args]
-  (.log js/console args)
   [:div
    [:div "What did you pass me? " (:type args)
     "Original args " args]])
@@ -63,10 +63,11 @@
    [:div.title
     (apply conj [:div.content] (map render-haggadah content))]])
 
-(defmethod render-haggadah :bracha [{:keys [title text]}]
+(defmethod render-haggadah :bracha [{:keys [title english hebrew]}]
   [:div.bracha
    [:div.title title]
-   [:div.text text]])
+   [:div.text.hebrew.pb-3 hebrew]
+   [:div.english-text english]])
 
 (defmethod render-haggadah :song [{:keys [title text]}]
   [:div.song
