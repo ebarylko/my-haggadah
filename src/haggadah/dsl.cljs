@@ -51,8 +51,8 @@
   {:type :haggadah :title title :content content})
 
 (defn section
-  [title & content]
-  {:type :section :title title :content content})
+  [hebrew-title english-title & content]
+  {:type :section :english english-title :hebrew hebrew-title :content content})
 
 (defmulti render-haggadah (comp keyword :type ))
 
@@ -91,10 +91,11 @@
     (apply conj [:tbody] rows)]])
 
 
-(defmethod render-haggadah :section [{:keys [title content]}]
+(defmethod render-haggadah :section [{:keys [hebrew english content]}]
   (apply conj
    [:div.section
-    [:div.title title]]
+    [:div.title english]
+    [:div.title.hebrew hebrew]]
     (map render-haggadah content)))
 
 

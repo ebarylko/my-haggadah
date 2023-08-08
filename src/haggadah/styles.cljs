@@ -35,6 +35,7 @@
           :background-color    :white}]
   [:nav.navbar {:background-color :transparent}]
   [:form {:background form-background}]
+  [:.hebrew {:text-align :right}]
   [:.english-instr {:text-align :left
                     :font-size :1rem}]
   [:.hebrew-instr {:text-align :right

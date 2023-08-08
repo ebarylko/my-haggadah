@@ -49,9 +49,10 @@
 
 (t/deftest render-section-test
     (t/testing "When rendering a section the title and content are returned"
-      (let [section (dsl/section "Magid" bracha)
+      (let [section (dsl/section "מַגִּיד" "Magid"  bracha)
             expected-section [:div.section
                               [:div.title "Magid"]
+                              [:div.title.hebrew "מַגִּיד"]
                               expected-bracha]]
        (t/is (= expected-section (dsl/render-haggadah section))))))
 
