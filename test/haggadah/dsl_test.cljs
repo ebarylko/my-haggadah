@@ -25,6 +25,14 @@
                     [:div.english-text "Since for Him it is pleasant, for Him it is suited."]]]
       (t/is (= expected (dsl/render-haggadah song))))))
 
+(t/deftest render-instruction-test
+  (t/testing "When rendering an instruction, returns the content in English and in Hebrew"
+    (let [instruction (dsl/instruction "Hebrew" "English")
+          expected [:div.instruction
+                    [:div.hebrew-instr.pb-3 "Hebrew"]
+                    [:div.english-instr "English"]]]
+      (t/is (= expected (dsl/render-haggadah instruction))))))
+
 (t/deftest render-table-test
   (t/testing "When rendering the table, each row and the content within is returned"
     (let [table (dsl/table "Las Diez Plagas" 
