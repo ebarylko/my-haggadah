@@ -47,8 +47,6 @@
    [:.title {:font-size :1.7rem}]]
   [:.hebrew {:text-align :right}]
   [:.text {:font-size :1rem}]
-  #_[:.text {:text-align :right
-           :font-size :1.25rem}]
   [:.table-content
    {:border-width :1px
     :display :flex
