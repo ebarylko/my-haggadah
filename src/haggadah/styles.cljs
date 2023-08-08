@@ -35,10 +35,8 @@
           :background-color    :white}]
   [:nav.navbar {:background-color :transparent}]
   [:form {:background form-background}]
-  [:.english-instr {:text-align :left
-                    :font-size :1rem}]
-  [:.hebrew-instr {:text-align :right
-                    :font-size :1rem}]
+  [:.english {:text-align :left}]
+  [:.instr {:font-size :1rem}]
   [:.english-text {:text-align :left
               :font-size :1.25rem}]
   [:.page {:background page-background
@@ -47,8 +45,8 @@
             :font-weight :normal
             :text-align :center}
    [:.title {:font-size :1.7rem}]]
-  [:.text {:text-align :right
-           :font-size :1.25rem}]
+  [:.hebrew {:text-align :right}]
+  [:.text {:font-size :1rem}]
   [:.table-content
    {:border-width :1px
     :display :flex

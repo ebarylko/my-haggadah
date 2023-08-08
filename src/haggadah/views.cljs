@@ -297,7 +297,7 @@
             [:div {:class "dropdown-menu", :id "dropdown-menu", :role "menu"}
              [:div {:class "dropdown-content"}
               [:a.dropdown-item.is-active "Base Haggadah" ]]]])]
-         [:div.field.is-grouped.is-grouped-right 
+         [:div.field.is-grouped.is-grouped-right
           [:a.button.mr-3 {:on-click (dispatch ::push-state :dashboard)} "Cancel"]
           [:a.button {:class (styles/submit-button)
                       :data-testid :add-haggadah
@@ -309,7 +309,7 @@
   [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:section.container.is-flex
-       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} text ]])])
+       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} text]])])
 
 (defn about-panel
   []

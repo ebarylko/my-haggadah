@@ -21,7 +21,7 @@
 
 (defn bracha-english-content
   []
-  (e/get-element-text driver {:css "div.bracha>div.english-text"}))
+  (e/get-element-text driver {:css "div.bracha>div.english"}))
 
 
 (defn wait-for-seder

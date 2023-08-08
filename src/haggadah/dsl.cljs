@@ -51,8 +51,8 @@
   {:type :haggadah :title title :content content})
 
 (defn section
-  [title & content]
-  {:type :section :title title :content content})
+  [hebrew-title english-title & content]
+  {:type :section :english english-title :hebrew hebrew-title :content content})
 
 (defmulti render-haggadah (comp keyword :type ))
 
@@ -71,18 +71,18 @@
   [:div.bracha
    [:div.title title]
    [:div.text.hebrew.pb-3 hebrew]
-   [:div.english-text english]])
+   [:div.english.text english]])
 
 (defmethod render-haggadah :instruction [{:keys [hebrew english]}]
   [:div.instruction
-   [:div.hebrew-instr.pb-3 hebrew]
-   [:div.english-instr english]])
+   [:div.instr.hebrew.pb-3 hebrew]
+   [:div.instr.english english]])
 
 (defmethod render-haggadah :song [{:keys [title hebrew english]}]
   [:div.song
    [:div.title title]
    [:div.text.hebrew.pb-3 hebrew]
-   [:div.english-text english]])
+   [:div.english.text english]])
 
 (defmethod render-haggadah :table [{:keys [title rows]}]
   [:div.table.is-bordered
@@ -91,10 +91,11 @@
     (apply conj [:tbody] rows)]])
 
 
-(defmethod render-haggadah :section [{:keys [title content]}]
+(defmethod render-haggadah :section [{:keys [hebrew english content]}]
   (apply conj
    [:div.section
-    [:div.title title]]
+    [:div.title english]
+    [:div.title.hebrew hebrew]]
     (map render-haggadah content)))
 
 
