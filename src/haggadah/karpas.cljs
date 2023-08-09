@@ -8,8 +8,9 @@
 (def urchatz-bracha-heb "בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא פְּרִי הָאֲדָמָה.")
 (def urchatz-bracha-eng "Blessed are you, Lord our God, King of the universe, who creates the fruit of the earth.")
 
-(section "כַּרְפַּס"
-         "Karpas"
-         (instruction instr-heb-7 instr-eng-7)
-         (bracha urchatz-bracha-heb urchatz-bracha-eng))
+(def karpas
+  (section "כַּרְפַּס"
+           "Karpas"
+           (instruction instr-heb-7 instr-eng-7)
+           (bracha urchatz-bracha-heb urchatz-bracha-eng)))
 
