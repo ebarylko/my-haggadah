@@ -59,8 +59,10 @@
 
 
 (def kadesh-bracha-heb-5 "בָּרוּךְ אַתָּה ה', הַמַּבְדִיל בֵּין קֹדֶשׁ לְקֹדֶשׁ.")
+(def kadesh-bracha-eng-5 "Blessed are You, O Lord, who distinguishes between the holy and the holy.")
 
 (def kadesh-bracha-heb-6 "בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁהֶחֱיָנוּ וְקִיְּמָנוּ וְהִגִּיעָנוּ לַזְּמַן הַזֶּה.")
+(def kadesh-bracha-eng-6 "Blessed are You, Lord our God, King of the universe, who has granted us life and sustenance and permitted us to reach this season.")
 
 (def karpas-content-eng "Take from the greens less than a kazayit - so that you will not need to say the blessing after eating it; dip it into the salt water; say the blessing 'who creates the fruit of the earth;' and have in mind that this blessing will also be for the bitter herbs.  Eat without reclining.")
 
@@ -74,6 +76,8 @@
 (def instr-eng-3 "On weekdays, begin here:")
 (def instr-heb-4 "בּמוצאי שבת מוסיפים:")
 (def instr-eng-4  "On Saturday night add the following two paragraphs:")
+(def instr-heb-5 "שותה בהסיבת שמאל ואינו מברך ברכה אחרונה.")
+(def instr-eng-5 "Drink while reclining to the left and do not recite a blessing after drinking.")
 
 (defn haggadaah
   [title & content]
@@ -96,9 +100,9 @@
                      (bracha "" kadesh-bracha-heb-3 kadesh-bracha-eng-3)
                      (instruction instr-heb-4 instr-eng-4)
                      (bracha "" kadesh-bracha-heb-4 kadesh-bracha-eng-4)
-                     ;; (bracha "" kadesh-bracha-heb-5)
-                     ;; (bracha "" kadesh-bracha-heb-6)
-                     )
+                     (bracha "" kadesh-bracha-heb-5 kadesh-bracha-eng-5)
+                     (bracha "" kadesh-bracha-heb-6 kadesh-bracha-eng-6)
+                     (instruction instr-heb-5 instr-eng-5))
             #_(section "Urchatz"
                     (song "And Wash" "נוטלים את הידים ואין מברכים עַל נְטִילַת יָדַיִּם" ))
             #_(section "Karpas"
