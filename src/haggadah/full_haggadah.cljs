@@ -24,9 +24,6 @@
 (def kadesh-bracha-heb-6 "בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁהֶחֱיָנוּ וְקִיְּמָנוּ וְהִגִּיעָנוּ לַזְּמַן הַזֶּה.")
 (def kadesh-bracha-eng-6 "Blessed are You, Lord our God, King of the universe, who has granted us life and sustenance and permitted us to reach this season.")
 
-(def karpas-content-eng "Take from the greens less than a kazayit - so that you will not need to say the blessing after eating it; dip it into the salt water; say the blessing 'who creates the fruit of the earth;' and have in mind that this blessing will also be for the bitter herbs.  Eat without reclining.")
-
-(def karpas-content-heb "לוקח מן הכרפס פחות מכזית – כדי שלא יתחייב בברכה אחרונה – טובל במי מלח, מברך בורא פרי האדמה, ומכווין לפטור בברכה גם את המרור. אוכל בלא הסבה.")
 
 (def instr-heb-1 "מוזגים כוס ראשון. המצּות מכוסות.")
 (def instr-eng-1 "We pour the first cup. The matsot are covered")
@@ -39,8 +36,24 @@
 (def instr-heb-5 "שותה בהסיבת שמאל ואינו מברך ברכה אחרונה.")
 (def instr-eng-5 "Drink while reclining to the left and do not recite a blessing after drinking.")
 
-(def instr-heb-6 "נוטלים את הידים ואין מברכים ׳׳עַל נְטִילַת יָדַיִּם")
+(def instr-heb-6 "נוֹטְלִין אֶת הַיָדַיִם וְאֵין מְבָרְכִין ״עַל נְטִילַת יָדַיִם״")
 (def instr-eng-6 "Wash your hands but do not say the blessing 'on the washing of the hands.'")
+
+(def instr-heb-7 "לוקח מן הכרפס פחות מכזית – כדי שלא יתחייב בברכה אחרונה – טובל במי מלח, מברך בורא פרי האדמה, ומכווין לפטור בברכה גם את המרור. אוכל בלא הסבה.")
+(def instr-eng-7 "Take from the greens less than a kazayit - so that you will not need to say the blessing after eating it; dip it into the salt water; say the blessing 'who creates the fruit of the earth;' and have in mind that this blessing will also be for the bitter herbs.  Eat without reclining.")
+
+
+(def instr-heb-8 "חותך את המצה האמצעית לשתים, ומצפין את הנתח הגדול לאפיקומן")
+(def instr-eng-8 "Split the middle matsah in two, and conceal the larger piece to use it for the afikoman.")
+
+(def instr-heb-9 "מגלה את המצות, מגביה את הקערה ואומר בקול רם:")
+(def instr-eng-9 "The leader uncovers the matsot, raises the Seder plate, and says out loud:")
+
+(def urchatz-bracha-heb "בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא פְּרִי הָאֲדָמָה.")
+(def urchatz-bracha-eng "Blessed are you, Lord our God, King of the universe, who creates the fruit of the earth.")
+
+(def ah-lach-manya-heb "הָא לַחְמָא עַנְיָא דִּי אֲכָלוּ אַבְהָתָנָא בְאַרְעָא דְמִצְרָיִם. כָּל דִכְפִין יֵיתֵי וְיֵיכֹל, כָּל דִצְרִיךְ יֵיתֵי וְיִפְסַח. הָשַּׁתָּא הָכָא, לְשָׁנָה הַבָּאָה בְּאַרְעָא דְיִשְׂרָאֵל. הָשַּׁתָּא עַבְדֵי, לְשָׁנָה הַבָּאָה בְּנֵי חוֹרִין.")
+(def ah-lach-manya-eng "This is the bread of destitution that our ancestors ate in the land of Egypt. Anyone who is famished should come and eat, anyone who is in need should come and partake of the Pesach sacrifice. Now we are here, next year we will be in the land of Israel; this year we are slaves, next year we will be free people.")
 
 (def full-haggadah
   (haggadah "Full Haggadah"
@@ -58,9 +71,20 @@
                      (bracha "" kadesh-bracha-heb-5 kadesh-bracha-eng-5)
                      (bracha "" kadesh-bracha-heb-6 kadesh-bracha-eng-6)
                      (instruction instr-heb-5 instr-eng-5))
-            (section "Urchatz"
-                     "וּרְחַץ"
+            (section "וּרְחַץ"
+                     "Urchatz"
                      (instruction instr-heb-6 instr-eng-6))
-            #_(section "Karpas"
-                     (general-content "" karpas-content-heb karpas-content-eng)
-                     (bracha "" "בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא פְּרִי הָאֲדָמָה."))))
+            (section "כַּרְפַּס"
+                     "Karpas"
+                     (instruction instr-heb-7 instr-eng-7)
+                     (bracha "" urchatz-bracha-heb urchatz-bracha-eng))
+            (section "יַחַץ"
+                     "Yachatz"
+                     (instruction instr-heb-8 instr-eng-8)
+                     )
+            (section "מַגִּיד"
+                     "Magid"
+                     (song "Ha Lachma Anya" "" "")
+                     (instruction instr-heb-9 instr-eng-9)
+                     (song "" ah-lach-manya-heb ah-lach-manya-eng)
+                     )))
