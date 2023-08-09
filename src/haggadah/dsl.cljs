@@ -5,8 +5,10 @@
   {:type :bracha :title title :hebrew hebrew-text :english english-text})
 
 (defn song
-  [title hebrew-text english-text]
-  {:type :song :title title :hebrew hebrew-text :english english-text})
+  "A song has a title, an optional instruction, hebrew text and english translation"
+  ([title hebrew-text english-text] (song title hebrew-text english-text nil))
+  ([title hebrew-text english-text instruction]
+   {:type :song :title title :hebrew hebrew-text :english english-text :instruction instruction}))
 
 (defn instruction
   [hebrew-text english-text]
@@ -25,8 +27,9 @@
   {:type :table :title title :rows rows})
 
 (defn general-content
-  [title hebrew-text english-text]
-  {:type :general :title title :hebrew hebrew-text :english english-text})
+  ([hebrew-text english-text] (general-content ["" hebrew-text english-text]))
+  ([title hebrew-text english-text & more-content]
+   {:type :general :title title :hebrew hebrew-text :english english-text :children more-content})))
 
 (defn haggadah
   "Pre: takes a title and content for a Haggadah

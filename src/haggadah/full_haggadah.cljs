@@ -99,8 +99,13 @@ Rabbi Elazar ben Azariah said, 'Behold I am like a man of seventy years and I ha
   "וְשֶׁאֵינוֹ יוֹדֵעַ לִשְׁאוֹל – אַתְּ פְּתַח לוֹ, שֶׁנֶּאֱמַר, וְהִגַּדְתָּ לְבִנְךָ בַּיּוֹם הַהוּא לֵאמֹר, בַּעֲבוּר זֶה עָשָׂה ה' לִי בְּצֵאתִי מִמִּצְרָיִם")
 
 (def simple-son-eng
-  "And [regarding] the one who doesn't know to ask, you will open [the conversation] for him. As it is stated (Exodus 13:8), \"And you will speak to your son on that day saying, for the sake of this, did the Lord do [this] for me in my going out of Egypt.\""
-  )
+  "And [regarding] the one who doesn't know to ask, you will open [the conversation] for him. As it is stated (Exodus 13:8), \"And you will speak to your son on that day saying, for the sake of this, did the Lord do [this] for me in my going out of Egypt.\"")
+
+(def yechol-merosh-heb
+  "יָכוֹל מֵראשׁ חֹדֶשׁ? תַּלְמוּד לוֹמַר בַּיּוֹם הַהוּא. אִי בַּיּוֹם הַהוּא יָכוֹל מִבְּעוֹד יוֹם? תַּלְמוּד לוֹמַר בַּעֲבוּר זֶה – בַּעֲבוּר זֶה לֹא אָמַרְתִּי, אֶלָּא בְּשָׁעָה שֶׁיֵּשׁ מַצָּה וּמָרוֹר מֻנָּחִים לְפָנֶיךָ.")
+
+(def yechol-merosh-eng
+  "It could be from Rosh Chodesh [that one would have to discuss the Exodus. However] we learn [otherwise, since] it is stated, \"on that day.\" If it is [written] \"on that day,\" it could be from while it is still day [before the night of the fifteenth of Nissan. However] we learn [otherwise, since] it is stated, \"for the sake of this.\"  I didn't say 'for the sake of this' except [that it be observed] when [this] matsa and maror are resting in front of you [meaning, on the night of the fifteenth].")
 
 (def full-haggadah
   (haggadah "Full Haggadah"
@@ -127,24 +132,24 @@ Rabbi Elazar ben Azariah said, 'Behold I am like a man of seventy years and I ha
                      (bracha "" urchatz-bracha-heb urchatz-bracha-eng))
             (section "יַחַץ"
                      "Yachatz"
-                     (instruction instr-heb-8 instr-eng-8)
-                     )
+                     (instruction instr-heb-8 instr-eng-8))
             (section "מַגִּיד"
                      "Magid"
-                     (song "Ha Lachma Anya" "" "")
-                     (instruction instr-heb-9 instr-eng-9)
-                     (song "" ah-lach-manya-heb ah-lach-manya-eng)
-                     (song "The Four Questions" "" "")
-                     (instruction instr-heb-10 instr-eng-10)
-                     (song "" mah-nishtana-heb mah-nishtana-eng)
-                     (song "We Were Slaves in Egypt" "" "")
-                     (instruction instr-heb-11 instr-eng-11)
-                     (song "" avadim-hayinu-heb avadim-hayinu-eng)
+                     (song "Ha Lachma Anya"
+                           ah-lach-manya-heb ah-lach-manya-eng
+                           (instruction instr-heb-9 instr-eng-9))
+                     (song "The Four Questions"
+                           (instruction instr-heb-10 instr-eng-10)
+                           mah-nishtana-heb mah-nishtana-eng)
+                     (song "We Were Slaves in Egypt"
+                           (instruction instr-heb-11 instr-eng-11)
+                           avadim-hayinu-heb avadim-hayinu-eng)
                      (general-content "Story of the Five Rabbis" story-of-five-rabs-heb story-of-five-rabs-eng)
-                     (general-content "The Four Sons" the-four-sons-bracha-heb the-four-sons-bracha-eng)
-                     (general-content "" wise-son-heb wise-son-eng)
-                     (general-content "" evil-son-heb evil-son-eng)
-                     (general-content "" innocent-son-heb innocent-son-eng)
-                     (general-content "" simple-son-heb simple-son-eng)
-                     (general-content "Yechol Me'rosh Chodesh")
-                     )))
+                     (general-content "The Four Sons"
+                                      the-four-sons-bracha-heb
+                                      the-four-sons-bracha-eng
+                                      (general-content wise-son-heb wise-son-eng)
+                                      (general-content evil-son-heb evil-son-eng)
+                                      (general-content innocent-son-heb innocent-son-eng)
+                                      (general-content simple-son-heb simple-son-eng))
+                     (general-content "Yechol Me'rosh Chodesh" yechol-merosh-heb yechol-merosh-eng))))
