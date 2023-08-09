@@ -1,8 +1,9 @@
 (ns haggadah.dsl)
 
 (defn bracha
-  [title hebrew-text english-text]
-  {:type :bracha :title title :hebrew hebrew-text :english english-text})
+  ([hebrew-text english-text] (bracha "" hebrew-text english-text))
+  ([title hebrew-text english-text]
+   {:type :bracha :title title :hebrew hebrew-text :english english-text}))
 
 (defn song
   "A song has a title, an optional instruction, hebrew text and english translation"
@@ -27,9 +28,9 @@
   {:type :table :title title :rows rows})
 
 (defn general-content
-  ([hebrew-text english-text] (general-content ["" hebrew-text english-text]))
+  ([hebrew-text english-text] (general-content "" hebrew-text english-text))
   ([title hebrew-text english-text & more-content]
-   {:type :general :title title :hebrew hebrew-text :english english-text :children more-content})))
+   {:type :general :title title :hebrew hebrew-text :english english-text :children more-content}))
 
 (defn haggadah
   "Pre: takes a title and content for a Haggadah

@@ -28,7 +28,7 @@
 
 (defn wave
   []
-[:div {:class "relative -mt-12 lg:-mt-24"}
+  [:div {:class "relative -mt-12 lg:-mt-24"}
        [:svg {:viewBox "0 0 1428 174", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlnsXlink "http://www.w3.org/1999/xlink"}
         [:g {:stroke "none", :stroke-width "1", :fill "none", :fill-rule "evenodd"}
          [:g {:transform "translate(-2.000000, 44.000000)", :fill "#FFFFFF", :fill-rule "nonzero"}
@@ -186,8 +186,8 @@
                           [:a#share-seder {:class active-link
                                            :href (href :seder-view {:seder-id seder-id })}
                            seder-link]
-                          [:div.field.is-grouped.is-grouped-left 
-                           [:div.control 
+                          [:div.field.is-grouped.is-grouped-left
+                           [:div.control
                             [:a.button.is-small.button  {:on-click (dispatch ::events/hide-link-modal)} "Cancel"]]]]] [:button.modal-close.is-large]]))
 
 (defn seder-view-panel
@@ -195,7 +195,7 @@
   (let [{:keys [title haggadah]} @(re-frame/subscribe [::subs/seder])]
     [:div.page.is-flex.is-flex-grow-1 {:class (styles/seder-view)}
      [:section.container.is-flex
-      [:div.box.is-flex-grow-1 
+      [:div.box.is-flex-grow-1
        [:div.title {:data-testid :seder-title} title ]
        [:div haggadah]]]]))
 
@@ -215,27 +215,27 @@
        [:td [:a.seder-link.mr-2 {:data-testid id} title]]
        [:td [:a.button.is-small {:on-click (dispatch ::events/link-modal id)
                                  :data-testid :activate-seder} "Activate Seder"]]
-       [seder-link-popup]])]])
+       [:td [seder-link-popup]]])]])
 
 (defn render-haggadot
   "Pree: takes a collection of haggadot
   Post: returns a collection of pairs, the first item being the Haggadah title and the second item being a button which creates a seder with the Haggadah when clicked"
   [haggadot]
-   [:table.table.is-narrow.is-bordered.haggadot.is-striped {:class (styles/dashboard-table)}
-    [:thead
-     [:tr
-      [:th "Haggadah title"]
-      [:th "Actions"]]]
-    [:tbody 
-   (for [{:keys [title id]} haggadot :when id]
-     ^{:key id}
-       [:tr
-        [:td
-         [:a.haggadah-link {:data-testid :haggadah-link
-                            :href (href :haggadah-view {:id id})} title]]
-        [:td
-         [:a.button.is-small {:data-testid :create-seder
-                              :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]]])]])
+  [:table.table.is-narrow.is-bordered.haggadot.is-striped {:class (styles/dashboard-table)}
+   [:thead
+    [:tr
+     [:th "Haggadah title"]
+     [:th "Actions"]]]
+   [:tbody
+    (for [{:keys [title id]} haggadot :when id]
+      ^{:key id}
+      [:tr
+       [:td
+        [:a.haggadah-link {:data-testid :haggadah-link
+                           :href (href :haggadah-view {:id id})} title]]
+       [:td
+        [:a.button.is-small {:data-testid :create-seder
+                             :on-click (dispatch ::events/create-seder-modal id)} "Create Seder"]]])]])
 
 (defn dashboard-panel
   []

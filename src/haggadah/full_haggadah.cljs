@@ -113,15 +113,15 @@ Rabbi Elazar ben Azariah said, 'Behold I am like a man of seventy years and I ha
                      "Kadesh"
                      (instruction instr-heb-1 instr-eng-1)
                      (instruction instr-heb-2 instr-eng-2)
-                     (general-content "" kadesh-cont-heb kadesh-cont-eng)
+                     (general-content kadesh-cont-heb kadesh-cont-eng)
                      (instruction instr-heb-3 instr-eng-3)
-                     (bracha "" kadesh-bracha-heb-1 kadesh-bracha-eng-1)
-                     (bracha "" kadesh-bracha-heb-2 kadesh-bracha-eng-2)
-                     (bracha "" kadesh-bracha-heb-3 kadesh-bracha-eng-3)
+                     (bracha kadesh-bracha-heb-1 kadesh-bracha-eng-1)
+                     (bracha kadesh-bracha-heb-2 kadesh-bracha-eng-2)
+                     (bracha kadesh-bracha-heb-3 kadesh-bracha-eng-3)
                      (instruction instr-heb-4 instr-eng-4)
-                     (bracha "" kadesh-bracha-heb-4 kadesh-bracha-eng-4)
-                     (bracha "" kadesh-bracha-heb-5 kadesh-bracha-eng-5)
-                     (bracha "" kadesh-bracha-heb-6 kadesh-bracha-eng-6)
+                     (bracha kadesh-bracha-heb-4 kadesh-bracha-eng-4)
+                     (bracha kadesh-bracha-heb-5 kadesh-bracha-eng-5)
+                     (bracha kadesh-bracha-heb-6 kadesh-bracha-eng-6)
                      (instruction instr-heb-5 instr-eng-5))
             (section "וּרְחַץ"
                      "Urchatz"
@@ -129,7 +129,7 @@ Rabbi Elazar ben Azariah said, 'Behold I am like a man of seventy years and I ha
             (section "כַּרְפַּס"
                      "Karpas"
                      (instruction instr-heb-7 instr-eng-7)
-                     (bracha "" urchatz-bracha-heb urchatz-bracha-eng))
+                     (bracha urchatz-bracha-heb urchatz-bracha-eng))
             (section "יַחַץ"
                      "Yachatz"
                      (instruction instr-heb-8 instr-eng-8))
@@ -139,11 +139,11 @@ Rabbi Elazar ben Azariah said, 'Behold I am like a man of seventy years and I ha
                            ah-lach-manya-heb ah-lach-manya-eng
                            (instruction instr-heb-9 instr-eng-9))
                      (song "The Four Questions"
-                           (instruction instr-heb-10 instr-eng-10)
-                           mah-nishtana-heb mah-nishtana-eng)
+                           mah-nishtana-heb mah-nishtana-eng
+                           (instruction instr-heb-10 instr-eng-10))
                      (song "We Were Slaves in Egypt"
-                           (instruction instr-heb-11 instr-eng-11)
-                           avadim-hayinu-heb avadim-hayinu-eng)
+                           avadim-hayinu-heb avadim-hayinu-eng
+                           (instruction instr-heb-11 instr-eng-11))
                      (general-content "Story of the Five Rabbis" story-of-five-rabs-heb story-of-five-rabs-eng)
                      (general-content "The Four Sons"
                                       the-four-sons-bracha-heb
