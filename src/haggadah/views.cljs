@@ -1,8 +1,9 @@
-(ns  haggadah.views
+(ns haggadah.views
   (:require
    [re-frame.core :as re-frame]
    [haggadah.styles :as styles]
    [haggadah.subs :as subs]
+   [haggadah.full-haggadah :as h]
    [haggadah.dsl :as dsl]
    [reitit.frontend.easy :as rfe]
    [haggadah.events :as events]
@@ -309,7 +310,7 @@
   [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:section.container.is-flex
-       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} (dsl/render-haggadah dsl/full-haggadah) #_text]])])
+       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} (dsl/render-haggadah h/full-haggadah) #_text]])])
 
 (defn about-panel
   []
