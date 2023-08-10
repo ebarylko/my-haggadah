@@ -7,6 +7,7 @@
 
 (defn song
   "A song has a title, an optional instruction, hebrew text and english translation"
+  ([hebrew-text english-text] (song nil hebrew-text english-text nil))
   ([title hebrew-text english-text] (song title hebrew-text english-text nil))
   ([title hebrew-text english-text instruction]
    {:type :song :title title :hebrew hebrew-text :english english-text :instruction instruction}))
@@ -100,22 +101,18 @@
 (defmethod render-haggadah :song [{:keys [title hebrew english instruction]}]
   (let [content [[:div.text.hebrew.pb-3 hebrew]
                  [:div.english.text english]]
-        title [:div.song
-               [:div.title title]]
-        instruc (render-haggadah instruction)]
-   (case instruc
+        title-hic [:div.title title]
+        instruc (render-haggadah instruction)
+        render (partial apply conj [:div.song])]
+    (cond
+      (and instruc title) (render title-hic instruc content)
+      (title) (render title-hic content)
+      :else (render content)
+      )
+   #_(case instruc
      nil (apply conj title content)
-     (apply conj title instruc content)))
-  #_[:div.song
-   [:div.title title]
-   (render-haggadah instruction)
-   [:div.text.hebrew.pb-3 hebrew]
-   [:div.english.text english]
-   ])
+     (apply conj title instruc content))))
 
-
-(render-haggadah nil)
-(apply conj []  [[1] [2] 3])
 
 (defmethod render-haggadah :table [{:keys [title rows]}]
   [:div.table.is-bordered

@@ -72,6 +72,25 @@
   "It could be from Rosh Chodesh [that one would have to discuss the Exodus. However] we learn [otherwise, since] it is stated, \"on that day.\" If it is [written] \"on that day,\" it could be from while it is still day [before the night of the fifteenth of Nissan. However] we learn [otherwise, since] it is stated, \"for the sake of this.\"  I didn't say 'for the sake of this' except [that it be observed] when [this] matsa and maror are resting in front of you [meaning, on the night of the fifteenth].")
 
 
+(def idol-worship-heb-1 "מִתְּחִלָּה עוֹבְדֵי עֲבוֹדָה זָרָה הָיוּ אֲבוֹתֵינוּ, וְעַכְשָׁיו קֵרְבָנוּ הַמָּקוֹם לַעֲבדָתוֹ, שֶׁנֶּאֱמַר: וַיֹאמֶר יְהוֹשֻעַ אֶל־כָּל־הָעָם, כֹּה אָמַר ה' אֱלֹהֵי יִשְׂרָאֵל: בְּעֵבֶר הַנָּהָר יָשְׁבוּ אֲבוֹתֵיכֶם מֵעוֹלָם, תֶּרַח אֲבִי אַבְרָהָם וַאֲבִי נָחוֹר, וַיַּעַבְדוּ אֱלֹהִים אֲחֵרִים.")
+
+(def idol-worship-heb-2 "וָאֶקַּח אֶת־אֲבִיכֶם אֶת־אַבְרָהָם מֵעֵבֶר הַנָּהָר וָאוֹלֵךְ אוֹתוֹ בְּכָל־אֶרֶץ כְּנָעַן, וָאַרְבֶּה אֶת־זַרְעוֹ וָאֶתֵּן לוֹ אֶת־יִצְחָק, וָאֶתֵּן לְיִצְחָק אֶת־יַעֲקֹב וְאֶת־עֵשָׂו. וָאֶתֵּן לְעֵשָׂו אֶת־הַר שֵּׂעִיר לָרֶשֶׁת אתוֹ, וְיַעֲקֹב וּבָנָיו יָרְדוּ מִצְרָיִם.")
+
+(def idol-worship-heb-3 "בָּרוּךְ שׁוֹמֵר הַבְטָחָתוֹ לְיִשְׂרָאֵל, בָּרוּךְ הוּא. שֶׁהַקָּדוֹשׁ בָּרוּךְ הוּא חִשַּׁב אֶת־הַקֵּץ, לַעֲשׂוֹת כְּמוֹ שֶּׁאָמַר לְאַבְרָהָם אָבִינוּ בִּבְרִית בֵּין הַבְּתָרִים, שֶׁנֶּאֱמַר: וַיֹּאמֶר לְאַבְרָם, יָדֹעַ תֵּדַע כִּי־גֵר יִהְיֶה זַרְעֲךָ בְּאֶרֶץ לֹא לָהֶם, וַעֲבָדוּם וְעִנּוּ אֹתָם אַרְבַּע מֵאוֹת שָׁנָה. וְגַם אֶת־הַגּוֹי אֲשֶׁר יַעֲבֹדוּ דָּן אָנֹכִי וְאַחֲרֵי־כֵן יֵצְאוּ בִּרְכֻשׁ גָּדוֹל.")
+
+(def idol-worship-eng-1
+  "From the beginning, our ancestors were idol worshipers. And now, the Place [of all] has brought us close to His worship, as it is stated (Joshua 24:2-4), \"Yehoshua said to the whole people, so said the Lord, God of Israel, 'Over the river did your ancestors dwell from always, Terach the father of Avraham and the father of Nachor, and they worshiped other gods.\"")
+
+(def idol-worship-eng-2 "And I took your father, Avraham, from over the river and I made him walk in all the land of Canaan and I increased his seed and I gave him Yitschak. And I gave to Yitschak, Ya'akov and Esav; and I gave to Esav, Mount Seir [in order that he] inherit it; and Yaakov and his sons went down to Egypt.'")
+
+(def idol-worship-eng-3 "Blessed be the One who keeps His promise to Israel, blessed be He; since the Holy One, blessed be He, calculated the end [of the exile,] to do as He said to Avraham, our father, in the Covenant between the Pieces, as it is stated (Genesis 15:13-14), \"And He said to Avram, 'you should surely know that your seed will be a stranger in a land that is not theirs, and they will enslave them and afflict them four hundred years. And also that nation for which they shall toil will I judge, and afterwards they will go out with much property.'\"")
+
+(def instr-heb-3 "מכסה המצה ומגביה את הכוס בידו, ואומר:")
+(def instr-eng-3 "He covers the matsa and lifts up the cup and says:")
+
+(def vehi-sheamda-heb "וְהִיא שֶׁעָמְדָה לַאֲבוֹתֵינוּ וְלָנוּ. שֶׁלֹּא אֶחָד בִּלְבָד עָמַד עָלֵינוּ לְכַלּוֹתֵנוּ, אֶלָּא שֶׁבְּכָל דּוֹר וָדוֹר עוֹמְדִים עָלֵינוּ לְכַלוֹתֵנוּ, וְהַקָּדוֹשׁ בָּרוּךְ הוּא מַצִּילֵנוּ מִיָּדָם.")
+
+(def vehi-sheamda-eng "And it is this that has stood for our ancestors and for us; since it is not [only] one [person or nation] that has stood [against] us to destroy us, but rather in each generation, they stand [against] us to destroy us, but the Holy One, blessed be He, rescues us from their hand.")
 
 (def magid
  (section "מַגִּיד"
@@ -95,4 +114,11 @@
                            (general-content evil-son-heb evil-son-eng)
                            (general-content innocent-son-heb innocent-son-eng)
                            (general-content simple-son-heb simple-son-eng))
-          (general-content "Yechol Me'rosh Chodesh" yechol-merosh-heb yechol-merosh-eng)))
+          (general-content "Yechol Me'rosh Chodesh" yechol-merosh-heb yechol-merosh-eng)
+          (general-content "In the Beginning Our Fathers Were Idol Worshipers"
+                           idol-worship-heb-1
+                           idol-worship-eng-1
+                           (general-content idol-worship-heb-2 idol-worship-eng-2)
+                           (general-content idol-worship-heb-3 idol-worship-eng-3)
+                           (instruction instr-heb-3 instr-eng-3)
+                           (song vehi-sheamda-heb vehi-sheamda-eng))))
