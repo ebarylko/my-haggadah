@@ -9,7 +9,7 @@
 (def full-haggadah
   (haggadah "Full Haggadah"
             kadesh
-           #_#_#_#_ urchatz
+            urchatz
             karpas
             yachatz
             magid))

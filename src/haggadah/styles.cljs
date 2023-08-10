@@ -35,11 +35,13 @@
           :background-color    :white}]
   [:nav.navbar {:background-color :transparent}]
   [:form {:background form-background}]
+  [:.song {:padding-top :1rem}]
   [:.english {:text-align :left}]
   [:.instr {:font-size :1rem
             :padding-bottom :1rem}]
   [:.english-text {:text-align :left
               :font-size :1.25rem}]
+  [:.general {:padding-top :1rem}]
   [:.page {:background page-background
            :width :100%}]
   [:.title {:font-size :2rem
