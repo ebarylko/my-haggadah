@@ -96,4 +96,3 @@
                            (general-content innocent-son-heb innocent-son-eng)
                            (general-content simple-son-heb simple-son-eng))
           (general-content "Yechol Me'rosh Chodesh" yechol-merosh-heb yechol-merosh-eng)))
-

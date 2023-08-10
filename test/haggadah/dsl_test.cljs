@@ -7,7 +7,7 @@
   [:div.bracha
    [:div.title  "Wine"]
    [:div.text.hebrew.pb-3 "סַבְרִי מָרָנָן"]
-   [:div.english.text #_english-text  "Baruj hata"]])
+   [:div.english.text  "Baruj hata"]])
 
 (t/deftest render-bracha-test
   (t/testing "When rendering a bracha, returns the title and the text"

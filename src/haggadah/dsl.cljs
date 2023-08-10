@@ -68,7 +68,7 @@
 (defmulti render-haggadah (comp keyword :type ))
 
 (defmethod render-haggadah :default [args]
-  nil
+  #_nil
   #_[:div
    [:div "What did you pass me? " (:type args)
     "Original args " args]])
@@ -98,11 +98,24 @@
          (map render-haggadah children)))
 
 (defmethod render-haggadah :song [{:keys [title hebrew english instruction]}]
-  [:div.song
+  (let [content [[:div.text.hebrew.pb-3 hebrew]
+                 [:div.english.text english]]
+        title [:div.song
+               [:div.title title]]
+        instruc (render-haggadah instruction)]
+   (case instruc
+     nil (apply conj title content)
+     (apply conj title instruc content)))
+  #_[:div.song
    [:div.title title]
    (render-haggadah instruction)
    [:div.text.hebrew.pb-3 hebrew]
-   [:div.english.text english]])
+   [:div.english.text english]
+   ])
+
+
+(render-haggadah nil)
+(apply conj []  [[1] [2] 3])
 
 (defmethod render-haggadah :table [{:keys [title rows]}]
   [:div.table.is-bordered
