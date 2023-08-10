@@ -33,9 +33,10 @@
 
 (defn general-content
   "General content has a title, instruction, hebrew text and english translation, and additional content"
-  ([hebrew-text english-text] (general-content "" hebrew-text english-text nil))
-  ([title hebrew-text english-text & more-content]
-   {:type :general :title title :hebrew hebrew-text :english english-text :children more-content}))
+  ([hebrew-text english-text] (general-content "" hebrew-text english-text nil nil))
+  ([title hebrew-text english-text] (general-content title hebrew-text english-text nil nil))
+  ([title hebrew-text english-text instruction & more-content]
+   {:type :general :title title :hebrew hebrew-text :english english-text :instruction instruction :children more-content}))
 
 (defn haggadah
   "Pre: takes a title and content for a Haggadah
@@ -94,22 +95,35 @@
    [:div.instr.hebrew.pb-3 hebrew]
    [:div.instr.english english]])
 
-(defmethod render-haggadah :general [{:keys [title english hebrew children]}]
-  (apply conj [:div.general
+(defmethod render-haggadah :general [{:keys [title english hebrew instruction children]}]
+  (cond-> [:div.genral]
+    (seq instruction) (conj (render-haggadah instruction))
+    (seq title) (conj [:div.title title])
+    :always (conj [:div.text.hebrew.pb-3 hebrew] [:div.text.english english])
+    (seq children) ((partial apply conj) (map render-haggadah children)))
+  #_(apply conj [:div.general
                [:div.title title]
                [:div.text.hebrew.pb-3 hebrew]
                [:div.text.english english]]
          (map render-haggadah children)))
 
+(conj [:div.gen] [:div.en] [:div.heb])
+
+(def mult-conj (partial apply conj))
+
 (defmethod render-haggadah :song [{:keys [title hebrew english instruction]}]
   (let [content [[:div.text.hebrew.pb-3 hebrew]
                  [:div.english.text english]]]
     (cond-> [:div.song]
-      (seq instruction) (conj (render-haggadah instruction))
       (seq title) (conj [:div.title title])
-      :always ((partial apply conj) content))))
+      (seq instruction) (conj (render-haggadah instruction))
+      :always (mult-conj content))))
 
+(cond-> [:div.song]
+  true (conj [:div.hi])
+  true (conj [:div.whoa]))
 
+(conj [:div.song []])
 
 (defmethod render-haggadah :table [{:keys [title rows]}]
   [:div.table.is-bordered
