@@ -28,7 +28,8 @@
   {:type :table :title title :rows rows})
 
 (defn general-content
-  ([hebrew-text english-text] (general-content "" hebrew-text english-text))
+  "General content has a title, instruction, hebrew text and english translation, and additional content"
+  ([hebrew-text english-text] (general-content "" hebrew-text english-text nil))
   ([title hebrew-text english-text & more-content]
    {:type :general :title title :hebrew hebrew-text :english english-text :children more-content}))
 
@@ -67,7 +68,8 @@
 (defmulti render-haggadah (comp keyword :type ))
 
 (defmethod render-haggadah :default [args]
-  [:div
+  nil
+  #_[:div
    [:div "What did you pass me? " (:type args)
     "Original args " args]])
 
@@ -88,15 +90,17 @@
    [:div.instr.hebrew.pb-3 hebrew]
    [:div.instr.english english]])
 
-(defmethod render-haggadah :general [{:keys [title english hebrew]}]
-  [:div.general
-   [:div.title title]
-   [:div.text.hebrew.pb-3 hebrew]
-   [:div.text.english english]])
+(defmethod render-haggadah :general [{:keys [title english hebrew children]}]
+  (apply conj [:div.general
+               [:div.title title]
+               [:div.text.hebrew.pb-3 hebrew]
+               [:div.text.english english]]
+         (map render-haggadah children)))
 
-(defmethod render-haggadah :song [{:keys [title hebrew english]}]
+(defmethod render-haggadah :song [{:keys [title hebrew english instruction]}]
   [:div.song
    [:div.title title]
+   (render-haggadah instruction)
    [:div.text.hebrew.pb-3 hebrew]
    [:div.english.text english]])
 

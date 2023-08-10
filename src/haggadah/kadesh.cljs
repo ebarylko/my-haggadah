@@ -35,10 +35,12 @@
 (def instr-heb-5 "שותה בהסיבת שמאל ואינו מברך ברכה אחרונה.")
 (def instr-eng-5 "Drink while reclining to the left and do not recite a blessing after drinking.")
 
+(general-content kadesh-cont-heb kadesh-cont-eng)
+
 (def kadesh
  (section "קַדֵּשׁ"
           "Kadesh"
-          (instruction instr-heb-1 instr-eng-1)
+         (instruction instr-heb-1 instr-eng-1)
           (instruction instr-heb-2 instr-eng-2)
           (general-content kadesh-cont-heb kadesh-cont-eng)
           (instruction instr-heb-3 instr-eng-3)

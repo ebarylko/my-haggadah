@@ -68,6 +68,8 @@ Rabbi Elazar ben Azariah said, 'Behold I am like a man of seventy years and I ha
 (def yechol-merosh-eng
   "It could be from Rosh Chodesh [that one would have to discuss the Exodus. However] we learn [otherwise, since] it is stated, \"on that day.\" If it is [written] \"on that day,\" it could be from while it is still day [before the night of the fifteenth of Nissan. However] we learn [otherwise, since] it is stated, \"for the sake of this.\"  I didn't say 'for the sake of this' except [that it be observed] when [this] matsa and maror are resting in front of you [meaning, on the night of the fifteenth].")
 
+
+
 (def magid
  (section "מַגִּיד"
           "Magid"
@@ -89,3 +91,11 @@ Rabbi Elazar ben Azariah said, 'Behold I am like a man of seventy years and I ha
                            (general-content innocent-son-heb innocent-son-eng)
                            (general-content simple-son-heb simple-son-eng))
           (general-content "Yechol Me'rosh Chodesh" yechol-merosh-heb yechol-merosh-eng)))
+
+(dsl/render-haggadah
+ (general-content wise-son-heb wise-son-eng)
+ )
+
+(dsl/render-haggadah
+ (instruction instr-heb-9 instr-eng-9)
+ )

@@ -36,7 +36,8 @@
   [:nav.navbar {:background-color :transparent}]
   [:form {:background form-background}]
   [:.english {:text-align :left}]
-  [:.instr {:font-size :1rem}]
+  [:.instr {:font-size :1rem
+            :padding-bottom :1rem}]
   [:.english-text {:text-align :left
               :font-size :1.25rem}]
   [:.page {:background page-background
