@@ -50,14 +50,21 @@
 ;; (general-content title hebrew-text english-text opts)
 
 ;; opts = {:instruction instruction :children }
+
+; add-options :children cont :instruction instr
+
 (defn general-content
   "General content has a title, hebrew text and english translation, and optional instructions and additional content"
-  ([hebrew-text english-text] (general-content "" hebrew-text english-text {}))
-  ([title hebrew-text english-text] (general-content title hebrew-text english-text {}))
-  ([title hebrew-text english-text {:keys [children instruction]}]
-   (general-content title hebrew-text english-text instruction children))
-  ([title hebrew-text english-text instruction more-content]
-   {:type :general :title title :hebrew hebrew-text :english english-text :instruction instruction :children more-content}))
+  ([hebrew-text english-text] (general-content nil hebrew-text english-text))
+  ([title hebrew-text english-text] {:type :general :title title :hebrew hebrew-text :english english-text})
+  ([title hebrew-text english-text & more-content]
+   {:type :general :title title :hebrew hebrew-text :english english-text :children more-content}))
+
+
+(defn general-content-with-instruction
+  [title hebrew english instruction & more-content]
+  (-> (apply general-content title hebrew english more-content)
+      (assoc :instruction instruction)))
 
 (defn haggadah
   "Pre: takes a title and content for a Haggadah
