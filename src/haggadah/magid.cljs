@@ -1,5 +1,6 @@
 (ns haggadah.magid
-  (:require [haggadah.dsl :as dsl :refer [haggadah bracha instruction song section general-content general-content-with-instruction]]))
+  (:require [haggadah.dsl :as dsl :refer [haggadah bracha instruction song section general-content general-content-with-instruction]]
+            [haggadah.first-fruits :refer [first-fruits-declaration]]))
 
 
 (def ah-lach-manya-heb "הָא לַחְמָא עַנְיָא דִּי אֲכָלוּ אַבְהָתָנָא בְאַרְעָא דְמִצְרָיִם. כָּל דִכְפִין יֵיתֵי וְיֵיכֹל, כָּל דִצְרִיךְ יֵיתֵי וְיִפְסַח. הָשַּׁתָּא הָכָא, לְשָׁנָה הַבָּאָה בְּאַרְעָא דְיִשְׂרָאֵל. הָשַּׁתָּא עַבְדֵי, לְשָׁנָה הַבָּאָה בְּנֵי חוֹרִין.")
@@ -202,6 +203,9 @@
 
 (def first-fruit-eng-22 " And with wonders\" - this [refers to] the blood, as it is stated (Joel 3:3); \"And I will place my wonders in the skies and in the earth: ")
 
+(def instr-heb-5 "כשאומר דם ואש ותימרות עשן, עשר המכות ודצ״ך עד״ש באח״ב – ישפוך מן הכוס מעט יין:")
+(def instr-eng-5 "And when he says, \"blood and fire and pillars of smoke\" and the ten plagues and \"detsakh,\" \"adash\" and \"ba'achab,\" he should pour out a little wine from his cup.")
+
 (def magid
  (section "מַגִּיד"
           "Magid"
@@ -233,30 +237,9 @@
                            (general-content idol-worship-heb-3 idol-worship-eng-3)
                            (instruction instr-heb-3 instr-eng-3)
                            (song vehi-sheamda-heb vehi-sheamda-eng))
-          (general-content-with-instruction "First Fruits Declaration"
-                                            first-fruit-heb-1 first-fruit-eng-1
-                                           (instruction instr-heb-4 instr-eng-4) 
-                                            (general-content first-fruit-heb-2 first-fruit-eng-2)
-                                            (general-content first-fruit-heb-3 first-fruit-eng-3)
-                                            (general-content first-fruit-heb-4 first-fruit-eng-4)
-                                            (general-content first-fruit-heb-5 first-fruit-eng-5)
-                                            (general-content first-fruit-heb-6 first-fruit-eng-6)
-                                            (general-content first-fruit-heb-7 first-fruit-eng-7)
-                                            (general-content first-fruit-heb-8 first-fruit-eng-8)
-                                            (general-content first-fruit-heb-9 first-fruit-eng-9)
-                                            (general-content first-fruit-heb-10 first-fruit-eng-10)
-                                            (general-content first-fruit-heb-11 first-fruit-eng-11)
-                                            (general-content first-fruit-heb-12 first-fruit-eng-12)
-                                            (general-content first-fruit-heb-13 first-fruit-eng-13)
-                                            (general-content first-fruit-heb-14 first-fruit-eng-14)
-                                            (general-content first-fruit-heb-15 first-fruit-eng-15)
-                                            (general-content first-fruit-heb-16 first-fruit-eng-16)
-                                            (general-content first-fruit-heb-17 first-fruit-eng-17)
-                                            (general-content first-fruit-heb-18 first-fruit-eng-18)
-                                            (general-content first-fruit-heb-19 first-fruit-eng-19)
-                                            (general-content first-fruit-heb-20 first-fruit-eng-20)
-                                            (general-content first-fruit-heb-21 first-fruit-eng-21)
-                                            (general-content first-fruit-heb-22 first-fruit-eng-22)
+          first-fruits-declaration
+          #_(general-content-with-instruction "The Ten Plagues"
+                                            (instruction instr-heb-5 instr-eng-5)
                                             )
           ))
 
