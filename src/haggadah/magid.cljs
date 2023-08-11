@@ -104,10 +104,10 @@
           (song "We Were Slaves in Egypt"
                 avadim-hayinu-heb avadim-hayinu-eng
                 (instruction instr-heb-11 instr-eng-11))
-          #_(general-content "Story of the Five Rabbis"
+         (general-content "Story of the Five Rabbis"
                            story-of-five-rabs-heb-1 story-of-five-rabs-eng-1
-                           (general-content story-of-five-rabs-heb-2 story-of-five-rabs-eng-2))
-       #_#_#_   (general-content "The Four Sons"
+                           {:children  (list (general-content story-of-five-rabs-heb-2 story-of-five-rabs-eng-2) ) })
+#_#_#_       (general-content "The Four Sons"
                            the-four-sons-bracha-heb
                            the-four-sons-bracha-eng
                            (general-content wise-son-heb wise-son-eng)
@@ -123,6 +123,7 @@
                            (instruction instr-heb-3 instr-eng-3)
                            (song vehi-sheamda-heb vehi-sheamda-eng))))
 
-(dsl/render-haggadah (song "We Were Slaves in Egypt"
-                           avadim-hayinu-heb avadim-hayinu-eng
-                           (instruction instr-heb-11 instr-eng-11)))
+
+(defn make-car [type & {:as opts}]
+  opts)
+(make-car "one" :hi :how :are :you)

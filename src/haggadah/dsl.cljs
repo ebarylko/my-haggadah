@@ -31,11 +31,32 @@
   [title & rows]
   {:type :table :title title :rows rows})
 
+(defn instruction?
+  "Pre: takes an instruction or a collection of content
+  Post: returns true if an instruction was passed. False otherwise"
+  [instr-or-coll]
+  (println "instruc " (first instr-or-coll ))
+  #_(println "Insruction "
+           (->> instr-or-coll
+                first
+                :type
+                (= :instruction))
+           " " instr-or-coll)
+  (->> instr-or-coll
+       first
+       :type
+       (= :instruction)))
+
+;; (general-content title hebrew-text english-text opts)
+
+;; opts = {:instruction instruction :children }
 (defn general-content
-  "General content has a title, instruction, hebrew text and english translation, and additional content"
-  ([hebrew-text english-text] (general-content "" hebrew-text english-text nil nil))
-  ([title hebrew-text english-text] (general-content title hebrew-text english-text nil nil))
-  ([title hebrew-text english-text instruction & more-content]
+  "General content has a title, hebrew text and english translation, and optional instructions and additional content"
+  ([hebrew-text english-text] (general-content "" hebrew-text english-text {}))
+  ([title hebrew-text english-text] (general-content title hebrew-text english-text {}))
+  ([title hebrew-text english-text {:keys [children instruction]}]
+   (general-content title hebrew-text english-text instruction children))
+  ([title hebrew-text english-text instruction more-content]
    {:type :general :title title :hebrew hebrew-text :english english-text :instruction instruction :children more-content}))
 
 (defn haggadah
@@ -73,6 +94,7 @@
 (defmulti render-haggadah (comp keyword :type ))
 
 (defmethod render-haggadah :default [args]
+  (println "This is what you passed " args)
   #_nil
   #_[:div
    [:div "What did you pass me? " (:type args)
@@ -95,21 +117,17 @@
    [:div.instr.hebrew.pb-3 hebrew]
    [:div.instr.english english]])
 
-(defmethod render-haggadah :general [{:keys [title english hebrew instruction children]}]
-  (cond-> [:div.genral]
-    (seq instruction) (conj (render-haggadah instruction))
-    (seq title) (conj [:div.title title])
-    :always (conj [:div.text.hebrew.pb-3 hebrew] [:div.text.english english])
-    (seq children) ((partial apply conj) (map render-haggadah children)))
-  #_(apply conj [:div.general
-               [:div.title title]
-               [:div.text.hebrew.pb-3 hebrew]
-               [:div.text.english english]]
-         (map render-haggadah children)))
-
-(conj [:div.gen] [:div.en] [:div.heb])
-
 (def mult-conj (partial apply conj))
+
+(defmethod render-haggadah :general [{:keys [title english hebrew instruction children]}]
+  (println "Children " children " insruction " instruction " Title " title)
+  (cond-> [:div.genral]
+    (seq title) (conj [:div.title title])
+    (seq instruction) (conj (render-haggadah instruction))
+    :always (conj [:div.text.hebrew.pb-3 hebrew] [:div.text.english english])
+    (seq children) (mult-conj (map render-haggadah children))))
+
+
 
 (defmethod render-haggadah :song [{:keys [title hebrew english instruction]}]
   (let [content [[:div.text.hebrew.pb-3 hebrew]

@@ -36,7 +36,8 @@
   [:nav.navbar {:background-color :transparent}]
   [:form {:background form-background}]
   [:.song {:padding-top :1rem}]
-  [:.english {:text-align :left}]
+  [:.english {:text-align :left
+              :padding-bottom :1rem}]
   [:.instr {:font-size :1rem
             :padding-bottom :1rem}]
   [:.english-text {:text-align :left

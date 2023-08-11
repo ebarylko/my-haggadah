@@ -33,6 +33,11 @@
                     [:div.instr.english "English"]]]
       (t/is (= expected (dsl/render-haggadah instruction))))))
 
+;; (t/deftest render-general-content-test
+;;   (t/testing "When rendering general content, returns the title and content"
+
+;;     ))
+
 (t/deftest render-table-test
   (t/testing "When rendering the table, each row and the content within is returned"
     (let [table (dsl/table "Las Diez Plagas" 
