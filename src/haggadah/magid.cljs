@@ -92,6 +92,39 @@
 
 (def vehi-sheamda-eng "And it is this that has stood for our ancestors and for us; since it is not [only] one [person or nation] that has stood [against] us to destroy us, but rather in each generation, they stand [against] us to destroy us, but the Holy One, blessed be He, rescues us from their hand.")
 
+(def instr-heb-4 "יניח הכוס מידו ויגלה אֶת הַמצות.")
+(def instr-eng-4 "He puts down the cup from his hand and uncovers the matsa.")
+
+(def first-fruit-heb-1 "צֵא וּלְמַד מַה בִּקֵּשׁ לָבָן הָאֲרַמִּי לַעֲשׂוֹת לְיַעֲקֹב אָבִינוּ: שֶׁפַּרְעֹה לֹא גָזַר אֶלָּא עַל הַזְּכָרִים, וְלָבָן בִּקֵּשׁ לַעֲקֹר אֶת־הַכֹּל. שֶׁנֶּאֱמַר: אֲרַמִּי אֹבֵד אָבִי, וַיֵּרֶד מִצְרַיְמָה וַיָּגָר שָׁם בִּמְתֵי מְעָט, וַיְהִי שָׁם לְגוֹי גָּדוֹל, עָצוּם וָרָב.")
+
+(def first-fruit-eng-1 "Go out and learn what Lavan the Aramean sought to do to Ya'akov, our father; since Pharaoh only decreed [the death sentence] on the males but Lavan sought to uproot the whole [people]. As it is stated (Deuteronomy 26:5), \"An Aramean was destroying my father and he went down to Egypt, and he resided there with a small number and he became there a nation, great, powerful and numerous.\"")
+
+
+(def first-fruit-heb-2 "וַיֵּרֶד מִצְרַיְמָה – אָנוּס עַל פִּי הַדִּבּוּר. וַיָּגָר שָׁם. מְלַמֵּד שֶׁלֹא יָרַד יַעֲקֹב אָבִינוּ לְהִשְׁתַּקֵּעַ בְּמִצְרַיִם אֶלָּא לָגוּר שָׁם, שֶׁנֶּאֱמַר: וַיֹּאמְרוּ אֶל־פַּרְעֹה, לָגוּר בָּאָרֶץ בָּאנוּ, כִּי אֵין מִרְעֶה לַצֹּאן אֲשֶׁר לַעֲבָדֶיךָ, כִּי כָבֵד הָרָעָב בְּאֶרֶץ כְּנָעַן. וְעַתָּה יֵשְׁבוּ־נָא עֲבָדֶיךָ בְּאֶרֶץ גֹּשֶן.")
+
+(def first-fruit-eng-2 " \"And he went down to Egypt\" - helpless on account of the word [in which God told Avraham that his descendants would have to go into exile]. \"And he resided there\" - [this] teaches that Ya'akov, our father, didn't go down to settle in Egypt, but rather [only] to reside there, as it is stated (Genesis 47:4), \"And they said to Pharaoh, 'To reside in the land have we come, since there is not enough pasture for your servant's flocks, since the famine is heavy in the land of Canaan, and now please grant that your servants should dwell in the Land of Goshen.'\"")
+
+
+(def first-fruit-heb-3 "בִּמְתֵי מְעָט. כְּמָה שֶּׁנֶּאֱמַר: בְּשִׁבְעִים נֶפֶשׁ יָרְדוּ אֲבוֹתֶיךָ מִצְרָיְמָה, וְעַתָּה שָׂמְךָ ה' אֱלֹהֶיךָ כְּכוֹכְבֵי הַשָּׁמַיִם לָרֹב.")
+
+(def first-fruit-eng-3 "\"As a small number\" - as it is stated (Deuteronomy 10:22), \"With seventy souls did your ancestors come down to Egypt, and now the Lord your God has made you as numerous as the stars of the sky.\" ")
+
+
+(def first-fruit-heb-4 "וַיְהִי שָׁם לְגוֹי. מְלַמֵד שֶׁהָיוּ יִשְׂרָאֵל מְצֻיָּנִים שָׁם. גָּדוֹל עָצוּם – כְּמָה שֶּׁנֶּאֱמַר: וּבְנֵי יִשְׂרָאֵל פָּרוּ וַיִּשְׁרְצוּ וַיִּרְבּוּ וַיַּעַצְמוּ בִּמְאֹד מְאֹד, וַתִּמָּלֵא הָאָרֶץ אֹתָם.")
+
+(def first-fruit-eng-4 "\"And he became there a nation\" - [this] teaches that Israel [became] distinguishable there. \"Great, powerful\" - as it is stated (Exodus 1:7), \"And the Children of Israel multiplied and swarmed and grew numerous and strong, most exceedingly and the land became full of them.\"")
+
+
+(def first-fruit-heb-5 "וָרָב. כְּמָה שֶּׁנֶּאֱמַר: רְבָבָה כְּצֶמַח הַשָּׂדֶה נְתַתִּיךְ, וַתִּרְבִּי וַתִּגְדְּלִי וַתָּבֹאִי בַּעֲדִי עֲדָיִים, שָׁדַיִם נָכֹנוּ וּשְׂעָרֵךְ צִמֵּחַ, וְאַתְּ עֵרֹם וְעֶרְיָה. וָאֶעֱבֹר עָלַיִךְ וָאֶרְאֵךְ מִתְבּוֹסֶסֶת בְּדָמָיִךְ, וָאֹמַר לָךְ בְּדָמַיִךְ חֲיִי, וָאֹמַר לָךְ בְּדָמַיִךְ חֲיִי.")
+
+(def first-fruit-eng-5 " \"And numerous\" - as it is stated (Ezekiel 16:7), \"I have given you to be numerous as the vegetation of the field, and you increased and grew and became highly ornamented, your breasts were set and your hair grew, but you were naked and barren.\" \"And when I passed by thee, and saw thee weltering in thy blood, I said to thee, In thy blood live! yea, I said to thee, In thy blood live!\" (Ezekiel 16:6).")
+
+(def first-fruit-heb-6 "וַיָּרֵעוּ אֹתָנוּ הַמִּצְרִים וַיְעַנּוּנוּ, וַיִתְּנוּ עָלֵינוּ עֲבֹדָה קָשָׁה. וַיָּרֵעוּ אֹתָנוּ הַמִּצְרִים – כְּמָה שֶּׁנֶּאֱמַר: הָבָה נִתְחַכְּמָה לוֹ פֶּן יִרְבֶּה, וְהָיָה כִּי תִקְרֶאנָה מִלְחָמָה וְנוֹסַף גַּם הוּא עַל שֹׂנְאֵינוּ וְנִלְחַם־בָּנוּ, וְעָלָה מִן־הָאָרֶץ. ")
+
+
+(def first-fruit-eng-6" \"And the Egyptians did bad to us\" (Deuteronomy 26:6) - as it is stated (Exodus 1:10), \"Let us be wise towards him, lest he multiply and it will be that when war is called, he too will join with our enemies and fight against us and go up from the land.\"")
+
+
 (def magid
  (section "מַגִּיד"
           "Magid"
@@ -108,11 +141,7 @@
                            story-of-five-rabs-heb-1 story-of-five-rabs-eng-1
                            (general-content story-of-five-rabs-heb-2 story-of-five-rabs-eng-2))
 
-         (general-content-with-instruction "Story of the Five Rabbis"
-                                           story-of-five-rabs-heb-1 story-of-five-rabs-eng-1
-                                           (instruction "Do something" "And in hebrew")
-                                           (general-content story-of-five-rabs-heb-2 story-of-five-rabs-eng-2))
-#_#_#_       (general-content "The Four Sons"
+       (general-content "The Four Sons"
                            the-four-sons-bracha-heb
                            the-four-sons-bracha-eng
                            (general-content wise-son-heb wise-son-eng)
@@ -126,52 +155,31 @@
                            (general-content idol-worship-heb-2 idol-worship-eng-2)
                            (general-content idol-worship-heb-3 idol-worship-eng-3)
                            (instruction instr-heb-3 instr-eng-3)
-                           (song vehi-sheamda-heb vehi-sheamda-eng))))
+                           (song vehi-sheamda-heb vehi-sheamda-eng))
+          (general-content-with-instruction "First Fruits Declaration"
+                                            first-fruit-heb-1 first-fruit-eng-1
+                                           (instruction instr-heb-4 instr-eng-4) 
+                                            (general-content first-fruit-heb-2 first-fruit-eng-2)
+                                            (general-content first-fruit-heb-3 first-fruit-eng-3)
+                                            (general-content first-fruit-heb-4 first-fruit-eng-4)
+                                            (general-content first-fruit-heb-5 first-fruit-eng-5)
+                                            (general-content first-fruit-heb-6 first-fruit-eng-6)
+                                            ;; (general-content first-fruit-heb-7 first-fruit-eng-7)
+                                            ;; (general-content first-fruit-heb-8 first-fruit-eng-8)
+                                            ;; (general-content first-fruit-heb-9 first-fruit-eng-9)
+                                            ;; (general-content first-fruit-heb-10 first-fruit-eng-10)
+                                            ;; (general-content first-fruit-heb-11 first-fruit-eng-11)
+                                            ;; (general-content first-fruit-heb-12 first-fruit-eng-12)
+                                            ;; (general-content first-fruit-heb-13 first-fruit-eng-13)
+                                            ;; (general-content first-fruit-heb-14 first-fruit-eng-14)
+                                            ;; (general-content first-fruit-heb-15 first-fruit-eng-15)
+                                            ;; (general-content first-fruit-heb-16 first-fruit-eng-16)
+                                            ;; (general-content first-fruit-heb-17 first-fruit-eng-17)
+                                            ;; (general-content first-fruit-heb-18 first-fruit-eng-18)
+                                            ;; (general-content first-fruit-heb-19 first-fruit-eng-19)
+                                            ;; (general-content first-fruit-heb-20 first-fruit-eng-20)
+                                            ;; (general-content first-fruit-heb-21 first-fruit-eng-21)
+                                            ;; (general-content first-fruit-heb-22 first-fruit-eng-22)
+                                            )
+          ))
 
-{:children (list :child1 :child2 :child3)
- :instruction :instruction}
-
-(defn make-opt
-  [opt-title & op-val]
-  (case opt-title
-    :instruction {:instruction (first op-val)})
-  )
-
-[[:opt :cont]]
-;; (defn make-car [type & {:as opts}]
-;;   opts)
-;; (make-car "one" :hi :how :are :you )
-;; ; defmacro 
-
-;; (defn create-opt
-;;   [key & vals]
-;;   {key vals})
-
-;; (defn create-opts
-;;   [coll]
-;;   (merge (map create-opt coll)))
-
-;; (println
-;;  (create-opts [
-;;                [:children (general-content story-of-five-rabs-heb-2 story-of-five-rabs-eng-2)
-;;                 (general-content wise-son-heb wise-son-eng)
-;;                 (general-content evil-son-heb evil-son-eng)
-;;                 (general-content innocent-son-heb innocent-son-eng)
-;;                 (general-content simple-son-heb simple-son-eng)]
-;;                [:instruction (instruction instr-heb-3 instr-eng-3)]
-;;                ])
-;;  )
-
-;; (println
-;;  (merge {:hi :hello}
-;;         (create-opt
-;;          :children (general-content story-of-five-rabs-heb-2 story-of-five-rabs-eng-2)
-;;          (general-content wise-son-heb wise-son-eng)
-;;          (general-content evil-son-heb evil-son-eng)
-;;          (general-content innocent-son-heb innocent-son-eng)
-;;          (general-content simple-son-heb simple-son-eng)
-;;          )
-
-;;         )
-
-;;  )
