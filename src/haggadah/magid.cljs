@@ -118,8 +118,15 @@
 
 (def rabbi-yose-eng "Rabbi Yose Hagelili says, \"From where can you [derive] that the Egyptians were struck with ten plagues in Egypt and struck with fifty plagues at the Sea? In Egypt, what does it state? 'Then the magicians said unto Pharaoh: ‘This is the finger of God' (Exodus 8:15). And at the Sea, what does it state? 'And Israel saw the Lord's great hand that he used upon the Egyptians, and the people feared the Lord; and they believed in the Lord, and in Moshe, His servant' (Exodus 14:31). How many were they struck with with the finger? Ten plagues. You can say from here that in Egypt, they were struck with ten plagues and at the Sea, they were struck with fifty plagues.\" ")
 
-(def magid
- (section "מַגִּיד"
+(def rabbi-eliezer-heb "רַבִּי אֱלִיעֶזֲר אוֹמֵר: מִנַּיִן שֶׁכָּל־מַכָּה וּמַכָּה שֶׁהֵבִיא הַקָּדוֹשׁ בָּרוּךְ הוּא עַל הַמִּצְרִים בְּמִצְרַיִם הָיְתָה שֶׁל אַרְבַּע מַכּוֹת? שֶׁנֶּאֱמַר: יְשַׁלַּח־בָּם חֲרוֹן אַפּוֹ, עֶבְרָה וָזַעַם וְצָרָה, מִשְׁלַחַת מַלְאֲכֵי רָעִים. עֶבְרָה – אַחַת, וָזַעַם – שְׁתַּיִם, וְצָרָה – שָׁלשׁ, מִשְׁלַחַת מַלְאֲכֵי רָעִים – אַרְבַּע. אֱמוֹר מֵעַתָּה: בְּמִצְרַיִם לָקוּ אַרְבָּעִים מַכּוֹת וְעַל הַיָּם לָקוּ מָאתַיִם מַכּוֹת.")
+
+(def rabbi-eliezer-eng " Rabbi Eliezer says, \"From where [can you derive] that every plague that the Holy One, blessed be He, brought upon the Egyptians in Egypt was [composed] of four plagues? As it is stated (Psalms 78:49): 'He sent upon them the fierceness of His anger, wrath, and fury, and trouble, a sending of messengers of evil.' 'Wrath' [corresponds to] one; 'and fury' [brings it to] two; 'and trouble' [brings it to] three; 'a sending of messengers of evil' [brings it to] four. You can say from here that in Egypt, they were struck with forty plagues and at the Sea, they were struck with two hundred plagues.\" ")
+
+(def rabbi-akiva-heb "רַבִּי עֲקִיבָא אוֹמֵר: מִנַּיִן שֶׁכָּל־מַכָּה וּמַכָּה שֶהֵבִיא הַקָּדוֹשׁ בָּרוּךְ הוּא עַל הַמִּצְרִים בְּמִצְרַיִם הָיְתָה שֶׁל חָמֵשׁ מַכּוֹת? שֶׁנֶּאֱמַר: יְִשַׁלַּח־בָּם חֲרוֹן אַפּוֹ, עֶבְרָה וָזַעַם וְצַרָה, מִשְׁלַחַת מַלְאֲכֵי רָעִים. חֲרוֹן אַפּוֹ – אַחַת, עֶבְרָה – שְׁתָּיִם, וָזַעַם – שָׁלוֹשׁ, וְצָרָה – אַרְבַּע, מִשְׁלַחַת מַלְאֲכֵי רָעִים – חָמֵשׁ. אֱמוֹר מֵעַתָּה: בְּמִצְרַיִם לָקוּ חֲמִשִּׁים מַכּות וְעַל הַיָּם לָקוּ חֲמִשִּׁים וּמָאתַיִם מַכּוֹת.")
+
+(def rabbi-akiva-eng " Rabbi Akiva says, says, \"From where [can you derive] that every plague that the Holy One, blessed be He, brought upon the Egyptians in Egypt was [composed] of five plagues? As it is stated (Psalms 78:49): 'He sent upon them the fierceness of His anger, wrath, and fury, and trouble, a sending of messengers of evil.' 'The fierceness of His anger' [corresponds to] one; 'wrath' [brings it to] two; 'and fury' [brings it to] three; 'and trouble' [brings it to] four; 'a sending of messengers of evil' [brings it to] five. You can say from here that in Egypt, they were struck with fifty plagues and at the Sea, they were struck with two hundred and fifty plagues.\" ")
+
+(def magid (section "מַגִּיד"
           "Magid"
           (song "Ha Lachma Anya"
                 ah-lach-manya-heb ah-lach-manya-eng
@@ -158,6 +165,8 @@
                                               (apply table "" plague-rows)
                                               (general-content rabbi-yehuda-heb rabbi-yehuda-eng)
                                               (general-content rabbi-yose-heb rabbi-yose-eng)
+                                              (general-content rabbi-eliezer-heb rabbi-eliezer-eng)
+                                              (general-content rabbi-akiva-heb rabbi-akiva-eng)
                                               )
           ))
 
