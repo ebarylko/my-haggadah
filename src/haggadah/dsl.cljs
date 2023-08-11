@@ -8,12 +8,15 @@
 (defn song
   "A song has a title, an optional instruction, hebrew text and english translation"
   ([hebrew-text english-text] (song nil hebrew-text english-text nil))
-  ([title-or-instruction hebrew-text english-text]
-   (cond
-     (map? title-or-instruction) (song nil hebrew-text english-text title-or-instruction)
-     (string? title-or-instruction) (song title-or-instruction hebrew-text english-text nil)))
-  ([title hebrew-text english-text instruction]
-   {:type :song :title title :hebrew hebrew-text :english english-text :instruction instruction}))
+  ([title hebrew-text english-text]
+   (song title hebrew-text english-text nil))
+  ([title hebrew-text english-text & more-content]
+   {:type :song :title title :hebrew hebrew-text :english english-text :children more-content}))
+
+(defn song-with-instruction
+  [title hebrew-text english-text instruction & content]
+  (-> (apply song title hebrew-text english-text content)
+      (assoc :instruction instruction)))
 
 (defn instruction
   [hebrew-text english-text]

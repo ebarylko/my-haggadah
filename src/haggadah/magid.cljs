@@ -1,6 +1,7 @@
 (ns haggadah.magid
-  (:require [haggadah.dsl :as dsl :refer [table row instruction song section general-content general-content-with-instruction]]
-            [haggadah.first-fruits :refer [first-fruits-declaration]]))
+  (:require [haggadah.dsl :as dsl :refer [table row instruction song song-with-instruction section general-content general-content-with-instruction]]
+            [haggadah.first-fruits :refer [first-fruits-declaration]]
+            [haggadah.dayenu :refer [dayenu]]))
 
 
 (def ah-lach-manya-heb "הָא לַחְמָא עַנְיָא דִּי אֲכָלוּ אַבְהָתָנָא בְאַרְעָא דְמִצְרָיִם. כָּל דִכְפִין יֵיתֵי וְיֵיכֹל, כָּל דִצְרִיךְ יֵיתֵי וְיִפְסַח. הָשַּׁתָּא הָכָא, לְשָׁנָה הַבָּאָה בְּאַרְעָא דְיִשְׂרָאֵל. הָשַּׁתָּא עַבְדֵי, לְשָׁנָה הַבָּאָה בְּנֵי חוֹרִין.")
@@ -128,13 +129,13 @@
 
 (def magid (section "מַגִּיד"
           "Magid"
-          (song "Ha Lachma Anya"
+          (song-with-instruction "Ha Lachma Anya"
                 ah-lach-manya-heb ah-lach-manya-eng
                 (instruction instr-heb-1 instr-eng-1))
-          (song "The Four Questions"
+          (song-with-instruction "The Four Questions"
                 mah-nishtana-heb mah-nishtana-eng
                 (instruction instr-heb-2 instr-eng-2))
-          (song "We Were Slaves in Egypt"
+          (song-with-instruction "We Were Slaves in Egypt"
                 avadim-hayinu-heb avadim-hayinu-eng
                 (instruction instr-heb-3 instr-eng-3))
          (general-content "Story of the Five Rabbis"
@@ -168,5 +169,6 @@
                                               (general-content rabbi-eliezer-heb rabbi-eliezer-eng)
                                               (general-content rabbi-akiva-heb rabbi-akiva-eng)
                                               )
+          dayenu
           ))
 
