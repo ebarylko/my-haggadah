@@ -121,7 +121,7 @@
 
 (defmethod render-haggadah :general [{:keys [title english hebrew instruction children]}]
   (println "Children " children " insruction " instruction " Title " title)
-  (cond-> [:div.genral]
+  (cond-> [:div.general]
     (seq title) (conj [:div.title title])
     (seq instruction) (conj (render-haggadah instruction))
     :always (conj [:div.text.hebrew.pb-3 hebrew] [:div.text.english english])
