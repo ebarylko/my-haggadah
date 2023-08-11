@@ -1,5 +1,5 @@
 (ns haggadah.magid
-  (:require [haggadah.dsl :as dsl :refer [haggadah bracha instruction song section general-content general-content-with-instruction]]
+  (:require [haggadah.dsl :as dsl :refer [table row instruction song section general-content general-content-with-instruction]]
             [haggadah.first-fruits :refer [first-fruits-declaration]]))
 
 
@@ -7,44 +7,34 @@
 
 (def ah-lach-manya-eng "This is the bread of destitution that our ancestors ate in the land of Egypt. Anyone who is famished should come and eat, anyone who is in need should come and partake of the Pesach sacrifice. Now we are here, next year we will be in the land of Israel; this year we are slaves, next year we will be free people.")
 
-
-(def instr-heb-9 "מגלה את המצות, מגביה את הקערה ואומר בקול רם:")
-(def instr-eng-9 "The leader uncovers the matsot, raises the Seder plate, and says out loud:")
-
+(def instr-heb-1 "מגלה את המצות, מגביה את הקערה ואומר בקול רם:")
+(def instr-eng-1 "The leader uncovers the matsot, raises the Seder plate, and says out loud:")
 
 (def mah-nishtana-eng "מַה נִּשְׁתַּנָּה הַלַּיְלָה הַזֶּה מִכָּל הַלֵּילוֹת? שֶׁבְּכָל הַלֵּילוֹת אָנוּ אוֹכְלִין חָמֵץ וּמַצָּה, הַלַּיְלָה הַזֶּה – כֻּלּוֹ מַצָּה. שֶׁבְּכָל הַלֵּילוֹת אָנוּ אוֹכְלִין שְׁאָר יְרָקוֹת – הַלַּיְלָה הַזֶּה (כֻּלּוֹ) מָרוֹר. שֶׁבְּכָל הַלֵּילוֹת אֵין אָנוּ מַטְבִּילִין אֲפִילוּ פַּעַם אֶחָת – הַלַּיְלָה הַזֶּה שְׁתֵּי פְעָמִים. שֶׁבְּכָל הַלֵּילוֹת אָנוּ אוֹכְלִין בֵּין יוֹשְׁבִין וּבֵין מְסֻבִּין – הַלַּיְלָה הַזֶּה כֻּלָּנוּ מְסֻבִּין.")
 
 (def mah-nishtana-heb "What differentiates this night from all [other] nights? On all [other] nights we eat chamets and matsa; this night, only matsa? On all [other] nights we eat other vegetables; tonight (only) marror. On all [other] nights, we don't dip [our food], even one time; tonight [we dip it] twice. On [all] other nights, we eat either sitting or reclining; tonight we all recline.")
 
-
-(def instr-heb-10 "מסיר את הקערה מעל השולחן. מוזגין כוס שני. הבן שואל:")
-(def instr-eng-10 "He removes the plate from the table. We pour a second cup of wine. The son then asks:")
-
+(def instr-heb-2 "מסיר את הקערה מעל השולחן. מוזגין כוס שני. הבן שואל:")
+(def instr-eng-2 "He removes the plate from the table. We pour a second cup of wine. The son then asks:")
 
 (def avadim-hayinu-heb "עֲבָדִים הָיִינוּ לְפַרְעֹה בְּמִצְרָיִם, וַיּוֹצִיאֵנוּ ה' אֱלֹהֵינוּ מִשָּׁם בְּיָד חֲזָקָה וּבִזְרֹעַ נְטוּיָה. וְאִלּוּ לֹא הוֹצִיא הַקָּדוֹשׁ בָּרוּךְ הוּא אֶת אֲבוֹתֵינוּ מִמִּצְרָיִם, הֲרֵי אָנוּ וּבָנֵינוּ וּבְנֵי בָנֵינוּ מְשֻׁעְבָּדִים הָיִינוּ לְפַרְעֹה בְּמִצְרָיִם. וַאֲפִילוּ כֻּלָּנוּ חֲכָמִים כֻּלָּנוּ נְבוֹנִים כֻּלָּנוּ זְקֵנִים כֻּלָּנוּ יוֹדְעִים אֶת הַתּוֹרָה מִצְוָה עָלֵינוּ לְסַפֵּר בִּיצִיאַת מִצְרָיִם. וְכָל הַמַּרְבֶּה לְסַפֵּר בִּיצִיאַת מִצְרַיִם הֲרֵי זֶה מְשֻׁבָּח.")
 
 (def avadim-hayinu-eng "We were slaves to Pharaoh in the land of Egypt. And the Lord, our God, took us out from there with a strong hand and an outstretched forearm. And if the Holy One, blessed be He, had not taken our ancestors from Egypt, behold we and our children and our children's children would [all] be enslaved to Pharaoh in Egypt. And even if we were all sages, all discerning, all elders, all knowledgeable about the Torah, it would be a commandment upon us to tell the story of the exodus from Egypt. And anyone who adds [and spends extra time] in telling the story of the exodus from Egypt, behold he is praiseworthy.")
 
-
-(def instr-heb-11 "מחזיר את הקערה אל השולחן. המצות תִהיינה מגלות בִשעת אמירת ההגדה.")
-(def instr-eng-11 "He puts the plate back on the table. The matsot should be uncovered during the saying of the Haggadah.")
-
-
+(def instr-heb-3 "מחזיר את הקערה אל השולחן. המצות תִהיינה מגלות בִשעת אמירת ההגדה.")
+(def instr-eng-3 "He puts the plate back on the table. The matsot should be uncovered during the saying of the Haggadah.")
 
 (def story-of-five-rabs-heb-1 "מַעֲשֶׂה בְּרַבִּי אֱלִיעֶזֶר וְרַבִּי יְהוֹשֻׁעַ וְרַבִּי אֶלְעָזָר בֶּן־עֲזַרְיָה וְרַבִּי עֲקִיבָא וְרַבִּי טַרְפוֹן שֶׁהָיוּ מְסֻבִּין בִּבְנֵי־בְרַק וְהָיוּ מְסַפְּרִים בִּיצִיאַת מִצְרַיִם כָּל־אוֹתוֹ הַלַּיְלָה, עַד שֶׁבָּאוּ תַלְמִידֵיהֶם וְאָמְרוּ לָהֶם רַבּוֹתֵינוּ הִגִּיעַ זְמַן קְרִיאַת שְׁמַע שֶׁל שַׁחֲרִית.")
 
 (def story-of-five-rabs-heb-2 "אָמַר רַבִּי אֶלְעָזָר בֶּן־עֲזַרְיָה הֲרֵי אֲנִי כְּבֶן שִׁבְעִים שָׁנָה וְלֹא זָכִיתִי שֶׁתֵּאָמֵר יְצִיאַת מִצְרַיִם בַּלֵּילוֹת עַד שֶׁדְּרָשָׁהּ בֶּן זוֹמָא, שֶׁנֶּאֱמַר, לְמַעַן תִּזְכֹּר אֶת יוֹם צֵאתְךָ מֵאֶרֶץ מִצְרַיִם כֹּל יְמֵי חַיֶּיךָ. יְמֵי חַיֶּיךָ הַיָּמִים. כֹּל יְמֵי חַיֶּיךָ הַלֵּילוֹת. וַחֲכָמִים אוֹמְרִים יְמֵי חַיֶּיךָ הָעוֹלָם הַזֶּה. כֹּל יְמֵי חַיֶּיךָ לְהָבִיא לִימוֹת הַמָּשִׁיחַ:")
 
-
 (def story-of-five-rabs-eng-1 "It happened once [on Pesach] that Rabbi Eliezer, Rabbi Yehoshua, Rabbi Elazar ben Azariah, Rabbi Akiva and Rabbi Tarfon were reclining in Bnei Brak and were telling the story of the exodus from Egypt that whole night, until their students came and said to them, 'The time of [reciting] the morning Shema has arrived.'")
 
 (def story-of-five-rabs-eng-2 "Rabbi Elazar ben Azariah said, 'Behold I am like a man of seventy years and I have not merited [to understand why] the exodus from Egypt should be said at night until Ben Zoma explicated it, as it is stated (Deuteronomy 16:3), 'In order that you remember the day of your going out from the land of Egypt all the days of your life;' 'the days of your life' [indicates that the remembrance be invoked during] the days, 'all the days of your life' [indicates that the remembrance be invoked also during] the nights.' But the Sages say, ''the days of your life' [indicates that the remembrance be invoked in] this world, 'all the days of your life' [indicates that the remembrance be invoked also] in the days of the Messiah.'")
 
-
 (def the-four-sons-bracha-heb "בָּרוּךְ הַמָּקוֹם, בָּרוּךְ הוּא, בָּרוּךְ שֶׁנָּתַן תּוֹרָה לְעַמּוֹ יִשְׂרָאֵל, בָּרוּךְ הוּא. כְּנֶגֶד אַרְבָּעָה בָנִים דִּבְּרָה תוֹרָה: אֶחָד חָכָם, וְאֶחָד רָשָׁע, וְאֶחָד תָּם, וְאֶחָד שֶׁאֵינוֹ יוֹדֵעַ לִשְׁאוֹל.")
 
 (def the-four-sons-bracha-eng "Blessed be the Place [of all], Blessed be He; Blessed be the One who Gave the Torah to His people Israel, Blessed be He. Corresponding to four sons did the Torah speak; one [who is] wise, one [who is] evil, one who is innocent and one who doesn't know to ask.")
-
 
 (def wise-son-eng "What does the wise [son] say? ''What are these testimonies, statutes and judgments that the Lord our God commanded you?' (Deuteronomy 6:20)' And accordingly you will say to him, as per the laws of the Pesach sacrifice, 'We may not eat an afikoman [a dessert or other foods eaten after the meal] after [we are finished eating] the Pesach sacrifice (Mishnah Pesachim 10:8).'")
 
@@ -86,138 +76,60 @@
 
 (def idol-worship-eng-3 "Blessed be the One who keeps His promise to Israel, blessed be He; since the Holy One, blessed be He, calculated the end [of the exile,] to do as He said to Avraham, our father, in the Covenant between the Pieces, as it is stated (Genesis 15:13-14), \"And He said to Avram, 'you should surely know that your seed will be a stranger in a land that is not theirs, and they will enslave them and afflict them four hundred years. And also that nation for which they shall toil will I judge, and afterwards they will go out with much property.'\"")
 
-(def instr-heb-3 "מכסה המצה ומגביה את הכוס בידו, ואומר:")
-(def instr-eng-3 "He covers the matsa and lifts up the cup and says:")
-
 (def vehi-sheamda-heb "וְהִיא שֶׁעָמְדָה לַאֲבוֹתֵינוּ וְלָנוּ. שֶׁלֹּא אֶחָד בִּלְבָד עָמַד עָלֵינוּ לְכַלּוֹתֵנוּ, אֶלָּא שֶׁבְּכָל דּוֹר וָדוֹר עוֹמְדִים עָלֵינוּ לְכַלוֹתֵנוּ, וְהַקָּדוֹשׁ בָּרוּךְ הוּא מַצִּילֵנוּ מִיָּדָם.")
 
 (def vehi-sheamda-eng "And it is this that has stood for our ancestors and for us; since it is not [only] one [person or nation] that has stood [against] us to destroy us, but rather in each generation, they stand [against] us to destroy us, but the Holy One, blessed be He, rescues us from their hand.")
 
-(def instr-heb-4 "יניח הכוס מידו ויגלה אֶת הַמצות.")
-(def instr-eng-4 "He puts down the cup from his hand and uncovers the matsa.")
+(def instr-heb-4 "כשאומר דם ואש ותימרות עשן, עשר המכות ודצ״ך עד״ש באח״ב – ישפוך מן הכוס מעט יין:")
+(def instr-eng-4 "And when he says, \"blood and fire and pillars of smoke\" and the ten plagues and \"detsakh,\" \"adash\" and \"ba'achab,\" he should pour out a little wine from his cup.")
 
-(def first-fruit-heb-1 "צֵא וּלְמַד מַה בִּקֵּשׁ לָבָן הָאֲרַמִּי לַעֲשׂוֹת לְיַעֲקֹב אָבִינוּ: שֶׁפַּרְעֹה לֹא גָזַר אֶלָּא עַל הַזְּכָרִים, וְלָבָן בִּקֵּשׁ לַעֲקֹר אֶת־הַכֹּל. שֶׁנֶּאֱמַר: אֲרַמִּי אֹבֵד אָבִי, וַיֵּרֶד מִצְרַיְמָה וַיָּגָר שָׁם בִּמְתֵי מְעָט, וַיְהִי שָׁם לְגוֹי גָּדוֹל, עָצוּם וָרָב.")
+(def ten-plagues-heb-1 "דָּם וָאֵשׁ וְתִימְרוֹת עָשָׁן.")
+(def ten-plagues-eng-1 "blood and fire and pillars of smoke.")
 
-(def first-fruit-eng-1 "Go out and learn what Lavan the Aramean sought to do to Ya'akov, our father; since Pharaoh only decreed [the death sentence] on the males but Lavan sought to uproot the whole [people]. As it is stated (Deuteronomy 26:5), \"An Aramean was destroying my father and he went down to Egypt, and he resided there with a small number and he became there a nation, great, powerful and numerous.\"")
 
+(def ten-plagues-heb-2 "דָבָר אַחֵר: בְּיָד חֲזָקָה שְׁתַּיִם, וּבִזְרֹעַ נְטוּיָה שְׁתַּיִם, וּבְמֹרָא גָּדֹל – שְׁתַּיִם, וּבְאֹתוֹת – שְׁתַּיִם, וּבְמֹפְתִים – שְׁתַּיִם.")
 
-(def first-fruit-heb-2 "וַיֵּרֶד מִצְרַיְמָה – אָנוּס עַל פִּי הַדִּבּוּר. וַיָּגָר שָׁם. מְלַמֵּד שֶׁלֹא יָרַד יַעֲקֹב אָבִינוּ לְהִשְׁתַּקֵּעַ בְּמִצְרַיִם אֶלָּא לָגוּר שָׁם, שֶׁנֶּאֱמַר: וַיֹּאמְרוּ אֶל־פַּרְעֹה, לָגוּר בָּאָרֶץ בָּאנוּ, כִּי אֵין מִרְעֶה לַצֹּאן אֲשֶׁר לַעֲבָדֶיךָ, כִּי כָבֵד הָרָעָב בְּאֶרֶץ כְּנָעַן. וְעַתָּה יֵשְׁבוּ־נָא עֲבָדֶיךָ בְּאֶרֶץ גֹּשֶן.")
+(def ten-plagues-eng-2 "Another [explanation]: \"With a strong hand\" [corresponds to] two [plagues]; \"and with an outstretched forearm\" [corresponds to] two [plagues]; \"and with great awe\" [corresponds to] two [plagues]; \"and with signs\" [corresponds to] two [plagues]; \"and with wonders\" [corresponds to] two [plagues].")
 
-(def first-fruit-eng-2 " \"And he went down to Egypt\" - helpless on account of the word [in which God told Avraham that his descendants would have to go into exile]. \"And he resided there\" - [this] teaches that Ya'akov, our father, didn't go down to settle in Egypt, but rather [only] to reside there, as it is stated (Genesis 47:4), \"And they said to Pharaoh, 'To reside in the land have we come, since there is not enough pasture for your servant's flocks, since the famine is heavy in the land of Canaan, and now please grant that your servants should dwell in the Land of Goshen.'\"")
 
+(def ten-plagues-heb-3 "אֵלּוּ עֶשֶׂר מַכּוֹת שֶׁהֵבִיא הַקָּדוֹשׁ בָּרוּךְ הוּא עַל־הַמִּצְרִים בְּמִצְרַיִם, וְאֵלוּ הֵן:")
 
-(def first-fruit-heb-3 "בִּמְתֵי מְעָט. כְּמָה שֶּׁנֶּאֱמַר: בְּשִׁבְעִים נֶפֶשׁ יָרְדוּ אֲבוֹתֶיךָ מִצְרָיְמָה, וְעַתָּה שָׂמְךָ ה' אֱלֹהֶיךָ כְּכוֹכְבֵי הַשָּׁמַיִם לָרֹב.")
+(def ten-plagues-eng-3 "These are [the] ten plagues that the Holy One, blessed be He, brought on the Egyptians in Egypt and they are:")
 
-(def first-fruit-eng-3 "\"As a small number\" - as it is stated (Deuteronomy 10:22), \"With seventy souls did your ancestors come down to Egypt, and now the Lord your God has made you as numerous as the stars of the sky.\" ")
+(def plagues-heb (reverse ["מַכַּת בְּכוֹרוֹת" "חשֶׁךְ" "אַרְבֶּה" "בָּרָד" "שְׁחִין" "דֶּבֶר" "עָרוֹב" "כִּנִּים" "צְפַרְדֵּעַ" "דָּם"] ))
+(def plagues-eng ["Blood"
+                  "Frogs"
+                  "Lice"
+                  "[The] Mixture [of Wild Animals]"
+                  "Pestilence"
+                  "Boils"
+                  "Hail"
+                  "Locusts"
+                  "Darkness"
+                  "Slaying of [the] Firstborn"])
 
+(def plague-rows (map (comp row vector) plagues-eng plagues-heb))
 
-(def first-fruit-heb-4 "וַיְהִי שָׁם לְגוֹי. מְלַמֵד שֶׁהָיוּ יִשְׂרָאֵל מְצֻיָּנִים שָׁם. גָּדוֹל עָצוּם – כְּמָה שֶּׁנֶּאֱמַר: וּבְנֵי יִשְׂרָאֵל פָּרוּ וַיִּשְׁרְצוּ וַיִּרְבּוּ וַיַּעַצְמוּ בִּמְאֹד מְאֹד, וַתִּמָּלֵא הָאָרֶץ אֹתָם.")
+(def rabbi-yehuda-heb "רַבִּי יְהוּדָה הָיָה נוֹתֵן בָּהֶם סִמָּנִים: דְּצ״ךְ עַד״שׁ בְּאַח״ב.")
 
-(def first-fruit-eng-4 "\"And he became there a nation\" - [this] teaches that Israel [became] distinguishable there. \"Great, powerful\" - as it is stated (Exodus 1:7), \"And the Children of Israel multiplied and swarmed and grew numerous and strong, most exceedingly and the land became full of them.\"")
+(def rabbi-yehuda-eng "Rabbi Yehuda was accustomed to giving [the plagues] mnemonics: Detsakh [the Hebrew initials of the first three plagues], Adash [the Hebrew initials of the second three plagues], Beachav [the Hebrew initials of the last four plagues].")
 
+(def rabbi-yose-heb "רַבִּי יוֹסֵי הַגְּלִילִי אוֹמֵר: מִנַּיִן אַתָּה אוֹמֵר שֶׁלָּקוּ הַמִּצְרִים בְּמִצְרַיִם עֶשֶׂר מַכּוֹת וְעַל הַיָּם לָקוּ חֲמִשִּׁים מַכּוֹת? בְּמִצְרַיִם מַה הוּא אוֹמֵר? וַיֹּאמְרוּ הַחַרְטֻמִּם אֶל פַּרְעֹה: אֶצְבַּע אֱלֹהִים הִוא, וְעַל הַיָּם מָה הוּא אוֹמֵר? וַיַּרְא יִשְׂרָאֵל אֶת־הַיָּד הַגְּדֹלָה אֲשֶׁר עָשָׂה ה' בְּמִצְרַיִם, וַיִּירְאוּ הָעָם אֶת־ה', וַיַּאֲמִינוּ בַּיי וּבְמשֶׁה עַבְדוֹ. כַּמָה לָקוּ בְאֶצְבַּע? עֶשֶׂר מַכּוֹת. אֱמוֹר מֵעַתָּה: בְּמִצְרַים לָקוּ עֶשֶׂר מַכּוֹת וְעַל הַיָּם לָקוּ חֲמִשִּׁים מַכּוֹת.")
 
-(def first-fruit-heb-5 "וָרָב. כְּמָה שֶּׁנֶּאֱמַר: רְבָבָה כְּצֶמַח הַשָּׂדֶה נְתַתִּיךְ, וַתִּרְבִּי וַתִּגְדְּלִי וַתָּבֹאִי בַּעֲדִי עֲדָיִים, שָׁדַיִם נָכֹנוּ וּשְׂעָרֵךְ צִמֵּחַ, וְאַתְּ עֵרֹם וְעֶרְיָה. וָאֶעֱבֹר עָלַיִךְ וָאֶרְאֵךְ מִתְבּוֹסֶסֶת בְּדָמָיִךְ, וָאֹמַר לָךְ בְּדָמַיִךְ חֲיִי, וָאֹמַר לָךְ בְּדָמַיִךְ חֲיִי.")
-
-(def first-fruit-eng-5 " \"And numerous\" - as it is stated (Ezekiel 16:7), \"I have given you to be numerous as the vegetation of the field, and you increased and grew and became highly ornamented, your breasts were set and your hair grew, but you were naked and barren.\" \"And when I passed by thee, and saw thee weltering in thy blood, I said to thee, In thy blood live! yea, I said to thee, In thy blood live!\" (Ezekiel 16:6).")
-
-(def first-fruit-heb-6 "וַיָּרֵעוּ אֹתָנוּ הַמִּצְרִים וַיְעַנּוּנוּ, וַיִתְּנוּ עָלֵינוּ עֲבֹדָה קָשָׁה. וַיָּרֵעוּ אֹתָנוּ הַמִּצְרִים – כְּמָה שֶּׁנֶּאֱמַר: הָבָה נִתְחַכְּמָה לוֹ פֶּן יִרְבֶּה, וְהָיָה כִּי תִקְרֶאנָה מִלְחָמָה וְנוֹסַף גַּם הוּא עַל שֹׂנְאֵינוּ וְנִלְחַם־בָּנוּ, וְעָלָה מִן־הָאָרֶץ. ")
-
-
-(def first-fruit-eng-6" \"And the Egyptians did bad to us\" (Deuteronomy 26:6) - as it is stated (Exodus 1:10), \"Let us be wise towards him, lest he multiply and it will be that when war is called, he too will join with our enemies and fight against us and go up from the land.\"")
-
-
-(def first-fruit-heb-7 "וַיְעַנּוּנוּ. כְּמָה שֶּׁנֶּאֱמַר: וַיָּשִׂימוּ עָלָיו שָׂרֵי מִסִּים לְמַעַן עַנֹּתוֹ בְּסִבְלֹתָם. וַיִּבֶן עָרֵי מִסְכְּנוֹת לְפַרְעֹה. אֶת־פִּתֹם וְאֶת־רַעַמְסֵס.")
-
-
-(def first-fruit-eng-7 "\"And afflicted us\" - as is is stated (Exodus 1:11); \"And they placed upon him leaders over the work-tax in order to afflict them with their burdens; and they built storage cities, Pithom and Ra'amses.\"")
-
-(def first-fruit-heb-8 "וַיִתְּנוּ עָלֵינוּ עֲבֹדָה קָשָׁה. כְּמָה שֶֹׁנֶּאֱמַר: וַיַּעֲבִדוּ מִצְרַיִם אֶת־בְּנֵי יִשְׂרָאֵל בְּפָרֶךְ.")
-
-(def first-fruit-eng-8 "\"And put upon us hard work\" - as it is stated (Exodus 1:11), \"And they enslaved the children of Israel with breaking work.\"")
-
-
-(def first-fruit-heb-9 "וַנִּצְעַק אֶל־ה' אֱלֹהֵי אֲבֹתֵינוּ, וַיִּשְׁמַע ה' אֶת־קֹלֵנוּ, וַיַּרְא אֶת־עָנְיֵנוּ וְאֶת עֲמָלֵנוּ וְאֶת לַחֲצֵנוּ.")
-
-(def first-fruit-eng-9 "\"And we we cried out to the Lord, the God of our ancestors, and the Lord heard our voice, and He saw our affliction, and our toil and our duress\" (Deuteronomy 26:7).")
-
-(def first-fruit-heb-10 "וַנִּצְעַק אֶל־ה' אֱלֹהֵי אֲבֹתֵינוּ – כְּמָה שֶּׁנֶּאֱמַר: וַיְהִי בַיָּמִים הָרַבִּים הָהֵם וַיָּמָת מֶלֶךְ מִצְרַיִם, וַיֵּאָנְחוּ בְנֵי־יִשְׂרָאֵל מִ־הָעֲבוֹדָה וַיִּזְעָקוּ, וַתַּעַל שַׁוְעָתָם אֶל־הָאֱלֹהִים מִן הָעֲבֹדָה.")
-
-(def first-fruit-eng-10 "\"And we cried out to the Lord, the God of our ancestors\" - as it is stated (Exodus 2:23); \"And it was in those great days that the king of Egypt died and the Children of Israel sighed from the work and yelled out, and their supplication went up to God from the work.\"")
-
-
-(def first-fruit-heb-11 "וַיִּשְׁמַע ה' אֶת קלֵנוּ. כְּמָה שֶּׁנֶּאֱמַר: וַיִּשְׁמַע אֱלֹהִים אֶת־נַאֲקָתָם, וַיִּזְכֹּר אֱלֹהִים אֶת־בְּרִיתוֹ אֶת־אַבְרָהָם, אֶת־יִצְחָק וְאֶת־יַעֲקֹב.")
-
-(def first-fruit-eng-11 " \"And the Lord heard our voice\" - as it is stated (Exodus 2:24); \"And God heard their groans and God remembered His covenant with Avraham and with Yitschak and with Ya'akov.\" ")
-
-
-(def first-fruit-heb-12 "וַיַּרְא אֶת־עָנְיֵנוּ. זוֹ פְּרִישׁוּת דֶּרֶךְ אֶרֶץ, כְּמָה שֶּׁנֶּאֱמַר: וַיַּרְא אֱלֹהִים אֶת בְּנֵי־יִשְׂרָאֵל וַיֵּדַע אֱלֹהִים.")
-
-(def first-fruit-eng-12 " \"And He saw our affliction\" - this [refers to] the separation from the way of the world, as it is stated (Exodus 2:25); \"And God saw the Children of Israel and God knew.\" ")
-
-
-(def first-fruit-heb-13 "וְאֶת־עֲמָלֵנוּ. אֵלּוּ הַבָּנִים. כְּמָה שֶּׁנֶּאֱמַר: כָּל־הַבֵּן הַיִּלּוֹד הַיְאֹרָה תַּשְׁלִיכֻהוּ וְכָל־הַבַּת תְּחַיּוּן.")
-
-(def first-fruit-eng-13 " \"And our toil\" - this [refers to the killing of the] sons, as it is stated (Exodus 1:22); \"Every boy that is born, throw him into the Nile and every girl you shall keep alive.\" ")
-
-
-(def first-fruit-heb-14 "וְאֶת לַחָצֵנוּ. זֶו הַדְּחַק, כְּמָה שֶּׁנֶּאֱמַר: וְגַם־רָאִיתִי אֶת־הַלַּחַץ אֲשֶׁר מִצְרַיִם לֹחֲצִים אֹתָם.")
-
-(def first-fruit-eng-14 "\"And our duress\" - this [refers to] the pressure, as it is stated (Exodus 3:9); \"And I also saw the duress that the Egyptians are applying on them.\" ")
-
-
-(def first-fruit-heb-15 "וַיּוֹצִאֵנוּ ה' מִמִצְרַיִם בְּיָד חֲזָקָה, וּבִזְרֹעַ נְטוּיָה, וּבְמֹרָא גָּדֹל, וּבְאֹתוֹת וּבְמֹפְתִים.")
-
-(def first-fruit-eng-15 "\"And the Lord took us out of Egypt with a strong hand and with an outstretched forearm and with great awe and with signs and with wonders\" (Deuteronomy 26:8). ")
-
-(def first-fruit-heb-16 "וַיּוֹצִאֵנוּ ה' מִמִּצְרַיִם. לֹא עַל־יְדֵי מַלְאָךְ, וְלֹא עַל־יְדֵי שָׂרָף, וְלֹא עַל־יְדֵי שָׁלִיחַ, אֶלָּא הַקָּדוֹשׁ בָּרוּךְ הוּא בִּכְבוֹדוֹ וּבְעַצְמוֹ. שֶׁנֶּאֱמַר: וְעָבַרְתִּי בְאֶרֶץ מִצְרַיִם בַּלַּיְלָה הַזֶּה, וְהִכֵּיתִי כָּל־בְּכוֹר בְּאֶרֶץ מִצְרַיִם מֵאָדָם וְעַד בְּהֵמָה, וּבְכָל אֱלֹהֵי מִצְרַיִם אֶעֱשֶׂה שְׁפָטִים. אֲנִי ה'.")
-
-(def first-fruit-eng-16 " \"And the Lord took us out of Egypt\" - not through an angel and not through a seraph and not through a messenger, but [directly by] the Holy One, blessed be He, Himself, as it is stated (Exodus 12:12); \"And I will pass through the Land of Egypt on that night and I will smite every firstborn in the Land of Egypt, from men to animals; and with all the gods of Egypt, I will make judgments, I am the Lord.\"")
-
-
-(def first-fruit-heb-17 "וְעָבַרְתִּי בְאֶרֶץ מִצְרַיִם בַּלַּיְלָה הַזֶּה – אֲנִי וְלֹא מַלְאָךְ; וְהִכֵּיתִי כָל בְּכוֹר בְּאֶרֶץ־מִצְרַים. אֲנִי וְלֹא שָׂרָף; וּבְכָל־אֱלֹהֵי מִצְרַיִם אֶעֱשֶׂה שְׁפָטִים. אֲנִי וְלֹא הַשָּׁלִיחַ; אֲנִי ה'. אֲנִי הוּא וְלֹא אַחֵר.")
-
-(def first-fruit-eng-17 " \"And I will pass through the Land of Egypt\" - I and not an angel. \"And I will smite every firstborn\" - I and not a seraph. \"And with all the gods of Egypt, I will make judgments\" - I and not a messenger. \"I am the Lord\" - I am He and there is no other. ")
-
-
-(def first-fruit-heb-18 "בְּיָד חֲזָקָה. זוֹ הַדֶּבֶר, כְּמָה שֶּׁנֶּאֱמַר: הִנֵּה יַד־ה' הוֹיָה בְּמִקְנְךָ אֲשֶׁר בַּשָּׂדֶה, בַּסּוּסִים, בַּחֲמֹרִים, בַּגְּמַלִים, בַּבָּקָר וּבַצֹּאן, דֶּבֶר כָּבֵד מְאֹד.")
-
-(def first-fruit-eng-18 " \"With a strong hand\" - this [refers to] the pestilence, as it is stated (Exodus 9:3); \"Behold the hand of the Lord is upon your herds that are in the field, upon the horses, upon the donkeys, upon the camels, upon the cattle and upon the flocks, [there will be] a very heavy pestilence.\" ")
-
-
-(def first-fruit-heb-19 "וּבִזְרֹעַ נְטוּיָה. זוֹ הַחֶרֶב, כְּמָה שֶּׁנֶּאֱמַר: וְחַרְבּוֹ שְׁלוּפָה בְּיָדוֹ, נְטוּיָה עַל־יְרוּשָלָיִם.")
-
-(def first-fruit-eng-19 " \"And with an outstretched forearm\" - this [refers to] the sword, as it is stated (I Chronicles 21:16); \"And his sword was drawn in his hand, leaning over Jerusalem.\" ")
-
-
-(def first-fruit-heb-20 "וּבְמוֹרָא גָּדֹל. זוֹ גִּלּוּי שְׁכִינָה. כְּמָה שֶּׁנֶּאֱמַר, אוֹ הֲנִסָּה אֱלֹהִים לָבוֹא לָקַחַת לוֹ גּוֹי מִקֶּרֶב גּוֹי בְּמַסֹּת בְּאֹתֹת וּבְמוֹפְתִים וּבְמִלְחָמָה וּבְיָד חֲזָקָה וּבִזְרוֹעַ נְטוּיָה וּבְמוֹרָאִים גְּדוֹלִים כְּכֹל אֲשֶׁר־עָשָׂה לָכֶם ה' אֱלֹהֵיכֶם בְּמִצְרַיִם לְעֵינֶיךָ.")
-
-(def first-fruit-eng-20 " \"And with great awe\" - this [refers to the revelation of] the Divine Presence, as it is stated (Deuteronomy 4:34), \"Or did God try to take for Himself a nation from within a nation with enigmas, with signs and with wonders and with war and with a strong hand and with an outstretched forearm and with great and awesome acts, like all that the Lord, your God, did for you in Egypt in front of your eyes?\" ")
-
-
-(def first-fruit-heb-21 "וּבְאֹתוֹת. זֶה הַמַּטֶּה, כְּמָה שֶּׁנֶּאֱמַר: וְאֶת הַמַּטֶּה הַזֶּה תִּקַּח בְּיָדְךָ, אֲשֶׁר תַּעֲשֶׂה־בּוֹ אֶת הָאֹתוֹת.")
-
-(def first-fruit-eng-21 " \"And with signs\" - this [refers to] the staff, as it is stated (Exodus 4:17); \"And this staff you shall take in your hand, that with it you will perform signs.\" ")
-
-
-(def first-fruit-heb-22 "וּבְמֹפְתִים. זֶה הַדָּם, כְּמָה שֶּׁנֶּאֱמַר: וְנָתַתִּי מוֹפְתִים בַּשָּׁמַיִם וּבָאָרֶץ.")
-
-(def first-fruit-eng-22 " And with wonders\" - this [refers to] the blood, as it is stated (Joel 3:3); \"And I will place my wonders in the skies and in the earth: ")
-
-(def instr-heb-5 "כשאומר דם ואש ותימרות עשן, עשר המכות ודצ״ך עד״ש באח״ב – ישפוך מן הכוס מעט יין:")
-(def instr-eng-5 "And when he says, \"blood and fire and pillars of smoke\" and the ten plagues and \"detsakh,\" \"adash\" and \"ba'achab,\" he should pour out a little wine from his cup.")
+(def rabbi-yose-eng "Rabbi Yose Hagelili says, \"From where can you [derive] that the Egyptians were struck with ten plagues in Egypt and struck with fifty plagues at the Sea? In Egypt, what does it state? 'Then the magicians said unto Pharaoh: ‘This is the finger of God' (Exodus 8:15). And at the Sea, what does it state? 'And Israel saw the Lord's great hand that he used upon the Egyptians, and the people feared the Lord; and they believed in the Lord, and in Moshe, His servant' (Exodus 14:31). How many were they struck with with the finger? Ten plagues. You can say from here that in Egypt, they were struck with ten plagues and at the Sea, they were struck with fifty plagues.\" ")
 
 (def magid
  (section "מַגִּיד"
           "Magid"
           (song "Ha Lachma Anya"
                 ah-lach-manya-heb ah-lach-manya-eng
-                (instruction instr-heb-9 instr-eng-9))
+                (instruction instr-heb-1 instr-eng-1))
           (song "The Four Questions"
                 mah-nishtana-heb mah-nishtana-eng
-                (instruction instr-heb-10 instr-eng-10))
+                (instruction instr-heb-2 instr-eng-2))
           (song "We Were Slaves in Egypt"
                 avadim-hayinu-heb avadim-hayinu-eng
-                (instruction instr-heb-11 instr-eng-11))
+                (instruction instr-heb-3 instr-eng-3))
          (general-content "Story of the Five Rabbis"
                            story-of-five-rabs-heb-1 story-of-five-rabs-eng-1
                            (general-content story-of-five-rabs-heb-2 story-of-five-rabs-eng-2))
@@ -238,8 +150,14 @@
                            (instruction instr-heb-3 instr-eng-3)
                            (song vehi-sheamda-heb vehi-sheamda-eng))
           first-fruits-declaration
-          #_(general-content-with-instruction "The Ten Plagues"
-                                            (instruction instr-heb-5 instr-eng-5)
-                                            )
+          (general-content-with-instruction "The Ten Plagues"
+                                              ten-plagues-heb-1 ten-plagues-eng-1
+                                              (instruction instr-heb-4 instr-eng-4)
+                                              (general-content ten-plagues-heb-2 ten-plagues-eng-2)
+                                              (general-content ten-plagues-heb-3 ten-plagues-eng-3)
+                                              (apply table "" plague-rows)
+                                              (general-content rabbi-yehuda-heb rabbi-yehuda-eng)
+                                              (general-content rabbi-yose-heb rabbi-yose-eng)
+                                              )
           ))
 

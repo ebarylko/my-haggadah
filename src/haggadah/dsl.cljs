@@ -31,28 +31,6 @@
   [title & rows]
   {:type :table :title title :rows rows})
 
-(defn instruction?
-  "Pre: takes an instruction or a collection of content
-  Post: returns true if an instruction was passed. False otherwise"
-  [instr-or-coll]
-  (println "instruc " (first instr-or-coll ))
-  #_(println "Insruction "
-           (->> instr-or-coll
-                first
-                :type
-                (= :instruction))
-           " " instr-or-coll)
-  (->> instr-or-coll
-       first
-       :type
-       (= :instruction)))
-
-;; (general-content title hebrew-text english-text opts)
-
-;; opts = {:instruction instruction :children }
-
-; add-options :children cont :instruction instr
-
 (defn general-content
   "General content has a title, hebrew text and english translation, and optional instructions and additional content"
   ([hebrew-text english-text] (general-content nil hebrew-text english-text))
@@ -127,7 +105,7 @@
 (def mult-conj (partial apply conj))
 
 (defmethod render-haggadah :general [{:keys [title english hebrew instruction children]}]
-  (println "Children " children " insruction " instruction " Title " title)
+  (println "Here is the hebrew " hebrew)
   (cond-> [:div.general]
     (seq title) (conj [:div.title title])
     (seq instruction) (conj (render-haggadah instruction))
