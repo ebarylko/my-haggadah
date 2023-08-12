@@ -6,6 +6,7 @@
             [haggadah.urchatz  :refer [urchatz]]
             [haggadah.kadesh  :refer [kadesh]]
             [haggadah.rachtzah  :refer [rachtzah]]
+            [haggadah.motzi-matzah :refer [motzi-matzah]]
             ))
 
 (def full-haggadah
@@ -16,5 +17,6 @@
             yachatz
             magid
             rachtzah
+            motzi-matzah
             ))
 
