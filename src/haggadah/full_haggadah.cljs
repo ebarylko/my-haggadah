@@ -4,7 +4,9 @@
             [haggadah.karpas :refer [karpas]]
             [haggadah.yachatz  :refer [yachatz]]
             [haggadah.urchatz  :refer [urchatz]]
-            [haggadah.kadesh  :refer [kadesh]]))
+            [haggadah.kadesh  :refer [kadesh]]
+            [haggadah.rachtzah  :refer [rachtzah]]
+            ))
 
 (def full-haggadah
   (haggadah "Full Haggadah"
@@ -12,5 +14,7 @@
             urchatz
             karpas
             yachatz
-            magid))
+            magid
+            rachtzah
+            ))
 
