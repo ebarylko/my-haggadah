@@ -158,6 +158,24 @@
 
 (def rabbi-gamliel-eng-5 " In each and every generation, a person is obligated to see himself as if he left Egypt, as it is stated (Exodus 13:8); \"And you shall explain to your son on that day: For the sake of this, did the Lord do [this] for me in my going out of Egypt.\" Not only our ancestors did the Holy One, blessed be He, redeem, but rather also us [together] with them did He redeem, as it is stated (Deuteronomy 6:23); \"And He took us out from there, in order to bring us in, to give us the land which He swore unto our fathers.\" ")
 
+(def hallel-heb-1 "לְפִיכָךְ אֲנַחְנוּ חַיָּבִים לְהוֹדוֹת, לְהַלֵּל, לְשַׁבֵּחַ, לְפָאֵר, לְרוֹמֵם, לְהַדֵּר, לְבָרֵךְ, לְעַלֵּה וּלְקַלֵּס לְמִי שֶׁעָשָׂה לַאֲבוֹתֵינוּ וְלָנוּ אֶת־כָּל־הַנִסִּים הָאֵלּוּ: הוֹצִיאָנוּ מֵעַבְדוּת לְחֵרוּת מִיָּגוֹן לְשִׂמְחָה, וּמֵאֵבֶל לְיוֹם טוֹב, וּמֵאֲפֵלָה לְאוֹר גָּדוֹל, וּמִשִּׁעְבּוּד לִגְאֻלָּה. וְנֹאמַר לְפָנָיו שִׁירָה חֲדָשָׁה: הַלְלוּיָהּ.")
+
+(def hallel-eng-1 "Therefore we are obligated to thank, praise, laud, glorify, exalt, lavish, bless, raise high, and acclaim He who made all these miracles for our ancestors and for us: He brought us out from slavery to freedom, from sorrow to joy, from mourning to [celebration of] a festival, from darkness to great light, and from servitude to redemption. And let us say a new song before Him, Halleluyah!")
+
+(def instr-heb-8 "יאחז הכוס בידו ויכסה המצות ויאמר:")
+
+(def instr-eng-8 "He holds the cup in his hand and and he covers the matsa and says:")
+
+
+(def hallel-heb-2 "הַלְלוּיָהּ הַלְלוּ עַבְדֵי ה', הַלְלוּ אֶת־שֵׁם ה'. יְהִי שֵׁם ה' מְבֹרָךְ מֵעַתָּה וְעַד עוֹלָם. מִמִּזְרַח שֶׁמֶשׁ עַד מְבוֹאוֹ מְהֻלָּל שֵׁם ה'. רָם עַל־כָּל־גּוֹיִם ה', עַל הַשָּׁמַיִם כְּבוֹדוֹ. מִי כַּיי אֱלֹהֵינוּ הַמַּגְבִּיהִי לָשָׁבֶת, הַמַּשְׁפִּילִי לִרְאוֹת בַּשָּׁמַיִם וּבָאָרֶץ? מְקִימִי מֵעָפָר דָּל, מֵאַשְׁפֹּת יָרִים אֶבְיוֹן, לְהוֹשִׁיבִי עִם־נְדִיבִים, עִם נְדִיבֵי עַמּוֹ. מוֹשִׁיבִי עֲקֶרֶת הַבַּיִת, אֵם הַבָּנִים שְׂמֵחָה. הַלְלוּיָהּ.")
+
+(def hallel-eng-2 "Halleluyah! Praise, servants of the Lord, praise the name of the Lord. May the Name of the Lord be blessed from now and forever. From the rising of the sun in the East to its setting, the name of the Lord is praised. Above all nations is the Lord, His honor is above the heavens. Who is like the Lord, our God, Who sits on high; Who looks down upon the heavens and the earth? He brings up the poor out of the dirt; from the refuse piles, He raises the destitute. To seat him with the nobles, with the nobles of his people. He seats a barren woman in a home, a happy mother of children. Halleluyah! (Psalms 113)")
+
+
+(def hallel-heb-3 "בְּצֵאת יִשְׂרָאֵל מִמִצְרַיִם, בֵּית יַעֲקֹב מֵעַם לֹעֵז, הָיְתָה יְהוּדָה לְקָדְשׁוֹ, יִשְׂרָאֵל מַמְשְׁלוֹתָיו. הַיָּם רָאָה וַיַּנֹס, הַיַּרְדֵּן יִסֹּב לְאָחוֹר. הֶהָרִים רָקְדוּ כְאֵילִים, גְּבַעוֹת כִּבְנֵי צֹאן. מַה לְּךָ הַיָּם כִּי תָנוּס, הַיַּרְדֵּן – תִּסֹּב לְאָחוֹר, הֶהָרִים – תִּרְקְדוּ כְאֵילִים, גְּבַעוֹת כִּבְנֵי־צֹאן. מִלְּפְנֵי אָדוֹן חוּלִי אָרֶץ, מִלְּפְנֵי אֱלוֹהַ יַעֲקֹב. הַהֹפְכִי הַצּוּר אֲגַם־מָיִם, חַלָּמִיש לְמַעְיְנוֹ־מָיִם.")
+
+(def hallel-eng-3 "In Israel's going out from Egypt, the house of Ya'akov from a people of foreign speech. Yehudah became His -holy one, Israel, His dominion. The Sea saw and fled, the Jordan turned to the rear. The mountains danced like rams, the hills like young sheep. What is happening to you, O Sea, that you are fleeing, O Jordan that you turn to the rearO mountains that you dance like rams, O hills like young sheep? From before the Master, tremble O earth, from before the Lord of Ya'akov. He who turns the boulder into a pond of water, the flint into a spring of water. (Psalms 114)")
+
 (def magid (section "מַגִּיד"
           "Magid"
           (song-with-instruction "Ha Lachma Anya"
@@ -209,6 +227,12 @@
                            (general-content rabbi-gamliel-heb-4 rabbi-gamliel-eng-4)
                            (general-content rabbi-gamliel-heb-5 rabbi-gamliel-eng-5)
                            )
+          (general-content-with-instruction "First Half of Hallel"
+                                            hallel-heb-1 hallel-eng-1
+                                            (instruction instr-heb-8 instr-eng-8)
+                                            (general-content hallel-heb-2 hallel-eng-2)
+                                            (general-content hallel-heb-3 hallel-eng-3)
+                                            )
 
           ))
 
