@@ -108,28 +108,22 @@
 (def mult-conj (partial apply conj))
 
 (defmethod render-haggadah :general [{:keys [title english hebrew instruction children]}]
-  (println "Here is the hebrew " hebrew)
   (cond-> [:div.general]
     (seq title) (conj [:div.title title])
     (seq instruction) (conj (render-haggadah instruction))
     :always (conj [:div.text.hebrew.pb-3 hebrew] [:div.text.english english])
     (seq children) (mult-conj (map render-haggadah children))))
 
+(def has-content? (comp not nil? first))
 
-
-(defmethod render-haggadah :song [{:keys [title hebrew english instruction]}]
+(defmethod render-haggadah :song [{:keys [title hebrew english instruction children]}]
   (let [content [[:div.text.hebrew.pb-3 hebrew]
                  [:div.english.text english]]]
     (cond-> [:div.song]
       (seq title) (conj [:div.title title])
       (seq instruction) (conj (render-haggadah instruction))
-      :always (mult-conj content))))
-
-(cond-> [:div.song]
-  true (conj [:div.hi])
-  true (conj [:div.whoa]))
-
-(conj [:div.song []])
+      :always (mult-conj content)
+      (has-content? children) (mult-conj (map render-haggadah children)))))
 
 (defmethod render-haggadah :table [{:keys [title rows]}]
   [:div.table.is-bordered

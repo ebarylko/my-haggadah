@@ -167,8 +167,7 @@
                                               (general-content rabbi-yehuda-heb rabbi-yehuda-eng)
                                               (general-content rabbi-yose-heb rabbi-yose-eng)
                                               (general-content rabbi-eliezer-heb rabbi-eliezer-eng)
-                                              (general-content rabbi-akiva-heb rabbi-akiva-eng)
-                                              )
+                                              (general-content rabbi-akiva-heb rabbi-akiva-eng))
           dayenu
           ))
 
