@@ -77,12 +77,16 @@
 
 (def idol-worship-eng-3 "Blessed be the One who keeps His promise to Israel, blessed be He; since the Holy One, blessed be He, calculated the end [of the exile,] to do as He said to Avraham, our father, in the Covenant between the Pieces, as it is stated (Genesis 15:13-14), \"And He said to Avram, 'you should surely know that your seed will be a stranger in a land that is not theirs, and they will enslave them and afflict them four hundred years. And also that nation for which they shall toil will I judge, and afterwards they will go out with much property.'\"")
 
+
+(def instr-heb-4 "מכסה המצה ומגביה את הכוס בידו, ואומר:")
+(def instr-eng-4 "He covers the matsa and lifts up the cup and says:")
+
 (def vehi-sheamda-heb "וְהִיא שֶׁעָמְדָה לַאֲבוֹתֵינוּ וְלָנוּ. שֶׁלֹּא אֶחָד בִּלְבָד עָמַד עָלֵינוּ לְכַלּוֹתֵנוּ, אֶלָּא שֶׁבְּכָל דּוֹר וָדוֹר עוֹמְדִים עָלֵינוּ לְכַלוֹתֵנוּ, וְהַקָּדוֹשׁ בָּרוּךְ הוּא מַצִּילֵנוּ מִיָּדָם.")
 
 (def vehi-sheamda-eng "And it is this that has stood for our ancestors and for us; since it is not [only] one [person or nation] that has stood [against] us to destroy us, but rather in each generation, they stand [against] us to destroy us, but the Holy One, blessed be He, rescues us from their hand.")
 
-(def instr-heb-4 "כשאומר דם ואש ותימרות עשן, עשר המכות ודצ״ך עד״ש באח״ב – ישפוך מן הכוס מעט יין:")
-(def instr-eng-4 "And when he says, \"blood and fire and pillars of smoke\" and the ten plagues and \"detsakh,\" \"adash\" and \"ba'achab,\" he should pour out a little wine from his cup.")
+(def instr-heb-5 "כשאומר דם ואש ותימרות עשן, עשר המכות ודצ״ך עד״ש באח״ב – ישפוך מן הכוס מעט יין:")
+(def instr-eng-5 "And when he says, \"blood and fire and pillars of smoke\" and the ten plagues and \"detsakh,\" \"adash\" and \"ba'achab,\" he should pour out a little wine from his cup.")
 
 (def ten-plagues-heb-1 "דָּם וָאֵשׁ וְתִימְרוֹת עָשָׁן.")
 (def ten-plagues-eng-1 "blood and fire and pillars of smoke.")
@@ -127,6 +131,33 @@
 
 (def rabbi-akiva-eng " Rabbi Akiva says, says, \"From where [can you derive] that every plague that the Holy One, blessed be He, brought upon the Egyptians in Egypt was [composed] of five plagues? As it is stated (Psalms 78:49): 'He sent upon them the fierceness of His anger, wrath, and fury, and trouble, a sending of messengers of evil.' 'The fierceness of His anger' [corresponds to] one; 'wrath' [brings it to] two; 'and fury' [brings it to] three; 'and trouble' [brings it to] four; 'a sending of messengers of evil' [brings it to] five. You can say from here that in Egypt, they were struck with fifty plagues and at the Sea, they were struck with two hundred and fifty plagues.\" ")
 
+(def rabbi-gamliel-heb-1 "רַבָּן גַּמְלִיאֵל הָיָה אוֹמֵר: כָּל שֶׁלֹּא אָמַר שְׁלשָׁה דְּבָרִים אֵלּוּ בַּפֶּסַח, לא יָצָא יְדֵי חוֹבָתוֹ, וְאֵלּוּ הֵן: פֶּסַח, מַצָּה, וּמָרוֹר.")
+(def rabbi-gamliel-eng-1 "Rabban Gamliel was accustomed to say, Anyone who has not said these three things on Pesach has not fulfilled his obligation, and these are them: the Pesach sacrifice, matsa and marror.")
+
+
+(def rabbi-gamliel-heb-2 "פֶּסַח שֶׁהָיוּ אֲבוֹתֵינוּ אוֹכְלִים בִּזְמַן שֶׁבֵּית הַמִּקְדָּשׁ הָיָה קַיָּם, עַל שׁוּם מָה? עַל שׁוּם שֶׁפָּסַח הַקָּדוֹשׁ בָּרוּךְ הוּא עַל בָּתֵּי אֲבוֹתֵינוּ בְּמִצְרַיִם, שֶׁנֶּאֱמַר: וַאֲמַרְתֶּם זֶבַח פֶּסַח הוּא לַיי, אֲשֶׁר פָּסַח עַל בָּתֵּי בְנֵי יִשְׂרָאֵל בְּמִצְרַיִם בְּנָגְפּוֹ אֶת־מִצְרַיִם, וְאֶת־בָּתֵּינוּ הִצִּיל וַיִּקֹּד הָעָם וַיִּשְׁתַּחווּ.")
+
+(def rabbi-gamliel-eng-2 "The Pesach [passover] sacrifice that our ancestors were accustomed to eating when the Temple existed, for the sake of what [was it]? For the sake [to commemorate] that the Holy One, blessed be He, passed over the homes of our ancestors in Egypt, as it is stated (Exodus 12:27); \"And you shall say: 'It is the passover sacrifice to the Lord, for that He passed over the homes of the Children of Israel in Egypt, when He smote the Egyptians, and our homes he saved.’ And the people bowed the head and bowed.\"")
+
+(def instr-heb-6 "אוחז המצה בידו ומראה אותה למסובין:")
+(def instr-eng-6 "He holds the matsa in his hand and shows it to the others there.")
+
+(def rabbi-gamliel-heb-3 "מַצָּה זוֹ שֶׁאָנוֹ אוֹכְלִים, עַל שׁוּם מַה? עַל שׁוּם שֶׁלֹּא הִסְפִּיק בְּצֵקָם שֶׁל אֲבוֹתֵינוּ לְהַחֲמִיץ עַד שֶׁנִּגְלָה עֲלֵיהֶם מֶלֶךְ מַלְכֵי הַמְּלָכִים, הַקָּדוֹשׁ בָּרוּךְ הוּא, וּגְאָלָם, שֶׁנֶּאֱמַר: וַיֹּאפוּ אֶת־הַבָּצֵק אֲשֶׁר הוֹצִיאוּ מִמִּצְרַיִם עֻגֹת מַצּוֹּת, כִּי לֹא חָמֵץ, כִּי גֹרְשׁוּ מִמִּצְרַיִם וְלֹא יָכְלוּ לְהִתְמַהְמֵהַּ, וְגַם צֵדָה לֹא עָשׂוּ לָהֶם.")
+(def rabbi-gamliel-eng-3 " This matsa that we are eating, for the sake of what [is it]? For the sake [to commemorate] that our ancestors' dough was not yet able to rise, before the King of the kings of kings, the Holy One, blessed be He, revealed [Himself] to them and redeemed them, as it is stated (Exodus 12:39); \"And they baked the dough which they brought out of Egypt into matsa cakes, since it did not rise; because they were expelled from Egypt, and could not tarry, neither had they made for themselves provisions.\"")
+
+
+(def instr-heb-7 "אוחז המרור בידו ומראה אותו למסובין:")
+(def instr-eng-7 "He holds the marror in his hand and shows it to the others there.")
+
+
+(def rabbi-gamliel-heb-4 "מָרוֹר זֶה שֶׁאָנוּ אוֹכְלִים, עַל שׁוּם מַה? עַל שׁוּם שֶׁמֵּרְרוּ הַמִּצְרִים אֶת־חַיֵּי אֲבוֹתֵינוּ בְּמִצְרַיִם, שֶׁנֶּאֱמַר: וַיְמָרְרוּ אֶת חַיֵּיהם בַּעֲבֹדָה קָשָה, בְּחֹמֶר וּבִלְבֵנִים וּבְכָל־עֲבֹדָה בַּשָּׂדֶה אֶת כָּל עֲבֹדָתָם אֲשֶׁר עָבְדוּ בָהֶם בְּפָרֶךְ.")
+(def rabbi-gamliel-eng-4 " This marror [bitter greens] that we are eating, for the sake of what [is it]? For the sake [to commemorate] that the Egyptians embittered the lives of our ancestors in Egypt, as it is stated (Exodus 1:14); \"And they made their lives bitter with hard service, in mortar and in brick, and in all manner of service in the field; in all their service, wherein they made them serve with rigor.\"")
+
+
+(def rabbi-gamliel-heb-5 "בְּכָל־דּוֹר וָדוֹר חַיָּב אָדָם לִרְאוֹת אֶת־עַצְמוֹ כְּאִלּוּ הוּא יָצָא מִמִּצְרַיִם, שֶׁנֶּאֱמַר: וְהִגַּדְתָּ לְבִנְךָ בַּיּוֹם הַהוּא לֵאמֹר, בַּעֲבוּר זֶה עָשָׂה ה' לִי בְּצֵאתִי מִמִּצְרַיִם. לֹא אֶת־אֲבוֹתֵינוּ בִּלְבָד גָּאַל הַקָּדוֹשׁ בָּרוּךְ הוּא, אֶלָּא אַף אוֹתָנוּ גָּאַל עִמָּהֶם, שֶׁנֶּאֱמַר: וְאוֹתָנוּ הוֹצִיא מִשָּׁם, לְמַעַן הָבִיא אוֹתָנוּ, לָתֶת לָנוּ אֶת־הָאָרֶץ אֲשֶׁר נִשָׁבַּע לַאֲבֹתֵינוּ.")
+
+(def rabbi-gamliel-eng-5 " In each and every generation, a person is obligated to see himself as if he left Egypt, as it is stated (Exodus 13:8); \"And you shall explain to your son on that day: For the sake of this, did the Lord do [this] for me in my going out of Egypt.\" Not only our ancestors did the Holy One, blessed be He, redeem, but rather also us [together] with them did He redeem, as it is stated (Deuteronomy 6:23); \"And He took us out from there, in order to bring us in, to give us the land which He swore unto our fathers.\" ")
+
 (def magid (section "מַגִּיד"
           "Magid"
           (song-with-instruction "Ha Lachma Anya"
@@ -155,12 +186,12 @@
                            idol-worship-eng-1
                            (general-content idol-worship-heb-2 idol-worship-eng-2)
                            (general-content idol-worship-heb-3 idol-worship-eng-3)
-                           (instruction instr-heb-3 instr-eng-3)
+                           (instruction instr-heb-4 instr-eng-4)
                            (song vehi-sheamda-heb vehi-sheamda-eng))
           first-fruits-declaration
           (general-content-with-instruction "The Ten Plagues"
                                               ten-plagues-heb-1 ten-plagues-eng-1
-                                              (instruction instr-heb-4 instr-eng-4)
+                                              (instruction instr-heb-5 instr-eng-5)
                                               (general-content ten-plagues-heb-2 ten-plagues-eng-2)
                                               (general-content ten-plagues-heb-3 ten-plagues-eng-3)
                                               (apply table "" plague-rows)
@@ -169,5 +200,15 @@
                                               (general-content rabbi-eliezer-heb rabbi-eliezer-eng)
                                               (general-content rabbi-akiva-heb rabbi-akiva-eng))
           dayenu
+          (general-content "Rabban Gamliel's Three Things"
+                           rabbi-gamliel-heb-1 rabbi-gamliel-eng-1
+                           (general-content rabbi-gamliel-heb-2 rabbi-gamliel-eng-2)
+                           (instruction instr-heb-6 instr-eng-6)
+                           (general-content rabbi-gamliel-heb-3 rabbi-gamliel-eng-3)
+                           (instruction instr-heb-7 instr-eng-7)
+                           (general-content rabbi-gamliel-heb-4 rabbi-gamliel-eng-4)
+                           (general-content rabbi-gamliel-heb-5 rabbi-gamliel-eng-5)
+                           )
+
           ))
 
