@@ -10,6 +10,7 @@
             [haggadah.maror :refer [maror]]
             [haggadah.korech :refer [korech]]
             [haggadah.shulchan-orech :refer [shulchan-orech]]
+            [haggadah.tzafun :refer [tzafun]]
             ))
 
 (def full-haggadah
@@ -24,5 +25,6 @@
             maror
             korech
             shulchan-orech
+            tzafun
             ))
 
