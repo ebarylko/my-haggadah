@@ -8,6 +8,7 @@
             [haggadah.rachtzah  :refer [rachtzah]]
             [haggadah.motzi-matzah :refer [motzi-matzah]]
             [haggadah.maror :refer [maror]]
+            [haggadah.korech :refer [korech]]
             ))
 
 (def full-haggadah
@@ -20,5 +21,6 @@
             rachtzah
             motzi-matzah
             maror
+            korech
             ))
 
