@@ -1,5 +1,5 @@
 (ns haggadah.tzafun
-  (:require [haggadah.dsl :as dsl :refer [instruction section general-content]]))
+  (:require [haggadah.dsl :as dsl :refer [instruction section]]))
 
 (def instr-heb-1 "אחר גמר הסעודה לוקח כל אחד מהמסבים כזית מהמצה שהייתה צפונה לאפיקומן ואוכל ממנה כזית בהסבה. וצריך לאוכלה קודם חצות הלילה ")
 (def instr-eng-1 "After the end of the meal, all those present take a kazayit from the matsa, that was concealed for the afikoman, and eat a kazayit from it while reclining.")
