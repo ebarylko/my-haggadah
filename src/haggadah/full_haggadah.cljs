@@ -9,6 +9,7 @@
             [haggadah.motzi-matzah :refer [motzi-matzah]]
             [haggadah.maror :refer [maror]]
             [haggadah.korech :refer [korech]]
+            [haggadah.shulchan-orech :refer [shulchan-orech]]
             ))
 
 (def full-haggadah
@@ -22,5 +23,6 @@
             motzi-matzah
             maror
             korech
+            shulchan-orech
             ))
 

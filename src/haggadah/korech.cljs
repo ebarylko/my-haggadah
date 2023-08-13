@@ -1,5 +1,5 @@
 (ns haggadah.korech
-  (:require [haggadah.dsl :as dsl :refer [haggadah bracha instruction song section general-content general-content-with-instruction]]))
+  (:require [haggadah.dsl :as dsl :refer [instruction section general-content]]))
 
 (def instr-heb "כל אחד מהמסבים לוקח כזית מן המצה השְלישית עם כזית מרור, כורכים יחד, אוכלים בהסבה ובלי ברכה. לפני אכלו אומר.")
 (def instr-eng "All present should take a kazayit from the third whole matsa with a kazayit of marror, wrap them together and eat them while reclining and without saying a blessing. Before he eats it, he should say:")
