@@ -12,6 +12,7 @@
             [haggadah.shulchan-orech :refer [shulchan-orech]]
             [haggadah.tzafun :refer [tzafun]]
             [haggadah.barech :refer [barech]]
+            [haggadah.hallel :refer [hallel]]
             ))
 
 (def full-haggadah
@@ -28,5 +29,6 @@
             shulchan-orech
             tzafun
             barech
+            hallel
             ))
 

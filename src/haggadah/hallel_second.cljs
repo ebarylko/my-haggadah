@@ -1,0 +1,22 @@
+(ns haggadah.hallel-second
+  (:require [haggadah.dsl :as dsl :refer [instruction section general-content bracha-with-more-content general-content-with-instruction]]))
+
+(def heb-cont-1 "לֹא לָנוּ, ה', לֹא לָנוּ, כִּי לְשִׁמְךָ תֵּן כָּבוֹד, עַל חַסְדְּךָ עַל אֲמִתֶּךָ. לָמָּה יֹאמְרוּ הַגּוֹיִם אַיֵּה נָא אֱלֹהֵיהֶם. וְאֱלֹהֵינוּ בַּשָּׁמַיִם, כֹּל אֲשֶׁר חָפֵץ עָשָׂה. עֲצַבֵּיהֶם כֶּסֶף וְזָהָב מַעֲשֵׂה יְדֵי אָדָם. פֶּה לָהֶם וְלֹא יְדַבֵּרוּ, עֵינַיִם לָהֶם וְלֹא יִרְאוּ. אָזְנָיִם לָהֶם וְלֹא יִשְׁמָעוּ, אַף לָהֶם וְלֹא יְרִיחוּן. יְדֵיהֶם וְלֹא יְמִישׁוּן, רַגְלֵיהֶם וְלֹא יְהַלֵּכוּ, לׁא יֶהְגּוּ בִּגְרוֹנָם. כְּמוֹהֶם יִהְיוּ עֹשֵׂיהֶם, כֹּל אֲשֶׁר בֹּטֵחַ בָּהֶם. יִשְׂרָאֵל בְּטַח בַּיי, עֶזְרָם וּמָגִנָּם הוּא. בֵּית אַהֲרֹן בִּטְחוּ בַיי, עֶזְרָם וּמָגִנָּם הוּא. יִרְאֵי ה' בִּטְחוּ בַיי, עֶזְרָם וּמָגִנָּם הוּא. יי זְכָרָנוּ יְבָרֵךְ. יְבָרֵךְ אֶת בֵּית יִשְׂרָאֵל, יְבָרֵךְ אֶת בֵּית אַהֲרֹן, יְבָרֵךְ יִרְאֵי ה', הַקְּטַנִים עִם הַגְּדֹלִים. יֹסֵף ה' עֲלֵיכֶם, עֲלֵיכֶם וְעַל בְּנֵיכֶם. בְּרוּכִים אַתֶּם לַיי, עֹשֵׂה שָׁמַיִם וָאָרֶץ. הַשָּׁמַיִם שָׁמַיִם לַיי וְהָאָרֶץ נָתַן לִבְנֵי אָדָם. לֹא הַמֵּתִים יְהַלְלוּ יָהּ וְלֹא כָּל יֹרְדֵי דוּמָה. וַאֲנַחְנוּ נְבָרֵךְ יָהּ מֵעַתָּה וְעַד עוֹלָם. הַלְלוּיָהּ.")
+
+(def eng-cont-1 "Not to us, not to us, but rather to Your name, give glory for your kindness and for your truth. Why should the nations say, \"Say, where is their God?\" But our God is in the heavens, all that He wanted, He has done. Their idols are silver and gold, the work of men's hands. They have a mouth but do not speak; they have eyes but do not see. They have ears but do not hear; they have a nose but do not smell. Hands, but they do not feel; feet, but do not walk; they do not make a peep from their throat. Like them will be their makers, all those that trust in them. Israel, trust in the Lord; their help and shield is He. House of Aharon, trust in the Lord; their help and shield is He. Those that fear the Lord, trust in the Lord; their help and shield is He. The Lord who remembers us, will bless; He will bless the House of Israel; He will bless the House of Aharon. He will bless those that fear the Lord, the small ones with the great ones. May the Lord bring increase to you, to you and to your children. Blessed are you to the Lord, the maker of the heavens and the earth. The heavens, are the Lord's heavens, but the earth He has given to the children of man. It is not the dead that will praise the Lord, and not those that go down to silence. But we will bless the Lord from now and forever. Halleluyah! (Psalms 115)")
+
+(def instr-heb-1 "מוזגין כוס רביעי וגומרין עליו את ההלל")
+(def instr-eng-1 "We pour the fourth cup and complete the Hallel")
+
+(def heb-cont-2 "אָהַבְתִּי כִּי יִשְׁמַע ה' אֶת קוֹלִי תַּחֲנוּנָי. כִּי הִטָּה אָזְנוֹ לִי וּבְיָמַי אֶקְרָא. אֲפָפוּנִי חֶבְלֵי מָוֶת וּמְצָרֵי שְׁאוֹל מְצָאוּנִי, צָרָה וְיָגוֹן אֶמְצָא. וּבְשֵׁם ה' אֶקְרָא: אָנָּא ה' מַלְּטָה נַפְשִׁי. חַנוּן ה' וְצַדִּיק, וֵאֱלֹהֵינוּ מְרַחֵם. שֹׁמֵר פְּתָאִים ה', דַּלוֹתִי וְלִי יְהושִׁיעַ. שׁוּבִי נַפְשִׁי לִמְנוּחָיְכִי, כִּי ה' גָּמַל עָלָיְכִי. כִּי חִלַּצְתָּ נַפְשִׁי מִמָּוֶת, אֶת עֵינִי מִן דִּמְעָה, אֶת רַגְלִי מִדֶּחִי. אֶתְהַלֵךְ לִפְנֵי ה' בְּאַרְצוֹת הַחַיִּים. הֶאֱמַנְתִּי כִּי אֲדַבֵּר, אֲנִי עָנִיתִי מְאֹד. אֲנִי אָמַרְתִּי בְחָפְזִי כָּל הָאָדָם כּזֵֹב.")
+
+(def eng-cont-2 "I have loved the Lord - since He hears my voice, my supplications. Since He inclined His ear to me - and in my days, I will call out. The pangs of death have encircled me and the straits of the Pit have found me and I found grief. And in the name of the Lord I called, \"Please Lord, Spare my soul.\" Gracious is the Lord and righteous, and our God acts mercifully. The Lord watches over the silly; I was poor and He has saved me. Return, my soul to your tranquility, since the Lord has favored you. Since You have rescued my soul from death, my eyes from tears, my feet from stumbling. I will walk before the Lord in the lands of the living. I have trusted, when I speak - I am very afflicted. I said in my haste, all men are hypocritical. (Psalms 116:1-11)")
+
+(def second-half
+  (general-content-with-instruction "Second Half of Hallel"
+                                    heb-cont-1 eng-cont-1
+                                    (instruction instr-heb-1 instr-eng-1)
+                                    (general-content heb-cont-2 eng-cont-2)
+
+                                    ))
+
