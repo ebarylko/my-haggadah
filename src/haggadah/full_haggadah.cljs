@@ -11,7 +11,7 @@
             [haggadah.korech :refer [korech]]
             [haggadah.shulchan-orech :refer [shulchan-orech]]
             [haggadah.tzafun :refer [tzafun]]
-            [haggadah.birkat-hamazon :refer [birkat-hamazon]]
+            [haggadah.barech :refer [barech]]
             ))
 
 (def full-haggadah
@@ -27,6 +27,6 @@
             korech
             shulchan-orech
             tzafun
-            birkat-hamazon
+            barech
             ))
 

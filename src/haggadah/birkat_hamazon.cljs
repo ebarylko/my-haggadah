@@ -1,5 +1,5 @@
 (ns haggadah.birkat-hamazon
-  (:require [haggadah.dsl :as dsl :refer [bracha instruction section general-content general-content-with-instruction]]))
+  (:require [haggadah.dsl :as dsl :refer [bracha instruction general-content general-content-with-instruction]]))
 
 (def ascents-heb "שִׁיר הַמַּעֲלוֹת, בְּשוּב ה' אֶת שִׁיבַת צִיּוֹן הָיִינוּ כְּחֹלְמִים. אָז יִמָּלֵא שְׂחוֹק פִּינוּ וּלְשׁוֹנֵנוּ רִנָּה. אָז יֹאמְרוּ בַגּוֹיִם: הִגְדִּיל ה' לַעֲשׂוֹת עִם אֵלֶּה. הִגְדִּיל ה' לַעֲשׂוֹת עִמָּנוּ, הָיִינוּ שְׂמֵחִים. שׁוּבָה ה' אֶת שְׁבִיתֵנוּ כַּאֲפִיקִים בַּנֶּגֶב. הַזֹּרְעִים בְּדִמְעָה, בְּרִנָּה יִקְצֹרוּ. הָלוֹךְ יֵלֵךְ וּבָכֹה נֹשֵׂא מֶשֶךְ הַזָּרַע, בֹּא יָבֹא בְרִנָּה נֹשֵׂא אֲלֻמֹּתָיו.")
 
@@ -95,11 +95,4 @@
    (general-content cont-heb-9 cont-eng-9)
    (general-content cont-heb-10 cont-eng-10)
    (bracha cont-heb-11 cont-eng-11)
-   (general-content cont-heb-12 cont-eng-12)
-   ;; (instruction instr-heb-7 instr-eng-7)
-   ;; (bracha bracha-heb-1 bracha-eng-1)
-   ;; (bracha bracha-heb-2 bracha-eng-2)
-   ;; (instruction instr-heb-8 instr-eng-8)
-
-   )
-  )
+   (general-content cont-heb-12 cont-eng-12)))

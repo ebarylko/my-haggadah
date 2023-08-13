@@ -1,9 +1,13 @@
 (ns haggadah.dsl)
 
 (defn bracha
-  ([hebrew-text english-text] (bracha "" hebrew-text english-text))
+  ([hebrew-text english-text] (bracha "" hebrew-text english-text nil))
   ([title hebrew-text english-text]
-   {:type :bracha :title title :hebrew hebrew-text :english english-text}))
+   (bracha title hebrew-text english-text nil))
+  ([title hebrew-text english-text & more-content] {:type :bracha :title title :hebrew hebrew-text :english english-text :children more-content}))
+
+(defn bracha-with-more-content
+  ([hebrew-text english-text & more-content] (apply bracha nil hebrew-text english-text more-content)))
 
 (defn song
   "A song has a title, an optional instruction, hebrew text and english translation"
@@ -94,18 +98,22 @@
    [:div.title
     (apply conj [:div.content] (map render-haggadah content))]])
 
-(defmethod render-haggadah :bracha [{:keys [title english hebrew]}]
-  [:div.bracha
-   [:div.title title]
-   [:div.text.hebrew.pb-3 hebrew]
-   [:div.english.text english]])
+(def mult-conj (partial apply conj))
+
+(def has-content? (comp not nil? first))
+
+(defmethod render-haggadah :bracha [{:keys [title english hebrew children]}]
+  (let [content [[:div.text.hebrew.pb-3 hebrew] [:div.english.text english]]]
+    (cond-> [:div.bracha]
+      (seq title) (conj [:div.title title])
+      :always (mult-conj content)
+      (has-content? children) (mult-conj (map render-haggadah children)))))
 
 (defmethod render-haggadah :instruction [{:keys [hebrew english]}]
   [:div.instruction
    [:div.instr.hebrew.pb-3 hebrew]
    [:div.instr.english english]])
 
-(def mult-conj (partial apply conj))
 
 (defmethod render-haggadah :general [{:keys [title english hebrew instruction children]}]
   (cond-> [:div.general]
@@ -114,7 +122,6 @@
     :always (conj [:div.text.hebrew.pb-3 hebrew] [:div.text.english english])
     (seq children) (mult-conj (map render-haggadah children))))
 
-(def has-content? (comp not nil? first))
 
 (defmethod render-haggadah :song [{:keys [title hebrew english instruction children]}]
   (let [content [[:div.text.hebrew.pb-3 hebrew]
