@@ -23,23 +23,30 @@
           expected [:div.song
                     [:div.title "Ki lo nae" ]
                     [:div.text.hebrew.pb-3 "כִּי לוֹ נָאֶה, כִּי לוֹ יָאֶה. אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו"]
-                    [:div.english.text "Since for Him it is pleasant, for Him it is suited."]]]
+                    [:div.english.text "Since for Him it is pleasant, for Him it is suited."]
+                    ]]
       (t/is (= expected (dsl/render-haggadah song))))))
 
 (def instruction (dsl/instruction "Hebrew" "English"))
-(def actual-instruction (dsl/render-haggadah instruction))
+(def expected-instruction [:div.instruction
+                           [:div.instr.hebrew.pb-3 "Hebrew"]
+                           [:div.instr.english "English"]])
 
-;; (t/deftest render-song-with-instruction-test
-;;   (t/testing "When rendering a song with an instruction, returns the title, instruction, main content, and additional content"
+(t/deftest render-song-with-instruction-test
+  (t/testing "When rendering a song with an instruction, returns the title, instruction, main content, and additional content"
+    (let [song (dsl/song-with-instruction "Title" "Heb" "Eng" instruction bracha)
+          expected [:div.song
+                    [:div.title "Title"]
+                    expected-instruction
+                    [:div.text.hebrew.pb-3 "Heb"]
+                    [:div.english.text "Eng"]
+                    expected-bracha]]
+      (t/is (= expected (dsl/render-haggadah song))))))
 
-;;     ))
 
 (t/deftest render-instruction-test
   (t/testing "When rendering an instruction, returns the content in English and in Hebrew"
-    (let [expected [:div.instruction
-                    [:div.instr.hebrew.pb-3 "Hebrew"]
-                    [:div.instr.english "English"]]]
-      (t/is (= expected actual-instruction)))))
+    (t/is (= expected-instruction (dsl/render-haggadah instruction)))))
 
 (t/deftest render-general-content-test
   (t/testing "When rendering general content, returns the title and content"
@@ -53,13 +60,13 @@
 (t/deftest render-general-content-with-instruction-test
   (t/testing "When rendering general content with an instruction, returns the title, instruction, main content, and additional content"
     (let [actual (dsl/general-content-with-instruction "Title"
-                                                          "Hebrew"
-                                                          "English"
-                                                          instruction
-                                                          bracha)
+                                                       "Hebrew"
+                                                       "English"
+                                                       instruction
+                                                       bracha)
           expected [:div.general
                     [:div.title "Title"]
-                    actual-instruction
+                    expected-instruction
                     [:div.text.hebrew.pb-3 "Hebrew"]
                     [:div.text.english "English"]
                     expected-bracha]]
