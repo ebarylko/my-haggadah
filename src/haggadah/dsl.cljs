@@ -46,8 +46,7 @@
 (defn general-content
   "General content has a title, hebrew text and english translation, and optional instructions and additional content"
   ([hebrew-text english-text] (general-content nil hebrew-text english-text nil))
-  ([title hebrew-text english-text] (general-content title hebrew-text english-text nil)
-   #_{:type :general :title title :hebrew hebrew-text :english english-text})
+  ([title hebrew-text english-text] (general-content title hebrew-text english-text nil))
   ([title hebrew-text english-text & more-content]
    {:type :general :title title :hebrew hebrew-text :english english-text :children more-content}))
 
@@ -92,11 +91,7 @@
 (defmulti render-haggadah (comp keyword :type ))
 
 (defmethod render-haggadah :default [args]
-  (println "This is what you passed " args)
-  #_nil
-  #_[:div
-   [:div "What did you pass me? " (:type args)
-    "Original args " args]])
+  (println "This is what you passed " args))
 
 (defmethod render-haggadah :haggadah [{:keys [title content]}]
   [:div.haggadah

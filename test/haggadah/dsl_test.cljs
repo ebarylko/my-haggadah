@@ -1,6 +1,7 @@
 (ns haggadah.dsl-test
   (:require [haggadah.dsl :as dsl]
-            [cljs.test :as t :include-macros true]))
+            [cljs.test :as t :include-macros true]
+            [reagent.core :as r]))
 
 (def bracha (dsl/bracha "Wine" "סַבְרִי מָרָנָן" "Baruj hata"))
 (def expected-bracha
@@ -25,13 +26,20 @@
                     [:div.english.text "Since for Him it is pleasant, for Him it is suited."]]]
       (t/is (= expected (dsl/render-haggadah song))))))
 
+(def instruction (dsl/instruction "Hebrew" "English"))
+(def actual-instruction (dsl/render-haggadah instruction))
+
+;; (t/deftest render-song-with-instruction-test
+;;   (t/testing "When rendering a song with an instruction, returns the title, instruction, main content, and additional content"
+
+;;     ))
+
 (t/deftest render-instruction-test
   (t/testing "When rendering an instruction, returns the content in English and in Hebrew"
-    (let [instruction (dsl/instruction "Hebrew" "English")
-          expected [:div.instruction
+    (let [expected [:div.instruction
                     [:div.instr.hebrew.pb-3 "Hebrew"]
                     [:div.instr.english "English"]]]
-      (t/is (= expected (dsl/render-haggadah instruction))))))
+      (t/is (= expected actual-instruction)))))
 
 (t/deftest render-general-content-test
   (t/testing "When rendering general content, returns the title and content"
@@ -39,28 +47,22 @@
           expected [:div.general
                     [:div.title "Title"]
                     [:div.text.hebrew.pb-3 "Hebrew"]
-                    [:div.text.english "English"]
-                    ]]
+                    [:div.text.english "English"]]]
          (t/is (= expected (dsl/render-haggadah gen-cont ))))))
-
 
 (t/deftest render-general-content-with-instruction-test
   (t/testing "When rendering general content with an instruction, returns the title, instruction, main content, and additional content"
     (let [actual (dsl/general-content-with-instruction "Title"
                                                           "Hebrew"
                                                           "English"
-                                                          (dsl/instruction "Hebrew" "English")
-                                                          (dsl/song "First" "Second"))
+                                                          instruction
+                                                          bracha)
           expected [:div.general
                     [:div.title "Title"]
-                    [:div.instruction
-                     [:div.instr.hebrew.pb-3 "Hebrew"]
-                     [:div.instr.english "English"]]
+                    actual-instruction
                     [:div.text.hebrew.pb-3 "Hebrew"]
                     [:div.text.english "English"]
-                    [:div.song
-                     [:div.text.hebrew.pb-3 "First"]
-                     [:div.english.text "Second"]]]]
+                    expected-bracha]]
       (t/is (= expected (dsl/render-haggadah actual))))))
 
 (t/deftest render-table-test
