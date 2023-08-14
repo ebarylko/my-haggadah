@@ -3,9 +3,7 @@
              [etaoin.api :as e]
              [acceptance.dashboard-actions :as d]
              [acceptance.haggadah-actions :as h]
-             [environ.core :refer [env]]
-             [acceptance.core :as c :refer [driver]]
-             [etaoin.keys :as k]))
+             [acceptance.core :as c :refer [driver]]))
 
 (t/use-fixtures :once c/init-firebase)
 (t/use-fixtures :each c/with-screenshot c/delete-fs-emulator-data)

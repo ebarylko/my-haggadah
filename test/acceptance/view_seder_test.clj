@@ -25,7 +25,7 @@
   (e/wait-visible driver {:fn/has-class :haggadah}))
 
 (t/deftest view-seder-from-link-test
-  (t/testing "When the current user has a Seder and copies the link to view the Seder and pastes it in the window, they should then see a welcome message and the Haggadah below"
+  (t/testing "When the current user has a Seder and copies the link to view the Seder and pastes it in the window, they should then see the Haggadah below"
     (let [id (c/fs-store-haggadah {:title "Haggadah 1"
                                    :type "haggadah"
                                    :content [{:type "bracha" :title "hello" :english "bracha" :hebrew "text"}]}

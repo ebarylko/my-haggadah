@@ -1,5 +1,5 @@
 (ns haggadah.full-haggadah
-  (:require [haggadah.dsl :as dsl :refer [haggadah bracha instruction song section general-content]]
+  (:require [haggadah.dsl :as dsl :refer [haggadah]]
             [haggadah.magid :refer [magid]]
             [haggadah.karpas :refer [karpas]]
             [haggadah.yachatz  :refer [yachatz]]
@@ -13,8 +13,7 @@
             [haggadah.tzafun :refer [tzafun]]
             [haggadah.barech :refer [barech]]
             [haggadah.hallel :refer [hallel]]
-            [haggadah.nirtzah :refer [nirtzah]]
-            ))
+            [haggadah.nirtzah :refer [nirtzah]]))
 
 (def full-haggadah
   (haggadah "Full Haggadah"
@@ -31,6 +30,5 @@
             tzafun
             barech
             hallel
-            nirtzah
-            ))
+            nirtzah))
 

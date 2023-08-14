@@ -1,8 +1,7 @@
 (ns acceptance.admin-login-test
   (:require  [clojure.test :as t]
              [etaoin.api :as e]
-             [acceptance.core :as c :refer [driver]])
-  (:import com.google.firebase.cloud.FirestoreClient))
+             [acceptance.core :as c :refer [driver]]))
 
 (def default-message
   "Hello (Unknown). We're glad to see you.")
