@@ -1,5 +1,5 @@
 (ns haggadah.fourth-cup
-  (:require [haggadah.dsl :as dsl :refer [general-content bracha instruction bracha-with-more-content]]))
+  (:require [haggadah.dsl :as dsl :refer [general-content bracha instruction]]))
 
 (def instr-heb "וְשׁותה בהסיבת שמאל.")
 (def instr-eng "We drink while reclining to the left")

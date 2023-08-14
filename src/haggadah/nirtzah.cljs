@@ -1,5 +1,5 @@
 (ns haggadah.nirtzah
-  (:require [haggadah.dsl :as dsl :refer [section general-content bracha instruction bracha-with-more-content]]
+  (:require [haggadah.dsl :as dsl :refer [section general-content]]
             [haggadah.at-midnight :refer [midnight]]
             [haggadah.zevach :refer [zevach-pesach]]
             [haggadah.ki-lo-nae :refer [ki-lo-nae]]

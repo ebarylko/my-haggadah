@@ -6,13 +6,10 @@
    (bracha title hebrew-text english-text nil))
   ([title hebrew-text english-text & more-content] {:type :bracha :title title :hebrew hebrew-text :english english-text :children more-content}))
 
-(defn bracha-with-more-content
-  ([hebrew-text english-text & more-content] (apply bracha nil hebrew-text english-text more-content)))
 
 (defn bracha-with-instruction
   ([title hebrew-text english-text instruction & more-content] (-> (apply bracha title hebrew-text english-text more-content)
                                                                    (assoc :instruction instruction))))
-
 
 (defn song
   "A song has a title, an optional instruction, hebrew text and english translation"

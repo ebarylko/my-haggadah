@@ -1,5 +1,5 @@
 (ns haggadah.barech
-  (:require [haggadah.dsl :as dsl :refer [instruction section general-content bracha-with-more-content general-content-with-instruction]]
+  (:require [haggadah.dsl :as dsl :refer [instruction section bracha general-content-with-instruction]]
             [haggadah.birkat-hamazon :refer [birkat-hamazon]]))
 
 (def bracha-heb "בָּרוּךְ אַתָּה ה', אֱלהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן.")
@@ -12,6 +12,9 @@
 (def instr-eng-2 "We pour the cup of Eliyahu and open the door.")
 (def cont-heb "שְׁפֹךְ חֲמָתְךָ אֶל־הַגּוֹיִם אֲשֶׁר לֹא יְדָעוּךָ וְעַל־מַמְלָכוֹת אֲשֶׁר בְּשִׁמְךָ לֹא קָרָאוּ. כִּי אָכַל אֶת־יַעֲקֹב וְאֶת־נָוֵהוּ הֵשַׁמּוּ. שְׁפָךְ־עֲלֵיהֶם זַעֲמֶךָ וַחֲרוֹן אַפְּךָ יַשִּׂיגֵם. תִּרְדֹף בְּאַף וְתַשְׁמִידֵם מִתַּחַת שְׁמֵי ה'.")
 (def cont-eng "Pour your wrath upon the nations that did not know You and upon the kingdoms that did not call upon Your Name! Since they have consumed Ya'akov and laid waste his habitation (Psalms 79:6-7). Pour out Your fury upon them and the fierceness of Your anger shall reach them (Psalms 69:25)! You shall pursue them with anger and eradicate them from under the skies of the Lord (Lamentations 3:66).")
+
+(defn bracha-with-more-content
+  ([hebrew-text english-text & more-content] (apply bracha nil hebrew-text english-text more-content)))
 
 (def barech
   (section

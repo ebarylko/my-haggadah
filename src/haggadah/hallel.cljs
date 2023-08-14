@@ -1,5 +1,5 @@
 (ns haggadah.hallel
-  (:require [haggadah.dsl :as dsl :refer [instruction section general-content bracha-with-more-content general-content-with-instruction]]
+  (:require [haggadah.dsl :as dsl :refer [section]]
             [haggadah.hallel-second :refer [second-half]]
             [haggadah.hallel-praise :refer [praise-and-thanks]]
             [haggadah.fourth-cup :refer [fourth-cup]]
