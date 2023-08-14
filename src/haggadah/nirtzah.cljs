@@ -6,7 +6,7 @@
             [haggadah.adir-hu :refer [adir-hu]]
             [haggadah.sefirat-haomer :refer [sefirat-haomer]]
             [haggadah.echad-mi-yodea :refer [echad-mi-yodea]]
-            ))
+            [haggadah.chad-gadya :refer [chad-gadya]]))
 
 (def heb-cont "חֲסַל סִדּוּר פֶּסַח כְּהִלְכָתוֹ, כְּכָל מִשְׁפָּטוֹ וְחֻקָּתוֹ. כַּאֲשֶׁר זָכִינוּ לְסַדֵּר אוֹתוֹ כֵּן נִזְכֶּה לַעֲשׂוֹתוֹ. זָךְ שׁוֹכֵן מְעוֹנָה, קוֹמֵם קְהַל עֲדַת מִי מָנָה. בְּקָרוֹב נַהֵל נִטְעֵי כַנָּה פְּדוּיִם לְצִיּוֹן בְּרִנָּה.")
 (def eng-cont "Completed is the Seder of Pesach according to its law, according to all its judgement and statute. Just as we have merited to arrange it, so too, may we merit to do [its sacrifice]. Pure One who dwells in the habitation, raise up the congregation of the community, which whom can count. Bring close, lead the plantings of the sapling, redeemed, to Zion in joy.")
@@ -26,5 +26,6 @@
            adir-hu
            sefirat-haomer
            echad-mi-yodea
+           chad-gadya
            ))
 
