@@ -2,6 +2,7 @@
   (:require [haggadah.dsl :as dsl :refer [section general-content bracha instruction bracha-with-more-content]]
             [haggadah.at-midnight :refer [midnight]]
             [haggadah.zevach :refer [zevach-pesach]]
+            [haggadah.ki-lo-nae :refer [ki-lo-nae]]
             ))
 
 (def heb-cont "חֲסַל סִדּוּר פֶּסַח כְּהִלְכָתוֹ, כְּכָל מִשְׁפָּטוֹ וְחֻקָּתוֹ. כַּאֲשֶׁר זָכִינוּ לְסַדֵּר אוֹתוֹ כֵּן נִזְכֶּה לַעֲשׂוֹתוֹ. זָךְ שׁוֹכֵן מְעוֹנָה, קוֹמֵם קְהַל עֲדַת מִי מָנָה. בְּקָרוֹב נַהֵל נִטְעֵי כַנָּה פְּדוּיִם לְצִיּוֹן בְּרִנָּה.")
@@ -15,5 +16,6 @@
                             "לְשָׁנָה הַבָּאָה בִּירוּשָלָיִם הַבְּנוּיָה."
                             "Next year, let us be in the built Jerusalem!")
            midnight
-           zevach-pesach))
+           zevach-pesach
+           ki-lo-nae))
 
