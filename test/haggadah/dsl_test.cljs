@@ -43,6 +43,7 @@
                     ]]
          (t/is (= expected (dsl/render-haggadah gen-cont ))))))
 
+
 (t/deftest render-general-content-with-instruction-test
   (t/testing "When rendering general content with an instruction, returns the title, instruction, main content, and additional content"
     (let [actual (dsl/general-content-with-instruction "Title"

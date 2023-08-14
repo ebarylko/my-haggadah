@@ -45,8 +45,9 @@
 
 (defn general-content
   "General content has a title, hebrew text and english translation, and optional instructions and additional content"
-  ([hebrew-text english-text] (general-content nil hebrew-text english-text))
-  ([title hebrew-text english-text] {:type :general :title title :hebrew hebrew-text :english english-text})
+  ([hebrew-text english-text] (general-content nil hebrew-text english-text nil))
+  ([title hebrew-text english-text] (general-content title hebrew-text english-text nil)
+   #_{:type :general :title title :hebrew hebrew-text :english english-text})
   ([title hebrew-text english-text & more-content]
    {:type :general :title title :hebrew hebrew-text :english english-text :children more-content}))
 
@@ -126,7 +127,7 @@
     (seq title) (conj [:div.title title])
     (seq instruction) (conj (render-haggadah instruction))
     :always (conj [:div.text.hebrew.pb-3 hebrew] [:div.text.english english])
-    (seq children) (mult-conj (map render-haggadah children))))
+    (has-content? children) (mult-conj (map render-haggadah children))))
 
 
 (defmethod render-haggadah :song [{:keys [title hebrew english instruction children]}]
