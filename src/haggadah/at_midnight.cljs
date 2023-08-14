@@ -1,5 +1,5 @@
 (ns haggadah.at-midnight
-  (:require [haggadah.dsl :as dsl :refer [section general-content bracha instruction general-content-with-instruction]]))
+  (:require [haggadah.dsl :as dsl :refer [general-content instruction general-content-with-instruction]]))
 
 (def heb-cont-1 "אָז רוֹב נִסִּים הִפְלֵאתָ בַּלַּיְלָה, בְּרֹאשׁ אַשְׁמוֹרֶת זֶה הַלַּיְלָה.")
 (def eng-cont-1 "Then, most of the miracles did You wondrously do at night, at the first of the watches this night.")
@@ -24,10 +24,8 @@
 (def heb-cont-7 "מִשְׁתַּכֵּר בִּכְלֵי קֹדֶשׁ נֶהֱרַג בּוֹ בַלַּיְלָה, נוֹשַׁע מִבּוֹר אֲרָיוֹת פּוֹתֵר בִּעֲתוּתֵי לַיְלָה, שִׂנְאָה נָטַר אֲגָגִי וְכָתַב סְפָרִים בַּלַּיְלָה, וַיְהִי בַּחֲצִי הַלַּיְלָה.")
 (def eng-cont-7 "The one who got drunk [Balshatsar] from the holy vessels was killed on that night [Daniel 5:30], the one saved from the pit of lions [Daniel] interpreted the scary visions of the night; hatred was preserved by the Agagite [Haman] and he wrote books at night, and it was in the middle of the night.")
 
-
 (def heb-cont-8 "עוֹרַרְתָּ נִצְחֲךָ עָלָיו בְּנֶדֶד שְׁנַת לַיְלָה. פּוּרָה תִדְרוֹךְ לְשׁוֹמֵר מַה מִּלַיְלָה, צָרַח כַּשּׁוֹמֵר וְשָׂח אָתָא בֹקֶר וְגַם לַיְלָה, וַיְהִי בַּחֲצִי הַלַּיְלָה.")
 (def eng-cont-8 "You aroused your victory upon him by disturbing the sleep of night [of Achashverosh], You will stomp the wine press for the one who guards from anything at night [Esav/Seir as per Isaiah 21:11]; He yelled like a guard and spoke, \"the morning has come and also the night,\" and it was in the middle of the night. ")
-
 
 (def heb-cont-9 "קָרֵב יוֹם אֲשֶׁר הוּא לֹא יוֹם וְלֹא לַיְלָה, רָם הוֹדַע כִּי לְךָ הַיּוֹם אַף לְךָ הַלַּיְלָה, שׁוֹמְרִים הַפְקֵד לְעִירְךָ כָּל הַיּוֹם וְכָל הַלַּיְלָה, תָּאִיר כְּאוֹר יוֹם חֶשְׁכַּת לַיְלָה, וַיְהִי בַּחֲצִי הַלַּיְלָה.")
 (def eng-cont-9 "Bring close the day which is not day and not night [referring to the end of days - Zechariah 14:7], High One, make known that Yours is the day and also Yours is the night, guards appoint for Your city all the day and all the night, illuminate like the light of the day, the darkness of the night, and it was in the middle of the night.")
