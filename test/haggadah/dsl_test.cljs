@@ -39,8 +39,28 @@
           expected [:div.general
                     [:div.title "Title"]
                     [:div.text.hebrew.pb-3 "Hebrew"]
-                    [:div.text.english "English"]]]
+                    [:div.text.english "English"]
+                    ]]
          (t/is (= expected (dsl/render-haggadah gen-cont ))))))
+
+(t/deftest render-general-content-with-instruction-test
+  (t/testing "When rendering general content with an instruction, returns the title, instruction, main content, and additional content"
+    (let [actual (dsl/general-content-with-instruction "Title"
+                                                          "Hebrew"
+                                                          "English"
+                                                          (dsl/instruction "Hebrew" "English")
+                                                          (dsl/song "First" "Second"))
+          expected [:div.general
+                    [:div.title "Title"]
+                    [:div.instruction
+                     [:div.instr.hebrew.pb-3 "Hebrew"]
+                     [:div.instr.english "English"]]
+                    [:div.text.hebrew.pb-3 "Hebrew"]
+                    [:div.text.english "English"]
+                    [:div.song
+                     [:div.text.hebrew.pb-3 "First"]
+                     [:div.english.text "Second"]]]]
+      (t/is (= expected (dsl/render-haggadah actual))))))
 
 (t/deftest render-table-test
   (t/testing "When rendering the table, each row and the content within is returned"
