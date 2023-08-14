@@ -9,6 +9,11 @@
 (defn bracha-with-more-content
   ([hebrew-text english-text & more-content] (apply bracha nil hebrew-text english-text more-content)))
 
+(defn bracha-with-instruction
+  ([title hebrew-text english-text instruction & more-content] (-> (apply bracha title hebrew-text english-text more-content)
+                                                                   (assoc :instruction instruction))))
+
+
 (defn song
   "A song has a title, an optional instruction, hebrew text and english translation"
   ([hebrew-text english-text] (song nil hebrew-text english-text nil))
@@ -102,10 +107,11 @@
 
 (def has-content? (comp not nil? first))
 
-(defmethod render-haggadah :bracha [{:keys [title english hebrew children]}]
+(defmethod render-haggadah :bracha [{:keys [title english hebrew children instruction]}]
   (let [content [[:div.text.hebrew.pb-3 hebrew] [:div.english.text english]]]
     (cond-> [:div.bracha]
       (seq title) (conj [:div.title title])
+      (seq instruction) (conj (render-haggadah instruction))
       :always (mult-conj content)
       (has-content? children) (mult-conj (map render-haggadah children)))))
 
