@@ -3,6 +3,7 @@
             [haggadah.at-midnight :refer [midnight]]
             [haggadah.zevach :refer [zevach-pesach]]
             [haggadah.ki-lo-nae :refer [ki-lo-nae]]
+            [haggadah.adir-hu :refer [adir-hu]]
             ))
 
 (def heb-cont "חֲסַל סִדּוּר פֶּסַח כְּהִלְכָתוֹ, כְּכָל מִשְׁפָּטוֹ וְחֻקָּתוֹ. כַּאֲשֶׁר זָכִינוּ לְסַדֵּר אוֹתוֹ כֵּן נִזְכֶּה לַעֲשׂוֹתוֹ. זָךְ שׁוֹכֵן מְעוֹנָה, קוֹמֵם קְהַל עֲדַת מִי מָנָה. בְּקָרוֹב נַהֵל נִטְעֵי כַנָּה פְּדוּיִם לְצִיּוֹן בְּרִנָּה.")
@@ -17,5 +18,6 @@
                             "Next year, let us be in the built Jerusalem!")
            midnight
            zevach-pesach
-           ki-lo-nae))
+           ki-lo-nae
+           adir-hu))
 

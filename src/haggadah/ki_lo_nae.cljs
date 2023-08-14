@@ -1,5 +1,5 @@
 (ns haggadah.ki-lo-nae
-  (:require [haggadah.dsl :refer [song general-content instruction general-content-with-instruction]]))
+  (:require [haggadah.dsl :refer [song]]))
 
 (def heb-cont-1 "אַדִּיר בִּמְלוּכָה, בָּחוּר כַּהֲלָכָה, גְּדוּדָיו יֹאמְרוּ לוֹ: לְךָ וּלְךָ, לְךָ כִּי לְךָ, לְךָ אַף לְךָ, לְךָ ה' הַמַּמְלָכָה, כִּי לוֹ נָאֵה, כִּי לוֹ יָאֶה.")
 (def eng-cont-1 "Mighty in rulership,  properly chosen, his troops shall say to Him, \"Yours and Yours, Yours since it is Yours, Yours and even Yours, Yours, Lord is the kingdom; since for Him it is pleasant, for Him it is suited.\"")
