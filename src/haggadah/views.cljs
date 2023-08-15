@@ -59,9 +59,7 @@
      [:div#menu.navbar-menu {:class active-menu}
       [:a.navbar-item {:class active-menu :on-click (dispatch ::push-state :home) } "Home"]
       [:a.navbar-item {:class active-menu :on-click (dispatch ::push-state :about) } "About"]
-      [:a.navbar-item {:class active-menu :on-click (dispatch ::events/signout)} "Sign out"]]
-     )
-    ]])
+      [:a.navbar-item {:class active-menu :on-click (dispatch ::events/signout)} "Sign out"]])]])
 
 (defn wave-top []
   [:svg {:class "wave-top", :viewBox "0 0 1439 147", :version "1.1", :xmlns "http://www.w3.org/2000/svg", :xmlnsXlink "http://www.w3.org/1999/xlink"}
@@ -310,7 +308,7 @@
   [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
       [:section.container.is-flex
-       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} (dsl/render-haggadah h/full-haggadah) #_text]])])
+       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} (dsl/render-haggadah h/full-haggadah)#_text]])])
 
 (defn about-panel
   []

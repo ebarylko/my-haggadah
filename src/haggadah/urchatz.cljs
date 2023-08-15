@@ -1,5 +1,5 @@
 (ns haggadah.urchatz
-  (:require [haggadah.dsl :as dsl :refer [haggadah bracha instruction song section general-content]]))
+  (:require [haggadah.dsl :as dsl :refer [instruction section]]))
 
 
 (def instr-heb-6 "נוֹטְלִין אֶת הַיָדַיִם וְאֵין מְבָרְכִין ״עַל נְטִילַת יָדַיִם״")

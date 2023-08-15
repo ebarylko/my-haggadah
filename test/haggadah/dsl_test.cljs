@@ -1,5 +1,7 @@
 (ns haggadah.dsl-test
   (:require [haggadah.dsl :as dsl]
+            [haggadah.kadesh :refer [kadesh]]
+            [haggadah.karpas :refer [karpas]]
             [cljs.test :as t :include-macros true]))
 
 (def instruction (dsl/instruction "Hebrew" "English"))
@@ -93,14 +95,15 @@
       (t/is (= expected (dsl/render-haggadah table))))))
 
 
+(def section-1 (dsl/section "מַגִּיד" "Magid"  bracha))
+(def expected-section-1 [:div.section
+                         [:div.title "Magid"]
+                         [:div.title.hebrew "מַגִּיד"]
+                         expected-bracha])
+
 (t/deftest render-section-test
     (t/testing "When rendering a section the title and content are returned"
-      (let [section (dsl/section "מַגִּיד" "Magid"  bracha)
-            expected-section [:div.section
-                              [:div.title "Magid"]
-                              [:div.title.hebrew "מַגִּיד"]
-                              expected-bracha]]
-       (t/is (= expected-section (dsl/render-haggadah section))))))
+      (t/is (= expected-section-1 (dsl/render-haggadah section-1)))))
 
 ;; (defn has-all-content?
 ;;   "Pre: takes an entire Haggadah
@@ -111,8 +114,21 @@
 
 ;; {:title section :brachas coll :songs }
 
-;; (t/deftest render-full-haggadah-test
-;;   (t/testing "When rendering an entire haggadah, every section is present and contains the content associated with that section"
-;;     (let [haggadah dsl/full-haggadah]
-;;       (t/is (has-all-content? haggadah)))))
+(def section-2 (dsl/section "יַחַץ" "Yachatz" song))
+(def expected-section-2 [:div.section
+                         [:div.title "Yachatz"]
+                         [:div.title.hebrew "יַחַץ"]
+                         expected-song])
+
+
+#_(t/deftest render-haggadah-test
+  (t/testing "When rendering an entire haggadah, every section and the content associated with that section is returned"
+    (let [haggadah (dsl/haggadah "Haggadah" section-1 section-2)
+          expected-haggadah [:div.haggadah
+                             [:div.title "Haggadah"]
+                             [:div.title
+                              [:div.content
+                              expected-section-1 
+                               expected-section-2]]]]
+      (t/is (= expected-haggadah (dsl/render-haggadah full-haggadah))))))
 

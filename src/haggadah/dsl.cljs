@@ -1,7 +1,7 @@
 (ns haggadah.dsl)
 
 (defn bracha
-  ([hebrew-text english-text] (bracha "" hebrew-text english-text nil))
+  ([hebrew-text english-text] (bracha nil hebrew-text english-text nil))
   ([title hebrew-text english-text]
    (bracha title hebrew-text english-text nil))
   ([title hebrew-text english-text & more-content] {:type :bracha :title title :hebrew hebrew-text :english english-text :children more-content}))
