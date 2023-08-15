@@ -21,7 +21,7 @@
             urchatz
             karpas
             yachatz
-            magid
+            ;; magid
             rachtzah
             motzi-matzah
             maror

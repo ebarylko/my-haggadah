@@ -4,8 +4,8 @@
    [haggadah.fb.firestore :as firestore]
    ["firebase/firestore" :as fire]
    [haggadah.db :as db]
-   [firebase.firestore :as firebase-firestore]
    [haggadah.dsl :as dsl]
+   [haggadah.full-haggadah :refer [full-haggadah]]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
    [haggadah.fb.auth :as auth]
    [haggadah.fb.functions :as func]))
@@ -179,6 +179,23 @@
         :fx fx})
      {:db (assoc db :name nil :uid nil :user :unregistered)})))
 
+;; :order 1, :content content 
+(map zipmap (repeat [:order]) (map vector (range 1 13) )) 
+
+
+
+(re-frame/reg-fx
+ ::add-full-haggadah
+ (fn [{:keys [content on-success on-error] :or {on-error ::error}}]
+   (let [batch (-> (firestore/instance)
+                   (.batch))]
+     (for [{:keys [path content]} content]
+       (.set batch path content))
+     (-> batch
+         (.commit)
+         (.then on-success)
+         (.catch on-error)))))
+
 (re-frame/reg-fx
  ::add-doc!
  (fn [{:keys [document-path content on-success on-error] :or {on-error ::error }}]
@@ -196,7 +213,7 @@
  ::add-haggadah
  (fn [{:keys [db]} [_ title]]
    {::add-doc! {:document-path ["users" (:uid db) "haggadot"]
-                :content (assoc dsl/default-haggadah :title title :createdAt (js/Date.))
+                :content (assoc #_dsl/default-haggadah full-haggadah  :title title :createdAt (js/Date.))
                 :on-success #(re-frame/dispatch [::push-state :haggadah-success])
                 :on-error (keyword->func ::error)}}))
 
