@@ -199,21 +199,27 @@
 (re-frame/reg-event-fx
  ::add-full-haggadah
  (fn [_ _]
-  {::add-full-haggadah! {:content haggadah-sections :on-success println}}))
+   (println "Adding the haggadah ")
+  {::add-full-haggadah! {:content haggadah-sections :on-success #(println "The batch worked" %)}}))
 
+(clj->js (prepare-section kadesh {:order 1}) )
 
 (re-frame/reg-fx
  ::add-full-haggadah!
  (fn [{:keys [content on-success on-error] :or {on-error ::error}}]
    (let [batch (-> (firestore/instance)
-                   (.batch))]
-     (for [{:keys [path content]} content]
-       (.set batch path content))
-     (-> batch
+                   (fire/writeBatch))
+         #_#_filled-batch (for [{:keys [path content]} content]
+                        (.set batch path (clj->js content)))]
+     (println "This is the batch " batch)
+     (-> #_(for [{:keys [path content]} content]
+           (.set batch path (clj->js content)))
+         (.set batch #_"haggadah/Karpas" (fire/doc (firestore/instance) "haggadah/Karpas") (clj->js (prepare-section kadesh {:order 1}) ))
          (.commit)
          (.then on-success)
          (.catch on-error)))))
 kadesh
+
 
 (re-frame/reg-fx
  ::add-doc!
