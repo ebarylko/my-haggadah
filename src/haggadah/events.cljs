@@ -5,7 +5,8 @@
    ["firebase/firestore" :as fire]
    [haggadah.db :as db]
    [haggadah.dsl :as dsl]
-   [haggadah.full-haggadah :refer [full-haggadah]]
+   [haggadah.urchatz :refer [urchatz]]
+   [haggadah.kadesh :refer [kadesh]]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
    [haggadah.fb.auth :as auth]
    [haggadah.fb.functions :as func]))
@@ -180,12 +181,29 @@
      {:db (assoc db :name nil :uid nil :user :unregistered)})))
 
 ;; :order 1, :content content 
-(map zipmap (repeat [:order]) (map vector (range 1 13) )) 
+(def orders (map zipmap (repeat [:order]) (map vector (range 1 13) )))
 
+(def sections [kadesh urchatz])
+
+(defn prepare-section
+  "Pre: takes a section from the Haggadah and a number which represents the position of the section in the Haggadah 
+  Post: returns the section with the number and the path to the section in firestore added"
+  [{:keys [english] :as section} pos]
+  (-> {}
+      (merge pos)
+      (assoc :content section :path (str "haggadah/" english))))
+
+(def haggadah-sections
+  (map prepare-section sections orders))
+
+(re-frame/reg-event-fx
+ ::add-full-haggadah
+ (fn [_ _]
+  {::add-full-haggadah! {:content haggadah-sections :on-success println}}))
 
 
 (re-frame/reg-fx
- ::add-full-haggadah
+ ::add-full-haggadah!
  (fn [{:keys [content on-success on-error] :or {on-error ::error}}]
    (let [batch (-> (firestore/instance)
                    (.batch))]
@@ -195,6 +213,7 @@
          (.commit)
          (.then on-success)
          (.catch on-error)))))
+kadesh
 
 (re-frame/reg-fx
  ::add-doc!
@@ -213,7 +232,7 @@
  ::add-haggadah
  (fn [{:keys [db]} [_ title]]
    {::add-doc! {:document-path ["users" (:uid db) "haggadot"]
-                :content (assoc #_dsl/default-haggadah full-haggadah  :title title :createdAt (js/Date.))
+                :content (assoc dsl/default-haggadah   :title title :createdAt (js/Date.))
                 :on-success #(re-frame/dispatch [::push-state :haggadah-success])
                 :on-error (keyword->func ::error)}}))
 
