@@ -121,14 +121,14 @@
                          expected-song])
 
 
-#_(t/deftest render-haggadah-test
+(t/deftest render-haggadah-test
   (t/testing "When rendering an entire haggadah, every section and the content associated with that section is returned"
     (let [haggadah (dsl/haggadah "Haggadah" section-1 section-2)
           expected-haggadah [:div.haggadah
                              [:div.title "Haggadah"]
                              [:div.title
                               [:div.content
-                              expected-section-1 
+                               expected-section-1 
                                expected-section-2]]]]
-      (t/is (= expected-haggadah (dsl/render-haggadah full-haggadah))))))
+      (t/is (= expected-haggadah (dsl/render-haggadah haggadah))))))
 
