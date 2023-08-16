@@ -13,7 +13,8 @@
             [haggadah.tzafun :refer [tzafun]]
             [haggadah.barech :refer [barech]]
             [haggadah.hallel :refer [hallel]]
-            [haggadah.nirtzah :refer [nirtzah]]))
+            [haggadah.nirtzah :refer [nirtzah]]
+            ))
 
 (def full-haggadah
   (haggadah "Full Haggadah"

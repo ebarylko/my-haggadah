@@ -5,8 +5,20 @@
    ["firebase/firestore" :as fire]
    [haggadah.db :as db]
    [haggadah.dsl :as dsl]
-   [haggadah.urchatz :refer [urchatz]]
-   [haggadah.kadesh :refer [kadesh]]
+   [haggadah.magid :refer [magid]]
+   [haggadah.karpas :refer [karpas]]
+   [haggadah.yachatz  :refer [yachatz]]
+   [haggadah.urchatz  :refer [urchatz]]
+   [haggadah.kadesh  :refer [kadesh]]
+   [haggadah.rachtzah  :refer [rachtzah]]
+   [haggadah.motzi-matzah :refer [motzi-matzah]]
+   [haggadah.maror :refer [maror]]
+   [haggadah.korech :refer [korech]]
+   [haggadah.shulchan-orech :refer [shulchan-orech]]
+   [haggadah.tzafun :refer [tzafun]]
+   [haggadah.barech :refer [barech]]
+   [haggadah.hallel :refer [hallel]]
+   [haggadah.nirtzah :refer [nirtzah]]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
    [haggadah.fb.auth :as auth]
    [haggadah.fb.functions :as func]))
@@ -183,7 +195,20 @@
 ;; :order 1, :content content 
 (def orders (map zipmap (repeat [:order]) (map vector (range 1 13) )))
 
-(def sections [kadesh urchatz])
+(def sections [magid] #_[kadesh
+               urchatz
+               karpas
+               yachatz
+#_               magid
+               rachtzah
+               motzi-matzah
+               maror
+               korech
+               shulchan-orech
+               tzafun
+               barech
+               hallel
+               nirtzah])
 
 (defn prepare-section
   "Pre: takes a section from the Haggadah and a number which represents the position of the section in the Haggadah 
@@ -202,23 +227,21 @@
    (println "Adding the haggadah ")
   {::add-full-haggadah! {:content haggadah-sections :on-success #(println "The batch worked" %)}}))
 
-(clj->js (prepare-section kadesh {:order 1}) )
+
 
 (re-frame/reg-fx
  ::add-full-haggadah!
  (fn [{:keys [content on-success on-error] :or {on-error ::error}}]
-   (let [batch (-> (firestore/instance)
+   (let [db (firestore/instance)
+         batch (-> db
                    (fire/writeBatch))
-         #_#_filled-batch (for [{:keys [path content]} content]
-                        (.set batch path (clj->js content)))]
-     (println "This is the batch " batch)
-     (-> #_(for [{:keys [path content]} content]
-           (.set batch path (clj->js content)))
-         (.set batch #_"haggadah/Karpas" (fire/doc (firestore/instance) "haggadah/Karpas") (clj->js (prepare-section kadesh {:order 1}) ))
+         filled-batch (for [{:keys [path content]} content]
+                        (.set batch (fire/doc db path) (clj->js content)))]
+     (println "This is the batch " filled-batch)
+     (-> batch
          (.commit)
          (.then on-success)
          (.catch on-error)))))
-kadesh
 
 
 (re-frame/reg-fx

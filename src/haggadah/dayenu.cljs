@@ -1,5 +1,5 @@
 (ns haggadah.dayenu
-  (:require [haggadah.dsl :as dsl :refer [table row instruction song song-with-instruction section general-content general-content-with-instruction]])
+  (:require [haggadah.dsl :as dsl :refer [song general-content]])
   )
 
 (def dayenu-heb-1 "כַּמָה מַעֲלוֹת טוֹבוֹת לַמָּקוֹם עָלֵינוּ!")
