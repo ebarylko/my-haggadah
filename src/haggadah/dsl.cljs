@@ -122,9 +122,7 @@
      (seq title) (conj title)
      (seq instruction) (conj (render-haggadah instruction))
      :always (conj [:div.text.hebrew.pb-3 hebrew] [:div.text.english english])
-     (has-content? children) (mult-conj (map render-haggadah children)))
-   )
-  )
+     (has-content? children) (mult-conj (map render-haggadah children)))))
 
 
 (defmethod render-haggadah :song [{:keys [title hebrew english instruction children]}]

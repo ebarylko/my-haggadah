@@ -6,6 +6,7 @@
    [haggadah.db :as db]
    [haggadah.dsl :as dsl]
    [haggadah.magid :refer [magid]]
+   [haggadah.magid-part-2 :refer [magid-part-2]]
    [haggadah.karpas :refer [karpas]]
    [haggadah.yachatz  :refer [yachatz]]
    [haggadah.urchatz  :refer [urchatz]]
@@ -193,22 +194,23 @@
      {:db (assoc db :name nil :uid nil :user :unregistered)})))
 
 ;; :order 1, :content content 
-(def orders (map zipmap (repeat [:order]) (map vector (range 1 13) )))
+(def orders (map zipmap (repeat [:order]) (map vector (range 1 16) )))
 
-(def sections [magid] #_[kadesh
-               urchatz
-               karpas
-               yachatz
-#_               magid
-               rachtzah
-               motzi-matzah
-               maror
-               korech
-               shulchan-orech
-               tzafun
-               barech
-               hallel
-               nirtzah])
+(def sections  [kadesh
+                urchatz
+                karpas
+                yachatz
+                magid
+                magid-part-2
+                rachtzah
+                motzi-matzah
+                maror
+                korech
+                shulchan-orech
+                tzafun
+                barech
+                hallel
+                nirtzah])
 
 (defn prepare-section
   "Pre: takes a section from the Haggadah and a number which represents the position of the section in the Haggadah 
@@ -216,7 +218,9 @@
   [{:keys [english] :as section} pos]
   (-> {}
       (merge pos)
-      (assoc :content section :path (str "haggadah/" english))))
+      (assoc :content section :path (str "haggadah/" (cond
+                                                       (nil? english) "Magid-part-2"
+                                                       :else english)))))
 
 (def haggadah-sections
   (map prepare-section sections orders))

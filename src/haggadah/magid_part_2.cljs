@@ -109,17 +109,16 @@
 
 (def magid-part-2
   (general-content nil nil nil
-                   (general-content-with-instruction
-                    "The Ten Plagues"
+                   (general-content-with-instruction "The Ten Plagues"
                                                      ten-plagues-heb-1 ten-plagues-eng-1
                                                      (instruction instr-heb-5 instr-eng-5)
                                                      (general-content ten-plagues-heb-2 ten-plagues-eng-2)
                                                      (general-content ten-plagues-heb-3 ten-plagues-eng-3)
-                                                     (apply table "" plague-rows)
-                                                     (general-content rabbi-yehuda-heb rabbi-yehuda-eng)
-                                                     (general-content rabbi-yose-heb rabbi-yose-eng)
-                                                     (general-content rabbi-eliezer-heb rabbi-eliezer-eng)
-                                                     (general-content rabbi-akiva-heb rabbi-akiva-eng))
+                                                     ;; (apply table "" plague-rows)
+                                                     ;; (general-content rabbi-yehuda-heb rabbi-yehuda-eng)
+                                                     ;; (general-content rabbi-yose-heb rabbi-yose-eng)
+                                                     ;; (general-content rabbi-eliezer-heb rabbi-eliezer-eng)
+                                                     #_(general-content rabbi-akiva-heb rabbi-akiva-eng))
                    dayenu
                    (general-content "Rabban Gamliel's Three Things"
                                     rabbi-gamliel-heb-1 rabbi-gamliel-eng-1
