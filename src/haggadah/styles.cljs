@@ -52,6 +52,7 @@
   [:.hebrew {:text-align :right}]
   [:.instr.hebrew {:padding-top :1rem}]
   [:.text {:font-size :1.25rem}]
+  [:.snd {:margin-top :-6.4rem}]
   [:.table-content
    {:border-width :1px
     :display :flex

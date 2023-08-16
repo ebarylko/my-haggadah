@@ -109,7 +109,8 @@
 
 (def magid-part-2
   (general-content nil nil nil
-                   (general-content-with-instruction "The Ten Plagues"
+                   (general-content-with-instruction
+                    "The Ten Plagues"
                                                      ten-plagues-heb-1 ten-plagues-eng-1
                                                      (instruction instr-heb-5 instr-eng-5)
                                                      (general-content ten-plagues-heb-2 ten-plagues-eng-2)
