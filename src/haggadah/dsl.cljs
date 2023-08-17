@@ -30,11 +30,12 @@
 
 (defn cell
   [content]
-  [:td content])
+  [:td content]
+  {:td content})
 
 (defn row
   [row]
-  (apply merge [:tr] (map cell row)))
+  (assoc {} :tr (mapv cell row)))
 
 (defn table
   [title & rows]

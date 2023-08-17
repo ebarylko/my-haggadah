@@ -31,6 +31,12 @@
                   "Darkness"
                   "Slaying of [the] Firstborn"])
 
+                                        ;map cada tr a una coleccion de td.
+; {:tr {td1 :content td2 ;more content}}
+
+(row [:a :aa])
+; array, cada row va a ser un mapa de la estructura {:tr [td-content]}
+;; {:tr {:td } }
 (def plague-rows (map (comp row vector) plagues-eng plagues-heb))
 
 (def rabbi-yehuda-heb "רַבִּי יְהוּדָה הָיָה נוֹתֵן בָּהֶם סִמָּנִים: דְּצ״ךְ עַד״שׁ בְּאַח״ב.")
@@ -104,7 +110,6 @@
 
 (def instr-heb-10 "שותים את הכוס בהסבת שמאל.")
 (def instr-eng-10 "We say the blessing below and drink the cup while reclining to the left")
-
 (def wine-blessing (bracha "בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן." "Blessed are You, Lord our God, who creates the fruit of the vine."))
 
 (def magid-part-2
@@ -112,13 +117,13 @@
                    (general-content-with-instruction "The Ten Plagues"
                                                      ten-plagues-heb-1 ten-plagues-eng-1
                                                      (instruction instr-heb-5 instr-eng-5)
-                                                     (general-content ten-plagues-heb-2 ten-plagues-eng-2)
+                                                    (general-content ten-plagues-heb-2 ten-plagues-eng-2)
                                                      (general-content ten-plagues-heb-3 ten-plagues-eng-3)
-                                                     ;; (apply table "" plague-rows)
-                                                     ;; (general-content rabbi-yehuda-heb rabbi-yehuda-eng)
-                                                     ;; (general-content rabbi-yose-heb rabbi-yose-eng)
-                                                     ;; (general-content rabbi-eliezer-heb rabbi-eliezer-eng)
-                                                     #_(general-content rabbi-akiva-heb rabbi-akiva-eng))
+                                                     (apply table "" plague-rows)
+                                                     (general-content rabbi-yehuda-heb rabbi-yehuda-eng)
+                                                     (general-content rabbi-yose-heb rabbi-yose-eng)
+                                                     (general-content rabbi-eliezer-heb rabbi-eliezer-eng)
+                                                     (general-content rabbi-akiva-heb rabbi-akiva-eng))
                    dayenu
                    (general-content "Rabban Gamliel's Three Things"
                                     rabbi-gamliel-heb-1 rabbi-gamliel-eng-1
