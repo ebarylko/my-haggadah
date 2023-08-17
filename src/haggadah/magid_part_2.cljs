@@ -34,10 +34,26 @@
                                         ;map cada tr a una coleccion de td.
 ; {:tr {td1 :content td2 ;more content}}
 
+
+(defn process-cell
+  [cell]
+(into [] cat cell))
+
+
+(defn process-row
+  "Pre: takes a a row
+  Post: returns a hiccup representation of a row"
+  [row]
+  (into [:tr]
+         (map process-cell (:tr row))))
+
 (row [:a :aa])
-; array, cada row va a ser un mapa de la estructura {:tr [td-content]}
+(process-row (row [:a :aa]))
+
+                                        ; array, cada row va a ser un mapa de la estructura {:tr [td-content]}
 ;; {:tr {:td } }
 (def plague-rows (map (comp row vector) plagues-eng plagues-heb))
+(map process-row plague-rows)
 
 (def rabbi-yehuda-heb "רַבִּי יְהוּדָה הָיָה נוֹתֵן בָּהֶם סִמָּנִים: דְּצ״ךְ עַד״שׁ בְּאַח״ב.")
 

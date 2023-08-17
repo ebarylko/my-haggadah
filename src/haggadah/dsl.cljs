@@ -135,6 +135,17 @@
       :always (mult-conj content)
       (has-content? children) (mult-conj (map render-haggadah children)))))
 
+(defn process-cell
+  [cell]
+  (into [] cat cell))
+
+(defn process-row
+  "Pre: takes a a row
+  Post: returns a hiccup representation of a row"
+  [row]
+  (apply conj [:tr]
+         (map process-cell row)))
+
 (defmethod render-haggadah :table [{:keys [title rows]}]
   [:div.table.is-bordered
    [:div.title title]
