@@ -90,7 +90,7 @@
 (defn home->dashboard
   [d]
   (doto d
-    (e/go "http://localhost:5000/")
+    (e/go "http://localhost:4999/")
     (e/click-visible {:data-testid :login})
     (e/click-visible {:data-testid :submit})
     (e/wait-visible {:data-testid :create-haggadah})))

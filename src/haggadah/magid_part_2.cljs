@@ -14,7 +14,6 @@
 
 (def ten-plagues-eng-2 "Another [explanation]: \"With a strong hand\" [corresponds to] two [plagues]; \"and with an outstretched forearm\" [corresponds to] two [plagues]; \"and with great awe\" [corresponds to] two [plagues]; \"and with signs\" [corresponds to] two [plagues]; \"and with wonders\" [corresponds to] two [plagues].")
 
-
 (def ten-plagues-heb-3 "אֵלּוּ עֶשֶׂר מַכּוֹת שֶׁהֵבִיא הַקָּדוֹשׁ בָּרוּךְ הוּא עַל־הַמִּצְרִים בְּמִצְרַיִם, וְאֵלוּ הֵן:")
 
 (def ten-plagues-eng-3 "These are [the] ten plagues that the Holy One, blessed be He, brought on the Egyptians in Egypt and they are:")

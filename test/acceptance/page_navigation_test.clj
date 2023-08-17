@@ -11,7 +11,7 @@
   Post: takes you from the home page to the login page"
   []
   (doto driver
-    (e/go "http://localhost:5000/")
+    (e/go "http://localhost:4999/")
     (e/click-visible {:data-testid :login})
     (e/wait-visible {:data-testid :submit})))
 

@@ -172,5 +172,5 @@
       (d/dashboard->first-seder)
       (d/gen-seder-link)
       (let [seder-link (seder-link)
-            expected-link (format "http://localhost:5000/#/seder/%s" seder-id)]
+            expected-link (format "http://localhost:4999/#/seder/%s" seder-id)]
         (t/is (= expected-link seder-link))))))
