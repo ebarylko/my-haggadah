@@ -1,7 +1,5 @@
 (ns haggadah.dsl-test
   (:require [haggadah.dsl :as dsl]
-            [haggadah.kadesh :refer [kadesh]]
-            [haggadah.karpas :refer [karpas]]
             [cljs.test :as t :include-macros true]))
 
 (def instruction (dsl/instruction "Hebrew" "English"))
@@ -93,7 +91,6 @@
                       [:tr [:td "Sangre"] [:td "דָּם"]]
                       [:tr [:td "Ranas"] [:td "צְפַרְדֵּעַ"]]]]]]
       (t/is (= expected (dsl/render-haggadah table))))))
-
 
 (def section-1 (dsl/section "מַגִּיד" "Magid"  bracha))
 (def expected-section-1 [:div.section

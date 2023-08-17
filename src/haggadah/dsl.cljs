@@ -136,6 +136,8 @@
       (has-content? children) (mult-conj (map render-haggadah children)))))
 
 (defn process-cell
+  "Pre: takes a cell
+  Post: returns the hiccup representation of a row"
   [cell]
   (into [] cat cell))
 
@@ -143,14 +145,15 @@
   "Pre: takes a a row
   Post: returns a hiccup representation of a row"
   [row]
-  (apply conj [:tr]
-         (map process-cell row)))
+  (into [:tr]
+         (map process-cell (:tr row))))
+
 
 (defmethod render-haggadah :table [{:keys [title rows]}]
   [:div.table.is-bordered
    [:div.title title]
    [:table.table.table-content
-    (apply conj [:tbody] rows)]])
+    (into [:tbody] (map process-row rows))]])
 
 
 (defmethod render-haggadah :section [{:keys [hebrew english content]}]
