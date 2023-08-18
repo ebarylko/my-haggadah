@@ -108,7 +108,7 @@
                    (.data)
                    (.-title))]
    {::query! {:path ["haggadah"]
-              :order-by #(fire/query % (fire/orderBy "order"))
+              :order-by #(fire/query % (fire/orderBy "order" "desc"))
               :on-success (keyword->func [on-success title])
               :on-error on-error}}
    )))
@@ -186,8 +186,6 @@
    :haggadah-view [[::fetch-haggadah {:on-success [::fetch-haggadah-sections {:on-success ::set-haggadah}]}]]
    :haggadah-edit [[::fetch-haggadah {:on-success ::set-haggadah }]]})
 
-;; [::fetch-haggadah {:on-success [::fetch-haggadah-sections {:on-success ::set-haggadah}]}]
-; fetch-haggadah->fetch-sections->set-haggadah
 (defn setup-events
   "Pre: takes a collection of events
   Post: returns a collection of events waiting to be dispatched"
@@ -229,12 +227,12 @@
   "Pre: takes a section from the Haggadah and a number which represents the position of the section in the Haggadah 
   Post: returns the section with the number and the path to the section in firestore added"
   [{:keys [english] :as section} pos]
-  (-> {}
-      (merge pos)
-      (assoc :content section :path (str "haggadah/" english))))
+  (-> {:path (str "haggadah/" english)}
+      (assoc :content (assoc section :order pos))))
+
 
 (def haggadah-sections
-  (map prepare-section sections orders))
+  (map prepare-section sections (range 1 16)))
 
 (re-frame/reg-event-fx
  ::add-full-haggadah
