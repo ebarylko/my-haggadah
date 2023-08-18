@@ -20,7 +20,6 @@
           "--disable-gpu"
           "--disable-extensions"
           "--start-maximized"]})
-
 (def driver
   (e/chrome-headless
    (assoc driver-config :path-browser (System/getenv "CHROME_BINARY"))))
@@ -87,10 +86,12 @@
   (test)
   (http/delete  "http://localhost:8080/emulator/v1/projects/my-haggadah/databases/(default)/documents"))
 
+(def home "http://localhost:4999/")
+
 (defn home->dashboard
   [d]
   (doto d
-    (e/go "http://localhost:4999/")
+    (e/go home)
     (e/click-visible {:data-testid :login})
     (e/click-visible {:data-testid :submit})
     (e/wait-visible {:data-testid :create-haggadah})))

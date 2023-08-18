@@ -1,7 +1,7 @@
 (ns acceptance.page-navigation-test
   (:require  [clojure.test :as t]
              [etaoin.api :as e]
-             [acceptance.core :as c :refer [driver]]))
+             [acceptance.core :as c :refer [driver home]]))
 
 (t/use-fixtures :once c/init-firebase)
 (t/use-fixtures :each c/with-screenshot c/delete-fs-emulator-data)
@@ -11,7 +11,7 @@
   Post: takes you from the home page to the login page"
   []
   (doto driver
-    (e/go "http://localhost:4999/")
+    (e/go home)
     (e/click-visible {:data-testid :login})
     (e/wait-visible {:data-testid :submit})))
 

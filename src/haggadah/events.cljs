@@ -195,7 +195,6 @@
 
 ;; :order 1, :content content 
 (def orders (map zipmap (repeat [:order]) (map vector (range 1 16) )))
-
 (def sections  [kadesh
                 urchatz
                 karpas
@@ -265,7 +264,7 @@
  ::add-haggadah
  (fn [{:keys [db]} [_ title]]
    {::add-doc! {:document-path ["users" (:uid db) "haggadot"]
-                :content (assoc dsl/default-haggadah   :title title :createdAt (js/Date.))
+                :content {:title title :createdAt (js/Date.)}
                 :on-success #(re-frame/dispatch [::push-state :haggadah-success])
                 :on-error (keyword->func ::error)}}))
 
@@ -330,6 +329,8 @@
    (assoc db :error {:error error
                      :code (. error -code)
                      :message (. error -message)})))
+
+; fetch cada parte de la haggadah, y despues meterlo adentro de un wa
 
 (re-frame/reg-event-db
  ::set-haggadah
