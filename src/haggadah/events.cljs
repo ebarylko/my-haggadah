@@ -101,6 +101,15 @@
                      :on-success (keyword->func on-success)
                      :on-error (keyword->func on-error)}}))))
 
+(re-frame/reg-event-fx
+ ::fetch-haggadah-sections
+ interceptors
+ (fn [{:keys [db]} [on-success haggadah]]
+   {::query! {:path ["haggadah"]
+              :order-by #(fire/query % (fire/orderBy "order"))
+              :on-success (keyword->func [on-success (.-title haggadah)])}}
+   ))
+
 
 (re-frame/reg-event-fx
  ::fetch-sedarim
@@ -174,12 +183,15 @@
    :haggadah-view [[::fetch-haggadah {:on-success ::set-haggadah }]]
    :haggadah-edit [[::fetch-haggadah {:on-success ::set-haggadah }]]})
 
-
+;; [::fetch-haggadah {:on-success [::fetch-haggadah-sections {:on-success ::set-haggadah}]}]
+; fetch-haggadah->fetch-sections->set-haggadah
 (defn setup-events
   "Pre: takes a collection of events
   Post: returns a collection of events waiting to be dispatched"
   [events]
   (mapv (fn [event] [:dispatch event]) events))
+
+(setup-events (:dashboard route-events))
 
 (re-frame/reg-event-fx
  ::store-user-info
@@ -200,7 +212,6 @@
                 karpas
                 yachatz
                 magid
-                magid-part-2
                 rachtzah
                 motzi-matzah
                 maror
@@ -334,7 +345,7 @@
 
 (re-frame/reg-event-db
  ::set-haggadah
- (fn [db [_ snap]]
+ (fn [db [_ title snap]]
    (assoc db :haggadah-text
           (-> snap
               (. data)

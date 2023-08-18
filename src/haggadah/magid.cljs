@@ -219,6 +219,34 @@
                            (instruction instr-heb-4 instr-eng-4)
                            (song vehi-sheamda-heb vehi-sheamda-eng))
           first-fruits-declaration
-          )
-  )
-
+                   (general-content-with-instruction "The Ten Plagues"
+                                                     ten-plagues-heb-1 ten-plagues-eng-1
+                                                     (instruction instr-heb-5 instr-eng-5)
+                                                    (general-content ten-plagues-heb-2 ten-plagues-eng-2)
+                                                     (general-content ten-plagues-heb-3 ten-plagues-eng-3)
+                                                     (apply table "" plague-rows)
+                                                     (general-content rabbi-yehuda-heb rabbi-yehuda-eng)
+                                                     (general-content rabbi-yose-heb rabbi-yose-eng)
+                                                     (general-content rabbi-eliezer-heb rabbi-eliezer-eng)
+                                                     (general-content rabbi-akiva-heb rabbi-akiva-eng))
+                   dayenu
+                   (general-content "Rabban Gamliel's Three Things"
+                                    rabbi-gamliel-heb-1 rabbi-gamliel-eng-1
+                                    (general-content rabbi-gamliel-heb-2 rabbi-gamliel-eng-2)
+                                    (instruction instr-heb-6 instr-eng-6)
+                                    (general-content rabbi-gamliel-heb-3 rabbi-gamliel-eng-3)
+                                    (instruction instr-heb-7 instr-eng-7)
+                                    (general-content rabbi-gamliel-heb-4 rabbi-gamliel-eng-4)
+                                    (general-content rabbi-gamliel-heb-5 rabbi-gamliel-eng-5)
+                                    )
+                   (general-content-with-instruction "First Half of Hallel"
+                                                     hallel-heb-1 hallel-eng-1
+                                                     (instruction instr-heb-8 instr-eng-8)
+                                                     (general-content hallel-heb-2 hallel-eng-2)
+                                                     (general-content hallel-heb-3 hallel-eng-3)
+                                                     )
+                   (general-content-with-instruction "Second Cup of Wine"
+                                                     second-cup-heb second-cup-eng
+                                                     (instruction instr-heb-9 instr-eng-9)
+                                                     (instruction instr-heb-10 instr-eng-10)
+                                                     wine-blessing)))

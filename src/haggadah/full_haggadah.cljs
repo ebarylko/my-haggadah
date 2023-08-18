@@ -24,7 +24,6 @@
             karpas
             yachatz
             magid
-            magid-part-2
             rachtzah
             motzi-matzah
             maror
