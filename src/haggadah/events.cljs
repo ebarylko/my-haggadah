@@ -6,7 +6,6 @@
    [haggadah.db :as db]
    [haggadah.dsl :as dsl]
    [haggadah.magid :refer [magid]]
-   [haggadah.magid-part-2 :refer [magid-part-2]]
    [haggadah.karpas :refer [karpas]]
    [haggadah.yachatz  :refer [yachatz]]
    [haggadah.urchatz  :refer [urchatz]]
@@ -104,11 +103,15 @@
 (re-frame/reg-event-fx
  ::fetch-haggadah-sections
  interceptors
- (fn [{:keys [db]} [on-success haggadah]]
+ (fn [{:keys [db]} [{:keys [on-success on-error] :or {on-error ::error}} haggadah]]
+   (let [title (-> haggadah
+                   (.data)
+                   (.-title))]
    {::query! {:path ["haggadah"]
               :order-by #(fire/query % (fire/orderBy "order"))
-              :on-success (keyword->func [on-success (.-title haggadah)])}}
-   ))
+              :on-success (keyword->func [on-success title])
+              :on-error on-error}}
+   )))
 
 
 (re-frame/reg-event-fx
@@ -180,7 +183,7 @@
 (def route-events
   {:dashboard [[::fetch-haggadot {:on-success [::set-collection :haggadot ]}]
                [::fetch-sedarim {:on-success [::set-collection :sedarim]}]]
-   :haggadah-view [[::fetch-haggadah {:on-success ::set-haggadah }]]
+   :haggadah-view [[::fetch-haggadah {:on-success [::fetch-haggadah-sections {:on-success ::set-haggadah}]}]]
    :haggadah-edit [[::fetch-haggadah {:on-success ::set-haggadah }]]})
 
 ;; [::fetch-haggadah {:on-success [::fetch-haggadah-sections {:on-success ::set-haggadah}]}]
@@ -228,9 +231,7 @@
   [{:keys [english] :as section} pos]
   (-> {}
       (merge pos)
-      (assoc :content section :path (str "haggadah/" (cond
-                                                       (nil? english) "Magid-part-2"
-                                                       :else english)))))
+      (assoc :content section :path (str "haggadah/" english))))
 
 (def haggadah-sections
   (map prepare-section sections orders))
@@ -240,7 +241,6 @@
  (fn [_ _]
    (println "Adding the haggadah ")
   {::add-full-haggadah! {:content haggadah-sections :on-success #(println "The batch worked" %)}}))
-
 
 
 (re-frame/reg-fx
@@ -346,12 +346,22 @@
 (re-frame/reg-event-db
  ::set-haggadah
  (fn [db [_ title snap]]
+   (println "This is the snapshot " snap)
+   (let [unconverted-sections (->> snap
+                                   (.-docs)
+                                   (js->clj))
+         converted-sections (->> unconverted-sections
+                                 (map #(.data %))
+                                 (map #(js->clj % :keywordize-keys :true))
+                                 (map dsl/render-haggadah))]
+     (println "The converted sections " converted-sections)
+     (println "The title" title)
+     (println "The converted sections " unconverted-sections)
    (assoc db :haggadah-text
-          (-> snap
-              (. data)
-              (js->clj :keywordize-keys true)
-              dsl/render-haggadah))))
-
+          [:div.haggadah
+           [:div.title title]
+           [:div.title
+            (apply conj [:div.content] converted-sections)]]))))
 (re-frame/reg-event-db
  ::set-preview
  (fn [db [_ preview?]]

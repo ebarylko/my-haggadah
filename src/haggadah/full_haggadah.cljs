@@ -1,7 +1,6 @@
 (ns haggadah.full-haggadah
   (:require [haggadah.dsl :as dsl :refer [haggadah]]
             [haggadah.magid :refer [magid]]
-            [haggadah.magid-part-2 :refer [magid-part-2]]
             [haggadah.karpas :refer [karpas]]
             [haggadah.yachatz  :refer [yachatz]]
             [haggadah.urchatz  :refer [urchatz]]
