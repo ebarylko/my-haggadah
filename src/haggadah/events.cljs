@@ -108,7 +108,7 @@
                    (.data)
                    (.-title))]
    {::query! {:path ["haggadah"]
-              :order-by #(fire/query % (fire/orderBy "order" "desc"))
+              :order-by #(fire/query % (fire/orderBy "order" ))
               :on-success (keyword->func [on-success title])
               :on-error on-error}}
    )))
