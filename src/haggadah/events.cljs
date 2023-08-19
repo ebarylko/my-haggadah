@@ -232,10 +232,10 @@
 (def haggadah-sections
   (map prepare-section sections (range 1 16)))
 
+
 (re-frame/reg-event-fx
  ::add-full-haggadah
  (fn [_ _]
-   (println "Adding the haggadah ")
   {::add-full-haggadah! {:content haggadah-sections :on-success #(println "The batch worked" %)}}))
 
 
@@ -247,7 +247,6 @@
                    (fire/writeBatch))
          filled-batch (for [{:keys [path content]} content]
                         (.set batch (fire/doc db path) (clj->js content)))]
-     (println "This is the batch " filled-batch)
      (-> batch
          (.commit)
          (.then on-success)

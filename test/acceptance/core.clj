@@ -81,28 +81,29 @@
                     (format "screenshots/%s.png" (last @test-names))))))
 
 ; {:path path :content {:type cont-type :english eng :heb heb}}
-(defn set-batch
-  "Pre: takes a batch, a collection of content, and a database
-  Post: adds all the content to the batch and saves it to the database"
-  [batch content db]
-  (for [{:keys [path content]} content]
-    (let [id (-> path
-                 (clojure.string/split "/")
-                 second)
-          route (-> db
-                    (.collection "haggadah")
-                    (.document id))]
-      (.set batch route content))))
+
+(defn add-content
+  "Pre: takes a batch and content 
+  Post: adds the content to the batch"
+  [batch {:keys [path] :as content}]
+  (let [id (-> path
+               (clojure.string/split #"/")
+               second)
+        route (-> (FirestoreClient/getFirestore)
+                  (.collection "haggadah")
+                  (.document id))]
+    (.set batch route (w/stringify-keys content))
+    batch))
 
 
-(defn add-haggadah-content
+(defn fs-store-haggadah-content
   "Pre: takes a collection of content for a Haggadah
   Post: adds the collection to the database"
   [& content]
-  (let [db (FirestoreClient/getFirestore)
-        batch (-> db (.batch))]
-    (set-batch batch content db)
-    (-> batch
+  (println "This is the content " content)
+  (let [batch (-> (FirestoreClient/getFirestore)
+                  (.batch))]
+    (-> (reduce add-content batch content)
         (.commit)
         (.get))))
 
