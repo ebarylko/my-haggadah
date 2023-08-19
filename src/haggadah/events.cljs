@@ -103,15 +103,14 @@
 (re-frame/reg-event-fx
  ::fetch-haggadah-sections
  interceptors
- (fn [{:keys [db]} [{:keys [on-success on-error] :or {on-error ::error}} haggadah]]
+ (fn [_ [{:keys [on-success on-error] :or {on-error ::error}} haggadah]]
    (let [title (-> haggadah
                    (.data)
                    (.-title))]
    {::query! {:path ["haggadah"]
               :order-by #(fire/query % (fire/orderBy "order" ))
               :on-success (keyword->func [on-success title])
-              :on-error on-error}}
-   )))
+              :on-error on-error}})))
 
 
 (re-frame/reg-event-fx
@@ -207,7 +206,6 @@
      {:db (assoc db :name nil :uid nil :user :unregistered)})))
 
 ;; :order 1, :content content 
-(def orders (map zipmap (repeat [:order]) (map vector (range 1 16) )))
 (def sections  [kadesh
                 urchatz
                 karpas
@@ -229,7 +227,7 @@
   [{:keys [english] :as section} pos]
   (-> {:path (str "haggadah/" english)}
       (assoc :content (assoc section :order pos))))
-
+(prepare-section urchatz 1)
 
 (def haggadah-sections
   (map prepare-section sections (range 1 16)))

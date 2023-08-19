@@ -80,11 +80,37 @@
       (e/screenshot driver
                     (format "screenshots/%s.png" (last @test-names))))))
 
+; {:path path :content {:type cont-type :english eng :heb heb}}
+(defn set-batch
+  "Pre: takes a batch, a collection of content, and a database
+  Post: adds all the content to the batch and saves it to the database"
+  [batch content db]
+  (for [{:keys [path content]} content]
+    (let [id (-> path
+                 (clojure.string/split "/")
+                 second)
+          route (-> db
+                    (.collection "haggadah")
+                    (.document id))]
+      (.set batch route content))))
+
+
+(defn add-haggadah-content
+  "Pre: takes a collection of content for a Haggadah
+  Post: adds the collection to the database"
+  [& content]
+  (let [db (FirestoreClient/getFirestore)
+        batch (-> db (.batch))]
+    (set-batch batch content db)
+    (-> batch
+        (.commit)
+        (.get))))
+
 (defn delete-fs-emulator-data
   "Takes a test and deletes what is in firestore after running the test"
   [test]
-  (test)
-  (http/delete  "http://localhost:8080/emulator/v1/projects/my-haggadah/databases/(default)/documents"))
+  (http/delete  "http://localhost:8080/emulator/v1/projects/my-haggadah/databases/(default)/documents")
+  (test))
 
 (def home "http://localhost:4999/")
 
