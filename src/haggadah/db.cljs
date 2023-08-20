@@ -2,7 +2,7 @@
 
 (def default-db
   {:name "(Unknown)"
-   :haggadah-text "The default haggadah"
+   :haggadah-text nil
    :uid nil
    :haggadot nil
    :error "none"

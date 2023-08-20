@@ -303,12 +303,18 @@
                       :on-click #(re-frame/dispatch [::events/add-haggadah (form-content "haggadah-title") %])
                       :id "submit"} "Create"]]]]]]]))
 
+(def content-ready? (partial vector?))
+
 (defn haggadah-view-panel
   []
   [:div.page.is-flex.is-flex-grow-1 {:class (styles/haggadah-view)}
     (let [text @(re-frame/subscribe [::subs/haggadah-text])]
-      [:section.container.is-flex
-       [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} text]])])
+      (when (content-ready? text)
+       [:section.container.is-flex
+        [:div.box.is-flex-grow-1 {:data-testid :haggadah-text} text]]
+       )
+
+      )])
 
 (defn about-panel
   []
