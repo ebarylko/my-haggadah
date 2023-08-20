@@ -104,15 +104,16 @@
 (re-frame/reg-event-fx
  ::fetch-default-haggadah
  interceptors
- (fn [{:keys [db]} [{:keys [on-success on-error field] :or {on-error ::error}} haggadah]]
+ (fn [{:keys [db]} [{:keys [on-success on-error path] :or {on-error ::error}} haggadah]]
    (let [title (-> haggadah
                    (.data)
                    (.-title))]
-     {:db (assoc db field {:title title})
+     {:db (assoc-in db path {:title title })
       :fx [[::fetch-doc {:path "haggadah/full-haggadah"
                          :on-success (keyword->func on-success)
                          :on-error on-error}]]})))
 
+(assoc-in {:a {:1 2}} [:a :1] 1)
 
 (re-frame/reg-event-fx
  ::fetch-sedarim
@@ -179,11 +180,12 @@
          (.then on-success)
          (.catch on-error))))
 
+(assoc-in {:text "Hi"} [:text] {:text 3})
 
 (def route-events
   {:dashboard [[::fetch-haggadot {:on-success [::set-collection :haggadot ]}]
                [::fetch-sedarim {:on-success [::set-collection :sedarim]}]]
-   :haggadah-view [[::fetch-haggadah {:on-success [::fetch-default-haggadah {:on-success ::set-haggadah :field :haggadah-text}]}]]
+   :haggadah-view [[::fetch-haggadah {:on-success [::fetch-default-haggadah {:on-success ::set-haggadah :path [:haggadah-text]}]}]]
    :haggadah-edit [[::fetch-haggadah {:on-success ::set-haggadah }]]})
 
 (defn setup-events
@@ -192,7 +194,6 @@
   [events]
   (mapv (fn [event] [:dispatch event]) events))
 
-(setup-events (:dashboard route-events))
 
 (re-frame/reg-event-fx
  ::store-user-info
@@ -329,7 +330,7 @@
                                             (map #(js->clj % :keywordize-keys true))
                                             first)]
      {::fetch-doc {:path haggadah-path
-                   :on-success [[::set-seder title]]}})))
+                   :on-success [[::fetch-default-haggadah title]]}})))
 
 ; :succ [::fetch-haggadah-sections {:success ::set-seder}]
 
@@ -340,7 +341,7 @@
                      :code (. error -code)
                      :message (. error -message)})))
 
-; fetch cada parte de la haggadah, y despues meterlo adentro de un wa
+
 (re-frame/reg-event-db
  ::set-haggadah
  (fn [db [_ snap]]
