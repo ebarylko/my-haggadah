@@ -47,8 +47,9 @@
 (def hebrew-bracha "סַבְרִי מָרָנָן וְרַבָּנָן וְרַבּוֹתַי. בָּרוּךְ אַתָּה ה', אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם בּוֹרֵא פְּרִי הַגָּפֶן")
 (def english-bracha "Blessed are You, Lord our God, King of the universe, who creates the fruit of the vine.")
 
-#_(t/deftest view-haggadah-with-bracha
+(t/deftest view-haggadah-with-bracha
   (t/testing "When the current user has a haggadah with a bracha in it and is at their dashboard, they should be able to view the haggadah and see it in a certain way"
+    (c/fs-store-haggadah-content {:type "bracha" :title title :hebrew hebrew-bracha :english english-bracha :path "haggadah/Bracha" :order 1})
     (doto driver
       (c/home->dashboard)
       (d/create-haggadah title)
@@ -61,12 +62,11 @@
         hebrew-bracha actual-hebrew-bracha
         english-bracha actual-english-bracha))))
 
-#_(t/deftest refresh-page-test
+(t/deftest refresh-page-test
   (t/testing "When the current user refreshes the haggadah"
-    (c/fs-store-haggadah {:title "The best haggadah of the year"
-                          :type "haggadah"
-                          :content [{:type "bracha" :hebrew hebrew-bracha :english english-bracha :title title}]}
+    (c/fs-store-haggadah {:title "The best haggadah of the year"}
                          "user1")
+    (c/fs-store-haggadah-content {:type "bracha" :title title :hebrew hebrew-bracha :english english-bracha :path "haggadah/Bracha" :order 1})
     (doto driver
       (c/home->dashboard)
       (click-on-haggadah hebrew-bracha)

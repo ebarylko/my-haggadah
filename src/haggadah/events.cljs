@@ -317,6 +317,8 @@
                       dsl/render-haggadah)]
      (assoc db :seder {:title seder-title :haggadah haggadah}))))
 
+; cuando hago el fetch de un seder tengo que pasar el titulo del seder. ademas de solo hacer el rendering del contenido, estoy tambien agarrando el titulo.
+
 (re-frame/reg-event-fx
  ::haggadah-from-seder
  (fn [db [_ snap]]
@@ -328,6 +330,8 @@
                                             first)]
      {::fetch-doc {:path haggadah-path
                    :on-success [::set-seder title]}})))
+
+; :succ [::fetch-haggadah-sections {:success ::set-seder}]
 
 (re-frame/reg-event-db
  ::error
@@ -341,7 +345,6 @@
 (re-frame/reg-event-db
  ::set-haggadah
  (fn [db [_ title snap]]
-   (println "This is the snapshot " snap)
    (let [unconverted-sections (->> snap
                                    (.-docs)
                                    (js->clj))
@@ -349,14 +352,12 @@
                                  (map #(.data %))
                                  (map #(js->clj % :keywordize-keys :true))
                                  (map dsl/render-haggadah))]
-     (println "The converted sections " converted-sections)
-     (println "The title" title)
-     (println "The converted sections " unconverted-sections)
    (assoc db :haggadah-text
           [:div.haggadah
            [:div.title title]
            [:div.title
             (apply conj [:div.content] converted-sections)]]))))
+
 (re-frame/reg-event-db
  ::set-preview
  (fn [db [_ preview?]]

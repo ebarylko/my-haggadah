@@ -100,7 +100,6 @@
   "Pre: takes a collection of content for a Haggadah
   Post: adds the collection to the database"
   [& content]
-  (println "This is the content " content)
   (let [batch (-> (FirestoreClient/getFirestore)
                   (.batch))]
     (-> (reduce add-content batch content)
