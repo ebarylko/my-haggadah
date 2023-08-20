@@ -4,6 +4,7 @@
    [haggadah.fb.firestore :as firestore]
    ["firebase/firestore" :as fire]
    [haggadah.db :as db]
+   [haggadah.full-haggadah :refer [full-haggadah]]
    [haggadah.dsl :as dsl]
    [haggadah.magid :refer [magid]]
    [haggadah.karpas :refer [karpas]]
@@ -101,16 +102,16 @@
                      :on-error (keyword->func on-error)}}))))
 
 (re-frame/reg-event-fx
- ::fetch-haggadah-sections
+ ::fetch-default-haggadah
  interceptors
- (fn [_ [{:keys [on-success on-error] :or {on-error ::error}} haggadah]]
+ (fn [{:keys [db]} [{:keys [on-success on-error field] :or {on-error ::error}} haggadah]]
    (let [title (-> haggadah
                    (.data)
                    (.-title))]
-   {::query! {:path ["haggadah"]
-              :order-by #(fire/query % (fire/orderBy "order" ))
-              :on-success (keyword->func [on-success title])
-              :on-error on-error}})))
+     {:db (assoc db field {:title title})
+      :fx [[::fetch-doc {:path "haggadah/full-haggadah"
+                         :on-success (keyword->func on-success)
+                         :on-error on-error}]]})))
 
 
 (re-frame/reg-event-fx
@@ -182,7 +183,7 @@
 (def route-events
   {:dashboard [[::fetch-haggadot {:on-success [::set-collection :haggadot ]}]
                [::fetch-sedarim {:on-success [::set-collection :sedarim]}]]
-   :haggadah-view [[::fetch-haggadah {:on-success [::fetch-haggadah-sections {:on-success ::set-haggadah}]}]]
+   :haggadah-view [[::fetch-haggadah {:on-success [::fetch-default-haggadah {:on-success ::set-haggadah :field :haggadah-text}]}]]
    :haggadah-edit [[::fetch-haggadah {:on-success ::set-haggadah }]]})
 
 (defn setup-events
@@ -236,17 +237,16 @@
 (re-frame/reg-event-fx
  ::add-full-haggadah
  (fn [_ _]
-  {::add-full-haggadah! {:content haggadah-sections :on-success #(println "The batch worked" %)}}))
+  {::add-full-haggadah! {:haggadah (assoc full-haggadah :path "haggadah/full-haggadah") :on-success #(println "The batch worked" %)}}))
 
 
 (re-frame/reg-fx
  ::add-full-haggadah!
- (fn [{:keys [content on-success on-error] :or {on-error ::error}}]
+ (fn [{:keys [haggadah on-success on-error] :or {on-error ::error}}]
    (let [db (firestore/instance)
          batch (-> db
                    (fire/writeBatch))
-         filled-batch (for [{:keys [path content]} content]
-                        (.set batch (fire/doc db path) (clj->js content)))]
+         filled-batch (.set batch (fire/doc db (:path haggadah)) (clj->js haggadah))]
      (-> batch
          (.commit)
          (.then on-success)
@@ -329,7 +329,7 @@
                                             (map #(js->clj % :keywordize-keys true))
                                             first)]
      {::fetch-doc {:path haggadah-path
-                   :on-success [::set-seder title]}})))
+                   :on-success [[::set-seder title]]}})))
 
 ; :succ [::fetch-haggadah-sections {:success ::set-seder}]
 
@@ -341,22 +341,16 @@
                      :message (. error -message)})))
 
 ; fetch cada parte de la haggadah, y despues meterlo adentro de un wa
-
 (re-frame/reg-event-db
  ::set-haggadah
- (fn [db [_ title snap]]
-   (let [unconverted-sections (->> snap
-                                   (.-docs)
-                                   (js->clj))
-         converted-sections (->> unconverted-sections
-                                 (map #(.data %))
-                                 (map #(js->clj % :keywordize-keys :true))
-                                 (map dsl/render-haggadah))]
+ (fn [db [_ snap]]
+   (let [current-text (db :haggadah-text)
+         haggadah (->> snap
+                       (.data)
+                       (#(js->clj % :keywordize-keys :true))
+                       (merge-with identity current-text))]
    (assoc db :haggadah-text
-          [:div.haggadah
-           [:div.title title]
-           [:div.title
-            (apply conj [:div.content] converted-sections)]]))))
+          (dsl/render-haggadah haggadah)))))
 
 (re-frame/reg-event-db
  ::set-preview
