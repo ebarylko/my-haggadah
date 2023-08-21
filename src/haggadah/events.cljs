@@ -4,28 +4,13 @@
    [haggadah.fb.firestore :as firestore]
    ["firebase/firestore" :as fire]
    [haggadah.db :as db]
-   [haggadah.full-haggadah :refer [full-haggadah]]
    [haggadah.dsl :as dsl]
-   [haggadah.magid :refer [magid]]
-   [haggadah.karpas :refer [karpas]]
-   [haggadah.yachatz  :refer [yachatz]]
-   [haggadah.urchatz  :refer [urchatz]]
-   [haggadah.kadesh  :refer [kadesh]]
-   [haggadah.rachtzah  :refer [rachtzah]]
-   [haggadah.motzi-matzah :refer [motzi-matzah]]
-   [haggadah.maror :refer [maror]]
-   [haggadah.korech :refer [korech]]
-   [haggadah.shulchan-orech :refer [shulchan-orech]]
-   [haggadah.tzafun :refer [tzafun]]
-   [haggadah.barech :refer [barech]]
-   [haggadah.hallel :refer [hallel]]
-   [haggadah.nirtzah :refer [nirtzah]]
+   [haggadah.full-haggadah :refer [full-haggadah]]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
    [haggadah.fb.auth :as auth]
    [haggadah.fb.functions :as func]))
 
 (def interceptors [re-frame/trim-v])
-
 
 (re-frame/reg-event-db
  ::initialize-db
@@ -113,7 +98,6 @@
                          :on-success (keyword->func on-success)
                          :on-error on-error}]]})))
 
-(assoc-in {:a {:1 2}} [:a :1] 1)
 
 (re-frame/reg-event-fx
  ::fetch-sedarim
@@ -208,31 +192,6 @@
      {:db (assoc db :name nil :uid nil :user :unregistered)})))
 
 ;; :order 1, :content content 
-(def sections  [kadesh
-                urchatz
-                karpas
-                yachatz
-                magid
-                rachtzah
-                motzi-matzah
-                maror
-                korech
-                shulchan-orech
-                tzafun
-                barech
-                hallel
-                nirtzah])
-
-(defn prepare-section
-  "Pre: takes a section from the Haggadah and a number which represents the position of the section in the Haggadah 
-  Post: returns the section with the number and the path to the section in firestore added"
-  [{:keys [english] :as section} pos]
-  (-> {:path (str "haggadah/" english)}
-      (assoc :content (assoc section :order pos))))
-(prepare-section urchatz 1)
-
-(def haggadah-sections
-  (map prepare-section sections (range 1 16)))
 
 
 (re-frame/reg-event-fx
@@ -309,16 +268,20 @@
    {::fetch-seder! {:seder-id seder-id :on-success on-success :on-error on-error}}))
 
 
+(def keep-first-map-content (partial merge-with identity))
+
 (re-frame/reg-event-db
  ::set-seder
- (fn [db [_ seder-title haggadah-snap]]
-   (let [haggadah (-> haggadah-snap
+ interceptors
+ (fn [db [seder-title haggadah-snap]]
+   (let [default-haggadah (-> haggadah-snap
                       (. data)
-                      (js->clj :keywordize-keys true)
-                      dsl/render-haggadah)]
-     (assoc db :seder {:title seder-title :haggadah haggadah}))))
+                      (js->clj :keywordize-keys true))
+         customized-haggadah (->> default-haggadah
+                                  (keep-first-map-content (get-in db [:seder :haggadah]))
+                                  dsl/render-haggadah)]
+     (assoc db :seder {:title seder-title :haggadah customized-haggadah}))))
 
-; cuando hago el fetch de un seder tengo que pasar el titulo del seder. ademas de solo hacer el rendering del contenido, estoy tambien agarrando el titulo.
 
 (re-frame/reg-event-fx
  ::haggadah-from-seder
@@ -330,7 +293,8 @@
                                             (map #(js->clj % :keywordize-keys true))
                                             first)]
      {::fetch-doc {:path haggadah-path
-                   :on-success [[::fetch-default-haggadah title]]}})))
+                   :on-success [::fetch-default-haggadah {:path [:seder :haggadah]
+                                                           :on-success [::set-seder title]}]}})))
 
 ; :succ [::fetch-haggadah-sections {:success ::set-seder}]
 

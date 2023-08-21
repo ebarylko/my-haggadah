@@ -97,10 +97,18 @@
 
 
 (defn fs-store-haggadah-content
-  "Pre: takes a collection of content for a Haggadah
-  Post: adds the collection to the database"
-  [& content]
-  (let [batch (-> (FirestoreClient/getFirestore)
+  "Pre: takes the content for a Haggadah
+  Post: adds the content of the Haggadah to the database"
+  [{:keys [path] :as content}]
+  (let [#_#_doc (-> path
+                (clojure.string/split #"/")
+                second)]
+    (-> (FirestoreClient/getFirestore)
+        (.collection "haggadah")
+        (.document "full-haggadah")
+        (.set (w/stringify-keys content))
+        (.get)))
+  #_(let [batch (-> (FirestoreClient/getFirestore)
                   (.batch))]
     (-> (reduce add-content batch content)
         (.commit)
