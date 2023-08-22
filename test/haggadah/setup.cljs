@@ -1,22 +1,19 @@
 (ns haggadah.setup
-  (:require  [cljs.test :as t :include-macros true]
-             [clojure.string :as str]
-             ["firebase-admin" :as admin]
-             ["firebase-admin/firestore" :as admin-fire]
-             ["firebase-admin/auth" :as admin-auth]
-             [cljs.nodejs :as nodejs]
-             [haggadah.fb.config :as cfg]))
+  (:require ["firebase-admin" :as admin]
+            ["firebase-admin/auth" :as admin-auth]
+            [cljs.nodejs :as nodejs]))
 
 (nodejs/enable-util-print!)
 
-(defonce app (.initializeApp admin #_(clj->js cfg/firebase)))
+(defonce app (.initializeApp admin ))
 (goog-define PROJECT_ID false)
 
 
-(defn main [& args]
+(defn main []
   (-> (.createUser (admin-auth/getAuth) #js{:email "han@skywalker.com" :password "123456789"})
       (.then (fn [user] (js/console.log user)
                (js/process.exit)))
-      (.catch (fn [e] (println "The error " e )))))
+      (.catch (fn [e] (println "The error " e )))
+      ))
 
 (set! *main-cli-fn* main)

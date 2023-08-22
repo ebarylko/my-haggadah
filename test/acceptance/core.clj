@@ -82,42 +82,27 @@
 
 ; {:path path :content {:type cont-type :english eng :heb heb}}
 
-(defn add-content
-  "Pre: takes a batch and content 
-  Post: adds the content to the batch"
-  [batch {:keys [path] :as content}]
-  (let [id (-> path
-               (clojure.string/split #"/")
-               second)
-        route (-> (FirestoreClient/getFirestore)
-                  (.collection "haggadah")
-                  (.document id))]
-    (.set batch route (w/stringify-keys content))
-    batch))
-
-
 (defn fs-store-haggadah-content
   "Pre: takes the content for a Haggadah
   Post: adds the content of the Haggadah to the database"
   [{:keys [path] :as content}]
-  (let [#_#_doc (-> path
+  (let [doc (-> path
                 (clojure.string/split #"/")
                 second)]
+    (println "The doc " doc)
     (-> (FirestoreClient/getFirestore)
         (.collection "haggadah")
-        (.document "full-haggadah")
+        (.document doc #_"full-haggadah")
         (.set (w/stringify-keys content))
-        (.get)))
-  #_(let [batch (-> (FirestoreClient/getFirestore)
-                  (.batch))]
-    (-> (reduce add-content batch content)
-        (.commit)
         (.get))))
 
 (defn delete-fs-emulator-data
-  "Takes a test and deletes what is in firestore after running the test"
+  "Takes a test and deletes what is in firestore before running the test"
   [test]
-  (http/delete  "http://localhost:8080/emulator/v1/projects/my-haggadah/databases/(default)/documents")
+   (http/delete  "http://localhost:8080/emulator/v1/projects/my-haggadah/databases/(default)/documents")
+  (println "After doing the delete request")
+  (Thread/sleep 3000)
+  (println "Deleting the data")
   (test))
 
 (def home "http://localhost:4999/")

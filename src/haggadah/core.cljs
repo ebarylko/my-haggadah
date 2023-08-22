@@ -42,6 +42,6 @@
   (dev-setup)
   (mount-root)
   (firebase-init!)
-  (re-frame/dispatch-sync [::events/add-full-haggadah])
+  #_(re-frame/dispatch-sync [::events/add-full-haggadah])
   (routes/init-routes!))
 
