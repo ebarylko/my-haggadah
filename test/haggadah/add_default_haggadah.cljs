@@ -12,7 +12,6 @@
 
 (defn add-haggadah
   []
-  (println "The id " PROJECT_ID )
   (-> db
       (.collection "haggadah")
       (.doc "full-haggadah")
@@ -21,4 +20,3 @@
                (js/process.exit)))
       (.catch (fn [e] (println "The error " e )))))
 
-;; (set! *main-cli-fn* add-haggadah)

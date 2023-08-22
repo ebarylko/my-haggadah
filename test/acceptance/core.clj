@@ -89,10 +89,9 @@
   (let [doc (-> path
                 (clojure.string/split #"/")
                 second)]
-    (println "The doc " doc)
     (-> (FirestoreClient/getFirestore)
         (.collection "haggadah")
-        (.document doc #_"full-haggadah")
+        (.document doc)
         (.set (w/stringify-keys content))
         (.get))))
 
@@ -100,9 +99,6 @@
   "Takes a test and deletes what is in firestore before running the test"
   [test]
    (http/delete  "http://localhost:8080/emulator/v1/projects/my-haggadah/databases/(default)/documents")
-  (println "After doing the delete request")
-  (Thread/sleep 3000)
-  (println "Deleting the data")
   (test))
 
 (def home "http://localhost:4999/")
@@ -128,6 +124,16 @@
       (.get)
       (.getId)))
 
+(defn add-id-to-seder
+  "Pre: Takes a user and a seder id and adds the id to the seder corresponding with the id"
+[user id]
+  (-> (FirestoreClient/getFirestore)
+      (.collection "users")
+      (.document user)
+      (.collection "seders")
+      (.document id)
+      (.update {"id" id})
+      (.get)))
 
 (defn fs-store-seder
   "Pre: takes a seder title, a user, and the id of a Haggadah
@@ -141,14 +147,8 @@
                                                 :haggadah-path (clojure.string/join "/" ["users" user "haggadot" id])}
                                                :createdAt (java.time.Instant/now))))
                (.get)
-               (.getId))
-        update (-> (FirestoreClient/getFirestore)
-                   (.collection "users")
-                   (.document user)
-                   (.collection "seders")
-                   (.document id)
-                   (.update {"id" id})
-                   (.get))]
+               (.getId))]
+    (add-id-to-seder "user1" id)
     id))
 
 (defn haggadah

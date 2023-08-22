@@ -24,13 +24,13 @@
   []
   (e/wait-visible driver {:fn/has-class :haggadah}))
 
+
 (t/deftest view-seder-from-link-test
   (t/testing "When the current user has a Seder and copies the link to view the Seder and pastes it in the window, they should then see the Haggadah below"
-    (let [id (c/fs-store-haggadah {:title "Haggadah 1"
-                                   :type "haggadah"
-                                   :content [{:type "bracha" :title "hello" :english "bracha" :hebrew "text"}]}
-                                  "user1")
-          seder-id (c/fs-store-seder "Seder title" "user1" id)]
+    (let [id (c/fs-store-haggadah {:title "Haggadah 1"}
+                                  "user1")]
+      (c/fs-store-seder "Seder title" "user1" id)
+      (c/fs-store-haggadah-content {:type "haggadah" :content [{:type "bracha" :title "hello" :english "bracha" :hebrew "text"}] :path "haggadah/full-haggadah"})
       (c/home->dashboard driver)
       (d/wait-for-sedarim)
       (d/dashboard->first-seder)
