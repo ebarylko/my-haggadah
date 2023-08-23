@@ -8,7 +8,7 @@
         "release": "npx shadow-cljs compile func func-test",
         "deploy": "firebase deploy --only functions",
         "logs": "firebase functions:log",
-		    "ci": "firebase emulators:exec --project my-haggadah 'npm run release'",
+		    "ci": "firebase emulators:exec --project my-haggadah --config ../test/firebase.json 'npm run release'",
         "watch": "npx shadow-cljs watch func func-test"
     },
     "engines": {
