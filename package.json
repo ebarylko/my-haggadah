@@ -6,7 +6,7 @@
         "ancient": "clojure -Sdeps '{:deps {com.github.liquidz/antq {:mvn/version \"RELEASE\"}}}' -m antq.core",
         "release": "npx shadow-cljs release app",
         "build-report": "npx shadow-cljs run shadow.cljs.build-report app target/build-report.html",
-        "test": "firebase emulators:exec --project my-haggadah 'npm run test:build && node target/ci-setup.js && npx karma start --single-run'",
+        "test": "firebase emulators:exec --project my-haggadah --config test/firebase.json 'npm run test:build && node target/ci-setup.js && npx karma start --single-run'",
         "karma:watch": "npx karma start",
         "karma:setup": "source .env.test && node target/ci-setup.js",
         "test:watch": "firebase emulators:exec --project my-haggadah 'npx shadow-cljs watch ci ci-setup'",

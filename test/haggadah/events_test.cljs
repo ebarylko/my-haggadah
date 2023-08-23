@@ -31,8 +31,11 @@
 (t/deftest unregistered-user-login
   (rf-test/run-test-async
    (core/firebase-init!)
+   (println "After initializing firebase")
    (rf/dispatch-sync [::events/initialize-db])
+   (println "After initializing db")
    (rf/dispatch-sync [::events/login "jan@weir.com" "123456789"])
+   (println "After logging in")
    (rf-test/wait-for [::events/error]
                      (let [{:keys [code]} @(rf/subscribe [::subs/error])]
                        (t/is (= user-not-found code))))))
