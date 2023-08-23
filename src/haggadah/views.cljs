@@ -9,8 +9,6 @@
    [haggadah.events :as events]
    [goog.string.format]))
 
-(goog-define WRITE false)
-
 (defn href
   "Return relative url for given route. Url can be used in HTML links."
   ([k]

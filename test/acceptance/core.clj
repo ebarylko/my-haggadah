@@ -98,10 +98,10 @@
 (defn delete-fs-emulator-data
   "Takes a test and deletes what is in firestore before running the test"
   [test]
-   (http/delete  "http://localhost:8080/emulator/v1/projects/my-haggadah/databases/(default)/documents")
+   (http/delete  "http://localhost:8088/emulator/v1/projects/my-haggadah/databases/(default)/documents")
   (test))
 
-(def home "http://localhost:4999/")
+(def home "http://localhost:4993/")
 
 (defn home->dashboard
   [d]

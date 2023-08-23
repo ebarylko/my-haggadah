@@ -38,10 +38,12 @@
           :ci {:target :karma
                :output-to "target/ci.js"
                :js-options {:js-package-dirs ["node_modules" "functions/node_modules"]}
-               :dev {:compiler-options {:closure-defines {haggadah.fb.auth/FIREBASE_AUTH_HOST "http://localhost:9098"
+               :dev {:compiler-options {:closure-defines {
+                                                          haggadah.fb.auth/FIREBASE_AUTH_HOST "http://localhost:9098"
                                                           haggadah.fb.auth/FIREBASE_HOSTING_HOST "http://localhost:4993"
                                                           haggadah.fb.auth/FIREBASE_FUNCTIONS_HOST "http://localhost:5003"
-                                                          haggadah.fb.auth/FIREBASE_FIRESTORE_HOST "http://localhost:8088"}}}}
+                                                          haggadah.fb.auth/FIREBASE_FIRESTORE_HOST "http://localhost:8088"
+                                                          }}}}
           :ci-setup {:target :node-script
            :output-to "target/ci-setup.js"
                      :main haggadah.setup/main
@@ -51,11 +53,13 @@
                         :output-dir "test/acceptance/resources/public/js/compiled"
                         :asset-path "/js/compiled"
                         :modules {:app {:init-fn haggadah.core/init}}
-                        :release {:compiler-options {:closure-defines {haggadah.fb.auth/FIREBASE_AUTH_HOST  "http://localhost:9099"
-                                                                       haggadah.fb.auth/FIREBASE_HOSTING_HOST  "localhost:4999"
-                                                                       haggadah.fb.functions/FIREBASE_FUNCTIONS_HOST  "localhost:5001"
-                                                                       haggadah.fb.firestore/FIREBASE_FIRESTORE_HOST  "localhost:8080"
-                                                                       haggadah.views/WRITE "http://127.0.0.1:5001/my-haggadah/us-central1/write"}}
+                        :release {:compiler-options {:closure-defines {
+                                                                       haggadah.fb.auth/FIREBASE_AUTH_HOST  "http://localhost:9098"
+                                                                       haggadah.fb.auth/FIREBASE_HOSTING_HOST  "localhost:4993"
+                                                                       haggadah.fb.functions/FIREBASE_FUNCTIONS_HOST  "localhost:5003"
+                                                                       haggadah.fb.firestore/FIREBASE_FIRESTORE_HOST  "localhost:8088"
+
+                                                                       }}
                                   :build-options {:ns-aliases {day8.re-frame.tracing day8.re-frame.tracing-stubs}}}}
           :acceptance-setup {:target :node-script
                              :output-to "target/default-haggadah-setup.js"
