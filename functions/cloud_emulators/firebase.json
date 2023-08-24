@@ -5,13 +5,7 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "../resources/public/index.html"
-      }
+      "../**/node_modules/**"
     ]
   },
   "emulators": {

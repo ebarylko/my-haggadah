@@ -1,16 +1,16 @@
 {
     "hosting": {
-        "public": "../resources/public",
+        "public": "resources/public",
         "predeploy": "npm run release",
         "ignore": [
             "firebase.json",
-            "../**/.*",
-            "../**/node_modules/**"
+            "/**/.*",
+            "**/node_modules/**"
         ],
         "rewrites": [
             {
             "source": "**",
-            "destination": "../resources/public/index.html"
+            "destination": "index.html"
         }
         ]
     },
@@ -37,6 +37,6 @@
         "indexes": "firestore.indexes.json"
     },
     "functions": {
-        "source": "../functions"
+        "source": "functions"
     }
 }
