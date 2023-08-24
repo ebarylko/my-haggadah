@@ -1,13 +1,31 @@
 {
+  "hosting": {
+    "public": "../resources/public",
+    "predeploy": "npm run release",
+    "ignore": [
+      "firebase.json",
+      "../**/.*",
+      "../**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "../resources/public/index.html"
+      }
+    ]
+  },
   "emulators": {
     "auth": {
-      "port": 9097
+      "port": 9099
     },
     "functions": {
-      "port": 5009
+      "port": 5001
     },
     "firestore": {
-      "port": 8084
+      "port": 8080
+    },
+    "hosting": {
+      "port": 4999
     },
     "ui": {
       "enabled": true
