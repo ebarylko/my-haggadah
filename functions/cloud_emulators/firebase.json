@@ -1,0 +1,39 @@
+{
+  "hosting": {
+    "public": "../resources/public",
+    "predeploy": "npm run release",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "../resources/public/index.html"
+      }
+    ]
+  },
+  "emulators": {
+    "auth": {
+      "port": 9098
+    },
+    "functions": {
+      "port": 5003
+    },
+    "firestore": {
+      "port": 8088
+    },
+    "hosting": {
+      "port": 4993
+    },
+    "singleProjectMode": true
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+      "indexes": "firestore.indexes.json"
+  },
+  "functions": {
+    "source": "../."
+  }
+}
