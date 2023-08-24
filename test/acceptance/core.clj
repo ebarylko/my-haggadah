@@ -101,7 +101,7 @@
    (http/delete  "http://localhost:8088/emulator/v1/projects/my-haggadah/databases/(default)/documents")
   (test))
 
-(def home "http://localhost:4993/")
+(def home "http://localhost:4992/")
 
 (defn home->dashboard
   [d]
