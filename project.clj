@@ -7,6 +7,7 @@
                  [clj-http "3.12.3"]
                  [org.clojure/data.json "2.4.0"]
                  [etaoin/etaoin "1.0.40"]
+                 [babashka/fs "0.4.19"]
                  [com.google.firebase/firebase-admin "9.1.1"]
                  [environ "1.2.0"]]
   :jvm-opts ["-Dclojure.main.report=stderr"]
