@@ -5,6 +5,7 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [clj-http "3.12.3"]
+                 [org.clojure/data.json "2.4.0"]
                  [etaoin/etaoin "1.0.40"]
                  [com.google.firebase/firebase-admin "9.1.1"]
                  [environ "1.2.0"]]
