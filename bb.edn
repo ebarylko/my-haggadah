@@ -1,9 +1,5 @@
-{:paths ["test"]
- :deps  {etaoin/etaoin {:mvn/version "1.0.40"}
-         com.google.firebase/firebase-admin {:mvn/version "9.1.1"}
-         org.clojure/data.json {:mvn/version "2.4.0"}}
- :tasks
- {:set-vars {:task (exec 'haggadah.set-global-vars/set-vars) }}}
-
-
+{:paths ["src/tasks"]
+ :deps  {org.clojure/data.json {:mvn/version "2.4.0"}}
+ :tasks {:requires ([set-vars :as sv])
+         export-vars sv/export-from-firebase}}
 
