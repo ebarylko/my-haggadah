@@ -3,9 +3,7 @@
    [clojure.data.json :as json]
    [babashka.fs :as fs :refer [exists?]]))
 
-
 (def localhost "127.0.0.1")
-(def emulator-hub (format "FIREBASE_EMULATOR_HUB=%s:4400" localhost ))
 (def fire-config {:FIREBASE_CONFIG {:projectId "my-haggadah" :storageBucket "my-haggadah.appspot.com" :databaseURL "https://my-haggadah.firebaseio.com"}})
 
 (def parse-fire-config (comp (partial format "FIREBASE_CONFIG=%s") json/write-str :FIREBASE_CONFIG))
@@ -58,6 +56,6 @@
          (map emulator->var)
          (concat [(parse-fire-config fire-config)])
          (clojure.string/join "\n" )
-         (spit ".env.test")))
+         (spit ".env.firebase")))
 
 
