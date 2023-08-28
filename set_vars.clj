@@ -21,6 +21,9 @@
   [emulator name]
 (get-in emulator [name :port]))
 
+                                        ; 1 - firebase.json
+;2 acceptance-firebase.json
+
 (defn set-vars
   "Pre: takes a file which contains a collection of key value pairs of the form [emulator-name emulator-port]
   Post: exports the ports of the auth and firestore emulators"
@@ -31,7 +34,9 @@
         auth-var (format "export FIREBASE_AUTH_EMULATOR_HOST=%s%d\n" base auth-port)]
     [fs-port auth-port]
     [fs-var auth-var]
-      (spit ".env.test" "Helloo there"#_emulator-hub :append true) ))
+    (spit ".env.test" "")
+      (run! #(spit ".env.test" % :append true) [emulator-hub fire-config fs-var auth-var])
+    ))
 
 
 (set-vars #_*command-line-args*)
