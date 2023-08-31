@@ -60,9 +60,11 @@
   "Pre: takes all tests
   Post: initializes all features of firebase, such as firestore, authentication,"
   [tests]
+  (println "Init firebase")
   (when-not @firebase
     (reset! firebase (init))
-   (create-user {:email "han@skywalker.com"  :pwd "123456789" :id "user1"}))
+    (create-user {:email "han@skywalker.com"  :pwd "123456789" :id "user1"}))
+  (println "After initializing firebase")
   (tests))
 
 (defonce test-names (atom []))
