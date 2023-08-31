@@ -25,7 +25,13 @@
         "ui": {
             "enabled": true
         },
+        "functions": {
+            "port": 5005
+        },
         "singleProjectMode": true
+    },
+    "functions": {
+        "source": "../../functions"
     },
     "firestore": {
         "rules": "firestore.rules",
